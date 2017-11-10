@@ -1,0 +1,28 @@
+name: holoviews_docs
+
+channels:
+  - ioam
+  - bokeh
+  - conda-forge
+  - defaults
+dependencies:
+  - python=2.7
+  - holoviews
+  - paramnb
+  - numpy
+  - scipy
+  - notebook
+  - matplotlib
+  - pandas
+  - bokeh=0.12.10
+  - nose
+  - networkx
+  - xarray
+  - datashader
+  - scikit-image
+  - selenium
+  - phantomjs
+  - streamz=0.2.0
+  - dask=0.15.4
+  - sphinx
+  - runipy
