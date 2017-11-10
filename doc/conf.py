@@ -36,11 +36,8 @@ rst_epilog = """
 # Override IOAM theme
 html_theme = 'holoviews_theme'
 html_theme_path = ['.']
-#MAIN_SITE = '//holoviews.org'
 
 html_context = {
-    'SITEMAP_BASE_URL': 'http://holoviews.org/', # Trailing slash is needed
-    'SITE_URL': '/',
     'DESCRIPTION': 'HoloViews library, documentation site.',
     'AUTHOR': 'HoloViews contributors',
     'VERSION': version,
@@ -73,12 +70,12 @@ html_context = {
     ),
     # Links for the docs sub navigation
     'NAV_DOCS': (
-        ('Getting started', 'getting_started/index'),
-        ('User Guide', 'user_guide/index'),
-        ('Gallery', 'gallery/index'),
-        ('Reference Gallery', 'reference/index'),
-        ('API', 'Reference_Manual/index'),
-        ('FAQ', 'FAQ')
+        ('Getting started', '/getting_started/index'),
+        ('User Guide', '/user_guide/index'),
+        ('Gallery', '/gallery/index'),
+        ('Reference Gallery', '/reference/index'),
+        ('API', '/Reference_Manual/index'),
+        ('FAQ', '/FAQ')
     ),
     'css_server': os.environ.get('HOLOVIEWS_DOCS_CSS_SERVER', 'assets.holoviews.org'),
     'js_includes': ['custom.js', 'require.js']
