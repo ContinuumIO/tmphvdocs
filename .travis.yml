@@ -18,6 +18,7 @@ script:
   - export PYTHONPATH=$PWD/doc
   - cd doc
   - make gallery
+  - make refmanual
   - make html
 
 # TODO: will copy html somewhere
