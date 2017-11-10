@@ -8,7 +8,7 @@ from builder.shared_conf import * # noqa (API import)
 paths = ['../param/', '.', '..']
 add_paths(paths)
 
-from ..setup import setup_args
+#from ..setup import setup_args
 
 # Declare information specific to this project.
 project = u'HoloViews'
@@ -22,9 +22,10 @@ description = 'Stop plotting your data - annotate your data and let it visualize
 # built documents.
 #
 # The short X.Y version.
-version = setup_args['version']
+# TODO: gah, version
+version = '0.0.1' #setup_args['version']
 # The full version, including alpha/beta/rc tags.
-release = setup_args['version']
+release = '0.0.1' #setup_args['version']
 
 ASSETS_URL = 'http://assets.holoviews.org'
 
