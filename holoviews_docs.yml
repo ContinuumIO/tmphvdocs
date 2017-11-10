@@ -27,4 +27,4 @@ dependencies:
   - sphinx
   - runipy
   - beautifulsoup4
- 
+  - graphviz
