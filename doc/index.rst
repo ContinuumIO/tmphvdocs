@@ -108,7 +108,6 @@ And then you can launch Jupyter Notebook to explore them::
    Getting Started <getting_started/index>
    User Guide <user_guide/index>
    Reference Gallery <reference/index>
-   Showcase <showcase/index>
    API <Reference_Manual/index>
    FAQ
    Github source <http://github.com/ioam/holoviews>
