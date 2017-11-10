@@ -36,7 +36,7 @@ rst_epilog = """
 # Override IOAM theme
 html_theme = 'holoviews_theme'
 html_theme_path = ['.']
-MAIN_SITE = '//holoviews.org'
+#MAIN_SITE = '//holoviews.org'
 
 html_context = {
     'SITEMAP_BASE_URL': 'http://holoviews.org/', # Trailing slash is needed
@@ -46,9 +46,9 @@ html_context = {
     'VERSION': version,
     # Nav
     'NAV': (
-        ('About', MAIN_SITE + '/about.html'),
+        ('About', '/about.html'),
         ('Gallery', '/gallery/index.html'),
-        ('Docs', '//holoviews.org/'),
+        ('Docs', '/'),
         ('Github', '//github.com/ioam/holoviews'),
     ),
     # Links
@@ -63,7 +63,7 @@ html_context = {
     ),
     # About Links
     'ABOUT': (
-        ('About', MAIN_SITE + '/about.html')
+        ('About', '/about.html')
     ),
     # Social links
     'SOCIAL': (
