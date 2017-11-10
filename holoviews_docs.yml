@@ -1,4 +1,4 @@
-name: holoviews_docs
+name: holoviews_docs3
 
 channels:
   - ioam
@@ -26,3 +26,5 @@ dependencies:
   - dask=0.15.4
   - sphinx
   - runipy
+  - beautifulsoup4
+ 
