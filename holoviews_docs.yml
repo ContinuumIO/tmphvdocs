@@ -1,4 +1,4 @@
-name: holoviews_docs3
+name: holoviews_docs
 
 channels:
   - ioam
@@ -6,7 +6,7 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - python=2.7
+  - python=3.6*
   - holoviews
   - paramnb
   - numpy
