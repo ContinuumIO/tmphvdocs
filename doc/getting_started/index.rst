@@ -24,12 +24,6 @@ range of primitives), see our `Reference Gallery
 * `Tabular Datasets <Tabular_Datasets.html>`_
    Introduction to working with tabular data.
 
-* `Gridded Datasets <Gridded_Datasets.html>`_
-   Introduction to working with array data.
-
-* `Live Data <Live_Data.html>`_
-   Working with dynamically generated data.
-
 .. toctree::
     :titlesonly:
     :hidden:
@@ -38,5 +32,3 @@ range of primitives), see our `Reference Gallery
     Introduction <Introduction>
     Customization <Customization>
     Tabular Datasets <Tabular_Datasets>
-    Gridded Datasets <Gridded_Datasets>
-    Live Data <Live_Data>
