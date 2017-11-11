@@ -5,3 +5,10 @@
 
 
 * Fill in your modules Reference_Manual/index.rst
+
+
+* google analytics: holoviews_theme/includes/ga.html
+
+
+* pushd _build/html && python -m http.server
+

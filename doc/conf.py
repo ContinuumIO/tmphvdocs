@@ -43,25 +43,25 @@ html_context = {
     'VERSION': version,
     # Nav
     'NAV': (
-        ('About', '/about.html'),
-        ('Gallery', '/gallery/index.html'),
-        ('Docs', '/'),
+        ('About', '/about'),
+        ('Gallery', '/gallery/index'),
+#        ('Docs', '/'),
         ('Github', '//github.com/ioam/holoviews'),
     ),
     # Links
     'LINKS': (
-        ('Getting started', '/getting_started/index.html'),
-        ('User Guide', '/user_guide/index.html'),
-        ('Gallery', '/gallery/index.html'),
+        ('Getting Started', '/getting_started/index'),
+        ('User Guide', '/user_guide/index'),
+        ('Gallery', '/gallery/index'),
 #        ('Reference Gallery', '/reference/index.html'),
-        ('API Docs', '/Reference_Manual/index.html'),
-        ('FAQ', '/FAQ.html'),
-        ('About', '/about.html')
+        ('API Docs', '/Reference_Manual/index'),
+        ('FAQ', '/FAQ'),
+        ('About', '/about')
     ),
     # About Links
-    'ABOUT': (
-        ('About', '/about.html')
-    ),
+#    'ABOUT': (
+#        ('About', '/about')
+#    ),
     # Social links
     'SOCIAL': (
         ('Gitter', '//gitter.im/ioam/holoviews'),
@@ -70,7 +70,7 @@ html_context = {
     ),
     # Links for the docs sub navigation
     'NAV_DOCS': (
-        ('Getting started', '/getting_started/index'),
+        ('Getting Started', '/getting_started/index'),
         ('User Guide', '/user_guide/index'),
         ('Gallery', '/gallery/index'),
 #        ('Reference Gallery', '/reference/index'),
@@ -78,13 +78,13 @@ html_context = {
         ('FAQ', '/FAQ')
     ),
 #    'css_server': os.environ.get('HOLOVIEWS_DOCS_CSS_SERVER', 'assets.holoviews.org'),
-    'js_includes': ['custom.js', 'require.js']
+    'js_includes': ['custom.js', 'require.js'],
+
 }
 
 # (Optional) Logo. Should be small enough to fit the navbar (ideally 24x24).
 # Path should be relative to the ``_static`` files directory.
 html_logo = "my_logo.png"
-
 
 html_logo = '_static/holoviews_logo.png'
 html_favicon = '_static/favicon.ico'

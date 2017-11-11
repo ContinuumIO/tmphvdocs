@@ -104,10 +104,9 @@ And then you can launch Jupyter Notebook to explore them::
    :hidden:
    :maxdepth: 2
 
-   Home <self>
    Getting Started <getting_started/index>
    User Guide <user_guide/index>
-   Reference Gallery <reference/index>
+   Gallery <gallery/index>
    API <Reference_Manual/index>
    FAQ
    Github source <http://github.com/ioam/holoviews>
