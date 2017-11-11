@@ -28,3 +28,4 @@ dependencies:
   - runipy
   - beautifulsoup4
   - graphviz
+  - plotly
