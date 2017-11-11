@@ -53,7 +53,7 @@ html_context = {
         ('Getting started', '/getting_started/index.html'),
         ('User Guide', '/user_guide/index.html'),
         ('Gallery', '/gallery/index.html'),
-        ('Reference Gallery', '/reference/index.html'),
+#        ('Reference Gallery', '/reference/index.html'),
         ('API Docs', '/Reference_Manual/index.html'),
         ('FAQ', '/FAQ.html'),
         ('About', '/about.html')
@@ -73,7 +73,7 @@ html_context = {
         ('Getting started', '/getting_started/index'),
         ('User Guide', '/user_guide/index'),
         ('Gallery', '/gallery/index'),
-        ('Reference Gallery', '/reference/index'),
+#        ('Reference Gallery', '/reference/index'),
         ('API', '/Reference_Manual/index'),
         ('FAQ', '/FAQ')
     ),
@@ -94,8 +94,7 @@ html_favicon = '_static/favicon.ico'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
-exclude_patterns = ['_build', 'test_data', 'reference_data', 'nbpublisher',
-                    'builder']
+exclude_patterns = ['_build', 'nbpublisher', 'builder']
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
