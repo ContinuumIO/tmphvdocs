@@ -77,7 +77,7 @@ html_context = {
         ('API', '/Reference_Manual/index'),
         ('FAQ', '/FAQ')
     ),
-    'css_server': os.environ.get('HOLOVIEWS_DOCS_CSS_SERVER', 'assets.holoviews.org'),
+#    'css_server': os.environ.get('HOLOVIEWS_DOCS_CSS_SERVER', 'assets.holoviews.org'),
     'js_includes': ['custom.js', 'require.js']
 }
 
