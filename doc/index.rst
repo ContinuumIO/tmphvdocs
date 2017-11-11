@@ -1,8 +1,13 @@
 .. HoloViews documentation master file
 
 HoloViews
-____________
+_________
 
+.. raw:: html
+
+   <div style="width: 65%; float:left">
+
+	 
 **Stop plotting your data - annotate your data and let it visualize itself.**
 
 HoloViews is an `open-source <https://github.com/ioam/holoviews/blob/master/LICENSE.txt>`_ Python library designed to make data analysis and visualization seamless and simple.  With HoloViews, you can usually express what you want to do in very few lines of code, letting you focus on what you are trying to explore and convey, not on the process of plotting.
@@ -17,12 +22,20 @@ The `API <Reference_Manual>`_ is the definitive guide to each HoloViews object, 
 
 If you have any `issues <https://github.com/ioam/holoviews/issues>`_ or wish to `contribute code <https://help.github.com/articles/about-pull-requests>`_, you can visit our `GitHub site <https://github.com/ioam/holoviews>`_ or chat with the developers on `gitter <https://gitter.im/ioam/holoviews>`_.
 
+
+.. raw:: html
+  
+   </div>
+
+
 .. raw:: html
   :file: latest_news.html
 
 
 .. raw:: html
 
+   <hr width='100%'></hr>
+	 
    <div>
    <div >
      <a href="http://holoviews.org/gallery/demos/bokeh/iris_splom_example.html">
@@ -53,6 +66,8 @@ If you have any `issues <https://github.com/ioam/holoviews/issues>`_ or wish to 
    </div>
    </div>
 
+   <hr width='100%'></hr>
+   
 
 Installation
 ____________
@@ -73,7 +88,7 @@ Additional installation and configuration options are described in the
 
 
 Usage
------
+_____
 
 Once you've installed HoloViews, you can get a copy of all the examples shown on this website::
 
