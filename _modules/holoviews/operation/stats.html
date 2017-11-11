@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8"/>
+  <title>
+   holoviews.operation.stats — HoloViews
+  </title>
+  <meta content="HoloViews library, documentation site." name="description"/>
+  <meta content="HoloViews contributors" name="author"/>
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js">
+  </script>
+  <script>
+   WebFont.load({
+      google: {
+        families: ['Source Sans Pro']
+      }
+    });
+  </script>
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../../../_static/main.css" rel="stylesheet"/>
+  <link href="../../../_static/custom.css" rel="stylesheet"/>
+  <!-- Scripts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
+  </script>
+  <script async="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+  </script>
+  <script src="../../../_static/js/main.js">
+  </script>
+  <script src="../../../_static/custom.js">
+  </script>
+  <script src="../../../_static/require.js">
+  </script>
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../../../_static/images/favicon.ico" rel="icon" type="image/png"/>
+  <!-- Canonical
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="http://holoviews.org/_modules/holoviews/operation/stats.html" rel="canonical"/>
+ </head>
+ <body class="">
+  <header class="navigation">
+   <div class="wrapper">
+    <a class="logo" href="//">
+     <img alt="Logo" src="../../../_static/images/logo.png"/>
+    </a>
+    <a class="navigation-menu logo-text" href="//">
+     HoloViews
+    </a>
+    <a class="navigation-menu-button" href="javascript:void(0)" id="js-mobile-menu">
+     Menu
+    </a>
+    <nav>
+     <ul class="navigation-menu show" id="js-navigation-menu">
+      <li class="nav-link">
+       <a href="/about.html">
+        About
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="/gallery/index.html">
+        Gallery
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="//github.com/ioam/holoviews.html">
+        Github
+       </a>
+      </li>
+     </ul>
+    </nav>
+   </div>
+  </header>
+  <div class="second-nav">
+   <nav>
+    <ul class="navigation-menu show">
+     <li class="nav-link doc-head">
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+    </ul>
+   </nav>
+   <div class="navigation-tools">
+    <div class="search-bar">
+     <form action="../../../search.html" method="get" role="search">
+      <input name="q" placeholder="Search" type="search"/>
+      <button type="submit">
+       <img alt="Search Icon" src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/search-icon-black.png"/>
+      </button>
+     </form>
+    </div>
+   </div>
+  </div>
+  <!-- MAIN BODY OF DOCS –––––––––––––––––– -->
+  <div class="docs section">
+   <div class="toc">
+    <ul>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference external" href="http://github.com/ioam/holoviews">
+       Github source
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../about.html">
+       About
+      </a>
+     </li>
+    </ul>
+   </div>
+   <div class="content">
+    <h1>
+     Source code for holoviews.operation.stats
+    </h1>
+    <div class="highlight">
+     <pre><span></span><span class="kn">import</span> <span class="nn">param</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">..core</span> <span class="k">import</span> <span class="n">Dimension</span><span class="p">,</span> <span class="n">Dataset</span><span class="p">,</span> <span class="n">NdOverlay</span>
+<span class="kn">from</span> <span class="nn">..core.dimension</span> <span class="k">import</span> <span class="n">Dimension</span>
+<span class="kn">from</span> <span class="nn">..core.operation</span> <span class="k">import</span> <span class="n">Operation</span>
+<span class="kn">from</span> <span class="nn">..core.options</span> <span class="k">import</span> <span class="n">Compositor</span><span class="p">,</span> <span class="n">Store</span><span class="p">,</span> <span class="n">Options</span><span class="p">,</span> <span class="n">StoreOptions</span>
+<span class="kn">from</span> <span class="nn">..core.util</span> <span class="k">import</span> <span class="n">basestring</span><span class="p">,</span> <span class="n">find_minmax</span><span class="p">,</span> <span class="n">cartesian_product</span>
+<span class="kn">from</span> <span class="nn">..element</span> <span class="k">import</span> <span class="p">(</span><span class="n">Curve</span><span class="p">,</span> <span class="n">Area</span><span class="p">,</span> <span class="n">Image</span><span class="p">,</span> <span class="n">Distribution</span><span class="p">,</span> <span class="n">Bivariate</span><span class="p">,</span>
+                       <span class="n">Contours</span><span class="p">,</span> <span class="n">Polygons</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">.element</span> <span class="k">import</span> <span class="n">contours</span>
+
+
+<span class="k">def</span> <span class="nf">_kde_support</span><span class="p">(</span><span class="n">bin_range</span><span class="p">,</span> <span class="n">bw</span><span class="p">,</span> <span class="n">gridsize</span><span class="p">,</span> <span class="n">cut</span><span class="p">,</span> <span class="n">clip</span><span class="p">):</span>
+    <span class="sd">"""Establish support for a kernel density estimate."""</span>
+    <span class="n">kmin</span><span class="p">,</span> <span class="n">kmax</span> <span class="o">=</span> <span class="n">bin_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">bw</span> <span class="o">*</span> <span class="n">cut</span><span class="p">,</span> <span class="n">bin_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">bw</span> <span class="o">*</span> <span class="n">cut</span>
+    <span class="k">if</span> <span class="n">clip</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">clip</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+        <span class="n">kmin</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">kmin</span><span class="p">,</span> <span class="n">clip</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">clip</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">clip</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
+        <span class="n">kmax</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">kmax</span><span class="p">,</span> <span class="n">clip</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">kmin</span><span class="p">,</span> <span class="n">kmax</span><span class="p">,</span> <span class="n">gridsize</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="univariate_kde"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.operation.html#holoviews.operation.stats.univariate_kde">[docs]</a><span class="k">class</span> <span class="nc">univariate_kde</span><span class="p">(</span><span class="n">Operation</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Computes a 1D kernel density estimate (KDE) along the supplied</span>
+<span class="sd">    dimension. Kernel density estimation is a non-parametric way to</span>
+<span class="sd">    estimate the probability density function of a random variable.</span>
+
+<span class="sd">    The KDE works by placing a Gaussian kernel at each sample with</span>
+<span class="sd">    the supplied bandwidth. These kernels are then summed to produce</span>
+<span class="sd">    the density estimate. By default a good bandwidth is determined</span>
+<span class="sd">    using the bw_method but it may be overridden by an explicit value.</span>
+<span class="sd">    """</span>
+
+    <span class="n">bw_method</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">ObjectSelector</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">'scott'</span><span class="p">,</span> <span class="n">objects</span><span class="o">=</span><span class="p">[</span><span class="s1">'scott'</span><span class="p">,</span> <span class="s1">'silverman'</span><span class="p">],</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        Method of automatically determining KDE bandwidth"""</span><span class="p">)</span>
+
+    <span class="n">bandwidth</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Number</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        Allows supplying explicit bandwidth value rather than relying on scott or silverman method."""</span><span class="p">)</span>
+
+    <span class="n">cut</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Number</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        Draw the estimate to cut * bw from the extreme data points."""</span><span class="p">)</span>
+
+    <span class="n">bin_range</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">NumericTuple</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>  <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        Specifies the range within which to compute the KDE."""</span><span class="p">)</span>
+
+    <span class="n">dimension</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        Along which dimension of the Element to compute the KDE."""</span><span class="p">)</span>
+
+    <span class="n">filled</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        Controls whether to return filled or unfilled KDE."""</span><span class="p">)</span>
+
+    <span class="n">n_samples</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        Number of samples to compute the KDE over."""</span><span class="p">)</span>
+
+    <span class="n">groupby</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">ClassSelector</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="p">(</span><span class="n">basestring</span><span class="p">,</span> <span class="n">Dimension</span><span class="p">),</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">      Defines a dimension to group the Histogram returning an NdOverlay of Histograms."""</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">groupby</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">Dataset</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'Cannot use histogram groupby on non-Dataset Element'</span><span class="p">)</span>
+            <span class="n">grouped</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">groupby</span><span class="p">,</span> <span class="n">group_type</span><span class="o">=</span><span class="n">Dataset</span><span class="p">,</span> <span class="n">container_type</span><span class="o">=</span><span class="n">NdOverlay</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">groupby</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">return</span> <span class="n">grouped</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_process</span><span class="p">,</span> <span class="n">Dataset</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">scipy</span> <span class="k">import</span> <span class="n">stats</span>
+        <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s1">'</span><span class="si">%s</span><span class="s1"> operation requires SciPy to be installed.'</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">Distribution</span><span class="p">):</span>
+            <span class="n">selected_dim</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">kdims</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">element</span><span class="o">.</span><span class="n">group</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="n">element</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span>
+                <span class="n">params</span><span class="p">[</span><span class="s1">'group'</span><span class="p">]</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">group</span>
+            <span class="n">params</span><span class="p">[</span><span class="s1">'label'</span><span class="p">]</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">label</span>
+            <span class="n">vdim</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">vdims</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">vdim_name</span> <span class="o">=</span> <span class="s1">'</span><span class="si">{}</span><span class="s1">_density'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">selected_dim</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">vdim_label</span> <span class="o">=</span> <span class="s1">'</span><span class="si">{}</span><span class="s1"> Density'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">selected_dim</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
+            <span class="n">vdims</span> <span class="o">=</span> <span class="p">[</span><span class="n">vdim</span><span class="p">(</span><span class="n">vdim_name</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">vdim_label</span><span class="p">)</span> <span class="k">if</span> <span class="n">vdim</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">'Density'</span> <span class="k">else</span> <span class="n">vdim</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">dimension</span><span class="p">:</span>
+                <span class="n">selected_dim</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">get_dimension</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">dimension</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">selected_dim</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">element</span><span class="o">.</span><span class="n">vdims</span> <span class="o">+</span> <span class="n">element</span><span class="o">.</span><span class="n">kdims</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">vdim_name</span> <span class="o">=</span> <span class="s1">'</span><span class="si">{}</span><span class="s1">_density'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">selected_dim</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">vdim_label</span> <span class="o">=</span> <span class="s1">'</span><span class="si">{}</span><span class="s1"> Density'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">selected_dim</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
+            <span class="n">vdims</span> <span class="o">=</span> <span class="p">[</span><span class="n">Dimension</span><span class="p">(</span><span class="n">vdim_nam</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">vdim_label</span><span class="p">)]</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">dimension_values</span><span class="p">(</span><span class="n">selected_dim</span><span class="p">)</span>
+        <span class="n">bin_range</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">bin_range</span> <span class="ow">or</span> <span class="n">element</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="n">selected_dim</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">bin_range</span> <span class="o">==</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">any</span><span class="p">(</span><span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">bin_range</span><span class="p">):</span>
+            <span class="n">bin_range</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">data</span><span class="p">)]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+            <span class="n">kde</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">bandwidth</span><span class="p">:</span>
+                <span class="n">kde</span><span class="o">.</span><span class="n">set_bandwidth</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">bandwidth</span><span class="p">)</span>
+            <span class="n">bw</span> <span class="o">=</span> <span class="n">kde</span><span class="o">.</span><span class="n">scotts_factor</span><span class="p">()</span> <span class="o">*</span> <span class="n">data</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">xs</span> <span class="o">=</span> <span class="n">_kde_support</span><span class="p">(</span><span class="n">bin_range</span><span class="p">,</span> <span class="n">bw</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">n_samples</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">cut</span><span class="p">,</span> <span class="n">selected_dim</span><span class="o">.</span><span class="n">range</span><span class="p">)</span>
+            <span class="n">ys</span> <span class="o">=</span> <span class="n">kde</span><span class="o">.</span><span class="n">evaluate</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">bin_range</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">bin_range</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">n_samples</span><span class="p">)</span>
+            <span class="n">ys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full_like</span><span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="n">element_type</span> <span class="o">=</span> <span class="n">Area</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">filled</span> <span class="k">else</span> <span class="n">Curve</span>
+        <span class="k">return</span> <span class="n">element_type</span><span class="p">((</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">),</span> <span class="n">kdims</span><span class="o">=</span><span class="p">[</span><span class="n">selected_dim</span><span class="p">],</span> <span class="n">vdims</span><span class="o">=</span><span class="n">vdims</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="bivariate_kde"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.operation.html#holoviews.operation.stats.bivariate_kde">[docs]</a><span class="k">class</span> <span class="nc">bivariate_kde</span><span class="p">(</span><span class="n">Operation</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Computes a 2D kernel density estimate (KDE) of the first two</span>
+<span class="sd">    dimensions in the input data. Kernel density estimation is a</span>
+<span class="sd">    non-parametric way to estimate the probability density function of</span>
+<span class="sd">    a random variable.</span>
+
+<span class="sd">    The KDE works by placing 2D Gaussian kernel at each sample with</span>
+<span class="sd">    the supplied bandwidth. These kernels are then summed to produce</span>
+<span class="sd">    the density estimate. By default a good bandwidth is determined</span>
+<span class="sd">    using the bw_method but it may be overridden by an explicit value.</span>
+<span class="sd">    """</span>
+
+    <span class="n">contours</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        Whether to compute contours from the KDE, determines whether to</span>
+<span class="s2">        return an Image or Contours/Polygons."""</span><span class="p">)</span>
+
+    <span class="n">bw_method</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">ObjectSelector</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">'scott'</span><span class="p">,</span> <span class="n">objects</span><span class="o">=</span><span class="p">[</span><span class="s1">'scott'</span><span class="p">,</span> <span class="s1">'silverman'</span><span class="p">],</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        Method of automatically determining KDE bandwidth"""</span><span class="p">)</span>
+
+    <span class="n">bandwidth</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Number</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        Allows supplying explicit bandwidth value rather than relying</span>
+<span class="s2">        on scott or silverman method."""</span><span class="p">)</span>
+
+    <span class="n">cut</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Number</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        Draw the estimate to cut * bw from the extreme data points."""</span><span class="p">)</span>
+
+    <span class="n">filled</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        Controls whether to return filled or unfilled contours."""</span><span class="p">)</span>
+
+    <span class="n">n_samples</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        Number of samples to compute the KDE over."""</span><span class="p">)</span>
+
+    <span class="n">x_range</span>  <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">NumericTuple</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">       The x_range as a tuple of min and max x-value. Auto-ranges</span>
+<span class="s2">       if set to None."""</span><span class="p">)</span>
+
+    <span class="n">y_range</span>  <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">NumericTuple</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">       The x_range as a tuple of min and max y-value. Auto-ranges</span>
+<span class="s2">       if set to None."""</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">scipy</span> <span class="k">import</span> <span class="n">stats</span>
+        <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s1">'</span><span class="si">%s</span><span class="s1"> operation requires SciPy to be installed.'</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+
+        <span class="n">xdim</span><span class="p">,</span> <span class="n">ydim</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">dimensions</span><span class="p">()[:</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">Bivariate</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">element</span><span class="o">.</span><span class="n">group</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="n">element</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span>
+                <span class="n">params</span><span class="p">[</span><span class="s1">'group'</span><span class="p">]</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">group</span>
+            <span class="n">params</span><span class="p">[</span><span class="s1">'label'</span><span class="p">]</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">label</span>
+            <span class="n">vdim</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">vdims</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">vdim</span> <span class="o">=</span> <span class="s1">'Density'</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">x_range</span> <span class="ow">or</span> <span class="n">element</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">y_range</span> <span class="ow">or</span> <span class="n">element</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="p">(</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">)):</span>
+            <span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="p">(</span><span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span><span class="p">)):</span>
+            <span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">kde</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">gaussian_kde</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">bandwidth</span><span class="p">:</span>
+                <span class="n">kde</span><span class="o">.</span><span class="n">set_bandwidth</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">bandwidth</span><span class="p">)</span>
+            <span class="n">bw</span> <span class="o">=</span> <span class="n">kde</span><span class="o">.</span><span class="n">scotts_factor</span><span class="p">()</span> <span class="o">*</span> <span class="n">data</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">xs</span> <span class="o">=</span> <span class="n">_kde_support</span><span class="p">((</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">),</span> <span class="n">bw</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">n_samples</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">cut</span><span class="p">,</span> <span class="n">xdim</span><span class="o">.</span><span class="n">range</span><span class="p">)</span>
+            <span class="n">ys</span> <span class="o">=</span> <span class="n">_kde_support</span><span class="p">((</span><span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span><span class="p">),</span> <span class="n">bw</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">n_samples</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">cut</span><span class="p">,</span> <span class="n">ydim</span><span class="o">.</span><span class="n">range</span><span class="p">)</span>
+            <span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">cartesian_product</span><span class="p">([</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">],</span> <span class="kc">False</span><span class="p">)</span>
+            <span class="n">positions</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">xx</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">yy</span><span class="o">.</span><span class="n">ravel</span><span class="p">()])</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">kde</span><span class="p">(</span><span class="n">positions</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">xx</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">contours</span><span class="p">:</span>
+            <span class="n">eltype</span> <span class="o">=</span> <span class="n">Polygons</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">filled</span> <span class="k">else</span> <span class="n">Contours</span>
+            <span class="k">return</span> <span class="n">eltype</span><span class="p">([],</span> <span class="n">kdims</span><span class="o">=</span><span class="p">[</span><span class="n">xdim</span><span class="p">,</span> <span class="n">ydim</span><span class="p">],</span> <span class="n">vdims</span><span class="o">=</span><span class="p">[</span><span class="n">vdim</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">n_samples</span><span class="p">)</span>
+            <span class="n">ys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">n_samples</span><span class="p">)</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">n_samples</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">n_samples</span><span class="p">))</span>
+
+        <span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="p">((</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">f</span><span class="o">.</span><span class="n">T</span><span class="p">),</span> <span class="n">kdims</span><span class="o">=</span><span class="n">element</span><span class="o">.</span><span class="n">dimensions</span><span class="p">()[:</span><span class="mi">2</span><span class="p">],</span> <span class="n">vdims</span><span class="o">=</span><span class="p">[</span><span class="n">vdim</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">contours</span><span class="p">:</span>
+            <span class="n">cntr</span> <span class="o">=</span> <span class="n">contours</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">filled</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">filled</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">cntr</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">cntr</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">img</span></div>
+</pre>
+    </div>
+   </div>
+  </div>
+  <!-- END MAIN BODY OF DOCS ––––––––––––– -->
+  <footer class="footer">
+   <div class="footer-links">
+    <ul>
+     <li>
+      <span class="footer-title">
+       Links
+      </span>
+     </li>
+     <li>
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li>
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li>
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li>
+      <a href="/Reference_Manual/index.html">
+       API Docs
+      </a>
+     </li>
+     <li>
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li>
+      <a href="/about.html">
+       About
+      </a>
+     </li>
+    </ul>
+    <ul>
+     <li>
+      <span class="footer-title">
+       Join Us
+      </span>
+     </li>
+     <li>
+      <a href="//gitter.im/ioam/holoviews.html">
+       Gitter
+      </a>
+     </li>
+     <li>
+      <a href="//twitter.com/holoviews.html">
+       Twitter
+      </a>
+     </li>
+     <li>
+      <a href="//github.com/ioam/holoviews.html">
+       Github
+      </a>
+     </li>
+    </ul>
+    <ul class="copyright">
+     <li>
+      2017 IOAM: Jean-Luc R. Stevens, Philipp Rudiger, and James A. Bednar
+     </li>
+    </ul>
+   </div>
+  </footer>
+  <!-- Google Analytics -->
+  <script>
+   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-61554933-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <!-- MathJax Config -->
+  <script type="text/x-mathjax-config">
+   MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+  </script>
+  <!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+ </body>
+</html>

@@ -1,0 +1,136 @@
+holoviews.plotly Package
+========================
+
+
+---------
+
+:mod:`plotly` Package
+---------------------
+
+.. inheritance-diagram:: holoviews.plotting.plotly
+
+
+.. automodule:: holoviews.plotting.plotly
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`chart` Module
+-------------------
+
+.. inheritance-diagram:: holoviews.plotting.plotly.chart
+
+
+.. automodule:: holoviews.plotting.plotly.chart
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`chart3d` Module
+---------------------
+
+.. inheritance-diagram:: holoviews.plotting.plotly.chart3d
+
+
+.. automodule:: holoviews.plotting.plotly.chart3d
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`element` Module
+---------------------
+
+.. inheritance-diagram:: holoviews.plotting.plotly.element
+
+
+.. automodule:: holoviews.plotting.plotly.element
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`plot` Module
+------------------
+
+.. inheritance-diagram:: holoviews.plotting.plotly.plot
+
+
+.. automodule:: holoviews.plotting.plotly.plot
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`raster` Module
+--------------------
+
+.. inheritance-diagram:: holoviews.plotting.plotly.raster
+
+
+.. automodule:: holoviews.plotting.plotly.raster
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`renderer` Module
+----------------------
+
+.. inheritance-diagram:: holoviews.plotting.plotly.renderer
+
+
+.. automodule:: holoviews.plotting.plotly.renderer
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`tabular` Module
+---------------------
+
+.. inheritance-diagram:: holoviews.plotting.plotly.tabular
+
+
+.. automodule:: holoviews.plotting.plotly.tabular
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`util` Module
+------------------
+
+.. inheritance-diagram:: holoviews.plotting.plotly.util
+
+
+.. automodule:: holoviews.plotting.plotly.util
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`widgets` Module
+---------------------
+
+.. inheritance-diagram:: holoviews.plotting.plotly.widgets
+
+
+.. automodule:: holoviews.plotting.plotly.widgets
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+

@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8"/>
+  <title>
+   Overview: module code — HoloViews
+  </title>
+  <meta content="HoloViews library, documentation site." name="description"/>
+  <meta content="HoloViews contributors" name="author"/>
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js">
+  </script>
+  <script>
+   WebFont.load({
+      google: {
+        families: ['Source Sans Pro']
+      }
+    });
+  </script>
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../_static/main.css" rel="stylesheet"/>
+  <link href="../_static/custom.css" rel="stylesheet"/>
+  <!-- Scripts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
+  </script>
+  <script async="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+  </script>
+  <script src="../_static/js/main.js">
+  </script>
+  <script src="../_static/custom.js">
+  </script>
+  <script src="../_static/require.js">
+  </script>
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../_static/images/favicon.ico" rel="icon" type="image/png"/>
+  <!-- Canonical
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="http://holoviews.org/_modules/index.html" rel="canonical"/>
+ </head>
+ <body class="">
+  <header class="navigation">
+   <div class="wrapper">
+    <a class="logo" href="//">
+     <img alt="Logo" src="../_static/images/logo.png"/>
+    </a>
+    <a class="navigation-menu logo-text" href="//">
+     HoloViews
+    </a>
+    <a class="navigation-menu-button" href="javascript:void(0)" id="js-mobile-menu">
+     Menu
+    </a>
+    <nav>
+     <ul class="navigation-menu show" id="js-navigation-menu">
+      <li class="nav-link">
+       <a href="/about.html">
+        About
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="/gallery/index.html">
+        Gallery
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="//github.com/ioam/holoviews.html">
+        Github
+       </a>
+      </li>
+     </ul>
+    </nav>
+   </div>
+  </header>
+  <div class="second-nav">
+   <nav>
+    <ul class="navigation-menu show">
+     <li class="nav-link doc-head">
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+    </ul>
+   </nav>
+   <div class="navigation-tools">
+    <div class="search-bar">
+     <form action="../search.html" method="get" role="search">
+      <input name="q" placeholder="Search" type="search"/>
+      <button type="submit">
+       <img alt="Search Icon" src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/search-icon-black.png"/>
+      </button>
+     </form>
+    </div>
+   </div>
+  </div>
+  <!-- MAIN BODY OF DOCS –––––––––––––––––– -->
+  <div class="docs section">
+   <div class="toc">
+    <ul>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference external" href="http://github.com/ioam/holoviews">
+       Github source
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../about.html">
+       About
+      </a>
+     </li>
+    </ul>
+   </div>
+   <div class="content">
+    <h1>
+     All modules for which code is available
+    </h1>
+    <ul>
+     <li>
+      <a href="IPython/core/magic.html">
+       IPython.core.magic
+      </a>
+     </li>
+     <li>
+      <a href="builtins.html">
+       builtins
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/__init__.html">
+       holoviews.__init__
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/core/boundingregion.html">
+       holoviews.core.boundingregion
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/core/data.html">
+       holoviews.core.data
+      </a>
+     </li>
+     <ul>
+      <li>
+       <a href="holoviews/core/data/dask.html">
+        holoviews.core.data.dask
+       </a>
+      </li>
+      <li>
+       <a href="holoviews/core/data/dictionary.html">
+        holoviews.core.data.dictionary
+       </a>
+      </li>
+      <li>
+       <a href="holoviews/core/data/grid.html">
+        holoviews.core.data.grid
+       </a>
+      </li>
+      <li>
+       <a href="holoviews/core/data/image.html">
+        holoviews.core.data.image
+       </a>
+      </li>
+      <li>
+       <a href="holoviews/core/data/interface.html">
+        holoviews.core.data.interface
+       </a>
+      </li>
+      <li>
+       <a href="holoviews/core/data/multipath.html">
+        holoviews.core.data.multipath
+       </a>
+      </li>
+      <li>
+       <a href="holoviews/core/data/pandas.html">
+        holoviews.core.data.pandas
+       </a>
+      </li>
+     </ul>
+     <li>
+      <a href="holoviews/core/dimension.html">
+       holoviews.core.dimension
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/core/element.html">
+       holoviews.core.element
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/core/io.html">
+       holoviews.core.io
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/core/layout.html">
+       holoviews.core.layout
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/core/ndmapping.html">
+       holoviews.core.ndmapping
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/core/operation.html">
+       holoviews.core.operation
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/core/options.html">
+       holoviews.core.options
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/core/overlay.html">
+       holoviews.core.overlay
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/core/pprint.html">
+       holoviews.core.pprint
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/core/sheetcoords.html">
+       holoviews.core.sheetcoords
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/core/spaces.html">
+       holoviews.core.spaces
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/core/traversal.html">
+       holoviews.core.traversal
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/core/tree.html">
+       holoviews.core.tree
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/core/util.html">
+       holoviews.core.util
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/element/annotation.html">
+       holoviews.element.annotation
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/element/chart.html">
+       holoviews.element.chart
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/element/chart3d.html">
+       holoviews.element.chart3d
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/element/comparison.html">
+       holoviews.element.comparison
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/element/graphs.html">
+       holoviews.element.graphs
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/element/path.html">
+       holoviews.element.path
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/element/raster.html">
+       holoviews.element.raster
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/element/stats.html">
+       holoviews.element.stats
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/element/tabular.html">
+       holoviews.element.tabular
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/element/util.html">
+       holoviews.element.util
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/ipython.html">
+       holoviews.ipython
+      </a>
+     </li>
+     <ul>
+      <li>
+       <a href="holoviews/ipython/archive.html">
+        holoviews.ipython.archive
+       </a>
+      </li>
+      <li>
+       <a href="holoviews/ipython/display_hooks.html">
+        holoviews.ipython.display_hooks
+       </a>
+      </li>
+      <li>
+       <a href="holoviews/ipython/magics.html">
+        holoviews.ipython.magics
+       </a>
+      </li>
+      <li>
+       <a href="holoviews/ipython/preprocessors.html">
+        holoviews.ipython.preprocessors
+       </a>
+      </li>
+      <li>
+       <a href="holoviews/ipython/widgets.html">
+        holoviews.ipython.widgets
+       </a>
+      </li>
+     </ul>
+     <li>
+      <a href="holoviews/operation/datashader.html">
+       holoviews.operation.datashader
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/operation/element.html">
+       holoviews.operation.element
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/operation/normalization.html">
+       holoviews.operation.normalization
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/operation/stats.html">
+       holoviews.operation.stats
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/operation/timeseries.html">
+       holoviews.operation.timeseries
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/plotting/bokeh/annotation.html">
+       holoviews.plotting.bokeh.annotation
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/plotting/bokeh/callbacks.html">
+       holoviews.plotting.bokeh.callbacks
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/plotting/bokeh/chart.html">
+       holoviews.plotting.bokeh.chart
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/plotting/bokeh/element.html">
+       holoviews.plotting.bokeh.element
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/plotting/bokeh/graphs.html">
+       holoviews.plotting.bokeh.graphs
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/plotting/bokeh/plot.html">
+       holoviews.plotting.bokeh.plot
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/plotting/bokeh/stats.html">
+       holoviews.plotting.bokeh.stats
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/plotting/bokeh/util.html">
+       holoviews.plotting.bokeh.util
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/plotting/bokeh/widgets.html">
+       holoviews.plotting.bokeh.widgets
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/plotting/comms.html">
+       holoviews.plotting.comms
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/plotting/mpl.html">
+       holoviews.plotting.mpl
+      </a>
+     </li>
+     <ul>
+      <li>
+       <a href="holoviews/plotting/mpl/annotation.html">
+        holoviews.plotting.mpl.annotation
+       </a>
+      </li>
+      <li>
+       <a href="holoviews/plotting/mpl/chart.html">
+        holoviews.plotting.mpl.chart
+       </a>
+      </li>
+      <li>
+       <a href="holoviews/plotting/mpl/chart3d.html">
+        holoviews.plotting.mpl.chart3d
+       </a>
+      </li>
+      <li>
+       <a href="holoviews/plotting/mpl/comms.html">
+        holoviews.plotting.mpl.comms
+       </a>
+      </li>
+      <li>
+       <a href="holoviews/plotting/mpl/element.html">
+        holoviews.plotting.mpl.element
+       </a>
+      </li>
+      <li>
+       <a href="holoviews/plotting/mpl/graphs.html">
+        holoviews.plotting.mpl.graphs
+       </a>
+      </li>
+      <li>
+       <a href="holoviews/plotting/mpl/path.html">
+        holoviews.plotting.mpl.path
+       </a>
+      </li>
+      <li>
+       <a href="holoviews/plotting/mpl/plot.html">
+        holoviews.plotting.mpl.plot
+       </a>
+      </li>
+      <li>
+       <a href="holoviews/plotting/mpl/raster.html">
+        holoviews.plotting.mpl.raster
+       </a>
+      </li>
+      <li>
+       <a href="holoviews/plotting/mpl/renderer.html">
+        holoviews.plotting.mpl.renderer
+       </a>
+      </li>
+      <li>
+       <a href="holoviews/plotting/mpl/stats.html">
+        holoviews.plotting.mpl.stats
+       </a>
+      </li>
+      <li>
+       <a href="holoviews/plotting/mpl/tabular.html">
+        holoviews.plotting.mpl.tabular
+       </a>
+      </li>
+      <li>
+       <a href="holoviews/plotting/mpl/util.html">
+        holoviews.plotting.mpl.util
+       </a>
+      </li>
+     </ul>
+     <li>
+      <a href="holoviews/plotting/plot.html">
+       holoviews.plotting.plot
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/plotting/plotly/plot.html">
+       holoviews.plotting.plotly.plot
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/plotting/plotly/util.html">
+       holoviews.plotting.plotly.util
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/plotting/renderer.html">
+       holoviews.plotting.renderer
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/plotting/util.html">
+       holoviews.plotting.util
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/plotting/widgets.html">
+       holoviews.plotting.widgets
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/streams.html">
+       holoviews.streams
+      </a>
+     </li>
+     <li>
+      <a href="holoviews/util.html">
+       holoviews.util
+      </a>
+     </li>
+     <ul>
+      <li>
+       <a href="holoviews/util/parser.html">
+        holoviews.util.parser
+       </a>
+      </li>
+      <li>
+       <a href="holoviews/util/settings.html">
+        holoviews.util.settings
+       </a>
+      </li>
+     </ul>
+     <li>
+      <a href="json/encoder.html">
+       json.encoder
+      </a>
+     </li>
+     <li>
+      <a href="nbconvert/preprocessors/base.html">
+       nbconvert.preprocessors.base
+      </a>
+     </li>
+     <li>
+      <a href="numpy/core/fromnumeric.html">
+       numpy.core.fromnumeric
+      </a>
+     </li>
+     <li>
+      <a href="numpy/core/function_base.html">
+       numpy.core.function_base
+      </a>
+     </li>
+     <li>
+      <a href="param/parameterized.html">
+       param.parameterized
+      </a>
+     </li>
+     <li>
+      <a href="threading.html">
+       threading
+      </a>
+     </li>
+     <li>
+      <a href="traitlets/config/configurable.html">
+       traitlets.config.configurable
+      </a>
+     </li>
+     <li>
+      <a href="traitlets/traitlets.html">
+       traitlets.traitlets
+      </a>
+     </li>
+     <li>
+      <a href="unittest/case.html">
+       unittest.case
+      </a>
+     </li>
+    </ul>
+   </div>
+  </div>
+  <!-- END MAIN BODY OF DOCS ––––––––––––– -->
+  <footer class="footer">
+   <div class="footer-links">
+    <ul>
+     <li>
+      <span class="footer-title">
+       Links
+      </span>
+     </li>
+     <li>
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li>
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li>
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li>
+      <a href="/Reference_Manual/index.html">
+       API Docs
+      </a>
+     </li>
+     <li>
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li>
+      <a href="/about.html">
+       About
+      </a>
+     </li>
+    </ul>
+    <ul>
+     <li>
+      <span class="footer-title">
+       Join Us
+      </span>
+     </li>
+     <li>
+      <a href="//gitter.im/ioam/holoviews.html">
+       Gitter
+      </a>
+     </li>
+     <li>
+      <a href="//twitter.com/holoviews.html">
+       Twitter
+      </a>
+     </li>
+     <li>
+      <a href="//github.com/ioam/holoviews.html">
+       Github
+      </a>
+     </li>
+    </ul>
+    <ul class="copyright">
+     <li>
+      2017 IOAM: Jean-Luc R. Stevens, Philipp Rudiger, and James A. Bednar
+     </li>
+    </ul>
+   </div>
+  </footer>
+  <!-- Google Analytics -->
+  <script>
+   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-61554933-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <!-- MathJax Config -->
+  <script type="text/x-mathjax-config">
+   MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+  </script>
+  <!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+ </body>
+</html>

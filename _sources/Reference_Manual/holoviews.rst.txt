@@ -1,0 +1,44 @@
+holoviews.holoviews Package
+===========================
+
+
+---------
+
+:mod:`holoviews` Package
+------------------------
+
+.. inheritance-diagram:: holoviews.__init__
+
+
+.. automodule:: holoviews.__init__
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`streams` Module
+---------------------
+
+.. inheritance-diagram:: holoviews.streams
+
+
+.. automodule:: holoviews.streams
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+Subpackages
+-----------
+
+.. toctree::
+
+    holoviews.core
+    holoviews.element
+    holoviews.ipython
+    holoviews.operation
+    holoviews.plotting
+    holoviews.util
+

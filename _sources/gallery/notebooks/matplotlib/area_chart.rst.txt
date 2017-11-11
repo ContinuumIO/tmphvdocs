@@ -1,0 +1,10 @@
+.. _matplotlib_gallery_area_chart:
+
+Area chart
+__________
+
+.. notebook:: holoviews area_chart.ipynb
+
+-------
+
+`Download this notebook from GitHub (right-click to download). <https://raw.githubusercontent.com/ioam/holoviews/master/examples/gallery/notebooks/matplotlib/area_chart.ipynb>`_

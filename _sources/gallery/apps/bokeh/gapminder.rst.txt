@@ -1,0 +1,14 @@
+.. _bokeh_gallery_gapminder:
+
+Gapminder
+_________
+
+.. literalinclude:: gapminder.py
+
+.. figure:: http://assets.holoviews.org/gifs/gallery/apps/bokeh/gapminder.gif
+
+
+
+-------
+
+`Download this script from GitHub (right-click to download). <https://raw.githubusercontent.com/ioam/holoviews/master/examples/gallery/apps/bokeh/gapminder.py>`_

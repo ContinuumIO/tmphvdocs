@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8"/>
+  <title>
+   holoviews.operation.datashader — HoloViews
+  </title>
+  <meta content="HoloViews library, documentation site." name="description"/>
+  <meta content="HoloViews contributors" name="author"/>
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js">
+  </script>
+  <script>
+   WebFont.load({
+      google: {
+        families: ['Source Sans Pro']
+      }
+    });
+  </script>
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../../../_static/main.css" rel="stylesheet"/>
+  <link href="../../../_static/custom.css" rel="stylesheet"/>
+  <!-- Scripts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
+  </script>
+  <script async="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+  </script>
+  <script src="../../../_static/js/main.js">
+  </script>
+  <script src="../../../_static/custom.js">
+  </script>
+  <script src="../../../_static/require.js">
+  </script>
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../../../_static/images/favicon.ico" rel="icon" type="image/png"/>
+  <!-- Canonical
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="http://holoviews.org/_modules/holoviews/operation/datashader.html" rel="canonical"/>
+ </head>
+ <body class="">
+  <header class="navigation">
+   <div class="wrapper">
+    <a class="logo" href="//">
+     <img alt="Logo" src="../../../_static/images/logo.png"/>
+    </a>
+    <a class="navigation-menu logo-text" href="//">
+     HoloViews
+    </a>
+    <a class="navigation-menu-button" href="javascript:void(0)" id="js-mobile-menu">
+     Menu
+    </a>
+    <nav>
+     <ul class="navigation-menu show" id="js-navigation-menu">
+      <li class="nav-link">
+       <a href="/about.html">
+        About
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="/gallery/index.html">
+        Gallery
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="//github.com/ioam/holoviews.html">
+        Github
+       </a>
+      </li>
+     </ul>
+    </nav>
+   </div>
+  </header>
+  <div class="second-nav">
+   <nav>
+    <ul class="navigation-menu show">
+     <li class="nav-link doc-head">
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+    </ul>
+   </nav>
+   <div class="navigation-tools">
+    <div class="search-bar">
+     <form action="../../../search.html" method="get" role="search">
+      <input name="q" placeholder="Search" type="search"/>
+      <button type="submit">
+       <img alt="Search Icon" src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/search-icon-black.png"/>
+      </button>
+     </form>
+    </div>
+   </div>
+  </div>
+  <!-- MAIN BODY OF DOCS –––––––––––––––––– -->
+  <div class="docs section">
+   <div class="toc">
+    <ul>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference external" href="http://github.com/ioam/holoviews">
+       Github source
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../about.html">
+       About
+      </a>
+     </li>
+    </ul>
+   </div>
+   <div class="content">
+    <h1>
+     Source code for holoviews.operation.datashader
+    </h1>
+    <div class="highlight">
+     <pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">division</span>
+
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">Iterable</span>
+<span class="kn">from</span> <span class="nn">distutils.version</span> <span class="k">import</span> <span class="n">LooseVersion</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+
+<span class="kn">import</span> <span class="nn">param</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">xarray</span> <span class="k">as</span> <span class="nn">xr</span>
+<span class="kn">import</span> <span class="nn">datashader</span> <span class="k">as</span> <span class="nn">ds</span>
+<span class="kn">import</span> <span class="nn">datashader.transfer_functions</span> <span class="k">as</span> <span class="nn">tf</span>
+<span class="kn">import</span> <span class="nn">dask.dataframe</span> <span class="k">as</span> <span class="nn">dd</span>
+
+<span class="n">ds_version</span> <span class="o">=</span> <span class="n">LooseVersion</span><span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">datashader.core</span> <span class="k">import</span> <span class="n">bypixel</span>
+<span class="kn">from</span> <span class="nn">datashader.pandas</span> <span class="k">import</span> <span class="n">pandas_pipeline</span>
+<span class="kn">from</span> <span class="nn">datashader.dask</span> <span class="k">import</span> <span class="n">dask_pipeline</span>
+<span class="kn">from</span> <span class="nn">datashape.dispatch</span> <span class="k">import</span> <span class="n">dispatch</span>
+<span class="kn">from</span> <span class="nn">datashape</span> <span class="k">import</span> <span class="n">discover</span> <span class="k">as</span> <span class="n">dsdiscover</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">datashader.bundling</span> <span class="k">import</span> <span class="p">(</span><span class="n">directly_connect_edges</span> <span class="k">as</span> <span class="n">connect_edges</span><span class="p">,</span>
+                                     <span class="n">hammer_bundle</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="n">hammer_bundle</span><span class="p">,</span> <span class="n">connect_edges</span> <span class="o">=</span> <span class="nb">object</span><span class="p">,</span> <span class="nb">object</span>
+
+<span class="kn">from</span> <span class="nn">..core</span> <span class="k">import</span> <span class="p">(</span><span class="n">Operation</span><span class="p">,</span> <span class="n">Element</span><span class="p">,</span> <span class="n">Dimension</span><span class="p">,</span> <span class="n">NdOverlay</span><span class="p">,</span>
+                    <span class="n">CompositeOverlay</span><span class="p">,</span> <span class="n">Dataset</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">..core.data</span> <span class="k">import</span> <span class="n">PandasInterface</span><span class="p">,</span> <span class="n">DaskInterface</span><span class="p">,</span> <span class="n">XArrayInterface</span>
+<span class="kn">from</span> <span class="nn">..core.sheetcoords</span> <span class="k">import</span> <span class="n">BoundingBox</span>
+<span class="kn">from</span> <span class="nn">..core.util</span> <span class="k">import</span> <span class="n">get_param_values</span><span class="p">,</span> <span class="n">basestring</span><span class="p">,</span> <span class="n">datetime_types</span><span class="p">,</span> <span class="n">dt_to_int</span>
+<span class="kn">from</span> <span class="nn">..element</span> <span class="k">import</span> <span class="n">Image</span><span class="p">,</span> <span class="n">Path</span><span class="p">,</span> <span class="n">Curve</span><span class="p">,</span> <span class="n">Contours</span><span class="p">,</span> <span class="n">RGB</span><span class="p">,</span> <span class="n">Graph</span>
+<span class="kn">from</span> <span class="nn">..streams</span> <span class="k">import</span> <span class="n">RangeXY</span><span class="p">,</span> <span class="n">PlotSize</span>
+<span class="kn">from</span> <span class="nn">..plotting.util</span> <span class="k">import</span> <span class="n">fire</span>
+
+
+<div class="viewcode-block" id="ResamplingOperation"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.operation.html#holoviews.operation.datashader.ResamplingOperation">[docs]</a><span class="k">class</span> <span class="nc">ResamplingOperation</span><span class="p">(</span><span class="n">Operation</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Abstract baseclass for resampling operations</span>
+<span class="sd">    """</span>
+
+    <span class="n">dynamic</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">       Enables dynamic processing by default."""</span><span class="p">)</span>
+
+    <span class="n">expand</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">       Whether the x_range and y_range should be allowed to expand</span>
+<span class="s2">       beyond the extent of the data.  Setting this value to True is</span>
+<span class="s2">       useful for the case where you want to ensure a certain size of</span>
+<span class="s2">       output grid, e.g. if you are doing masking or other arithmetic</span>
+<span class="s2">       on the grids.  A value of False ensures that the grid is only</span>
+<span class="s2">       just as large as it needs to be to contain the data, which will</span>
+<span class="s2">       be faster and use less memory if the resulting aggregate is</span>
+<span class="s2">       being overlaid on a much larger background."""</span><span class="p">)</span>
+
+    <span class="n">height</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">       The height of the output image in pixels."""</span><span class="p">)</span>
+
+    <span class="n">width</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">       The width of the output image in pixels."""</span><span class="p">)</span>
+
+    <span class="n">x_range</span>  <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">NumericTuple</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">       The x_range as a tuple of min and max x-value. Auto-ranges</span>
+<span class="s2">       if set to None."""</span><span class="p">)</span>
+
+    <span class="n">y_range</span>  <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">NumericTuple</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">       The x_range as a tuple of min and max y-value. Auto-ranges</span>
+<span class="s2">       if set to None."""</span><span class="p">)</span>
+
+    <span class="n">x_sampling</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Number</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        Specifies the smallest allowed sampling interval along the y-axis."""</span><span class="p">)</span>
+
+    <span class="n">y_sampling</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Number</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        Specifies the smallest allowed sampling interval along the y-axis."""</span><span class="p">)</span>
+
+    <span class="n">target</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">ClassSelector</span><span class="p">(</span><span class="n">class_</span><span class="o">=</span><span class="n">Image</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        A target Image which defines the desired x_range, y_range,</span>
+<span class="s2">        width and height.</span>
+<span class="s2">    """</span><span class="p">)</span>
+
+    <span class="n">streams</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">List</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="p">[</span><span class="n">PlotSize</span><span class="p">,</span> <span class="n">RangeXY</span><span class="p">],</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        List of streams that are applied if dynamic=True, allowing</span>
+<span class="s2">        for dynamic interaction with the plot."""</span><span class="p">)</span>
+
+    <span class="n">element_type</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">ClassSelector</span><span class="p">(</span><span class="n">class_</span><span class="o">=</span><span class="p">(</span><span class="n">Dataset</span><span class="p">,),</span> <span class="n">instantiate</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                                        <span class="n">is_instance</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="n">Image</span><span class="p">,</span>
+                                        <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        The type of the returned Elements, must be a 2D Dataset type."""</span><span class="p">)</span>
+
+    <span class="n">link_inputs</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        By default, the link_inputs parameter is set to True so that</span>
+<span class="s2">        when applying shade, backends that support linked streams</span>
+<span class="s2">        update RangeXY streams on the inputs of the shade operation.</span>
+<span class="s2">        Disable when you do not want the resulting plot to be interactive,</span>
+<span class="s2">        e.g. when trying to display an interactive plot a second time."""</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_sampling</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">target</span>
+        <span class="k">if</span> <span class="n">target</span><span class="p">:</span>
+            <span class="n">x_range</span><span class="p">,</span> <span class="n">y_range</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">target</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+            <span class="n">height</span><span class="p">,</span> <span class="n">width</span> <span class="o">=</span> <span class="n">target</span><span class="o">.</span><span class="n">dimension_values</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">x</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">y</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">x_range</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">x_range</span> <span class="ow">or</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+                <span class="n">y_range</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">y_range</span> <span class="ow">or</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">expand</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">x_range</span><span class="p">:</span>
+                    <span class="n">x_range</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">x_range</span> <span class="ow">or</span> <span class="n">element</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">x0</span><span class="p">,</span> <span class="n">x1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">x_range</span>
+                    <span class="n">ex0</span><span class="p">,</span> <span class="n">ex1</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                    <span class="n">x_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">([</span><span class="n">x0</span><span class="p">,</span> <span class="n">ex0</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">([</span><span class="n">x1</span><span class="p">,</span> <span class="n">ex1</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">x_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">x_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+                    <span class="n">x_range</span> <span class="o">=</span> <span class="p">(</span><span class="n">x_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">x_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mf">0.5</span><span class="p">)</span>
+                    
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">expand</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">y_range</span><span class="p">:</span>
+                    <span class="n">y_range</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">y_range</span> <span class="ow">or</span> <span class="n">element</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">y0</span><span class="p">,</span> <span class="n">y1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">y_range</span>
+                    <span class="n">ey0</span><span class="p">,</span> <span class="n">ey1</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+                    <span class="n">y_range</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">([</span><span class="n">y0</span><span class="p">,</span> <span class="n">ey0</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">([</span><span class="n">y1</span><span class="p">,</span> <span class="n">ey1</span><span class="p">])</span>
+            <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">height</span>
+        <span class="p">(</span><span class="n">xstart</span><span class="p">,</span> <span class="n">xend</span><span class="p">),</span> <span class="p">(</span><span class="n">ystart</span><span class="p">,</span> <span class="n">yend</span><span class="p">)</span> <span class="o">=</span> <span class="n">x_range</span><span class="p">,</span> <span class="n">y_range</span>
+
+        <span class="n">xtype</span> <span class="o">=</span> <span class="s1">'numeric'</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">xstart</span><span class="p">,</span> <span class="n">datetime_types</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">xend</span><span class="p">,</span> <span class="n">datetime_types</span><span class="p">):</span>
+            <span class="n">xstart</span><span class="p">,</span> <span class="n">xend</span> <span class="o">=</span> <span class="n">dt_to_int</span><span class="p">(</span><span class="n">xstart</span><span class="p">),</span> <span class="n">dt_to_int</span><span class="p">(</span><span class="n">xend</span><span class="p">)</span>
+            <span class="n">xtype</span> <span class="o">=</span> <span class="s1">'datetime'</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">xstart</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">xend</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">element</span><span class="o">.</span><span class="n">get_dimension_type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="ow">in</span> <span class="n">datetime_types</span><span class="p">:</span>
+                <span class="n">xstart</span><span class="p">,</span> <span class="n">xend</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10000</span>
+                <span class="n">xtype</span> <span class="o">=</span> <span class="s1">'datetime'</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">xstart</span><span class="p">,</span> <span class="n">xend</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">xstart</span> <span class="o">==</span> <span class="n">xend</span><span class="p">:</span>
+            <span class="n">xstart</span><span class="p">,</span> <span class="n">xend</span> <span class="o">=</span> <span class="p">(</span><span class="n">xstart</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">xend</span><span class="o">+</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">x_range</span> <span class="o">=</span> <span class="p">(</span><span class="n">xstart</span><span class="p">,</span> <span class="n">xend</span><span class="p">)</span>
+
+        <span class="n">ytype</span> <span class="o">=</span> <span class="s1">'numeric'</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ystart</span><span class="p">,</span> <span class="n">datetime_types</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">yend</span><span class="p">,</span> <span class="n">datetime_types</span><span class="p">):</span>
+            <span class="n">ystart</span><span class="p">,</span> <span class="n">yend</span> <span class="o">=</span> <span class="n">dt_to_int</span><span class="p">(</span><span class="n">ystart</span><span class="p">),</span> <span class="n">dt_to_int</span><span class="p">(</span><span class="n">yend</span><span class="p">)</span>
+            <span class="n">ytype</span> <span class="o">=</span> <span class="s1">'datetime'</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">ystart</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">yend</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">element</span><span class="o">.</span><span class="n">get_dimension_type</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="n">datetime_types</span><span class="p">:</span>
+                <span class="n">xstart</span><span class="p">,</span> <span class="n">xend</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">10000</span>
+                <span class="n">xtype</span> <span class="o">=</span> <span class="s1">'datetime'</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">ystart</span><span class="p">,</span> <span class="n">yend</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="n">ystart</span> <span class="o">==</span> <span class="n">yend</span><span class="p">:</span>
+            <span class="n">ystart</span><span class="p">,</span> <span class="n">yend</span> <span class="o">=</span> <span class="p">(</span><span class="n">ystart</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">yend</span><span class="o">+</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">y_range</span> <span class="o">=</span> <span class="p">(</span><span class="n">ystart</span><span class="p">,</span> <span class="n">yend</span><span class="p">)</span>
+
+        <span class="c1"># Compute highest allowed sampling density</span>
+        <span class="n">xspan</span> <span class="o">=</span> <span class="n">xend</span> <span class="o">-</span> <span class="n">xstart</span>
+        <span class="n">yspan</span> <span class="o">=</span> <span class="n">yend</span> <span class="o">-</span> <span class="n">ystart</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">x_sampling</span><span class="p">:</span>
+            <span class="n">width</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">min</span><span class="p">([(</span><span class="n">xspan</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">x_sampling</span><span class="p">),</span> <span class="n">width</span><span class="p">]))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">y_sampling</span><span class="p">:</span>
+            <span class="n">height</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">min</span><span class="p">([(</span><span class="n">yspan</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">y_sampling</span><span class="p">),</span> <span class="n">height</span><span class="p">]))</span>
+        <span class="n">xunit</span><span class="p">,</span> <span class="n">yunit</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">xspan</span><span class="p">)</span><span class="o">/</span><span class="n">width</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">yspan</span><span class="p">)</span><span class="o">/</span><span class="n">height</span>
+        <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">xstart</span><span class="o">+</span><span class="n">xunit</span><span class="o">/</span><span class="mf">2.</span><span class="p">,</span> <span class="n">xend</span><span class="o">-</span><span class="n">xunit</span><span class="o">/</span><span class="mf">2.</span><span class="p">,</span> <span class="n">width</span><span class="p">),</span>
+                  <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">ystart</span><span class="o">+</span><span class="n">yunit</span><span class="o">/</span><span class="mf">2.</span><span class="p">,</span> <span class="n">yend</span><span class="o">-</span><span class="n">yunit</span><span class="o">/</span><span class="mf">2.</span><span class="p">,</span> <span class="n">height</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="p">(</span><span class="n">x_range</span><span class="p">,</span> <span class="n">y_range</span><span class="p">),</span> <span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">),</span> <span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">),</span> <span class="p">(</span><span class="n">xtype</span><span class="p">,</span> <span class="n">ytype</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="aggregate"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.operation.html#holoviews.operation.datashader.aggregate">[docs]</a><span class="k">class</span> <span class="nc">aggregate</span><span class="p">(</span><span class="n">ResamplingOperation</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    aggregate implements 2D binning for any valid HoloViews Element</span>
+<span class="sd">    type using datashader. I.e., this operation turns a HoloViews</span>
+<span class="sd">    Element or overlay of Elements into an hv.Image or an overlay of</span>
+<span class="sd">    hv.Images by rasterizing it, which provides a fixed-sized</span>
+<span class="sd">    representation independent of the original dataset size.</span>
+
+<span class="sd">    By default it will simply count the number of values in each bin</span>
+<span class="sd">    but other aggregators can be supplied implementing mean, max, min</span>
+<span class="sd">    and other reduction operations.</span>
+
+<span class="sd">    The bins of the aggregate are defined by the width and height and</span>
+<span class="sd">    the x_range and y_range. If x_sampling or y_sampling are supplied</span>
+<span class="sd">    the operation will ensure that a bin is no smaller than the minimum</span>
+<span class="sd">    sampling distance by reducing the width and height when zoomed in</span>
+<span class="sd">    beyond the minimum sampling distance.</span>
+
+<span class="sd">    By default, the PlotSize stream is applied when this operation</span>
+<span class="sd">    is used dynamically, which means that the height and width</span>
+<span class="sd">    will automatically be set to match the inner dimensions of</span>
+<span class="sd">    the linked plot.</span>
+<span class="sd">    """</span>
+
+    <span class="n">aggregator</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">ClassSelector</span><span class="p">(</span><span class="n">class_</span><span class="o">=</span><span class="n">ds</span><span class="o">.</span><span class="n">reductions</span><span class="o">.</span><span class="n">Reduction</span><span class="p">,</span>
+                                     <span class="n">default</span><span class="o">=</span><span class="n">ds</span><span class="o">.</span><span class="n">count</span><span class="p">())</span>
+
+<div class="viewcode-block" id="aggregate.get_agg_data"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.operation.html#holoviews.operation.datashader.aggregate.get_agg_data">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">get_agg_data</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Reduces any Overlay or NdOverlay of Elements into a single</span>
+<span class="sd">        xarray Dataset that can be aggregated.</span>
+<span class="sd">        """</span>
+        <span class="n">paths</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Graph</span><span class="p">):</span>
+            <span class="n">obj</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">edgepaths</span>
+        <span class="n">kdims</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">kdims</span><span class="p">)</span>
+        <span class="n">vdims</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">vdims</span><span class="p">)</span>
+        <span class="n">dims</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">dimensions</span><span class="p">()[:</span><span class="mi">2</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Path</span><span class="p">):</span>
+            <span class="n">glyph</span> <span class="o">=</span> <span class="s1">'line'</span>
+            <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">datatype</span><span class="o">=</span><span class="s1">'dataframe'</span><span class="p">):</span>
+                <span class="n">paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">CompositeOverlay</span><span class="p">):</span>
+            <span class="n">element</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">glyph</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">get_agg_data</span><span class="p">(</span><span class="n">el</span><span class="p">)</span>
+                <span class="n">dims</span> <span class="o">=</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="n">PandasInterface</span><span class="o">.</span><span class="n">as_dframe</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">NdOverlay</span><span class="p">):</span>
+                    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="o">**</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">dimensions</span><span class="p">(</span><span class="s1">'key'</span><span class="p">,</span> <span class="kc">True</span><span class="p">),</span> <span class="n">key</span><span class="p">)))</span>
+                <span class="n">paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">element</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">dims</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">kdims</span> <span class="o">+=</span> <span class="n">element</span><span class="o">.</span><span class="n">kdims</span>
+                <span class="n">vdims</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">vdims</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Element</span><span class="p">):</span>
+            <span class="n">glyph</span> <span class="o">=</span> <span class="s1">'line'</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Curve</span><span class="p">)</span> <span class="k">else</span> <span class="s1">'points'</span>
+            <span class="n">paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">PandasInterface</span><span class="o">.</span><span class="n">as_dframe</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">dims</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">dims</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">dims</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">paths</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">glyph</span> <span class="o">==</span> <span class="s1">'line'</span><span class="p">:</span>
+                <span class="n">path</span> <span class="o">=</span> <span class="n">paths</span><span class="p">[</span><span class="mi">0</span><span class="p">][:</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">dd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+                    <span class="n">path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+                <span class="n">empty</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+                <span class="n">empty</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">NaN</span><span class="p">,)</span> <span class="o">*</span> <span class="n">empty</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="n">paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">elem</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">paths</span> <span class="k">for</span> <span class="n">elem</span> <span class="ow">in</span> <span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">empty</span><span class="p">)][:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">dd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">):</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="n">dd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">paths</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">paths</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">dd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="k">else</span> <span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">paths</span><span class="p">]</span>
+                <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">paths</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">paths</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">category</span> <span class="ow">and</span> <span class="n">df</span><span class="p">[</span><span class="n">category</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">name</span> <span class="o">!=</span> <span class="s1">'category'</span><span class="p">:</span>
+            <span class="n">df</span><span class="p">[</span><span class="n">category</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">category</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">'category'</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">kind</span> <span class="o">==</span> <span class="s1">'M'</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)):</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">df</span><span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">kind</span> <span class="o">==</span> <span class="s1">'M'</span><span class="p">:</span>
+                <span class="n">df</span><span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">'datetime64[ns]'</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">'int64'</span><span class="p">)</span> <span class="o">*</span> <span class="mf">10e-4</span>
+
+        <span class="k">return</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">kdims</span><span class="o">=</span><span class="n">kdims</span><span class="p">,</span> <span class="n">vdims</span><span class="o">=</span><span class="n">vdims</span><span class="p">),</span> <span class="n">glyph</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_aggregate_ndoverlay</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">agg_fn</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Optimized aggregation for NdOverlay objects by aggregating each</span>
+<span class="sd">        Element in an NdOverlay individually avoiding having to concatenate</span>
+<span class="sd">        items in the NdOverlay. Works by summing sum and count aggregates and</span>
+<span class="sd">        applying appropriate masking for NaN values. Mean aggregation</span>
+<span class="sd">        is also supported by dividing sum and count aggregates. count_cat</span>
+<span class="sd">        aggregates are grouped by the categorical dimension and a separate</span>
+<span class="sd">        aggregate for each category is generated.</span>
+<span class="sd">        """</span>
+        <span class="c1"># Compute overall bounds</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">last</span><span class="o">.</span><span class="n">dimensions</span><span class="p">()[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+        <span class="p">(</span><span class="n">x_range</span><span class="p">,</span> <span class="n">y_range</span><span class="p">),</span> <span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">),</span> <span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">),</span> <span class="p">(</span><span class="n">xtype</span><span class="p">,</span> <span class="n">ytype</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_sampling</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+        <span class="n">agg_params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">({</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">aggregate</span><span class="o">.</span><span class="n">params</span><span class="p">()},</span>
+                          <span class="n">x_range</span><span class="o">=</span><span class="n">x_range</span><span class="p">,</span> <span class="n">y_range</span><span class="o">=</span><span class="n">y_range</span><span class="p">)</span>
+
+        <span class="c1"># Optimize categorical counts by aggregating them individually</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">agg_fn</span><span class="p">,</span> <span class="n">ds</span><span class="o">.</span><span class="n">count_cat</span><span class="p">):</span>
+            <span class="n">agg_params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="n">dynamic</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">aggregator</span><span class="o">=</span><span class="n">ds</span><span class="o">.</span><span class="n">count</span><span class="p">()))</span>
+            <span class="n">agg_fn1</span> <span class="o">=</span> <span class="n">aggregate</span><span class="o">.</span><span class="n">instance</span><span class="p">(</span><span class="o">**</span><span class="n">agg_params</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">element</span><span class="o">.</span><span class="n">ndims</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">grouped</span> <span class="o">=</span> <span class="n">element</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">grouped</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="n">agg_fn</span><span class="o">.</span><span class="n">column</span><span class="p">],</span> <span class="n">container_type</span><span class="o">=</span><span class="n">NdOverlay</span><span class="p">,</span>
+                                          <span class="n">group_type</span><span class="o">=</span><span class="n">NdOverlay</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">grouped</span><span class="o">.</span><span class="n">clone</span><span class="p">({</span><span class="n">k</span><span class="p">:</span> <span class="n">agg_fn1</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">grouped</span><span class="o">.</span><span class="n">items</span><span class="p">()})</span>
+
+        <span class="c1"># Create aggregate instance for sum, count operations, breaking mean</span>
+        <span class="c1"># into two aggregates</span>
+        <span class="n">column</span> <span class="o">=</span> <span class="n">agg_fn</span><span class="o">.</span><span class="n">column</span> <span class="ow">or</span> <span class="s1">'Count'</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">agg_fn</span><span class="p">,</span> <span class="n">ds</span><span class="o">.</span><span class="n">mean</span><span class="p">):</span>
+            <span class="n">agg_fn1</span> <span class="o">=</span> <span class="n">aggregate</span><span class="o">.</span><span class="n">instance</span><span class="p">(</span><span class="o">**</span><span class="nb">dict</span><span class="p">(</span><span class="n">agg_params</span><span class="p">,</span> <span class="n">aggregator</span><span class="o">=</span><span class="n">ds</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">column</span><span class="p">)))</span>
+            <span class="n">agg_fn2</span> <span class="o">=</span> <span class="n">aggregate</span><span class="o">.</span><span class="n">instance</span><span class="p">(</span><span class="o">**</span><span class="nb">dict</span><span class="p">(</span><span class="n">agg_params</span><span class="p">,</span> <span class="n">aggregator</span><span class="o">=</span><span class="n">ds</span><span class="o">.</span><span class="n">count</span><span class="p">()))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">agg_fn1</span> <span class="o">=</span> <span class="n">aggregate</span><span class="o">.</span><span class="n">instance</span><span class="p">(</span><span class="o">**</span><span class="n">agg_params</span><span class="p">)</span>
+            <span class="n">agg_fn2</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">is_sum</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">agg_fn1</span><span class="o">.</span><span class="n">aggregator</span><span class="p">,</span> <span class="n">ds</span><span class="o">.</span><span class="n">sum</span><span class="p">)</span>
+
+        <span class="c1"># Accumulate into two aggregates and mask</span>
+        <span class="n">agg</span><span class="p">,</span> <span class="n">agg2</span><span class="p">,</span> <span class="n">mask</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">element</span><span class="p">:</span>
+            <span class="c1"># Compute aggregates and mask</span>
+            <span class="n">new_agg</span> <span class="o">=</span> <span class="n">agg_fn1</span><span class="o">.</span><span class="n">process_element</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">is_sum</span><span class="p">:</span>
+                <span class="n">new_mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">new_agg</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+                <span class="n">new_agg</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">new_agg</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">agg_fn2</span><span class="p">:</span>
+                <span class="n">new_agg2</span> <span class="o">=</span> <span class="n">agg_fn2</span><span class="o">.</span><span class="n">process_element</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">agg</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">agg</span> <span class="o">=</span> <span class="n">new_agg</span>
+                <span class="k">if</span> <span class="n">is_sum</span><span class="p">:</span> <span class="n">mask</span> <span class="o">=</span> <span class="n">new_mask</span>
+                <span class="k">if</span> <span class="n">agg_fn2</span><span class="p">:</span> <span class="n">agg2</span> <span class="o">=</span> <span class="n">new_agg2</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">agg</span><span class="o">.</span><span class="n">data</span> <span class="o">+=</span> <span class="n">new_agg</span><span class="o">.</span><span class="n">data</span>
+                <span class="k">if</span> <span class="n">is_sum</span><span class="p">:</span> <span class="n">mask</span> <span class="o">&amp;=</span> <span class="n">new_mask</span>
+                <span class="k">if</span> <span class="n">agg_fn2</span><span class="p">:</span> <span class="n">agg2</span><span class="o">.</span><span class="n">data</span> <span class="o">+=</span> <span class="n">new_agg2</span><span class="o">.</span><span class="n">data</span>
+
+        <span class="c1"># Divide sum by count to compute mean</span>
+        <span class="k">if</span> <span class="n">agg2</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">agg2</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">rename</span><span class="p">({</span><span class="s1">'Count'</span><span class="p">:</span> <span class="n">agg_fn</span><span class="o">.</span><span class="n">column</span><span class="p">},</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">with</span> <span class="n">np</span><span class="o">.</span><span class="n">errstate</span><span class="p">(</span><span class="n">divide</span><span class="o">=</span><span class="s1">'ignore'</span><span class="p">,</span> <span class="n">invalid</span><span class="o">=</span><span class="s1">'ignore'</span><span class="p">):</span>
+                <span class="n">agg</span><span class="o">.</span><span class="n">data</span> <span class="o">/=</span> <span class="n">agg2</span><span class="o">.</span><span class="n">data</span>
+
+        <span class="c1"># Fill masked with with NaNs</span>
+        <span class="k">if</span> <span class="n">is_sum</span><span class="p">:</span>
+            <span class="n">agg</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">NaN</span>
+        <span class="k">return</span> <span class="n">agg</span>
+
+
+    <span class="k">def</span> <span class="nf">_process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">agg_fn</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">aggregator</span>
+        <span class="n">category</span> <span class="o">=</span> <span class="n">agg_fn</span><span class="o">.</span><span class="n">column</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">agg_fn</span><span class="p">,</span> <span class="n">ds</span><span class="o">.</span><span class="n">count_cat</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">NdOverlay</span><span class="p">)</span> <span class="ow">and</span>
+            <span class="p">((</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">agg_fn</span><span class="p">,</span> <span class="p">(</span><span class="n">ds</span><span class="o">.</span><span class="n">count</span><span class="p">,</span> <span class="n">ds</span><span class="o">.</span><span class="n">sum</span><span class="p">,</span> <span class="n">ds</span><span class="o">.</span><span class="n">mean</span><span class="p">))</span> <span class="ow">and</span> <span class="n">agg_fn</span><span class="o">.</span><span class="n">column</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">element</span><span class="o">.</span><span class="n">kdims</span><span class="p">)</span> <span class="ow">or</span>
+             <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">agg_fn</span><span class="p">,</span> <span class="n">ds</span><span class="o">.</span><span class="n">count_cat</span><span class="p">)</span> <span class="ow">and</span> <span class="n">agg_fn</span><span class="o">.</span><span class="n">column</span> <span class="ow">in</span> <span class="n">element</span><span class="o">.</span><span class="n">kdims</span><span class="p">))):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_aggregate_ndoverlay</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">agg_fn</span><span class="p">)</span>
+
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">glyph</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_agg_data</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">category</span><span class="p">)</span>
+        <span class="p">(</span><span class="n">x_range</span><span class="p">,</span> <span class="n">y_range</span><span class="p">),</span> <span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">),</span> <span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">),</span> <span class="p">(</span><span class="n">xtype</span><span class="p">,</span> <span class="n">ytype</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_sampling</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">x</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">y</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">xarray</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="n">height</span><span class="p">,</span> <span class="n">width</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">NaN</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">float32</span><span class="p">),</span>
+                                  <span class="n">dims</span><span class="o">=</span><span class="p">[</span><span class="s1">'y'</span><span class="p">,</span> <span class="s1">'x'</span><span class="p">],</span> <span class="n">coords</span><span class="o">=</span><span class="p">{</span><span class="s1">'x'</span><span class="p">:</span> <span class="n">xs</span><span class="p">,</span> <span class="s1">'y'</span><span class="p">:</span> <span class="n">ys</span><span class="p">})</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">element_type</span><span class="p">(</span><span class="n">xarray</span><span class="p">)</span>
+
+        <span class="n">cvs</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">Canvas</span><span class="p">(</span><span class="n">plot_width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span> <span class="n">plot_height</span><span class="o">=</span><span class="n">height</span><span class="p">,</span>
+                        <span class="n">x_range</span><span class="o">=</span><span class="n">x_range</span><span class="p">,</span> <span class="n">y_range</span><span class="o">=</span><span class="n">y_range</span><span class="p">)</span>
+
+        <span class="n">column</span> <span class="o">=</span> <span class="n">agg_fn</span><span class="o">.</span><span class="n">column</span>
+        <span class="k">if</span> <span class="n">column</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">agg_fn</span><span class="p">,</span> <span class="n">ds</span><span class="o">.</span><span class="n">count_cat</span><span class="p">):</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="s1">'</span><span class="si">%s</span><span class="s1"> Count'</span> <span class="o">%</span> <span class="n">agg_fn</span><span class="o">.</span><span class="n">column</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">column</span>
+        <span class="n">vdims</span> <span class="o">=</span> <span class="p">[</span><span class="n">element</span><span class="o">.</span><span class="n">get_dimension</span><span class="p">(</span><span class="n">column</span><span class="p">)(</span><span class="n">name</span><span class="p">)</span> <span class="k">if</span> <span class="n">column</span>
+                 <span class="k">else</span> <span class="n">Dimension</span><span class="p">(</span><span class="s1">'Count'</span><span class="p">)]</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">get_param_values</span><span class="p">(</span><span class="n">element</span><span class="p">),</span> <span class="n">kdims</span><span class="o">=</span><span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">],</span>
+                      <span class="n">datatype</span><span class="o">=</span><span class="p">[</span><span class="s1">'xarray'</span><span class="p">],</span> <span class="n">vdims</span><span class="o">=</span><span class="n">vdims</span><span class="p">)</span>
+
+        <span class="n">dfdata</span> <span class="o">=</span> <span class="n">PandasInterface</span><span class="o">.</span><span class="n">as_dframe</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">agg</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">cvs</span><span class="p">,</span> <span class="n">glyph</span><span class="p">)(</span><span class="n">dfdata</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">aggregator</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">'x_axis'</span> <span class="ow">in</span> <span class="n">agg</span> <span class="ow">and</span> <span class="s1">'y_axis'</span> <span class="ow">in</span> <span class="n">agg</span><span class="p">:</span>
+            <span class="n">agg</span> <span class="o">=</span> <span class="n">agg</span><span class="o">.</span><span class="n">rename</span><span class="p">({</span><span class="s1">'x_axis'</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="s1">'y_axis'</span><span class="p">:</span> <span class="n">y</span><span class="p">})</span>
+        <span class="k">if</span> <span class="n">xtype</span> <span class="o">==</span> <span class="s1">'datetime'</span><span class="p">:</span>
+            <span class="n">agg</span><span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">agg</span><span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">'datetime64[us]'</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ytype</span> <span class="o">==</span> <span class="s1">'datetime'</span><span class="p">:</span>
+            <span class="n">agg</span><span class="p">[</span><span class="n">y</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">agg</span><span class="p">[</span><span class="n">y</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">'datetime64[us]'</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">agg</span><span class="o">.</span><span class="n">ndim</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="c1"># Replacing x and y coordinates to avoid numerical precision issues</span>
+            <span class="n">eldata</span> <span class="o">=</span> <span class="n">agg</span> <span class="k">if</span> <span class="n">ds_version</span> <span class="o">&gt;</span> <span class="s1">'0.5.0'</span> <span class="k">else</span> <span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">agg</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">element_type</span><span class="p">(</span><span class="n">eldata</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">layers</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">agg</span><span class="o">.</span><span class="n">coords</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+                <span class="n">cagg</span> <span class="o">=</span> <span class="n">agg</span><span class="o">.</span><span class="n">sel</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="n">column</span><span class="p">:</span> <span class="n">c</span><span class="p">})</span>
+                <span class="n">eldata</span> <span class="o">=</span> <span class="n">cagg</span> <span class="k">if</span> <span class="n">ds_version</span> <span class="o">&gt;</span> <span class="s1">'0.5.0'</span> <span class="k">else</span> <span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="n">ys</span><span class="p">,</span> <span class="n">cagg</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+                <span class="n">layers</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">element_type</span><span class="p">(</span><span class="n">eldata</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">NdOverlay</span><span class="p">(</span><span class="n">layers</span><span class="p">,</span> <span class="n">kdims</span><span class="o">=</span><span class="p">[</span><span class="n">data</span><span class="o">.</span><span class="n">get_dimension</span><span class="p">(</span><span class="n">column</span><span class="p">)])</span></div>
+
+
+
+<div class="viewcode-block" id="regrid"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.operation.html#holoviews.operation.datashader.regrid">[docs]</a><span class="k">class</span> <span class="nc">regrid</span><span class="p">(</span><span class="n">ResamplingOperation</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    regrid allows resampling a HoloViews Image type using specified</span>
+<span class="sd">    up- and downsampling functions defined using the aggregator and</span>
+<span class="sd">    interpolation parameters respectively. By default upsampling is</span>
+<span class="sd">    disabled to avoid unnecessarily upscaling an image that has to be</span>
+<span class="sd">    sent to the browser. Also disables expanding the image beyond its</span>
+<span class="sd">    original bounds avoiding unneccessarily padding the output array</span>
+<span class="sd">    with nan values.</span>
+<span class="sd">    """</span>
+
+    <span class="n">aggregator</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">ObjectSelector</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">'mean'</span><span class="p">,</span>
+        <span class="n">objects</span><span class="o">=</span><span class="p">[</span><span class="s1">'first'</span><span class="p">,</span> <span class="s1">'last'</span><span class="p">,</span> <span class="s1">'mean'</span><span class="p">,</span> <span class="s1">'mode'</span><span class="p">,</span> <span class="s1">'std'</span><span class="p">,</span> <span class="s1">'var'</span><span class="p">,</span> <span class="s1">'min'</span><span class="p">,</span> <span class="s1">'max'</span><span class="p">],</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        Aggregation method.</span>
+<span class="s2">        """</span><span class="p">)</span>
+
+    <span class="n">expand</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">       Whether the x_range and y_range should be allowed to expand</span>
+<span class="s2">       beyond the extent of the data.  Setting this value to True is</span>
+<span class="s2">       useful for the case where you want to ensure a certain size of</span>
+<span class="s2">       output grid, e.g. if you are doing masking or other arithmetic</span>
+<span class="s2">       on the grids.  A value of False ensures that the grid is only</span>
+<span class="s2">       just as large as it needs to be to contain the data, which will</span>
+<span class="s2">       be faster and use less memory if the resulting aggregate is</span>
+<span class="s2">       being overlaid on a much larger background."""</span><span class="p">)</span>
+
+    <span class="n">interpolation</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">ObjectSelector</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">'nearest'</span><span class="p">,</span>
+        <span class="n">objects</span><span class="o">=</span><span class="p">[</span><span class="s1">'linear'</span><span class="p">,</span> <span class="s1">'nearest'</span><span class="p">],</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        Interpolation method"""</span><span class="p">)</span>
+
+    <span class="n">upsample</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        Whether to allow upsampling if the source array is smaller</span>
+<span class="s2">        than the requested array. Setting this value to True will</span>
+<span class="s2">        enable upsampling using the interpolation method, when the</span>
+<span class="s2">        requested width and height are larger than what is available</span>
+<span class="s2">        on the source grid. If upsampling is disabled (the default)</span>
+<span class="s2">        the width and height are clipped to what is available on the</span>
+<span class="s2">        source array."""</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">ds_version</span> <span class="o">&lt;=</span> <span class="s1">'0.5.0'</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">'regrid operation requires datashader&gt;=0.6.0'</span><span class="p">)</span>
+
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">kdims</span>
+        <span class="p">(</span><span class="n">x_range</span><span class="p">,</span> <span class="n">y_range</span><span class="p">),</span> <span class="n">_</span><span class="p">,</span> <span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">),</span> <span class="p">(</span><span class="n">xtype</span><span class="p">,</span> <span class="n">ytype</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_sampling</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+        <span class="n">coords</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">dimension_values</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">expanded</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                       <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="p">[</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">])</span>
+        <span class="n">coord_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">coords</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">coords</span><span class="p">[</span><span class="mi">1</span><span class="p">]}</span>
+        <span class="n">dims</span> <span class="o">=</span> <span class="p">[</span><span class="n">y</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+        <span class="n">arrays</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">vd</span> <span class="ow">in</span> <span class="n">element</span><span class="o">.</span><span class="n">vdims</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">element</span><span class="o">.</span><span class="n">interface</span> <span class="ow">is</span> <span class="n">XArrayInterface</span><span class="p">:</span>
+                <span class="n">xarr</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">vd</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+                <span class="k">if</span> <span class="s1">'datetime'</span> <span class="ow">in</span> <span class="p">(</span><span class="n">xtype</span><span class="p">,</span> <span class="n">ytype</span><span class="p">):</span>
+                    <span class="n">xarr</span> <span class="o">=</span> <span class="n">xarr</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">arr</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">dimension_values</span><span class="p">(</span><span class="n">vd</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                <span class="n">xarr</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">DataArray</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="n">coord_dict</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="n">dims</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">xtype</span> <span class="o">==</span> <span class="s2">"datetime"</span><span class="p">:</span>
+                <span class="n">xarr</span><span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">dt_to_int</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">xarr</span><span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">ytype</span> <span class="o">==</span> <span class="s2">"datetime"</span><span class="p">:</span>
+                <span class="n">xarr</span><span class="p">[</span><span class="n">y</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">dt_to_int</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">xarr</span><span class="p">[</span><span class="n">y</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">]</span>
+            <span class="n">arrays</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">xarr</span><span class="p">)</span>
+
+        <span class="c1"># Disable upsampling if requested</span>
+        <span class="p">(</span><span class="n">xstart</span><span class="p">,</span> <span class="n">xend</span><span class="p">),</span> <span class="p">(</span><span class="n">ystart</span><span class="p">,</span> <span class="n">yend</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">x_range</span><span class="p">,</span> <span class="n">y_range</span><span class="p">)</span>
+        <span class="n">xspan</span><span class="p">,</span> <span class="n">yspan</span> <span class="o">=</span> <span class="p">(</span><span class="n">xend</span><span class="o">-</span><span class="n">xstart</span><span class="p">),</span> <span class="p">(</span><span class="n">yend</span><span class="o">-</span><span class="n">ystart</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">upsample</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">target</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">x1</span><span class="p">),</span> <span class="p">(</span><span class="n">y0</span><span class="p">,</span> <span class="n">y1</span><span class="p">)</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">element</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">datetime_types</span><span class="p">):</span>
+                <span class="n">x0</span><span class="p">,</span> <span class="n">x1</span> <span class="o">=</span> <span class="n">dt_to_int</span><span class="p">(</span><span class="n">x0</span><span class="p">),</span> <span class="n">dt_to_int</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">y0</span><span class="p">,</span> <span class="n">datetime_types</span><span class="p">):</span>
+                <span class="n">y0</span><span class="p">,</span> <span class="n">y1</span> <span class="o">=</span> <span class="n">dt_to_int</span><span class="p">(</span><span class="n">y0</span><span class="p">),</span> <span class="n">dt_to_int</span><span class="p">(</span><span class="n">y1</span><span class="p">)</span>
+            <span class="n">exspan</span><span class="p">,</span> <span class="n">eyspan</span> <span class="o">=</span> <span class="p">(</span><span class="n">x1</span><span class="o">-</span><span class="n">x0</span><span class="p">),</span> <span class="p">(</span><span class="n">y1</span><span class="o">-</span><span class="n">y0</span><span class="p">)</span>
+            <span class="n">width</span> <span class="o">=</span> <span class="nb">min</span><span class="p">([</span><span class="nb">int</span><span class="p">((</span><span class="n">xspan</span><span class="o">/</span><span class="n">exspan</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">coords</span><span class="p">[</span><span class="mi">0</span><span class="p">])),</span> <span class="n">width</span><span class="p">])</span>
+            <span class="n">height</span> <span class="o">=</span> <span class="nb">min</span><span class="p">([</span><span class="nb">int</span><span class="p">((</span><span class="n">yspan</span><span class="o">/</span><span class="n">eyspan</span><span class="p">)</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">coords</span><span class="p">[</span><span class="mi">1</span><span class="p">])),</span> <span class="n">height</span><span class="p">])</span>
+
+        <span class="c1"># Get expanded or bounded ranges</span>
+        <span class="n">cvs</span> <span class="o">=</span> <span class="n">ds</span><span class="o">.</span><span class="n">Canvas</span><span class="p">(</span><span class="n">plot_width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span> <span class="n">plot_height</span><span class="o">=</span><span class="n">height</span><span class="p">,</span>
+                        <span class="n">x_range</span><span class="o">=</span><span class="n">x_range</span><span class="p">,</span> <span class="n">y_range</span><span class="o">=</span><span class="n">y_range</span><span class="p">)</span>
+        <span class="n">regridded</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">xarr</span> <span class="ow">in</span> <span class="n">arrays</span><span class="p">:</span>
+            <span class="n">rarray</span> <span class="o">=</span> <span class="n">cvs</span><span class="o">.</span><span class="n">raster</span><span class="p">(</span><span class="n">xarr</span><span class="p">,</span> <span class="n">upsample_method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">interpolation</span><span class="p">,</span>
+                                <span class="n">downsample_method</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">aggregator</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">xtype</span> <span class="o">==</span> <span class="s2">"datetime"</span><span class="p">:</span>
+                <span class="n">rarray</span><span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">rarray</span><span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">'datetime64[us]'</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">ytype</span> <span class="o">==</span> <span class="s2">"datetime"</span><span class="p">:</span>
+                <span class="n">rarray</span><span class="p">[</span><span class="n">y</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">rarray</span><span class="p">[</span><span class="n">y</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">'datetime64[us]'</span><span class="p">)</span>
+            <span class="n">regridded</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rarray</span><span class="p">)</span>
+
+        <span class="n">regridded</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">Dataset</span><span class="p">({</span><span class="n">vd</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">xarr</span> <span class="k">for</span> <span class="n">vd</span><span class="p">,</span> <span class="n">xarr</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">vdims</span><span class="p">,</span> <span class="n">regridded</span><span class="p">)})</span>
+        <span class="k">if</span> <span class="n">xtype</span> <span class="o">==</span> <span class="s1">'datetime'</span><span class="p">:</span>
+            <span class="n">xstart</span><span class="p">,</span> <span class="n">xend</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">xstart</span><span class="p">,</span> <span class="n">xend</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">'datetime64[us]'</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ytype</span> <span class="o">==</span> <span class="s1">'datetime'</span><span class="p">:</span>
+            <span class="n">ystart</span><span class="p">,</span> <span class="n">yend</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">ystart</span><span class="p">,</span> <span class="n">yend</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">'datetime64[us]'</span><span class="p">)</span>  
+        <span class="n">bbox</span> <span class="o">=</span> <span class="n">BoundingBox</span><span class="p">(</span><span class="n">points</span><span class="o">=</span><span class="p">[(</span><span class="n">xstart</span><span class="p">,</span> <span class="n">ystart</span><span class="p">),</span> <span class="p">(</span><span class="n">xend</span><span class="p">,</span> <span class="n">yend</span><span class="p">)])</span>
+        <span class="k">return</span> <span class="n">element</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">regridded</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="n">bbox</span><span class="p">,</span> <span class="n">datatype</span><span class="o">=</span><span class="p">[</span><span class="s1">'xarray'</span><span class="p">])</span></div>
+
+
+
+<div class="viewcode-block" id="shade"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.operation.html#holoviews.operation.datashader.shade">[docs]</a><span class="k">class</span> <span class="nc">shade</span><span class="p">(</span><span class="n">Operation</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    shade applies a normalization function followed by colormapping to</span>
+<span class="sd">    an Image or NdOverlay of Images, returning an RGB Element.</span>
+<span class="sd">    The data must be in the form of a 2D or 3D DataArray, but NdOverlays</span>
+<span class="sd">    of 2D Images will be automatically converted to a 3D array.</span>
+
+<span class="sd">    In the 2D case data is normalized and colormapped, while a 3D</span>
+<span class="sd">    array representing categorical aggregates will be supplied a color</span>
+<span class="sd">    key for each category. The colormap (cmap) may be supplied as an</span>
+<span class="sd">    Iterable or a Callable.</span>
+<span class="sd">    """</span>
+
+    <span class="n">cmap</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">ClassSelector</span><span class="p">(</span><span class="n">class_</span><span class="o">=</span><span class="p">(</span><span class="n">Iterable</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="nb">dict</span><span class="p">),</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        Iterable or callable which returns colors as hex colors</span>
+<span class="s2">        or web color names (as defined by datashader), to be used</span>
+<span class="s2">        for the colormap of single-layer datashader output. </span>
+<span class="s2">        Callable type must allow mapping colors between 0 and 1.</span>
+<span class="s2">        The default value of None reverts to Datashader's default</span>
+<span class="s2">        colormap."""</span><span class="p">)</span>
+
+    <span class="n">color_key</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">ClassSelector</span><span class="p">(</span><span class="n">class_</span><span class="o">=</span><span class="p">(</span><span class="n">Iterable</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="nb">dict</span><span class="p">),</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        Iterable or callable which returns colors as hex colors, to</span>
+<span class="s2">        be used for the color key of categorical datashader output.</span>
+<span class="s2">        Callable type must allow mapping colors between 0 and 1."""</span><span class="p">)</span>
+
+    <span class="n">normalization</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">ClassSelector</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">'eq_hist'</span><span class="p">,</span>
+                                        <span class="n">class_</span><span class="o">=</span><span class="p">(</span><span class="n">basestring</span><span class="p">,</span> <span class="n">Callable</span><span class="p">),</span>
+                                        <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        The normalization operation applied before colormapping.</span>
+<span class="s2">        Valid options include 'linear', 'log', 'eq_hist', 'cbrt',</span>
+<span class="s2">        and any valid transfer function that accepts data, mask, nbins</span>
+<span class="s2">        arguments."""</span><span class="p">)</span>
+
+    <span class="n">clims</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">NumericTuple</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        Min and max data values to use for colormap interpolation, when</span>
+<span class="s2">        wishing to override autoranging.</span>
+<span class="s2">        """</span><span class="p">)</span>
+
+    <span class="n">link_inputs</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        By default, the link_inputs parameter is set to True so that</span>
+<span class="s2">        when applying shade, backends that support linked streams</span>
+<span class="s2">        update RangeXY streams on the inputs of the shade operation.</span>
+<span class="s2">        Disable when you do not want the resulting plot to be interactive,</span>
+<span class="s2">        e.g. when trying to display an interactive plot a second time."""</span><span class="p">)</span>
+
+<div class="viewcode-block" id="shade.concatenate"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.operation.html#holoviews.operation.datashader.shade.concatenate">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">concatenate</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">overlay</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Concatenates an NdOverlay of Image types into a single 3D</span>
+<span class="sd">        xarray Dataset.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">overlay</span><span class="p">,</span> <span class="n">NdOverlay</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'Only NdOverlays can be concatenated'</span><span class="p">)</span>
+        <span class="n">xarr</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">v</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">T</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">overlay</span><span class="o">.</span><span class="n">values</span><span class="p">()],</span>
+                         <span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">overlay</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">name</span><span class="o">=</span><span class="n">overlay</span><span class="o">.</span><span class="n">kdims</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">get_param_values</span><span class="p">(</span><span class="n">overlay</span><span class="o">.</span><span class="n">last</span><span class="p">),</span>
+                      <span class="n">vdims</span><span class="o">=</span><span class="n">overlay</span><span class="o">.</span><span class="n">last</span><span class="o">.</span><span class="n">vdims</span><span class="p">,</span>
+                      <span class="n">kdims</span><span class="o">=</span><span class="n">overlay</span><span class="o">.</span><span class="n">kdims</span><span class="o">+</span><span class="n">overlay</span><span class="o">.</span><span class="n">last</span><span class="o">.</span><span class="n">kdims</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Dataset</span><span class="p">(</span><span class="n">xarr</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">datatype</span><span class="o">=</span><span class="p">[</span><span class="s1">'xarray'</span><span class="p">],</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="shade.uint32_to_uint8"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.operation.html#holoviews.operation.datashader.shade.uint32_to_uint8">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">uint32_to_uint8</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">img</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Cast uint32 RGB image to 4 uint8 channels.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">flipud</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span> <span class="o">+</span> <span class="p">(</span><span class="mi">4</span><span class="p">,)))</span></div>
+
+
+<div class="viewcode-block" id="shade.rgb2hex"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.operation.html#holoviews.operation.datashader.shade.rgb2hex">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">rgb2hex</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">rgb</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Convert RGB(A) tuple to hex.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">rgb</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">rgb</span> <span class="o">=</span> <span class="n">rgb</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="s2">"#</span><span class="si">{0:02x}{1:02x}{2:02x}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">v</span><span class="o">*</span><span class="mi">255</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">rgb</span><span class="p">))</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">NdOverlay</span><span class="p">):</span>
+            <span class="n">bounds</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">last</span><span class="o">.</span><span class="n">bounds</span>
+            <span class="n">element</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">bounds</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">bounds</span>
+
+        <span class="n">vdim</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">vdims</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">array</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">vdim</span><span class="p">]</span>
+        <span class="n">kdims</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">kdims</span>
+
+        <span class="c1"># Compute shading options depending on whether</span>
+        <span class="c1"># it is a categorical or regular aggregate</span>
+        <span class="n">shade_opts</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">how</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">normalization</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">element</span><span class="o">.</span><span class="n">ndims</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">kdims</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">kdims</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+            <span class="n">categories</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">color_key</span><span class="p">:</span>
+                <span class="k">pass</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">color_key</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="n">shade_opts</span><span class="p">[</span><span class="s1">'color_key'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">color_key</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">color_key</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">):</span>
+                <span class="n">shade_opts</span><span class="p">[</span><span class="s1">'color_key'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span>
+                                           <span class="nb">zip</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">categories</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">color_key</span><span class="p">)]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">color_key</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">categories</span><span class="p">)]</span>
+                <span class="n">shade_opts</span><span class="p">[</span><span class="s1">'color_key'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rgb2hex</span><span class="p">,</span> <span class="n">colors</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">cmap</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">cmap</span><span class="p">,</span> <span class="n">Callable</span><span class="p">):</span>
+            <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">cmap</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">256</span><span class="p">)]</span>
+            <span class="n">shade_opts</span><span class="p">[</span><span class="s1">'cmap'</span><span class="p">]</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rgb2hex</span><span class="p">,</span> <span class="n">colors</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">shade_opts</span><span class="p">[</span><span class="s1">'cmap'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">cmap</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">clims</span><span class="p">:</span>
+            <span class="n">shade_opts</span><span class="p">[</span><span class="s1">'span'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">clims</span>
+        <span class="k">elif</span> <span class="n">ds_version</span> <span class="o">&gt;</span> <span class="s1">'0.5.0'</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">normalization</span> <span class="o">!=</span> <span class="s1">'eq_hist'</span><span class="p">:</span>
+            <span class="n">shade_opts</span><span class="p">[</span><span class="s1">'span'</span><span class="p">]</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="n">vdim</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">kdims</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">array</span><span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">kind</span> <span class="o">==</span> <span class="s1">'M'</span><span class="p">:</span>
+                <span class="n">array</span><span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">array</span><span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">'datetime64[ns]'</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">'int64'</span><span class="p">)</span> <span class="o">*</span> <span class="mf">10e-4</span>
+
+        <span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">():</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">'ignore'</span><span class="p">,</span> <span class="sa">r</span><span class="s1">'invalid value encountered in true_divide'</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">array</span><span class="o">.</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+                <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">array</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">)</span>
+                <span class="n">img</span> <span class="o">=</span> <span class="n">array</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+                <span class="n">img</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">arr</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">img</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">shade</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="o">**</span><span class="n">shade_opts</span><span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">get_param_values</span><span class="p">(</span><span class="n">element</span><span class="p">),</span> <span class="n">kdims</span><span class="o">=</span><span class="n">kdims</span><span class="p">,</span>
+                      <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">,</span> <span class="n">vdims</span><span class="o">=</span><span class="n">RGB</span><span class="o">.</span><span class="n">vdims</span><span class="p">[:])</span>
+        <span class="k">return</span> <span class="n">RGB</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">uint32_to_uint8</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">data</span><span class="p">),</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="datashade"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.operation.html#holoviews.operation.datashader.datashade">[docs]</a><span class="k">class</span> <span class="nc">datashade</span><span class="p">(</span><span class="n">aggregate</span><span class="p">,</span> <span class="n">shade</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Applies the aggregate and shade operations, aggregating all</span>
+<span class="sd">    elements in the supplied object and then applying normalization</span>
+<span class="sd">    and colormapping the aggregated data returning RGB elements.</span>
+
+<span class="sd">    See aggregate and shade operations for more details.</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span> <span class="nf">_process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">agg</span> <span class="o">=</span> <span class="n">aggregate</span><span class="o">.</span><span class="n">_process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+        <span class="n">shaded</span> <span class="o">=</span> <span class="n">shade</span><span class="o">.</span><span class="n">_process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">agg</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">shaded</span></div>
+
+
+
+<div class="viewcode-block" id="stack"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.operation.html#holoviews.operation.datashader.stack">[docs]</a><span class="k">class</span> <span class="nc">stack</span><span class="p">(</span><span class="n">Operation</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    The stack operation allows compositing multiple RGB Elements using</span>
+<span class="sd">    the defined compositing operator.</span>
+<span class="sd">    """</span>
+
+    <span class="n">compositor</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">ObjectSelector</span><span class="p">(</span><span class="n">objects</span><span class="o">=</span><span class="p">[</span><span class="s1">'add'</span><span class="p">,</span> <span class="s1">'over'</span><span class="p">,</span> <span class="s1">'saturate'</span><span class="p">,</span> <span class="s1">'source'</span><span class="p">],</span>
+                                      <span class="n">default</span><span class="o">=</span><span class="s1">'over'</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        Defines how the compositing operation combines the images"""</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">uint8_to_uint32</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dstack</span><span class="p">([</span><span class="n">element</span><span class="o">.</span><span class="n">dimension_values</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                         <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">element</span><span class="o">.</span><span class="n">vdims</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span> <span class="c1"># alpha channel not included</span>
+            <span class="n">alpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">img</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">'uint8'</span><span class="p">:</span>
+                <span class="n">alpha</span> <span class="o">=</span> <span class="p">(</span><span class="n">alpha</span><span class="o">*</span><span class="mi">255</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">'uint8'</span><span class="p">)</span>
+            <span class="n">img</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dstack</span><span class="p">([</span><span class="n">img</span><span class="p">,</span> <span class="n">alpha</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">img</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">name</span> <span class="o">!=</span> <span class="s1">'uint8'</span><span class="p">:</span>
+            <span class="n">img</span> <span class="o">=</span> <span class="p">(</span><span class="n">img</span><span class="o">*</span><span class="mi">255</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">uint8</span><span class="p">)</span>
+        <span class="n">N</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span>
+        <span class="k">return</span> <span class="n">img</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">uint32</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">N</span><span class="p">,</span> <span class="n">M</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">overlay</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">overlay</span><span class="p">,</span> <span class="n">CompositeOverlay</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">overlay</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">overlay</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">overlay</span><span class="o">.</span><span class="n">last</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">overlay</span><span class="p">,</span> <span class="n">NdOverlay</span><span class="p">)</span> <span class="k">else</span> <span class="n">overlay</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="n">imgs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">rgb</span> <span class="ow">in</span> <span class="n">overlay</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">rgb</span><span class="p">,</span> <span class="n">RGB</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">'stack operation expect RGB type elements, '</span>
+                                <span class="s1">'not </span><span class="si">%s</span><span class="s1"> name.'</span> <span class="o">%</span> <span class="nb">type</span><span class="p">(</span><span class="n">rgb</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+            <span class="n">rgb</span> <span class="o">=</span> <span class="n">rgb</span><span class="o">.</span><span class="n">rgb</span>
+            <span class="n">dims</span> <span class="o">=</span> <span class="p">[</span><span class="n">kd</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">kd</span> <span class="ow">in</span> <span class="n">rgb</span><span class="o">.</span><span class="n">kdims</span><span class="p">][::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">coords</span> <span class="o">=</span> <span class="p">{</span><span class="n">kd</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">rgb</span><span class="o">.</span><span class="n">dimension_values</span><span class="p">(</span><span class="n">kd</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+                      <span class="k">for</span> <span class="n">kd</span> <span class="ow">in</span> <span class="n">rgb</span><span class="o">.</span><span class="n">kdims</span><span class="p">}</span>
+            <span class="n">imgs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tf</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">uint8_to_uint32</span><span class="p">(</span><span class="n">rgb</span><span class="p">),</span> <span class="n">coords</span><span class="o">=</span><span class="n">coords</span><span class="p">,</span> <span class="n">dims</span><span class="o">=</span><span class="n">dims</span><span class="p">))</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">imgs</span> <span class="o">=</span> <span class="n">xr</span><span class="o">.</span><span class="n">align</span><span class="p">(</span><span class="o">*</span><span class="n">imgs</span><span class="p">,</span> <span class="n">join</span><span class="o">=</span><span class="s1">'exact'</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'RGB inputs to stack operation could not be aligned, '</span>
+                             <span class="s1">'ensure they share the same grid sampling.'</span><span class="p">)</span>
+
+        <span class="n">stacked</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">stack</span><span class="p">(</span><span class="o">*</span><span class="n">imgs</span><span class="p">,</span> <span class="n">how</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">compositor</span><span class="p">)</span>
+        <span class="n">arr</span> <span class="o">=</span> <span class="n">shade</span><span class="o">.</span><span class="n">uint32_to_uint8</span><span class="p">(</span><span class="n">stacked</span><span class="o">.</span><span class="n">data</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="n">coords</span><span class="p">[</span><span class="n">dims</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">coords</span><span class="p">[</span><span class="n">dims</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">arr</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">0</span><span class="p">],</span>
+                <span class="n">arr</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">arr</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">2</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">arr</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span> <span class="o">+</span> <span class="p">(</span><span class="n">arr</span><span class="p">[:,</span> <span class="p">:,</span> <span class="mi">3</span><span class="p">],)</span>
+        <span class="k">return</span> <span class="n">rgb</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">datatype</span><span class="o">=</span><span class="p">[</span><span class="n">rgb</span><span class="o">.</span><span class="n">interface</span><span class="o">.</span><span class="n">datatype</span><span class="p">]</span><span class="o">+</span><span class="n">rgb</span><span class="o">.</span><span class="n">datatype</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="dynspread"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.operation.html#holoviews.operation.datashader.dynspread">[docs]</a><span class="k">class</span> <span class="nc">dynspread</span><span class="p">(</span><span class="n">Operation</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Spreading expands each pixel in an Image based Element a certain</span>
+<span class="sd">    number of pixels on all sides according to a given shape, merging</span>
+<span class="sd">    pixels using a specified compositing operator. This can be useful</span>
+<span class="sd">    to make sparse plots more visible. Dynamic spreading determines</span>
+<span class="sd">    how many pixels to spread based on a density heuristic.</span>
+
+<span class="sd">    See the datashader documentation for more detail:</span>
+
+<span class="sd">    http://datashader.readthedocs.io/en/latest/api.html#datashader.transfer_functions.dynspread</span>
+<span class="sd">    """</span>
+
+    <span class="n">how</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">ObjectSelector</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">'source'</span><span class="p">,</span>
+                               <span class="n">objects</span><span class="o">=</span><span class="p">[</span><span class="s1">'source'</span><span class="p">,</span> <span class="s1">'over'</span><span class="p">,</span>
+                                        <span class="s1">'saturate'</span><span class="p">,</span> <span class="s1">'add'</span><span class="p">],</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        The name of the compositing operator to use when combining</span>
+<span class="s2">        pixels."""</span><span class="p">)</span>
+
+    <span class="n">max_px</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        Maximum number of pixels to spread on all sides."""</span><span class="p">)</span>
+
+    <span class="n">shape</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">ObjectSelector</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">'circle'</span><span class="p">,</span> <span class="n">objects</span><span class="o">=</span><span class="p">[</span><span class="s1">'circle'</span><span class="p">,</span> <span class="s1">'square'</span><span class="p">],</span>
+                                 <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        The shape to spread by. Options are 'circle' [default] or 'square'."""</span><span class="p">)</span>
+
+    <span class="n">threshold</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Number</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        When spreading, determines how far to spread.</span>
+<span class="s2">        Spreading starts at 1 pixel, and stops when the fraction</span>
+<span class="s2">        of adjacent non-empty pixels reaches this threshold.</span>
+<span class="s2">        Higher values give more spreading, up to the max_px</span>
+<span class="s2">        allowed."""</span><span class="p">)</span>
+
+    <span class="n">link_inputs</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        By default, the link_inputs parameter is set to True so that</span>
+<span class="s2">        when applying dynspread, backends that support linked streams</span>
+<span class="s2">        update RangeXY streams on the inputs of the dynspread operation.</span>
+<span class="s2">        Disable when you do not want the resulting plot to be interactive,</span>
+<span class="s2">        e.g. when trying to display an interactive plot a second time."""</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">uint8_to_uint32</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">img</span><span class="p">):</span>
+        <span class="n">shape</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span>
+        <span class="n">flat_shape</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">multiply</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">rgb</span> <span class="o">=</span> <span class="n">img</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">flat_shape</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="s1">'uint32'</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">shape</span><span class="p">[:</span><span class="mi">2</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">rgb</span>
+
+
+    <span class="k">def</span> <span class="nf">_apply_dynspread</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">array</span><span class="p">):</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">Image</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">dynspread</span><span class="p">(</span><span class="n">img</span><span class="p">,</span> <span class="n">max_px</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">max_px</span><span class="p">,</span>
+                            <span class="n">threshold</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">threshold</span><span class="p">,</span>
+                            <span class="n">how</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">how</span><span class="p">,</span> <span class="n">shape</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span><span class="o">.</span><span class="n">data</span>
+
+
+    <span class="k">def</span> <span class="nf">_process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">RGB</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'dynspread can only be applied to RGB Elements.'</span><span class="p">)</span>
+        <span class="n">rgb</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">rgb</span>
+        <span class="n">new_data</span> <span class="o">=</span> <span class="p">{</span><span class="n">kd</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">rgb</span><span class="o">.</span><span class="n">dimension_values</span><span class="p">(</span><span class="n">kd</span><span class="p">,</span> <span class="n">expanded</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                    <span class="k">for</span> <span class="n">kd</span> <span class="ow">in</span> <span class="n">rgb</span><span class="o">.</span><span class="n">kdims</span><span class="p">}</span>
+        <span class="n">rgbarray</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dstack</span><span class="p">([</span><span class="n">element</span><span class="o">.</span><span class="n">dimension_values</span><span class="p">(</span><span class="n">vd</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                              <span class="k">for</span> <span class="n">vd</span> <span class="ow">in</span> <span class="n">element</span><span class="o">.</span><span class="n">vdims</span><span class="p">])</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">uint8_to_uint32</span><span class="p">(</span><span class="n">rgbarray</span><span class="p">)</span>
+        <span class="n">array</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_apply_dynspread</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="n">img</span> <span class="o">=</span> <span class="n">datashade</span><span class="o">.</span><span class="n">uint32_to_uint8</span><span class="p">(</span><span class="n">array</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">vd</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">vdims</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">img</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="n">new_data</span><span class="p">[</span><span class="n">vd</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">flipud</span><span class="p">(</span><span class="n">img</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">i</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">element</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">new_data</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="split_dataframe"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.operation.html#holoviews.operation.datashader.split_dataframe">[docs]</a><span class="k">def</span> <span class="nf">split_dataframe</span><span class="p">(</span><span class="n">path_df</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Splits a dataframe of paths separated by NaNs into individual</span>
+<span class="sd">    dataframes.</span>
+<span class="sd">    """</span>
+    <span class="n">splits</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">path_df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">isnull</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mi">1</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">df</span> <span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">path_df</span><span class="p">,</span> <span class="n">splits</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">]</span></div>
+
+
+<span class="k">class</span> <span class="nc">_connect_edges</span><span class="p">(</span><span class="n">Operation</span><span class="p">):</span>
+
+    <span class="n">split</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        Determines whether bundled edges will be split into individual edges</span>
+<span class="s2">        or concatenated with NaN separators."""</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_bundle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position_df</span><span class="p">,</span> <span class="n">edges_df</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s1">'_connect edges is an abstract baseclass '</span>
+                                  <span class="s1">'and does not implement any actual bundling.'</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">kdims</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">name</span>
+        <span class="n">rename_edges</span> <span class="o">=</span> <span class="p">{</span><span class="n">d</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">d</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">kdims</span><span class="p">[:</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="s1">'source'</span><span class="p">,</span> <span class="s1">'target'</span><span class="p">])}</span>
+        <span class="n">rename_nodes</span> <span class="o">=</span> <span class="p">{</span><span class="n">d</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">d</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">kdims</span><span class="p">[:</span><span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="s1">'x'</span><span class="p">,</span> <span class="s1">'y'</span><span class="p">])}</span>
+        <span class="n">position_df</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">redim</span><span class="p">(</span><span class="o">**</span><span class="n">rename_nodes</span><span class="p">)</span><span class="o">.</span><span class="n">dframe</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+        <span class="n">edges_df</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">redim</span><span class="p">(</span><span class="o">**</span><span class="n">rename_edges</span><span class="p">)</span><span class="o">.</span><span class="n">dframe</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="n">paths</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bundle</span><span class="p">(</span><span class="n">position_df</span><span class="p">,</span> <span class="n">edges_df</span><span class="p">)</span>
+        <span class="n">paths</span> <span class="o">=</span> <span class="n">paths</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="n">v</span><span class="p">:</span> <span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">rename_nodes</span><span class="o">.</span><span class="n">items</span><span class="p">()})</span>
+        <span class="n">paths</span> <span class="o">=</span> <span class="n">split_dataframe</span><span class="p">(</span><span class="n">paths</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">split</span> <span class="k">else</span> <span class="p">[</span><span class="n">paths</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">element</span><span class="o">.</span><span class="n">clone</span><span class="p">((</span><span class="n">element</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">element</span><span class="o">.</span><span class="n">nodes</span><span class="p">,</span> <span class="n">paths</span><span class="p">))</span>
+
+
+<div class="viewcode-block" id="bundle_graph"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.operation.html#holoviews.operation.datashader.bundle_graph">[docs]</a><span class="k">class</span> <span class="nc">bundle_graph</span><span class="p">(</span><span class="n">_connect_edges</span><span class="p">,</span> <span class="n">hammer_bundle</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Iteratively group edges and return as paths suitable for datashading.</span>
+
+<span class="sd">    Breaks each edge into a path with multiple line segments, and</span>
+<span class="sd">    iteratively curves this path to bundle edges into groups.</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span> <span class="nf">_bundle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position_df</span><span class="p">,</span> <span class="n">edges_df</span><span class="p">):</span>
+        <span class="kn">from</span> <span class="nn">datashader.bundling</span> <span class="k">import</span> <span class="n">hammer_bundle</span>
+        <span class="k">return</span> <span class="n">hammer_bundle</span><span class="o">.</span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position_df</span><span class="p">,</span> <span class="n">edges_df</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="directly_connect_edges"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.operation.html#holoviews.operation.datashader.directly_connect_edges">[docs]</a><span class="k">class</span> <span class="nc">directly_connect_edges</span><span class="p">(</span><span class="n">_connect_edges</span><span class="p">,</span> <span class="n">connect_edges</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Given a Graph object will directly connect all nodes.</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span> <span class="nf">_bundle</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position_df</span><span class="p">,</span> <span class="n">edges_df</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">connect_edges</span><span class="o">.</span><span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position_df</span><span class="p">,</span> <span class="n">edges_df</span><span class="p">)</span></div>
+</pre>
+    </div>
+   </div>
+  </div>
+  <!-- END MAIN BODY OF DOCS ––––––––––––– -->
+  <footer class="footer">
+   <div class="footer-links">
+    <ul>
+     <li>
+      <span class="footer-title">
+       Links
+      </span>
+     </li>
+     <li>
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li>
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li>
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li>
+      <a href="/Reference_Manual/index.html">
+       API Docs
+      </a>
+     </li>
+     <li>
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li>
+      <a href="/about.html">
+       About
+      </a>
+     </li>
+    </ul>
+    <ul>
+     <li>
+      <span class="footer-title">
+       Join Us
+      </span>
+     </li>
+     <li>
+      <a href="//gitter.im/ioam/holoviews.html">
+       Gitter
+      </a>
+     </li>
+     <li>
+      <a href="//twitter.com/holoviews.html">
+       Twitter
+      </a>
+     </li>
+     <li>
+      <a href="//github.com/ioam/holoviews.html">
+       Github
+      </a>
+     </li>
+    </ul>
+    <ul class="copyright">
+     <li>
+      2017 IOAM: Jean-Luc R. Stevens, Philipp Rudiger, and James A. Bednar
+     </li>
+    </ul>
+   </div>
+  </footer>
+  <!-- Google Analytics -->
+  <script>
+   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-61554933-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <!-- MathJax Config -->
+  <script type="text/x-mathjax-config">
+   MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+  </script>
+  <!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+ </body>
+</html>

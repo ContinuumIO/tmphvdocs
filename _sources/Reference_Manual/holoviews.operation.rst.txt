@@ -1,0 +1,84 @@
+holoviews.operation Package
+===========================
+
+
+---------
+
+:mod:`operation` Package
+------------------------
+
+.. inheritance-diagram:: holoviews.operation
+
+
+.. automodule:: holoviews.operation
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`datashader` Module
+------------------------
+
+.. inheritance-diagram:: holoviews.operation.datashader
+
+
+.. automodule:: holoviews.operation.datashader
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`element` Module
+---------------------
+
+.. inheritance-diagram:: holoviews.operation.element
+
+
+.. automodule:: holoviews.operation.element
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`normalization` Module
+---------------------------
+
+.. inheritance-diagram:: holoviews.operation.normalization
+
+
+.. automodule:: holoviews.operation.normalization
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`stats` Module
+-------------------
+
+.. inheritance-diagram:: holoviews.operation.stats
+
+
+.. automodule:: holoviews.operation.stats
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`timeseries` Module
+------------------------
+
+.. inheritance-diagram:: holoviews.operation.timeseries
+
+
+.. automodule:: holoviews.operation.timeseries
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+

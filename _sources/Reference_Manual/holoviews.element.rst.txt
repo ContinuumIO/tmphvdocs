@@ -1,0 +1,149 @@
+holoviews.element Package
+=========================
+
+
+---------
+
+:mod:`element` Package
+----------------------
+
+.. inheritance-diagram:: holoviews.element
+
+
+.. automodule:: holoviews.element
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`annotation` Module
+------------------------
+
+.. inheritance-diagram:: holoviews.element.annotation
+
+
+.. automodule:: holoviews.element.annotation
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`chart` Module
+-------------------
+
+.. inheritance-diagram:: holoviews.element.chart
+
+
+.. automodule:: holoviews.element.chart
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`chart3d` Module
+---------------------
+
+.. inheritance-diagram:: holoviews.element.chart3d
+
+
+.. automodule:: holoviews.element.chart3d
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`comparison` Module
+------------------------
+
+.. inheritance-diagram:: holoviews.element.comparison
+
+
+.. automodule:: holoviews.element.comparison
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`graphs` Module
+--------------------
+
+.. inheritance-diagram:: holoviews.element.graphs
+
+
+.. automodule:: holoviews.element.graphs
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`path` Module
+------------------
+
+.. inheritance-diagram:: holoviews.element.path
+
+
+.. automodule:: holoviews.element.path
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`raster` Module
+--------------------
+
+.. inheritance-diagram:: holoviews.element.raster
+
+
+.. automodule:: holoviews.element.raster
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`stats` Module
+-------------------
+
+.. inheritance-diagram:: holoviews.element.stats
+
+
+.. automodule:: holoviews.element.stats
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`tabular` Module
+---------------------
+
+.. inheritance-diagram:: holoviews.element.tabular
+
+
+.. automodule:: holoviews.element.tabular
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`util` Module
+------------------
+
+.. inheritance-diagram:: holoviews.element.util
+
+
+.. automodule:: holoviews.element.util
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+

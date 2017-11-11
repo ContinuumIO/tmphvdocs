@@ -1,0 +1,1108 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8"/>
+  <title>
+   holoviews.plotting.bokeh.callbacks — HoloViews
+  </title>
+  <meta content="HoloViews library, documentation site." name="description"/>
+  <meta content="HoloViews contributors" name="author"/>
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js">
+  </script>
+  <script>
+   WebFont.load({
+      google: {
+        families: ['Source Sans Pro']
+      }
+    });
+  </script>
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../../../../_static/main.css" rel="stylesheet"/>
+  <link href="../../../../_static/custom.css" rel="stylesheet"/>
+  <!-- Scripts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
+  </script>
+  <script async="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+  </script>
+  <script src="../../../../_static/js/main.js">
+  </script>
+  <script src="../../../../_static/custom.js">
+  </script>
+  <script src="../../../../_static/require.js">
+  </script>
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../../../../_static/images/favicon.ico" rel="icon" type="image/png"/>
+  <!-- Canonical
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="http://holoviews.org/_modules/holoviews/plotting/bokeh/callbacks.html" rel="canonical"/>
+ </head>
+ <body class="">
+  <header class="navigation">
+   <div class="wrapper">
+    <a class="logo" href="//">
+     <img alt="Logo" src="../../../../_static/images/logo.png"/>
+    </a>
+    <a class="navigation-menu logo-text" href="//">
+     HoloViews
+    </a>
+    <a class="navigation-menu-button" href="javascript:void(0)" id="js-mobile-menu">
+     Menu
+    </a>
+    <nav>
+     <ul class="navigation-menu show" id="js-navigation-menu">
+      <li class="nav-link">
+       <a href="/about.html">
+        About
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="/gallery/index.html">
+        Gallery
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="//github.com/ioam/holoviews.html">
+        Github
+       </a>
+      </li>
+     </ul>
+    </nav>
+   </div>
+  </header>
+  <div class="second-nav">
+   <nav>
+    <ul class="navigation-menu show">
+     <li class="nav-link doc-head">
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+    </ul>
+   </nav>
+   <div class="navigation-tools">
+    <div class="search-bar">
+     <form action="../../../../search.html" method="get" role="search">
+      <input name="q" placeholder="Search" type="search"/>
+      <button type="submit">
+       <img alt="Search Icon" src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/search-icon-black.png"/>
+      </button>
+     </form>
+    </div>
+   </div>
+  </div>
+  <!-- MAIN BODY OF DOCS –––––––––––––––––– -->
+  <div class="docs section">
+   <div class="toc">
+    <ul>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../../getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../../user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../../gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../../Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../../FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference external" href="http://github.com/ioam/holoviews">
+       Github source
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../../about.html">
+       About
+      </a>
+     </li>
+    </ul>
+   </div>
+   <div class="content">
+    <h1>
+     Source code for holoviews.plotting.bokeh.callbacks
+    </h1>
+    <div class="highlight">
+     <pre><span></span><span class="kn">import</span> <span class="nn">datetime</span> <span class="k">as</span> <span class="nn">dt</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">defaultdict</span>
+
+<span class="kn">from</span> <span class="nn">bokeh.models</span> <span class="k">import</span> <span class="n">CustomJS</span><span class="p">,</span> <span class="n">FactorRange</span><span class="p">,</span> <span class="n">DatetimeAxis</span>
+
+<span class="kn">from</span> <span class="nn">...core</span> <span class="k">import</span> <span class="n">OrderedDict</span>
+<span class="kn">from</span> <span class="nn">...streams</span> <span class="k">import</span> <span class="p">(</span><span class="n">Stream</span><span class="p">,</span> <span class="n">PointerXY</span><span class="p">,</span> <span class="n">RangeXY</span><span class="p">,</span> <span class="n">Selection1D</span><span class="p">,</span> <span class="n">RangeX</span><span class="p">,</span>
+                        <span class="n">RangeY</span><span class="p">,</span> <span class="n">PointerX</span><span class="p">,</span> <span class="n">PointerY</span><span class="p">,</span> <span class="n">BoundsX</span><span class="p">,</span> <span class="n">BoundsY</span><span class="p">,</span>
+                        <span class="n">Tap</span><span class="p">,</span> <span class="n">SingleTap</span><span class="p">,</span> <span class="n">DoubleTap</span><span class="p">,</span> <span class="n">MouseEnter</span><span class="p">,</span> <span class="n">MouseLeave</span><span class="p">,</span>
+                        <span class="n">PlotSize</span><span class="p">,</span> <span class="n">Draw</span><span class="p">,</span> <span class="n">BoundsXY</span><span class="p">,</span> <span class="n">PlotReset</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">...streams</span> <span class="k">import</span> <span class="n">PositionX</span><span class="p">,</span> <span class="n">PositionY</span><span class="p">,</span> <span class="n">PositionXY</span><span class="p">,</span> <span class="n">Bounds</span> <span class="c1"># Deprecated: remove in 2.0</span>
+<span class="kn">from</span> <span class="nn">..comms</span> <span class="k">import</span> <span class="n">JupyterCommJS</span><span class="p">,</span> <span class="n">Comm</span>
+<span class="kn">from</span> <span class="nn">.util</span> <span class="k">import</span> <span class="n">convert_timestamp</span>
+
+
+<div class="viewcode-block" id="MessageCallback"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.callbacks.MessageCallback">[docs]</a><span class="k">class</span> <span class="nc">MessageCallback</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    A MessageCallback is an abstract baseclass used to supply Streams</span>
+<span class="sd">    with events originating from bokeh plot interactions. The baseclass</span>
+<span class="sd">    defines how messages are handled and the basic specification required</span>
+<span class="sd">    to define a Callback.</span>
+<span class="sd">    """</span>
+
+    <span class="n">attributes</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="c1"># The plotting handle(s) to attach the JS callback on</span>
+    <span class="n">models</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># Additional models available to the callback</span>
+    <span class="n">extra_models</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># Conditions when callback should be skipped</span>
+    <span class="n">skip</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># Callback will listen to events of the supplied type on the models</span>
+    <span class="n">on_events</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1"># List of change events on the models to listen to</span>
+    <span class="n">on_changes</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">_callbacks</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">def</span> <span class="nf">_process_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Subclassable method to preprocess JSON message in callback</span>
+<span class="sd">        before passing to stream.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="n">msg</span>
+
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plot</span><span class="p">,</span> <span class="n">streams</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot</span> <span class="o">=</span> <span class="n">plot</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">streams</span> <span class="o">=</span> <span class="n">streams</span>
+        <span class="k">if</span> <span class="n">plot</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">mode</span> <span class="o">!=</span> <span class="s1">'server'</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">comm</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_comm_type</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="n">on_msg</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">on_msg</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">comm</span> <span class="o">=</span> <span class="n">Comm</span><span class="p">(</span><span class="n">plot</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">source</span> <span class="o">=</span> <span class="n">source</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handle_ids</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot_handles</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_queue</span> <span class="o">=</span> <span class="p">[]</span>
+
+
+    <span class="k">def</span> <span class="nf">_filter_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">ids</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Filter event values that do not originate from the plotting</span>
+<span class="sd">        handles associated with a particular stream using their</span>
+<span class="sd">        ids to match them.</span>
+<span class="sd">        """</span>
+        <span class="n">filtered_msg</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">msg</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="s1">'id'</span> <span class="ow">in</span> <span class="n">v</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">v</span><span class="p">[</span><span class="s1">'id'</span><span class="p">]</span> <span class="ow">in</span> <span class="n">ids</span><span class="p">:</span>
+                    <span class="n">filtered_msg</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="s1">'value'</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">filtered_msg</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+        <span class="k">return</span> <span class="n">filtered_msg</span>
+
+
+    <span class="k">def</span> <span class="nf">on_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="n">streams</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">stream</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">streams</span><span class="p">:</span>
+            <span class="n">handle_ids</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle_ids</span><span class="p">[</span><span class="n">stream</span><span class="p">]</span>
+            <span class="n">ids</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">handle_ids</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+            <span class="n">filtered_msg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_filter_msg</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">ids</span><span class="p">)</span>
+            <span class="n">processed_msg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process_msg</span><span class="p">(</span><span class="n">filtered_msg</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">processed_msg</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">stream</span><span class="o">.</span><span class="n">transient</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">stream</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">**</span><span class="n">processed_msg</span><span class="p">)</span>
+            <span class="n">stream</span><span class="o">.</span><span class="n">_metadata</span> <span class="o">=</span> <span class="p">{</span><span class="n">h</span><span class="p">:</span> <span class="p">{</span><span class="s1">'id'</span><span class="p">:</span> <span class="n">hid</span><span class="p">,</span> <span class="s1">'events'</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_events</span><span class="p">}</span>
+                                <span class="k">for</span> <span class="n">h</span><span class="p">,</span> <span class="n">hid</span> <span class="ow">in</span> <span class="n">handle_ids</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+            <span class="n">streams</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span>
+        <span class="n">Stream</span><span class="o">.</span><span class="n">trigger</span><span class="p">(</span><span class="n">streams</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">stream</span> <span class="ow">in</span> <span class="n">streams</span><span class="p">:</span>
+            <span class="n">stream</span><span class="o">.</span><span class="n">_metadata</span> <span class="o">=</span> <span class="p">{}</span>
+
+
+    <span class="k">def</span> <span class="nf">_init_plot_handles</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Find all requested plotting handles and cache them along</span>
+<span class="sd">        with the IDs of the models the callbacks will be attached to.</span>
+<span class="sd">        """</span>
+        <span class="n">plots</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="p">]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">subplots</span><span class="p">:</span>
+            <span class="n">plots</span> <span class="o">+=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">subplots</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+        <span class="n">handles</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">plot</span> <span class="ow">in</span> <span class="n">plots</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">plot</span><span class="o">.</span><span class="n">handles</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">handles</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot_handles</span> <span class="o">=</span> <span class="n">handles</span>
+
+        <span class="n">requested</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">extra_models</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">h</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot_handles</span><span class="p">:</span>
+                <span class="n">requested</span><span class="p">[</span><span class="n">h</span><span class="p">]</span> <span class="o">=</span> <span class="n">handles</span><span class="p">[</span><span class="n">h</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="n">h</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">extra_models</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">"Warning </span><span class="si">%s</span><span class="s2"> could not find the </span><span class="si">%s</span><span class="s2"> model. "</span>
+                      <span class="s2">"The corresponding stream may not work."</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handle_ids</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_stream_handle_ids</span><span class="p">(</span><span class="n">requested</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">requested</span>
+
+
+    <span class="k">def</span> <span class="nf">_get_stream_handle_ids</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handles</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Gather the ids of the plotting handles attached to this callback</span>
+<span class="sd">        This allows checking that a stream is not given the state</span>
+<span class="sd">        of a plotting handle it wasn't attached to</span>
+<span class="sd">        """</span>
+        <span class="n">stream_handle_ids</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">stream</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">streams</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">h</span> <span class="ow">in</span> <span class="n">handles</span><span class="p">:</span>
+                    <span class="n">handle_id</span> <span class="o">=</span> <span class="n">handles</span><span class="p">[</span><span class="n">h</span><span class="p">]</span><span class="o">.</span><span class="n">ref</span><span class="p">[</span><span class="s1">'id'</span><span class="p">]</span>
+                    <span class="n">stream_handle_ids</span><span class="p">[</span><span class="n">stream</span><span class="p">][</span><span class="n">h</span><span class="p">]</span> <span class="o">=</span> <span class="n">handle_id</span>
+        <span class="k">return</span> <span class="n">stream_handle_ids</span></div>
+
+
+
+<div class="viewcode-block" id="CustomJSCallback"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.callbacks.CustomJSCallback">[docs]</a><span class="k">class</span> <span class="nc">CustomJSCallback</span><span class="p">(</span><span class="n">MessageCallback</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    The CustomJSCallback attaches CustomJS callbacks to a bokeh plot,</span>
+<span class="sd">    which looks up the requested attributes and sends back a message</span>
+<span class="sd">    to Python using a Comms instance.</span>
+<span class="sd">    """</span>
+
+    <span class="n">js_callback</span> <span class="o">=</span> <span class="s2">"""</span>
+<span class="s2">        function unique_events(events) {{</span>
+<span class="s2">            // Processes the event queue ignoring duplicate events</span>
+<span class="s2">            // of the same type</span>
+<span class="s2">            var unique = [];</span>
+<span class="s2">            var unique_events = [];</span>
+<span class="s2">            for (var i=0; i&lt;events.length; i++) {{</span>
+<span class="s2">                [event, data] = events[i];</span>
+<span class="s2">                if (unique_events.indexOf(event)===-1) {{</span>
+<span class="s2">                    unique.unshift(data);</span>
+<span class="s2">                    unique_events.push(event);</span>
+<span class="s2">                }}</span>
+<span class="s2">            }}</span>
+<span class="s2">            return unique;</span>
+<span class="s2">        }}</span>
+
+<span class="s2">        function process_events(comm_state) {{</span>
+<span class="s2">            // Iterates over event queue and sends events via Comm</span>
+<span class="s2">            var events = unique_events(comm_state.event_buffer);</span>
+<span class="s2">            for (var i=0; i&lt;events.length; i++) {{</span>
+<span class="s2">                var data = events[i];</span>
+<span class="s2">                var comm = HoloViewsWidget.comms[data["comm_id"]];</span>
+<span class="s2">                comm.send(data);</span>
+<span class="s2">            }}</span>
+<span class="s2">            comm_state.event_buffer = [];</span>
+<span class="s2">        }}</span>
+
+<span class="s2">        function on_msg(msg){{</span>
+<span class="s2">          // Receives acknowledgement from Python, processing event</span>
+<span class="s2">          // and unblocking Comm if event queue empty</span>
+<span class="s2">          msg = JSON.parse(msg.content.data);</span>
+<span class="s2">          var comm_id = msg["comm_id"]</span>
+<span class="s2">          var comm_state = HoloViewsWidget.comm_state[comm_id];</span>
+<span class="s2">          if (comm_state.event_buffer.length) {{</span>
+<span class="s2">            process_events(comm_state);</span>
+<span class="s2">            comm_state.blocked = true;</span>
+<span class="s2">            comm_state.time = Date.now()+</span><span class="si">{debounce}</span><span class="s2">;</span>
+<span class="s2">          }} else {{</span>
+<span class="s2">            comm_state.blocked = false;</span>
+<span class="s2">          }}</span>
+<span class="s2">          comm_state.event_buffer = [];</span>
+<span class="s2">          if ((msg.msg_type == "Ready") &amp;&amp; msg.content) {{</span>
+<span class="s2">            console.log("Python callback returned following output:", msg.content);</span>
+<span class="s2">          }} else if (msg.msg_type == "Error") {{</span>
+<span class="s2">            console.log("Python failed with the following traceback:", msg['traceback'])</span>
+<span class="s2">          }}</span>
+<span class="s2">        }}</span>
+
+<span class="s2">        // Initialize Comm</span>
+<span class="s2">        if ((window.Jupyter !== undefined) &amp;&amp; (Jupyter.notebook.kernel != null)) {{</span>
+<span class="s2">          var comm_manager = Jupyter.notebook.kernel.comm_manager;</span>
+<span class="s2">          var comm = HoloViewsWidget.comms["</span><span class="si">{comm_id}</span><span class="s2">"];</span>
+<span class="s2">          if (comm == null) {{</span>
+<span class="s2">            comm = comm_manager.new_comm("</span><span class="si">{comm_id}</span><span class="s2">", {{}}, {{}}, {{}});</span>
+<span class="s2">            comm.on_msg(on_msg);</span>
+<span class="s2">            comm_manager["</span><span class="si">{comm_id}</span><span class="s2">"] = comm;</span>
+<span class="s2">            HoloViewsWidget.comms["</span><span class="si">{comm_id}</span><span class="s2">"] = comm;</span>
+<span class="s2">          }}</span>
+<span class="s2">        }} else {{</span>
+<span class="s2">          return</span>
+<span class="s2">        }}</span>
+
+<span class="s2">        // Initialize event queue and timeouts for Comm</span>
+<span class="s2">        var comm_state = HoloViewsWidget.comm_state["</span><span class="si">{comm_id}</span><span class="s2">"];</span>
+<span class="s2">        if (comm_state === undefined) {{</span>
+<span class="s2">            comm_state = {{event_buffer: [], blocked: false, time: Date.now()}}</span>
+<span class="s2">            HoloViewsWidget.comm_state["</span><span class="si">{comm_id}</span><span class="s2">"] = comm_state</span>
+<span class="s2">        }}</span>
+
+<span class="s2">        // Add current event to queue and process queue if not blocked</span>
+<span class="s2">        event_name = cb_obj.event_name</span>
+<span class="s2">        data['comm_id'] = "</span><span class="si">{comm_id}</span><span class="s2">";</span>
+<span class="s2">        timeout = comm_state.time + </span><span class="si">{timeout}</span><span class="s2">;</span>
+<span class="s2">        if ((window.Jupyter == null) | (Jupyter.notebook.kernel == null)) {{</span>
+<span class="s2">        }} else if ((comm_state.blocked &amp;&amp; (Date.now() &lt; timeout))) {{</span>
+<span class="s2">            comm_state.event_buffer.unshift([event_name, data]);</span>
+<span class="s2">        }} else {{</span>
+<span class="s2">            comm_state.event_buffer.unshift([event_name, data]);</span>
+<span class="s2">            setTimeout(function() {{ process_events(comm_state); }}, </span><span class="si">{debounce}</span><span class="s2">);</span>
+<span class="s2">            comm_state.blocked = true;</span>
+<span class="s2">            comm_state.time = Date.now()+</span><span class="si">{debounce}</span><span class="s2">;</span>
+<span class="s2">        }}</span>
+<span class="s2">    """</span>
+
+    <span class="n">code</span> <span class="o">=</span> <span class="s2">""</span>
+
+    <span class="c1"># Timeout if a comm message is swallowed</span>
+    <span class="n">timeout</span> <span class="o">=</span> <span class="mi">20000</span>
+
+    <span class="c1"># Timeout before the first event is processed</span>
+    <span class="n">debounce</span> <span class="o">=</span> <span class="mi">20</span>
+
+    <span class="n">_comm_type</span> <span class="o">=</span> <span class="n">JupyterCommJS</span>
+
+<div class="viewcode-block" id="CustomJSCallback.attributes_js"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.callbacks.CustomJSCallback.attributes_js">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">attributes_js</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">attributes</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Generates JS code to look up attributes on JS objects from</span>
+<span class="sd">        an attributes specification dictionary. If the specification</span>
+<span class="sd">        references a plotting particular plotting handle it will also</span>
+<span class="sd">        generate JS code to get the ID of the object.</span>
+
+<span class="sd">        Simple example (when referencing cb_data or cb_obj):</span>
+
+<span class="sd">        Input  : {'x': 'cb_data.geometry.x'}</span>
+
+<span class="sd">        Output : data['x'] = cb_data['geometry']['x']</span>
+
+<span class="sd">        Example referencing plot handle:</span>
+
+<span class="sd">        Input  : {'x0': 'x_range.attributes.start'}</span>
+
+<span class="sd">        Output : if ((x_range !== undefined)) {</span>
+<span class="sd">                    data['x0'] = {id: x_range['id'], value: x_range['attributes']['start']}</span>
+<span class="sd">                 }</span>
+<span class="sd">        """</span>
+        <span class="n">assign_template</span> <span class="o">=</span> <span class="s1">'</span><span class="si">{assign}</span><span class="s1">{{id: </span><span class="si">{obj_name}</span><span class="s1">["id"], value: </span><span class="si">{obj_name}{attr_getters}</span><span class="s1">}};</span><span class="se">\n</span><span class="s1">'</span>
+        <span class="n">conditional_template</span> <span class="o">=</span> <span class="s1">'if ((</span><span class="si">{obj_name}</span><span class="s1"> != undefined)) {{ </span><span class="si">{assign}</span><span class="s1"> }}'</span>
+        <span class="n">code</span> <span class="o">=</span> <span class="s1">''</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">attr_path</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">attributes</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="n">data_assign</span> <span class="o">=</span> <span class="s1">'data["</span><span class="si">{key}</span><span class="s1">"] = '</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="o">=</span><span class="n">key</span><span class="p">)</span>
+            <span class="n">attrs</span> <span class="o">=</span> <span class="n">attr_path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'.'</span><span class="p">)</span>
+            <span class="n">obj_name</span> <span class="o">=</span> <span class="n">attrs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">attr_getters</span> <span class="o">=</span> <span class="s1">''</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">'["</span><span class="si">{attr}</span><span class="s1">"]'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">attr</span><span class="o">=</span><span class="n">attr</span><span class="p">)</span>
+                                    <span class="k">for</span> <span class="n">attr</span> <span class="ow">in</span> <span class="n">attrs</span><span class="p">[</span><span class="mi">1</span><span class="p">:]])</span>
+            <span class="k">if</span> <span class="n">obj_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'cb_obj'</span><span class="p">,</span> <span class="s1">'cb_data'</span><span class="p">]:</span>
+                <span class="n">assign_str</span> <span class="o">=</span> <span class="n">assign_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">assign</span><span class="o">=</span><span class="n">data_assign</span><span class="p">,</span> <span class="n">obj_name</span><span class="o">=</span><span class="n">obj_name</span><span class="p">,</span> <span class="n">attr_getters</span><span class="o">=</span><span class="n">attr_getters</span>
+                <span class="p">)</span>
+                <span class="n">code</span> <span class="o">+=</span> <span class="n">conditional_template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">obj_name</span><span class="o">=</span><span class="n">obj_name</span><span class="p">,</span> <span class="n">assign</span><span class="o">=</span><span class="n">assign_str</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">assign_str</span> <span class="o">=</span> <span class="s1">''</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">data_assign</span><span class="p">,</span> <span class="n">obj_name</span><span class="p">,</span> <span class="n">attr_getters</span><span class="p">,</span> <span class="s1">';</span><span class="se">\n</span><span class="s1">'</span><span class="p">])</span>
+                <span class="n">code</span> <span class="o">+=</span> <span class="n">assign_str</span>
+        <span class="k">return</span> <span class="n">code</span></div>
+
+
+<div class="viewcode-block" id="CustomJSCallback.get_customjs"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.callbacks.CustomJSCallback.get_customjs">[docs]</a>    <span class="k">def</span> <span class="nf">get_customjs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">references</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Creates a CustomJS callback that will send the requested</span>
+<span class="sd">        attributes back to python.</span>
+<span class="sd">        """</span>
+        <span class="c1"># Generate callback JS code to get all the requested data</span>
+        <span class="n">self_callback</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">js_callback</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">comm_id</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">comm</span><span class="o">.</span><span class="n">id</span><span class="p">,</span>
+                                                <span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">,</span>
+                                                <span class="n">debounce</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">debounce</span><span class="p">)</span>
+
+        <span class="n">attributes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">attributes_js</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">attributes</span><span class="p">)</span>
+        <span class="n">conditions</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"</span><span class="si">%s</span><span class="s2">"</span> <span class="o">%</span> <span class="n">cond</span> <span class="k">for</span> <span class="n">cond</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">skip</span><span class="p">]</span>
+        <span class="n">conditional</span> <span class="o">=</span> <span class="s1">''</span>
+        <span class="k">if</span> <span class="n">conditions</span><span class="p">:</span>
+            <span class="n">conditional</span> <span class="o">=</span> <span class="s1">'if (</span><span class="si">%s</span><span class="s1">) { return };</span><span class="se">\n</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span><span class="s1">' || '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">conditions</span><span class="p">))</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="s2">"var data = </span><span class="si">{}</span><span class="s2">;</span><span class="se">\n</span><span class="s2">"</span>
+        <span class="n">code</span> <span class="o">=</span> <span class="n">conditional</span> <span class="o">+</span> <span class="n">data</span> <span class="o">+</span> <span class="n">attributes</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">code</span> <span class="o">+</span> <span class="n">self_callback</span>
+        <span class="k">return</span> <span class="n">CustomJS</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="n">references</span><span class="p">,</span> <span class="n">code</span><span class="o">=</span><span class="n">code</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="CustomJSCallback.set_customjs_callback"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.callbacks.CustomJSCallback.set_customjs_callback">[docs]</a>    <span class="k">def</span> <span class="nf">set_customjs_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">js_callback</span><span class="p">,</span> <span class="n">handle</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Generates a CustomJS callback by generating the required JS</span>
+<span class="sd">        code and gathering all plotting handles and installs it on</span>
+<span class="sd">        the requested callback handle.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_events</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_events</span><span class="p">:</span>
+                <span class="n">handle</span><span class="o">.</span><span class="n">js_on_event</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">js_callback</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_changes</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">change</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_changes</span><span class="p">:</span>
+                <span class="n">handle</span><span class="o">.</span><span class="n">js_on_change</span><span class="p">(</span><span class="n">change</span><span class="p">,</span> <span class="n">js_callback</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">handle</span><span class="p">,</span> <span class="s1">'callback'</span><span class="p">):</span>
+            <span class="n">handle</span><span class="o">.</span><span class="n">callback</span> <span class="o">=</span> <span class="n">js_callback</span></div></div>
+
+
+
+<div class="viewcode-block" id="ServerCallback"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.callbacks.ServerCallback">[docs]</a><span class="k">class</span> <span class="nc">ServerCallback</span><span class="p">(</span><span class="n">MessageCallback</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Implements methods to set up bokeh server callbacks. A ServerCallback</span>
+<span class="sd">    resolves the requested attributes on the Python end and then hands</span>
+<span class="sd">    the msg off to the general on_msg handler, which will update the</span>
+<span class="sd">    Stream(s) attached to the callback.</span>
+<span class="sd">    """</span>
+
+<div class="viewcode-block" id="ServerCallback.resolve_attr_spec"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.callbacks.ServerCallback.resolve_attr_spec">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">resolve_attr_spec</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">spec</span><span class="p">,</span> <span class="n">cb_obj</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Resolves a Callback attribute specification looking the</span>
+<span class="sd">        corresponding attribute up on the cb_obj, which should be a</span>
+<span class="sd">        bokeh model. If not model is supplied cb_obj is assumed to</span>
+<span class="sd">        be the same as the model.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">cb_obj</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">'Bokeh plot attribute </span><span class="si">%s</span><span class="s1"> could not be found'</span> <span class="o">%</span> <span class="n">spec</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">model</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="n">cb_obj</span>
+        <span class="n">spec</span> <span class="o">=</span> <span class="n">spec</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'.'</span><span class="p">)</span>
+        <span class="n">resolved</span> <span class="o">=</span> <span class="n">cb_obj</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">spec</span><span class="p">[</span><span class="mi">1</span><span class="p">:]:</span>
+            <span class="k">if</span> <span class="n">p</span> <span class="o">==</span> <span class="s1">'attributes'</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">resolved</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="n">resolved</span> <span class="o">=</span> <span class="n">resolved</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">resolved</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">resolved</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">'id'</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">ref</span><span class="p">[</span><span class="s1">'id'</span><span class="p">],</span> <span class="s1">'value'</span><span class="p">:</span> <span class="n">resolved</span><span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="ServerCallback.on_change"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.callbacks.ServerCallback.on_change">[docs]</a>    <span class="k">def</span> <span class="nf">on_change</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">attr</span><span class="p">,</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Process change events adding timeout to process multiple concerted</span>
+<span class="sd">        value change at once rather than firing off multiple plot updates.</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_queue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">attr</span><span class="p">,</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">process_on_change</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">_session_callbacks</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">add_timeout_callback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">process_on_change</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ServerCallback.on_event"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.callbacks.ServerCallback.on_event">[docs]</a>    <span class="k">def</span> <span class="nf">on_event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">event</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Process bokeh UIEvents adding timeout to process multiple concerted</span>
+<span class="sd">        value change at once rather than firing off multiple plot updates.</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_queue</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">event</span><span class="p">))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">process_on_event</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">_session_callbacks</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">add_timeout_callback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">process_on_event</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ServerCallback.process_on_event"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.callbacks.ServerCallback.process_on_event">[docs]</a>    <span class="k">def</span> <span class="nf">process_on_event</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Trigger callback change event and triggering corresponding streams.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_queue</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="c1"># Get unique event types in the queue</span>
+        <span class="n">events</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">OrderedDict</span><span class="p">([(</span><span class="n">event</span><span class="o">.</span><span class="n">event_name</span><span class="p">,</span> <span class="n">event</span><span class="p">)</span>
+                                   <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_queue</span><span class="p">])</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_queue</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># Process event types</span>
+        <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">events</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">attr</span><span class="p">,</span> <span class="n">path</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">model_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot_handles</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="n">msg</span><span class="p">[</span><span class="n">attr</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resolve_attr_spec</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">event</span><span class="p">,</span> <span class="n">model_obj</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">on_msg</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">add_timeout_callback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">process_on_event</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span> <span class="nf">process_on_change</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_queue</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_queue</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">msg</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">attr</span><span class="p">,</span> <span class="n">path</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">attributes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">attr_path</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'.'</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">attr_path</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'cb_obj'</span><span class="p">:</span>
+                <span class="n">obj_handle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">path</span> <span class="o">=</span> <span class="s1">'.'</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">[:</span><span class="mi">1</span><span class="p">]</span><span class="o">+</span><span class="n">attr_path</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">obj_handle</span> <span class="o">=</span> <span class="n">attr_path</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">cb_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot_handles</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">obj_handle</span><span class="p">)</span>
+            <span class="n">msg</span><span class="p">[</span><span class="n">attr</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">resolve_attr_spec</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">cb_obj</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">on_msg</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">add_timeout_callback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">process_on_change</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="ServerCallback.set_server_callback"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.callbacks.ServerCallback.set_server_callback">[docs]</a>    <span class="k">def</span> <span class="nf">set_server_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handle</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Set up on_change events for bokeh server interactions.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_events</span> <span class="ow">and</span> <span class="n">bokeh_version</span> <span class="o">&gt;=</span> <span class="s1">'0.12.5'</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_events</span><span class="p">:</span>
+                <span class="n">handle</span><span class="o">.</span><span class="n">on_event</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_event</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_changes</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">change</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_changes</span><span class="p">:</span>
+                <span class="n">handle</span><span class="o">.</span><span class="n">on_change</span><span class="p">(</span><span class="n">change</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">on_change</span><span class="p">)</span></div></div>
+
+
+
+<div class="viewcode-block" id="Callback"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.callbacks.Callback">[docs]</a><span class="k">class</span> <span class="nc">Callback</span><span class="p">(</span><span class="n">CustomJSCallback</span><span class="p">,</span> <span class="n">ServerCallback</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Provides a baseclass to define callbacks, which return data from</span>
+<span class="sd">    bokeh model callbacks, events and attribute changes. The callback</span>
+<span class="sd">    then makes this data available to any streams attached to it.</span>
+
+<span class="sd">    The definition of a callback consists of a number of components:</span>
+
+<span class="sd">    * models      : Defines which bokeh models the callback will be</span>
+<span class="sd">                    attached on referencing the model by its key in</span>
+<span class="sd">                    the plots handles, e.g. this could be the x_range,</span>
+<span class="sd">                    y_range, plot, a plotting tool or any other</span>
+<span class="sd">                    bokeh mode.</span>
+
+<span class="sd">    * extra_models: Any additional models available in handles which</span>
+<span class="sd">                    should be made available in the namespace of the</span>
+<span class="sd">                    objects, e.g. to make a tool available to skip</span>
+<span class="sd">                    checks.</span>
+
+<span class="sd">    * attributes  : The attributes define which attributes to send</span>
+<span class="sd">                    back to Python. They are defined as a dictionary</span>
+<span class="sd">                    mapping between the name under which the variable</span>
+<span class="sd">                    is made available to Python and the specification</span>
+<span class="sd">                    of the attribute. The specification should start</span>
+<span class="sd">                    with the variable name that is to be accessed and</span>
+<span class="sd">                    the location of the attribute separated by</span>
+<span class="sd">                    periods.  All models defined by the models and</span>
+<span class="sd">                    extra_models attributes can be addressed in this</span>
+<span class="sd">                    way, e.g. to get the start of the x_range as 'x'</span>
+<span class="sd">                    you can supply {'x': 'x_range.attributes.start'}.</span>
+<span class="sd">                    Additionally certain handles additionally make the</span>
+<span class="sd">                    cb_data and cb_obj variables available containing</span>
+<span class="sd">                    additional information about the event.</span>
+
+<span class="sd">    * skip        : Conditions when the Callback should be skipped</span>
+<span class="sd">                    specified as a list of valid JS expressions, which</span>
+<span class="sd">                    can reference models requested by the callback,</span>
+<span class="sd">                    e.g. ['pan.attributes.active'] would skip the</span>
+<span class="sd">                    callback if the pan tool is active.</span>
+
+<span class="sd">    * code        : Defines any additional JS code to be executed,</span>
+<span class="sd">                    which can modify the data object that is sent to</span>
+<span class="sd">                    the backend.</span>
+
+<span class="sd">    * on_events   : If the Callback should listen to bokeh events this</span>
+<span class="sd">                    should declare the types of event as a list (optional)</span>
+
+<span class="sd">    * on_changes  : If the Callback should listen to model attribute</span>
+<span class="sd">                    changes on the defined ``models`` (optional)</span>
+
+<span class="sd">    If either on_events or on_changes are declared the Callback will</span>
+<span class="sd">    be registered using the on_event or on_change machinery, otherwise</span>
+<span class="sd">    it will be treated as a regular callback on the model.  The</span>
+<span class="sd">    callback can also define a _process_msg method, which can modify</span>
+<span class="sd">    the data sent by the callback before it is passed to the streams.</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">handles</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_init_plot_handles</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">handle_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">models</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">handle_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">handles</span><span class="p">:</span>
+                <span class="n">warn_args</span> <span class="o">=</span> <span class="p">(</span><span class="n">handle_name</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+                             <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="si">%s</span><span class="s1"> handle not found on </span><span class="si">%s</span><span class="s1">, cannot '</span>
+                      <span class="s1">'attach </span><span class="si">%s</span><span class="s1"> callback'</span> <span class="o">%</span> <span class="n">warn_args</span><span class="p">)</span>
+                <span class="k">continue</span>
+            <span class="n">handle</span> <span class="o">=</span> <span class="n">handles</span><span class="p">[</span><span class="n">handle_name</span><span class="p">]</span>
+
+            <span class="c1"># Hash the plot handle with Callback type allowing multiple</span>
+            <span class="c1"># callbacks on one handle to be merged</span>
+            <span class="n">cb_hash</span> <span class="o">=</span> <span class="p">(</span><span class="nb">id</span><span class="p">(</span><span class="n">handle</span><span class="p">),</span> <span class="nb">id</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)))</span>
+            <span class="k">if</span> <span class="n">cb_hash</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_callbacks</span><span class="p">:</span>
+                <span class="c1"># Merge callbacks if another callback has already been attached</span>
+                <span class="n">cb</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_callbacks</span><span class="p">[</span><span class="n">cb_hash</span><span class="p">]</span>
+                <span class="n">cb</span><span class="o">.</span><span class="n">streams</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">cb</span><span class="o">.</span><span class="n">streams</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">streams</span><span class="p">))</span>
+                <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">handle_ids</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="n">cb</span><span class="o">.</span><span class="n">handle_ids</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+                <span class="k">continue</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">mode</span> <span class="o">==</span> <span class="s1">'server'</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">set_server_callback</span><span class="p">(</span><span class="n">handle</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">js_callback</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_customjs</span><span class="p">(</span><span class="n">handles</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">set_customjs_callback</span><span class="p">(</span><span class="n">js_callback</span><span class="p">,</span> <span class="n">handle</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">js_callback</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_callbacks</span><span class="p">[</span><span class="n">cb_hash</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span></div>
+
+
+
+<div class="viewcode-block" id="PointerXYCallback"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.callbacks.PointerXYCallback">[docs]</a><span class="k">class</span> <span class="nc">PointerXYCallback</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Returns the mouse x/y-position on mousemove event.</span>
+<span class="sd">    """</span>
+
+    <span class="n">attributes</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'x'</span><span class="p">:</span> <span class="s1">'cb_obj.x'</span><span class="p">,</span> <span class="s1">'y'</span><span class="p">:</span> <span class="s1">'cb_obj.y'</span><span class="p">}</span>
+    <span class="n">models</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'plot'</span><span class="p">]</span>
+    <span class="n">extra_models</span><span class="o">=</span> <span class="p">[</span><span class="s1">'x_range'</span><span class="p">,</span> <span class="s1">'y_range'</span><span class="p">]</span>
+
+    <span class="n">on_events</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'mousemove'</span><span class="p">]</span>
+    <span class="c1"># Clip x and y values to available axis range</span>
+    <span class="n">code</span> <span class="o">=</span> <span class="s2">"""</span>
+<span class="s2">           if (x_range.type.endsWith('Range1d')) {</span>
+<span class="s2">             if (cb_obj.x &lt; x_range.start) {</span>
+<span class="s2">               data['x'] = x_range.start }</span>
+<span class="s2">             else if (cb_obj.x &gt; x_range.end) {</span>
+<span class="s2">               data['x'] = x_range.end }}</span>
+<span class="s2">           if (y_range.type.endsWith('Range1d')) {</span>
+<span class="s2">             if (cb_obj.y &lt; y_range.start) {</span>
+<span class="s2">               data['y'] = y_range.start }</span>
+<span class="s2">             else if (cb_obj.y &gt; y_range.end) {</span>
+<span class="s2">               data['y'] = y_range.end }}</span>
+<span class="s2">           """</span>
+
+    <span class="k">def</span> <span class="nf">_process_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="n">x_range</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">handles</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'x_range'</span><span class="p">)</span>
+        <span class="n">y_range</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">handles</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'y_range'</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x_range</span><span class="p">,</span> <span class="n">FactorRange</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'x'</span><span class="p">),</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+            <span class="n">msg</span><span class="p">[</span><span class="s1">'x'</span><span class="p">]</span> <span class="o">=</span> <span class="n">x_range</span><span class="o">.</span><span class="n">factors</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">msg</span><span class="p">[</span><span class="s1">'x'</span><span class="p">])]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">y_range</span><span class="p">,</span> <span class="n">FactorRange</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'y'</span><span class="p">),</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">)):</span>
+            <span class="n">msg</span><span class="p">[</span><span class="s1">'y'</span><span class="p">]</span> <span class="o">=</span> <span class="n">y_range</span><span class="o">.</span><span class="n">factors</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">msg</span><span class="p">[</span><span class="s1">'y'</span><span class="p">])]</span>
+
+        <span class="n">xaxis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">handles</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'xaxis'</span><span class="p">)</span>
+        <span class="n">yaxis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">handles</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'yaxis'</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">'x'</span> <span class="ow">in</span> <span class="n">msg</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">xaxis</span><span class="p">,</span> <span class="n">DatetimeAxis</span><span class="p">):</span>
+            <span class="n">msg</span><span class="p">[</span><span class="s1">'x'</span><span class="p">]</span> <span class="o">=</span> <span class="n">convert_timestamp</span><span class="p">(</span><span class="n">msg</span><span class="p">[</span><span class="s1">'x'</span><span class="p">])</span>
+        <span class="k">if</span> <span class="s1">'y'</span> <span class="ow">in</span> <span class="n">msg</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">yaxis</span><span class="p">,</span> <span class="n">DatetimeAxis</span><span class="p">):</span>
+            <span class="n">msg</span><span class="p">[</span><span class="s1">'y'</span><span class="p">]</span> <span class="o">=</span> <span class="n">convert_timestamp</span><span class="p">(</span><span class="n">msg</span><span class="p">[</span><span class="s1">'y'</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">msg</span></div>
+
+
+<div class="viewcode-block" id="PointerXCallback"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.callbacks.PointerXCallback">[docs]</a><span class="k">class</span> <span class="nc">PointerXCallback</span><span class="p">(</span><span class="n">PointerXYCallback</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Returns the mouse x-position on mousemove event.</span>
+<span class="sd">    """</span>
+
+    <span class="n">attributes</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'x'</span><span class="p">:</span> <span class="s1">'cb_obj.x'</span><span class="p">}</span>
+    <span class="n">extra_models</span><span class="o">=</span> <span class="p">[</span><span class="s1">'x_range'</span><span class="p">]</span>
+    <span class="n">code</span> <span class="o">=</span> <span class="s2">"""</span>
+<span class="s2">           if (x_range.type.endsWith('Range1d')) {</span>
+<span class="s2">             if (cb_obj.x &lt; x_range.start) {</span>
+<span class="s2">               data['x'] = x_range.start }</span>
+<span class="s2">             else if (cb_obj.x &gt; x_range.end) {</span>
+<span class="s2">               data['x'] = x_range.end }}</span>
+<span class="s2">           """</span></div>
+
+<div class="viewcode-block" id="PointerYCallback"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.callbacks.PointerYCallback">[docs]</a><span class="k">class</span> <span class="nc">PointerYCallback</span><span class="p">(</span><span class="n">PointerXYCallback</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Returns the mouse x/y-position on mousemove event.</span>
+<span class="sd">    """</span>
+
+    <span class="n">attributes</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'y'</span><span class="p">:</span> <span class="s1">'cb_obj.y'</span><span class="p">}</span>
+    <span class="n">extra_models</span><span class="o">=</span> <span class="p">[</span><span class="s1">'y_range'</span><span class="p">]</span>
+    <span class="n">code</span> <span class="o">=</span> <span class="s2">"""</span>
+<span class="s2">           if (y_range.type.endsWith('Range1d')) {</span>
+<span class="s2">             if (cb_obj.y &lt; y_range.start) {</span>
+<span class="s2">               data['y'] = y_range.start }</span>
+<span class="s2">             else if (cb_obj.y &gt; y_range.end) {</span>
+<span class="s2">               data['y'] = y_range.end }}</span>
+<span class="s2">           """</span></div>
+
+<span class="k">class</span> <span class="nc">DrawCallback</span><span class="p">(</span><span class="n">PointerXYCallback</span><span class="p">):</span>
+    <span class="n">on_events</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'pan'</span><span class="p">,</span> <span class="s1">'panstart'</span><span class="p">,</span> <span class="s1">'panend'</span><span class="p">]</span>
+    <span class="n">models</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'plot'</span><span class="p">]</span>
+    <span class="n">extra_models</span><span class="o">=</span><span class="p">[</span><span class="s1">'pan'</span><span class="p">,</span> <span class="s1">'box_zoom'</span><span class="p">,</span> <span class="s1">'x_range'</span><span class="p">,</span> <span class="s1">'y_range'</span><span class="p">]</span>
+    <span class="n">skip</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'pan &amp;&amp; pan.attributes.active'</span><span class="p">,</span> <span class="s1">'box_zoom &amp;&amp; box_zoom.attributes.active'</span><span class="p">]</span>
+    <span class="n">attributes</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'x'</span><span class="p">:</span> <span class="s1">'cb_obj.x'</span><span class="p">,</span> <span class="s1">'y'</span><span class="p">:</span> <span class="s1">'cb_obj.y'</span><span class="p">,</span> <span class="s1">'event'</span><span class="p">:</span> <span class="s1">'cb_obj.event_name'</span><span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stroke_count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">DrawCallback</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_process_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="n">event</span> <span class="o">=</span> <span class="n">msg</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">'event'</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">event</span> <span class="o">==</span> <span class="s1">'panend'</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stroke_count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="n">stroke_count</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">stroke_count</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="TapCallback"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.callbacks.TapCallback">[docs]</a><span class="k">class</span> <span class="nc">TapCallback</span><span class="p">(</span><span class="n">PointerXYCallback</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Returns the mouse x/y-position on tap event.</span>
+
+<span class="sd">    Note: As of bokeh 0.12.5, there is no way to distinguish the</span>
+<span class="sd">    individual tap events within a doubletap event.</span>
+<span class="sd">    """</span>
+
+    <span class="n">on_events</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'tap'</span><span class="p">,</span> <span class="s1">'doubletap'</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="SingleTapCallback"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.callbacks.SingleTapCallback">[docs]</a><span class="k">class</span> <span class="nc">SingleTapCallback</span><span class="p">(</span><span class="n">PointerXYCallback</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Returns the mouse x/y-position on tap event.</span>
+<span class="sd">    """</span>
+
+    <span class="n">on_events</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'tap'</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="DoubleTapCallback"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.callbacks.DoubleTapCallback">[docs]</a><span class="k">class</span> <span class="nc">DoubleTapCallback</span><span class="p">(</span><span class="n">PointerXYCallback</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Returns the mouse x/y-position on doubletap event.</span>
+<span class="sd">    """</span>
+
+    <span class="n">on_events</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'doubletap'</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="MouseEnterCallback"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.callbacks.MouseEnterCallback">[docs]</a><span class="k">class</span> <span class="nc">MouseEnterCallback</span><span class="p">(</span><span class="n">PointerXYCallback</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Returns the mouse x/y-position on mouseenter event, i.e. when</span>
+<span class="sd">    mouse enters the plot canvas.</span>
+<span class="sd">    """</span>
+
+    <span class="n">on_events</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'mouseenter'</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="MouseLeaveCallback"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.callbacks.MouseLeaveCallback">[docs]</a><span class="k">class</span> <span class="nc">MouseLeaveCallback</span><span class="p">(</span><span class="n">PointerXYCallback</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Returns the mouse x/y-position on mouseleave event, i.e. when</span>
+<span class="sd">    mouse leaves the plot canvas.</span>
+<span class="sd">    """</span>
+
+    <span class="n">on_events</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'mouseleave'</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="RangeXYCallback"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.callbacks.RangeXYCallback">[docs]</a><span class="k">class</span> <span class="nc">RangeXYCallback</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Returns the x/y-axis ranges of a plot.</span>
+<span class="sd">    """</span>
+
+    <span class="n">attributes</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'x0'</span><span class="p">:</span> <span class="s1">'x_range.attributes.start'</span><span class="p">,</span>
+                  <span class="s1">'x1'</span><span class="p">:</span> <span class="s1">'x_range.attributes.end'</span><span class="p">,</span>
+                  <span class="s1">'y0'</span><span class="p">:</span> <span class="s1">'y_range.attributes.start'</span><span class="p">,</span>
+                  <span class="s1">'y1'</span><span class="p">:</span> <span class="s1">'y_range.attributes.end'</span><span class="p">}</span>
+    <span class="n">models</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'x_range'</span><span class="p">,</span> <span class="s1">'y_range'</span><span class="p">]</span>
+    <span class="n">on_changes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'start'</span><span class="p">,</span> <span class="s1">'end'</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_process_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="s1">'x0'</span> <span class="ow">in</span> <span class="n">msg</span> <span class="ow">and</span> <span class="s1">'x1'</span> <span class="ow">in</span> <span class="n">msg</span><span class="p">:</span>
+            <span class="n">x0</span><span class="p">,</span> <span class="n">x1</span> <span class="o">=</span> <span class="n">msg</span><span class="p">[</span><span class="s1">'x0'</span><span class="p">],</span> <span class="n">msg</span><span class="p">[</span><span class="s1">'x1'</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">handles</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'xaxis'</span><span class="p">),</span> <span class="n">DatetimeAxis</span><span class="p">):</span>
+                <span class="n">x0</span> <span class="o">=</span> <span class="n">convert_timestamp</span><span class="p">(</span><span class="n">x0</span><span class="p">)</span>
+                <span class="n">x1</span> <span class="o">=</span> <span class="n">convert_timestamp</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">invert_xaxis</span><span class="p">:</span>
+                <span class="n">x0</span><span class="p">,</span> <span class="n">x1</span> <span class="o">=</span> <span class="n">x1</span><span class="p">,</span> <span class="n">x0</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">'x_range'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">x1</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">'y0'</span> <span class="ow">in</span> <span class="n">msg</span> <span class="ow">and</span> <span class="s1">'y1'</span> <span class="ow">in</span> <span class="n">msg</span><span class="p">:</span>
+            <span class="n">y0</span><span class="p">,</span> <span class="n">y1</span> <span class="o">=</span> <span class="n">msg</span><span class="p">[</span><span class="s1">'y0'</span><span class="p">],</span> <span class="n">msg</span><span class="p">[</span><span class="s1">'y1'</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">handles</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'yaxis'</span><span class="p">),</span> <span class="n">DatetimeAxis</span><span class="p">):</span>
+                <span class="n">y0</span> <span class="o">=</span> <span class="n">convert_timestamp</span><span class="p">(</span><span class="n">y0</span><span class="p">)</span>
+                <span class="n">y1</span> <span class="o">=</span> <span class="n">convert_timestamp</span><span class="p">(</span><span class="n">y1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">invert_yaxis</span><span class="p">:</span>
+                <span class="n">y0</span><span class="p">,</span> <span class="n">y1</span> <span class="o">=</span> <span class="n">y1</span><span class="p">,</span> <span class="n">y0</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">'y_range'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">y0</span><span class="p">,</span> <span class="n">y1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">data</span></div>
+
+
+<div class="viewcode-block" id="RangeXCallback"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.callbacks.RangeXCallback">[docs]</a><span class="k">class</span> <span class="nc">RangeXCallback</span><span class="p">(</span><span class="n">RangeXYCallback</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Returns the x-axis range of a plot.</span>
+<span class="sd">    """</span>
+
+    <span class="n">attributes</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'x0'</span><span class="p">:</span> <span class="s1">'x_range.attributes.start'</span><span class="p">,</span>
+                  <span class="s1">'x1'</span><span class="p">:</span> <span class="s1">'x_range.attributes.end'</span><span class="p">}</span>
+    <span class="n">models</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'x_range'</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="RangeYCallback"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.callbacks.RangeYCallback">[docs]</a><span class="k">class</span> <span class="nc">RangeYCallback</span><span class="p">(</span><span class="n">RangeXYCallback</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Returns the y-axis range of a plot.</span>
+<span class="sd">    """</span>
+
+    <span class="n">attributes</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'y0'</span><span class="p">:</span> <span class="s1">'y_range.attributes.start'</span><span class="p">,</span>
+                  <span class="s1">'y1'</span><span class="p">:</span> <span class="s1">'y_range.attributes.end'</span><span class="p">}</span>
+    <span class="n">models</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'y_range'</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="PlotSizeCallback"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.callbacks.PlotSizeCallback">[docs]</a><span class="k">class</span> <span class="nc">PlotSizeCallback</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Returns the actual width and height of a plot once the layout</span>
+<span class="sd">    solver has executed.</span>
+<span class="sd">    """</span>
+
+    <span class="n">models</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'plot'</span><span class="p">]</span>
+    <span class="n">attributes</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'width'</span><span class="p">:</span> <span class="s1">'cb_obj.inner_width'</span><span class="p">,</span>
+                  <span class="s1">'height'</span><span class="p">:</span> <span class="s1">'cb_obj.inner_height'</span><span class="p">}</span>
+    <span class="n">on_changes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'inner_width'</span><span class="p">,</span> <span class="s1">'inner_height'</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_process_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">msg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'width'</span><span class="p">)</span> <span class="ow">and</span> <span class="n">msg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'height'</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">msg</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{}</span></div>
+
+
+<div class="viewcode-block" id="BoundsCallback"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.callbacks.BoundsCallback">[docs]</a><span class="k">class</span> <span class="nc">BoundsCallback</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Returns the bounds of a box_select tool.</span>
+<span class="sd">    """</span>
+    <span class="n">attributes</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'x0'</span><span class="p">:</span> <span class="s1">'cb_obj.geometry.x0'</span><span class="p">,</span>
+                  <span class="s1">'x1'</span><span class="p">:</span> <span class="s1">'cb_obj.geometry.x1'</span><span class="p">,</span>
+                  <span class="s1">'y0'</span><span class="p">:</span> <span class="s1">'cb_obj.geometry.y0'</span><span class="p">,</span>
+                  <span class="s1">'y1'</span><span class="p">:</span> <span class="s1">'cb_obj.geometry.y1'</span><span class="p">}</span>
+    <span class="n">models</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'plot'</span><span class="p">]</span>
+    <span class="n">extra_models</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'box_select'</span><span class="p">]</span>
+    <span class="n">on_events</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'selectiongeometry'</span><span class="p">]</span>
+    <span class="n">skip</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"cb_obj.geometry.type != 'rect'"</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_process_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">c</span> <span class="ow">in</span> <span class="n">msg</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'x0'</span><span class="p">,</span> <span class="s1">'y0'</span><span class="p">,</span> <span class="s1">'x1'</span><span class="p">,</span> <span class="s1">'y1'</span><span class="p">]):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">handles</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'xaxis'</span><span class="p">),</span> <span class="n">DatetimeAxis</span><span class="p">):</span>
+                <span class="n">msg</span><span class="p">[</span><span class="s1">'x0'</span><span class="p">]</span> <span class="o">=</span> <span class="n">convert_timestamp</span><span class="p">(</span><span class="n">msg</span><span class="p">[</span><span class="s1">'x0'</span><span class="p">])</span>
+                <span class="n">msg</span><span class="p">[</span><span class="s1">'x1'</span><span class="p">]</span> <span class="o">=</span> <span class="n">convert_timestamp</span><span class="p">(</span><span class="n">msg</span><span class="p">[</span><span class="s1">'x1'</span><span class="p">])</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">handles</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'yaxis'</span><span class="p">),</span> <span class="n">DatetimeAxis</span><span class="p">):</span>
+                <span class="n">msg</span><span class="p">[</span><span class="s1">'y0'</span><span class="p">]</span> <span class="o">=</span> <span class="n">convert_timestamp</span><span class="p">(</span><span class="n">msg</span><span class="p">[</span><span class="s1">'y0'</span><span class="p">])</span>
+                <span class="n">msg</span><span class="p">[</span><span class="s1">'y1'</span><span class="p">]</span> <span class="o">=</span> <span class="n">convert_timestamp</span><span class="p">(</span><span class="n">msg</span><span class="p">[</span><span class="s1">'y1'</span><span class="p">])</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s1">'bounds'</span><span class="p">:</span> <span class="p">(</span><span class="n">msg</span><span class="p">[</span><span class="s1">'x0'</span><span class="p">],</span> <span class="n">msg</span><span class="p">[</span><span class="s1">'y0'</span><span class="p">],</span> <span class="n">msg</span><span class="p">[</span><span class="s1">'x1'</span><span class="p">],</span> <span class="n">msg</span><span class="p">[</span><span class="s1">'y1'</span><span class="p">])}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{}</span></div>
+
+
+<div class="viewcode-block" id="BoundsXCallback"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.callbacks.BoundsXCallback">[docs]</a><span class="k">class</span> <span class="nc">BoundsXCallback</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Returns the bounds of a xbox_select tool.</span>
+<span class="sd">    """</span>
+
+    <span class="n">attributes</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'x0'</span><span class="p">:</span> <span class="s1">'cb_obj.geometry.x0'</span><span class="p">,</span> <span class="s1">'x1'</span><span class="p">:</span> <span class="s1">'cb_obj.geometry.x1'</span><span class="p">}</span>
+    <span class="n">models</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'plot'</span><span class="p">]</span>
+    <span class="n">extra_models</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'xbox_select'</span><span class="p">]</span>
+    <span class="n">on_events</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'selectiongeometry'</span><span class="p">]</span>
+    <span class="n">skip</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"cb_obj.geometry.type != 'rect'"</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_process_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">c</span> <span class="ow">in</span> <span class="n">msg</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'x0'</span><span class="p">,</span> <span class="s1">'x1'</span><span class="p">]):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">handles</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'xaxis'</span><span class="p">),</span> <span class="n">DatetimeAxis</span><span class="p">):</span>
+                <span class="n">msg</span><span class="p">[</span><span class="s1">'x0'</span><span class="p">]</span> <span class="o">=</span> <span class="n">convert_timestamp</span><span class="p">(</span><span class="n">msg</span><span class="p">[</span><span class="s1">'x0'</span><span class="p">])</span>
+                <span class="n">msg</span><span class="p">[</span><span class="s1">'x1'</span><span class="p">]</span> <span class="o">=</span> <span class="n">convert_timestamp</span><span class="p">(</span><span class="n">msg</span><span class="p">[</span><span class="s1">'x1'</span><span class="p">])</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s1">'boundsx'</span><span class="p">:</span> <span class="p">(</span><span class="n">msg</span><span class="p">[</span><span class="s1">'x0'</span><span class="p">],</span> <span class="n">msg</span><span class="p">[</span><span class="s1">'x1'</span><span class="p">])}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{}</span></div>
+
+
+<div class="viewcode-block" id="BoundsYCallback"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.callbacks.BoundsYCallback">[docs]</a><span class="k">class</span> <span class="nc">BoundsYCallback</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Returns the bounds of a ybox_select tool.</span>
+<span class="sd">    """</span>
+
+    <span class="n">attributes</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'y0'</span><span class="p">:</span> <span class="s1">'cb_obj.geometry.y0'</span><span class="p">,</span> <span class="s1">'y1'</span><span class="p">:</span> <span class="s1">'cb_obj.geometry.y1'</span><span class="p">}</span>
+    <span class="n">models</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'plot'</span><span class="p">]</span>
+    <span class="n">extra_models</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'ybox_select'</span><span class="p">]</span>
+    <span class="n">on_events</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'selectiongeometry'</span><span class="p">]</span>
+    <span class="n">skip</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"cb_obj.geometry.type != 'rect'"</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_process_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">c</span> <span class="ow">in</span> <span class="n">msg</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'y0'</span><span class="p">,</span> <span class="s1">'y1'</span><span class="p">]):</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">handles</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'yaxis'</span><span class="p">),</span> <span class="n">DatetimeAxis</span><span class="p">):</span>
+                <span class="n">msg</span><span class="p">[</span><span class="s1">'y0'</span><span class="p">]</span> <span class="o">=</span> <span class="n">convert_timestamp</span><span class="p">(</span><span class="n">msg</span><span class="p">[</span><span class="s1">'y0'</span><span class="p">])</span>
+                <span class="n">msg</span><span class="p">[</span><span class="s1">'y1'</span><span class="p">]</span> <span class="o">=</span> <span class="n">convert_timestamp</span><span class="p">(</span><span class="n">msg</span><span class="p">[</span><span class="s1">'y1'</span><span class="p">])</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s1">'boundsy'</span><span class="p">:</span> <span class="p">(</span><span class="n">msg</span><span class="p">[</span><span class="s1">'y0'</span><span class="p">],</span> <span class="n">msg</span><span class="p">[</span><span class="s1">'y1'</span><span class="p">])}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{}</span></div>
+
+
+<div class="viewcode-block" id="Selection1DCallback"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.callbacks.Selection1DCallback">[docs]</a><span class="k">class</span> <span class="nc">Selection1DCallback</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Returns the current selection on a ColumnDataSource.</span>
+<span class="sd">    """</span>
+
+    <span class="n">attributes</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'index'</span><span class="p">:</span> <span class="s1">'cb_obj.selected.1d.indices'</span><span class="p">}</span>
+    <span class="n">models</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'source'</span><span class="p">]</span>
+    <span class="n">on_changes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'selected'</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_process_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="k">if</span> <span class="s1">'index'</span> <span class="ow">in</span> <span class="n">msg</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{</span><span class="s1">'index'</span><span class="p">:</span> <span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">msg</span><span class="p">[</span><span class="s1">'index'</span><span class="p">]]}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">{}</span></div>
+
+
+<div class="viewcode-block" id="ResetCallback"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.callbacks.ResetCallback">[docs]</a><span class="k">class</span> <span class="nc">ResetCallback</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Signals the Reset stream if an event has been triggered.</span>
+<span class="sd">    """</span>
+
+    <span class="n">models</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'plot'</span><span class="p">]</span>
+    <span class="n">on_events</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'reset'</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">_process_msg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">'reset'</span><span class="p">:</span> <span class="kc">True</span><span class="p">}</span></div>
+
+
+<span class="n">callbacks</span> <span class="o">=</span> <span class="n">Stream</span><span class="o">.</span><span class="n">_callbacks</span><span class="p">[</span><span class="s1">'bokeh'</span><span class="p">]</span>
+
+<span class="n">callbacks</span><span class="p">[</span><span class="n">PointerXY</span><span class="p">]</span>   <span class="o">=</span> <span class="n">PointerXYCallback</span>
+<span class="n">callbacks</span><span class="p">[</span><span class="n">PointerX</span><span class="p">]</span>    <span class="o">=</span> <span class="n">PointerXCallback</span>
+<span class="n">callbacks</span><span class="p">[</span><span class="n">PointerY</span><span class="p">]</span>    <span class="o">=</span> <span class="n">PointerYCallback</span>
+<span class="n">callbacks</span><span class="p">[</span><span class="n">Tap</span><span class="p">]</span>         <span class="o">=</span> <span class="n">TapCallback</span>
+<span class="n">callbacks</span><span class="p">[</span><span class="n">SingleTap</span><span class="p">]</span>   <span class="o">=</span> <span class="n">SingleTapCallback</span>
+<span class="n">callbacks</span><span class="p">[</span><span class="n">DoubleTap</span><span class="p">]</span>   <span class="o">=</span> <span class="n">DoubleTapCallback</span>
+<span class="n">callbacks</span><span class="p">[</span><span class="n">MouseEnter</span><span class="p">]</span>  <span class="o">=</span> <span class="n">MouseEnterCallback</span>
+<span class="n">callbacks</span><span class="p">[</span><span class="n">MouseLeave</span><span class="p">]</span>  <span class="o">=</span> <span class="n">MouseLeaveCallback</span>
+<span class="n">callbacks</span><span class="p">[</span><span class="n">RangeXY</span><span class="p">]</span>     <span class="o">=</span> <span class="n">RangeXYCallback</span>
+<span class="n">callbacks</span><span class="p">[</span><span class="n">RangeX</span><span class="p">]</span>      <span class="o">=</span> <span class="n">RangeXCallback</span>
+<span class="n">callbacks</span><span class="p">[</span><span class="n">RangeY</span><span class="p">]</span>      <span class="o">=</span> <span class="n">RangeYCallback</span>
+<span class="n">callbacks</span><span class="p">[</span><span class="n">Bounds</span><span class="p">]</span>      <span class="o">=</span> <span class="n">BoundsCallback</span>
+<span class="n">callbacks</span><span class="p">[</span><span class="n">BoundsXY</span><span class="p">]</span>    <span class="o">=</span> <span class="n">BoundsCallback</span>
+<span class="n">callbacks</span><span class="p">[</span><span class="n">BoundsX</span><span class="p">]</span>     <span class="o">=</span> <span class="n">BoundsXCallback</span>
+<span class="n">callbacks</span><span class="p">[</span><span class="n">BoundsY</span><span class="p">]</span>     <span class="o">=</span> <span class="n">BoundsYCallback</span>
+<span class="n">callbacks</span><span class="p">[</span><span class="n">Selection1D</span><span class="p">]</span> <span class="o">=</span> <span class="n">Selection1DCallback</span>
+<span class="n">callbacks</span><span class="p">[</span><span class="n">PlotSize</span><span class="p">]</span>    <span class="o">=</span> <span class="n">PlotSizeCallback</span>
+<span class="n">callbacks</span><span class="p">[</span><span class="n">Draw</span><span class="p">]</span>        <span class="o">=</span> <span class="n">DrawCallback</span>
+<span class="n">callbacks</span><span class="p">[</span><span class="n">PlotReset</span><span class="p">]</span>   <span class="o">=</span> <span class="n">ResetCallback</span>
+
+<span class="c1"># Aliases for deprecated streams</span>
+<span class="n">callbacks</span><span class="p">[</span><span class="n">PositionXY</span><span class="p">]</span>  <span class="o">=</span> <span class="n">PointerXYCallback</span>
+<span class="n">callbacks</span><span class="p">[</span><span class="n">PositionX</span><span class="p">]</span>   <span class="o">=</span> <span class="n">PointerXCallback</span>
+<span class="n">callbacks</span><span class="p">[</span><span class="n">PositionY</span><span class="p">]</span>   <span class="o">=</span> <span class="n">PointerYCallback</span>
+</pre>
+    </div>
+   </div>
+  </div>
+  <!-- END MAIN BODY OF DOCS ––––––––––––– -->
+  <footer class="footer">
+   <div class="footer-links">
+    <ul>
+     <li>
+      <span class="footer-title">
+       Links
+      </span>
+     </li>
+     <li>
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li>
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li>
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li>
+      <a href="/Reference_Manual/index.html">
+       API Docs
+      </a>
+     </li>
+     <li>
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li>
+      <a href="/about.html">
+       About
+      </a>
+     </li>
+    </ul>
+    <ul>
+     <li>
+      <span class="footer-title">
+       Join Us
+      </span>
+     </li>
+     <li>
+      <a href="//gitter.im/ioam/holoviews.html">
+       Gitter
+      </a>
+     </li>
+     <li>
+      <a href="//twitter.com/holoviews.html">
+       Twitter
+      </a>
+     </li>
+     <li>
+      <a href="//github.com/ioam/holoviews.html">
+       Github
+      </a>
+     </li>
+    </ul>
+    <ul class="copyright">
+     <li>
+      2017 IOAM: Jean-Luc R. Stevens, Philipp Rudiger, and James A. Bednar
+     </li>
+    </ul>
+   </div>
+  </footer>
+  <!-- Google Analytics -->
+  <script>
+   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-61554933-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <!-- MathJax Config -->
+  <script type="text/x-mathjax-config">
+   MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+  </script>
+  <!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+ </body>
+</html>

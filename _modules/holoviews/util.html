@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8"/>
+  <title>
+   holoviews.util — HoloViews
+  </title>
+  <meta content="HoloViews library, documentation site." name="description"/>
+  <meta content="HoloViews contributors" name="author"/>
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js">
+  </script>
+  <script>
+   WebFont.load({
+      google: {
+        families: ['Source Sans Pro']
+      }
+    });
+  </script>
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../../_static/main.css" rel="stylesheet"/>
+  <link href="../../_static/custom.css" rel="stylesheet"/>
+  <!-- Scripts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
+  </script>
+  <script async="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+  </script>
+  <script src="../../_static/js/main.js">
+  </script>
+  <script src="../../_static/custom.js">
+  </script>
+  <script src="../../_static/require.js">
+  </script>
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../../_static/images/favicon.ico" rel="icon" type="image/png"/>
+  <!-- Canonical
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="http://holoviews.org/_modules/holoviews/util.html" rel="canonical"/>
+ </head>
+ <body class="">
+  <header class="navigation">
+   <div class="wrapper">
+    <a class="logo" href="//">
+     <img alt="Logo" src="../../_static/images/logo.png"/>
+    </a>
+    <a class="navigation-menu logo-text" href="//">
+     HoloViews
+    </a>
+    <a class="navigation-menu-button" href="javascript:void(0)" id="js-mobile-menu">
+     Menu
+    </a>
+    <nav>
+     <ul class="navigation-menu show" id="js-navigation-menu">
+      <li class="nav-link">
+       <a href="/about.html">
+        About
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="/gallery/index.html">
+        Gallery
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="//github.com/ioam/holoviews.html">
+        Github
+       </a>
+      </li>
+     </ul>
+    </nav>
+   </div>
+  </header>
+  <div class="second-nav">
+   <nav>
+    <ul class="navigation-menu show">
+     <li class="nav-link doc-head">
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+    </ul>
+   </nav>
+   <div class="navigation-tools">
+    <div class="search-bar">
+     <form action="../../search.html" method="get" role="search">
+      <input name="q" placeholder="Search" type="search"/>
+      <button type="submit">
+       <img alt="Search Icon" src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/search-icon-black.png"/>
+      </button>
+     </form>
+    </div>
+   </div>
+  </div>
+  <!-- MAIN BODY OF DOCS –––––––––––––––––– -->
+  <div class="docs section">
+   <div class="toc">
+    <ul>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference external" href="http://github.com/ioam/holoviews">
+       Github source
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../about.html">
+       About
+      </a>
+     </li>
+    </ul>
+   </div>
+   <div class="content">
+    <h1>
+     Source code for holoviews.util
+    </h1>
+    <div class="highlight">
+     <pre><span></span><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">inspect</span><span class="o">,</span> <span class="nn">shutil</span>
+
+<span class="kn">import</span> <span class="nn">param</span>
+
+<span class="kn">from</span> <span class="nn">..core</span> <span class="k">import</span> <span class="n">DynamicMap</span><span class="p">,</span> <span class="n">HoloMap</span><span class="p">,</span> <span class="n">Dimensioned</span><span class="p">,</span> <span class="n">ViewableElement</span><span class="p">,</span> <span class="n">StoreOptions</span><span class="p">,</span> <span class="n">Store</span>
+<span class="kn">from</span> <span class="nn">..core.options</span> <span class="k">import</span> <span class="n">options_policy</span>
+<span class="kn">from</span> <span class="nn">..core.operation</span> <span class="k">import</span> <span class="n">Operation</span>
+<span class="kn">from</span> <span class="nn">..core.util</span> <span class="k">import</span> <span class="n">Aliases</span><span class="p">,</span> <span class="n">basestring</span>  <span class="c1"># noqa (API import)</span>
+<span class="kn">from</span> <span class="nn">..core.operation</span> <span class="k">import</span> <span class="n">OperationCallable</span>
+<span class="kn">from</span> <span class="nn">..core.spaces</span> <span class="k">import</span> <span class="n">Callable</span>
+<span class="kn">from</span> <span class="nn">..core</span> <span class="k">import</span> <span class="n">util</span>
+<span class="kn">from</span> <span class="nn">..streams</span> <span class="k">import</span> <span class="n">Stream</span>
+<span class="kn">from</span> <span class="nn">.settings</span> <span class="k">import</span> <span class="n">OutputSettings</span><span class="p">,</span> <span class="n">list_formats</span><span class="p">,</span> <span class="n">list_backends</span>
+
+<span class="n">Store</span><span class="o">.</span><span class="n">output_settings</span> <span class="o">=</span> <span class="n">OutputSettings</span>
+
+
+
+<div class="viewcode-block" id="examples"><a class="viewcode-back" href="../../Reference_Manual/holoviews.util.html#holoviews.util.examples">[docs]</a><span class="k">def</span> <span class="nf">examples</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s1">'holoviews-examples'</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">root</span><span class="o">=</span><span class="vm">__file__</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Copies the notebooks to the supplied path.</span>
+<span class="sd">    """</span>
+    <span class="n">filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">root</span><span class="p">))</span>
+    <span class="n">example_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">'./examples'</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">example_dir</span><span class="p">):</span>
+        <span class="n">example_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">'../examples'</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">force</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">'</span><span class="si">%s</span><span class="s1"> directory already exists, either delete it or set the force flag'</span> <span class="o">%</span> <span class="n">path</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="n">ignore</span> <span class="o">=</span> <span class="n">shutil</span><span class="o">.</span><span class="n">ignore_patterns</span><span class="p">(</span><span class="s1">'.ipynb_checkpoints'</span><span class="p">,</span><span class="s1">'*.pyc'</span><span class="p">,</span><span class="s1">'*~'</span><span class="p">)</span>
+    <span class="n">tree_root</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">example_dir</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">tree_root</span><span class="p">):</span>
+        <span class="n">shutil</span><span class="o">.</span><span class="n">copytree</span><span class="p">(</span><span class="n">tree_root</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">ignore</span><span class="o">=</span><span class="n">ignore</span><span class="p">,</span> <span class="n">symlinks</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">'Cannot find </span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="n">tree_root</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="opts"><a class="viewcode-back" href="../../Reference_Manual/holoviews.util.html#holoviews.util.opts">[docs]</a><span class="k">class</span> <span class="nc">opts</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">ParameterizedFunction</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Utility function to set options either at the global level or on a</span>
+<span class="sd">    specific object.</span>
+
+<span class="sd">    To set opts globally use:</span>
+
+<span class="sd">    opts(options)</span>
+
+<span class="sd">    Where options may be an options specification string (as accepted by</span>
+<span class="sd">    the %opts magic) or an options specifications dictionary.</span>
+
+<span class="sd">    For instance:</span>
+
+<span class="sd">    opts("Curve (color='k')") # Or equivalently</span>
+<span class="sd">    opts({'Curve': {'style': {'color':'k'}}})</span>
+
+<span class="sd">    To set opts on a specific object, just supply it as the second</span>
+<span class="sd">    argument:</span>
+
+<span class="sd">    opts(options, obj)</span>
+
+<span class="sd">    For instance:</span>
+
+<span class="sd">    curve = hv.Curve([1,2,3])</span>
+<span class="sd">    opts("Curve (color='k')", curve) # Or equivalently</span>
+<span class="sd">    opts({'Curve': {'style': {'color':'k'}}}, curve)</span>
+
+<span class="sd">    These two modes are equivalent to the %opts line magic and the</span>
+<span class="sd">    %%opts cell magic respectively.</span>
+<span class="sd">    """</span>
+
+    <span class="n">strict</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">       Whether to be strict about the options specification. If not set</span>
+<span class="s2">       to strict (default), any invalid keywords are simply skipped. If</span>
+<span class="s2">       strict, invalid keywords prevent the options being applied."""</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">):</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">ParamOverrides</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">'The opts utility accepts one or two positional arguments.'</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">options</span><span class="p">,</span> <span class="n">obj</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="kc">None</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="p">(</span><span class="n">options</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span> <span class="o">=</span> <span class="n">args</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">options</span><span class="p">,</span> <span class="n">basestring</span><span class="p">):</span>
+            <span class="kn">from</span> <span class="nn">.parser</span> <span class="k">import</span> <span class="n">OptsSpec</span>
+            <span class="n">options</span> <span class="o">=</span> <span class="n">OptsSpec</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+
+
+        <span class="n">errmsg</span> <span class="o">=</span> <span class="n">StoreOptions</span><span class="o">.</span><span class="n">validation_error_message</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">errmsg</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">errmsg</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">p</span><span class="o">.</span><span class="n">strict</span><span class="p">:</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">' Options specification will not be applied.'</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">obj</span><span class="p">:</span> <span class="k">return</span> <span class="n">obj</span>
+                <span class="k">else</span><span class="p">:</span>   <span class="k">return</span>
+
+        <span class="k">if</span> <span class="n">obj</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">options_policy</span><span class="p">(</span><span class="n">skip_invalid</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">warn_on_skip</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+                <span class="n">StoreOptions</span><span class="o">.</span><span class="n">apply_customizations</span><span class="p">(</span><span class="n">options</span><span class="p">,</span> <span class="n">Store</span><span class="o">.</span><span class="n">options</span><span class="p">())</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Dimensioned</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">obj</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">StoreOptions</span><span class="o">.</span><span class="n">set_options</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">options</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="output"><a class="viewcode-back" href="../../Reference_Manual/holoviews.util.html#holoviews.util.output">[docs]</a><span class="k">class</span> <span class="nc">output</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">ParameterizedFunction</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Utility function to set output either at the global level or on a</span>
+<span class="sd">    specific object.</span>
+
+<span class="sd">    To set output globally use:</span>
+
+<span class="sd">    output(options)</span>
+
+<span class="sd">    Where options may be an options specification string (as accepted by</span>
+<span class="sd">    the %opts magic) or an options specifications dictionary.</span>
+
+<span class="sd">    For instance:</span>
+
+<span class="sd">    output("backend='bokeh'") # Or equivalently</span>
+<span class="sd">    output(backend='bokeh')</span>
+
+<span class="sd">    To set save output from a specific object do disk using the</span>
+<span class="sd">    'filename' argument, you can supply the object as the first</span>
+<span class="sd">    positional argument and supply the filename keyword:</span>
+
+<span class="sd">    curve = hv.Curve([1,2,3])</span>
+<span class="sd">    output(curve, filename='curve.png')</span>
+
+<span class="sd">    For compatibility with the output magic, you can supply the object</span>
+<span class="sd">    as the second argument after the string specification:</span>
+
+<span class="sd">    curve = hv.Curve([1,2,3])</span>
+<span class="sd">    output("filename='curve.png'", curve)</span>
+
+<span class="sd">    These two modes are equivalent to the %output line magic and the</span>
+<span class="sd">    %%output cell magic respectively. Note that only the filename</span>
+<span class="sd">    argument is supported when supplying an object and all other options</span>
+<span class="sd">    are ignored.</span>
+<span class="sd">    """</span>
+
+    <span class="n">filename_warning</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">       Whether to warn if the output utility is called on an object and</span>
+<span class="s2">       a filename is not given (in which case the utility has no</span>
+<span class="s2">       effect)"""</span> <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">):</span>
+        <span class="n">warn</span> <span class="o">=</span> <span class="n">options</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">'filename_warning'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">filename_warning</span><span class="p">)</span>
+        <span class="n">help_prompt</span> <span class="o">=</span> <span class="s1">'For help with hv.util.output call help(hv.util.output)'</span>
+        <span class="n">line</span><span class="p">,</span> <span class="n">obj</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span><span class="kc">None</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">'The opts utility accepts one or two positional arguments.'</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">options</span><span class="p">:</span>
+            <span class="n">obj</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span> <span class="o">=</span> <span class="n">args</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Dimensioned</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">line</span><span class="p">:</span>
+                <span class="n">options</span> <span class="o">=</span> <span class="n">Store</span><span class="o">.</span><span class="n">output_settings</span><span class="o">.</span><span class="n">extract_keywords</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="p">{})</span>
+            <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">Store</span><span class="o">.</span><span class="n">output_settings</span><span class="o">.</span><span class="n">allowed</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s1">'Invalid keyword: </span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="n">k</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s1">'filename'</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
+                <span class="k">def</span> <span class="nf">save_fn</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">renderer</span><span class="p">):</span> <span class="n">renderer</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">options</span><span class="p">[</span><span class="s1">'filename'</span><span class="p">])</span>
+                <span class="n">Store</span><span class="o">.</span><span class="n">output_settings</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="n">line</span><span class="o">=</span><span class="n">line</span><span class="p">,</span> <span class="n">cell</span><span class="o">=</span><span class="n">obj</span><span class="p">,</span> <span class="n">cell_runner</span><span class="o">=</span><span class="n">save_fn</span><span class="p">,</span>
+                                             <span class="n">help_prompt</span><span class="o">=</span><span class="n">help_prompt</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">warn</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">"hv.output not supplied a filename to export the "</span>
+                             <span class="s2">"given object. This call will have no effect."</span> <span class="p">)</span>
+            <span class="k">return</span> <span class="n">obj</span>
+        <span class="k">elif</span> <span class="n">obj</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">obj</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">Store</span><span class="o">.</span><span class="n">output_settings</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="n">line</span><span class="o">=</span><span class="n">line</span><span class="p">,</span> <span class="n">help_prompt</span><span class="o">=</span><span class="n">help_prompt</span><span class="p">,</span> <span class="o">**</span><span class="n">options</span><span class="p">)</span></div>
+
+<span class="n">output</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">Store</span><span class="o">.</span><span class="n">output_settings</span><span class="o">.</span><span class="n">_generate_docstring</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="renderer"><a class="viewcode-back" href="../../Reference_Manual/holoviews.util.html#holoviews.util.renderer">[docs]</a><span class="k">def</span> <span class="nf">renderer</span><span class="p">(</span><span class="n">name</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Helper utility to access the active renderer for a given extension.</span>
+<span class="sd">    """</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">Store</span><span class="o">.</span><span class="n">renderers</span><span class="p">:</span>
+            <span class="n">extension</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">Store</span><span class="o">.</span><span class="n">renderers</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'Could not find a </span><span class="si">{name!r}</span><span class="s1"> renderer, available renderers are: </span><span class="si">{available}</span><span class="s1">.'</span><span class="p">)</span>
+        <span class="n">available</span> <span class="o">=</span> <span class="s1">', '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">Store</span><span class="o">.</span><span class="n">renderers</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">name</span><span class="p">,</span> <span class="n">available</span><span class="o">=</span><span class="n">available</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="extension"><a class="viewcode-back" href="../../Reference_Manual/holoviews.util.html#holoviews.util.extension">[docs]</a><span class="k">class</span> <span class="nc">extension</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">ParameterizedFunction</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Helper utility used to load holoviews extensions. These can be</span>
+<span class="sd">    plotting extensions, element extensions or anything else that can be</span>
+<span class="sd">    registered to work with HoloViews.</span>
+<span class="sd">    """</span>
+
+    <span class="c1"># Mapping between backend name and module name</span>
+    <span class="n">_backends</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'matplotlib'</span><span class="p">:</span> <span class="s1">'mpl'</span><span class="p">,</span>
+                 <span class="s1">'bokeh'</span><span class="p">:</span> <span class="s1">'bokeh'</span><span class="p">,</span>
+                 <span class="s1">'plotly'</span><span class="p">:</span> <span class="s1">'plotly'</span><span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">):</span>
+        <span class="c1"># Get requested backends</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">'config'</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="n">util</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">set_param</span><span class="p">(</span><span class="o">**</span><span class="n">config</span><span class="p">)</span>
+        <span class="n">imports</span> <span class="o">=</span> <span class="p">[(</span><span class="n">arg</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backends</span><span class="p">[</span><span class="n">arg</span><span class="p">])</span> <span class="k">for</span> <span class="n">arg</span> <span class="ow">in</span> <span class="n">args</span>
+                   <span class="k">if</span> <span class="n">arg</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backends</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">p</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">params</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+            <span class="k">if</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backends</span><span class="p">:</span>
+                <span class="n">imports</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">p</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_backends</span><span class="p">[</span><span class="n">p</span><span class="p">]))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">imports</span><span class="p">:</span>
+            <span class="n">args</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'matplotlib'</span><span class="p">]</span>
+            <span class="n">imports</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">'matplotlib'</span><span class="p">,</span> <span class="s1">'mpl'</span><span class="p">)]</span>
+
+        <span class="n">args</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+        <span class="n">selected_backend</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">backend</span><span class="p">,</span> <span class="n">imp</span> <span class="ow">in</span> <span class="n">imports</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">module</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="n">backend</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">"</span><span class="si">%s</span><span class="s2"> is not available, ensure </span><span class="si">%s</span><span class="s2"> is installed "</span>
+                             <span class="s2">"to activate </span><span class="si">%s</span><span class="s2"> extension."</span> <span class="o">%</span> <span class="p">(</span><span class="n">backend</span><span class="p">,</span> <span class="n">backend</span><span class="p">))</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="nb">__import__</span><span class="p">(</span><span class="s1">'holoviews.plotting.</span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="n">imp</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">selected_backend</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">selected_backend</span> <span class="o">=</span> <span class="n">backend</span>
+            <span class="k">except</span> <span class="n">util</span><span class="o">.</span><span class="n">VersionError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">"HoloViews </span><span class="si">%s</span><span class="s2"> extension could not be loaded. "</span>
+                             <span class="s2">"The installed </span><span class="si">%s</span><span class="s2"> version </span><span class="si">%s</span><span class="s2"> is less than "</span>
+                             <span class="s2">"the required version </span><span class="si">%s</span><span class="s2">."</span> <span class="o">%</span>
+                             <span class="p">(</span><span class="n">backend</span><span class="p">,</span> <span class="n">backend</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">version</span><span class="p">,</span> <span class="n">e</span><span class="o">.</span><span class="n">min_version</span><span class="p">))</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">"Holoviews </span><span class="si">%s</span><span class="s2"> extension could not be imported, "</span>
+                             <span class="s2">"it raised the following exception: </span><span class="si">%s</span><span class="s2">('</span><span class="si">%s</span><span class="s2">')"</span> <span class="o">%</span>
+                             <span class="p">(</span><span class="n">backend</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="n">e</span><span class="p">))</span>
+            <span class="k">finally</span><span class="p">:</span>
+                <span class="n">Store</span><span class="o">.</span><span class="n">output_settings</span><span class="o">.</span><span class="n">allowed</span><span class="p">[</span><span class="s1">'backend'</span><span class="p">]</span> <span class="o">=</span> <span class="n">list_backends</span><span class="p">()</span>
+                <span class="n">Store</span><span class="o">.</span><span class="n">output_settings</span><span class="o">.</span><span class="n">allowed</span><span class="p">[</span><span class="s1">'fig'</span><span class="p">]</span> <span class="o">=</span> <span class="n">list_formats</span><span class="p">(</span><span class="s1">'fig'</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
+                <span class="n">Store</span><span class="o">.</span><span class="n">output_settings</span><span class="o">.</span><span class="n">allowed</span><span class="p">[</span><span class="s1">'holomap'</span><span class="p">]</span> <span class="o">=</span> <span class="n">list_formats</span><span class="p">(</span><span class="s1">'holomap'</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">selected_backend</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s1">'None of the backends could be imported'</span><span class="p">)</span>
+        <span class="n">Store</span><span class="o">.</span><span class="n">current_backend</span> <span class="o">=</span> <span class="n">selected_backend</span></div>
+
+
+<div class="viewcode-block" id="Dynamic"><a class="viewcode-back" href="../../Reference_Manual/holoviews.util.html#holoviews.util.Dynamic">[docs]</a><span class="k">class</span> <span class="nc">Dynamic</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">ParameterizedFunction</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Dynamically applies a callable to the Elements in any HoloViews</span>
+<span class="sd">    object. Will return a DynamicMap wrapping the original map object,</span>
+<span class="sd">    which will lazily evaluate when a key is requested. By default</span>
+<span class="sd">    Dynamic applies a no-op, making it useful for converting HoloMaps</span>
+<span class="sd">    to a DynamicMap.</span>
+
+<span class="sd">    Any supplied kwargs will be passed to the callable and any streams</span>
+<span class="sd">    will be instantiated on the returned DynamicMap.</span>
+<span class="sd">    """</span>
+
+    <span class="n">operation</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Callable</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        Operation or user-defined callable to apply dynamically"""</span><span class="p">)</span>
+
+    <span class="n">kwargs</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Dict</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="p">{},</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        Keyword arguments passed to the function."""</span><span class="p">)</span>
+
+    <span class="n">link_inputs</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">         If Dynamic is applied to another DynamicMap, determines whether</span>
+<span class="s2">         linked streams attached to its Callable inputs are</span>
+<span class="s2">         transferred to the output of the utility.</span>
+
+<span class="s2">         For example if the Dynamic utility is applied to a DynamicMap</span>
+<span class="s2">         with an RangeXY, this switch determines whether the</span>
+<span class="s2">         corresponding visualization should update this stream with</span>
+<span class="s2">         range changes originating from the newly generated axes."""</span><span class="p">)</span>
+
+    <span class="n">shared_data</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        Whether the cloned DynamicMap will share the same cache."""</span><span class="p">)</span>
+
+    <span class="n">streams</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">List</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="p">[],</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        List of streams to attach to the returned DynamicMap"""</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">map_obj</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">p</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">ParamOverrides</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">params</span><span class="p">)</span>
+        <span class="n">callback</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_dynamic_operation</span><span class="p">(</span><span class="n">map_obj</span><span class="p">)</span>
+        <span class="n">streams</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_streams</span><span class="p">(</span><span class="n">map_obj</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">map_obj</span><span class="p">,</span> <span class="n">DynamicMap</span><span class="p">):</span>
+            <span class="n">dmap</span> <span class="o">=</span> <span class="n">map_obj</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">callback</span><span class="o">=</span><span class="n">callback</span><span class="p">,</span> <span class="n">shared_data</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">shared_data</span><span class="p">,</span>
+                                 <span class="n">streams</span><span class="o">=</span><span class="n">streams</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dmap</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_make_dynamic</span><span class="p">(</span><span class="n">map_obj</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">streams</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">dmap</span>
+
+
+    <span class="k">def</span> <span class="nf">_get_streams</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">map_obj</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Generates a list of streams to attach to the returned DynamicMap.</span>
+<span class="sd">        If the input is a DynamicMap any streams that are supplying values</span>
+<span class="sd">        for the key dimension of the input are inherited. And the list</span>
+<span class="sd">        of supplied stream classes and instances are processed and</span>
+<span class="sd">        added to the list.</span>
+<span class="sd">        """</span>
+        <span class="n">streams</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">stream</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">streams</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">inspect</span><span class="o">.</span><span class="n">isclass</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="n">Stream</span><span class="p">):</span>
+                <span class="n">stream</span> <span class="o">=</span> <span class="n">stream</span><span class="p">()</span>
+            <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">stream</span><span class="p">,</span> <span class="n">Stream</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'Streams must be Stream classes or instances'</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">operation</span><span class="p">,</span> <span class="n">Operation</span><span class="p">):</span>
+                <span class="n">updates</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">operation</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">stream</span><span class="o">.</span><span class="n">contents</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                           <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">operation</span><span class="o">.</span><span class="n">p</span><span class="p">}</span>
+                <span class="k">if</span> <span class="n">updates</span><span class="p">:</span>
+                    <span class="n">reverse</span> <span class="o">=</span> <span class="p">{</span><span class="n">v</span><span class="p">:</span> <span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">stream</span><span class="o">.</span><span class="n">_rename</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+                    <span class="n">stream</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="n">reverse</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">updates</span><span class="o">.</span><span class="n">items</span><span class="p">()})</span>
+            <span class="n">streams</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">stream</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">map_obj</span><span class="p">,</span> <span class="n">DynamicMap</span><span class="p">):</span>
+            <span class="n">dim_streams</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">dimensioned_streams</span><span class="p">(</span><span class="n">map_obj</span><span class="p">)</span>
+            <span class="n">streams</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">util</span><span class="o">.</span><span class="n">unique_iterator</span><span class="p">(</span><span class="n">streams</span> <span class="o">+</span> <span class="n">dim_streams</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">streams</span>
+
+
+    <span class="k">def</span> <span class="nf">_process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">operation</span><span class="p">,</span> <span class="n">Operation</span><span class="p">):</span>
+            <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                      <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">operation</span><span class="o">.</span><span class="n">params</span><span class="p">()}</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">operation</span><span class="o">.</span><span class="n">process_element</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">operation</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">kwargs</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">_dynamic_operation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">map_obj</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Generate function to dynamically apply the operation.</span>
+<span class="sd">        Wraps an existing HoloMap or DynamicMap.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">map_obj</span><span class="p">,</span> <span class="n">DynamicMap</span><span class="p">):</span>
+            <span class="k">def</span> <span class="nf">dynamic_operation</span><span class="p">(</span><span class="o">*</span><span class="n">key</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+                <span class="n">obj</span> <span class="o">=</span> <span class="n">map_obj</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">map_obj</span><span class="p">,</span> <span class="n">HoloMap</span><span class="p">)</span> <span class="k">else</span> <span class="n">map_obj</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">def</span> <span class="nf">dynamic_operation</span><span class="p">(</span><span class="o">*</span><span class="n">key</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_process</span><span class="p">(</span><span class="n">map_obj</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">key</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">operation</span><span class="p">,</span> <span class="n">Operation</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">OperationCallable</span><span class="p">(</span><span class="n">dynamic_operation</span><span class="p">,</span> <span class="n">inputs</span><span class="o">=</span><span class="p">[</span><span class="n">map_obj</span><span class="p">],</span>
+                                     <span class="n">link_inputs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">link_inputs</span><span class="p">,</span>
+                                     <span class="n">operation</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">operation</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">Callable</span><span class="p">(</span><span class="n">dynamic_operation</span><span class="p">,</span> <span class="n">inputs</span><span class="o">=</span><span class="p">[</span><span class="n">map_obj</span><span class="p">],</span>
+                            <span class="n">link_inputs</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">link_inputs</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">_make_dynamic</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hmap</span><span class="p">,</span> <span class="n">dynamic_fn</span><span class="p">,</span> <span class="n">streams</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Accepts a HoloMap and a dynamic callback function creating</span>
+<span class="sd">        an equivalent DynamicMap from the HoloMap.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">hmap</span><span class="p">,</span> <span class="n">ViewableElement</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">DynamicMap</span><span class="p">(</span><span class="n">dynamic_fn</span><span class="p">,</span> <span class="n">streams</span><span class="o">=</span><span class="n">streams</span><span class="p">)</span>
+        <span class="n">dim_values</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">hmap</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">get_param_values</span><span class="p">(</span><span class="n">hmap</span><span class="p">)</span>
+        <span class="n">kdims</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">util</span><span class="o">.</span><span class="n">unique_iterator</span><span class="p">(</span><span class="n">values</span><span class="p">)))</span> <span class="k">for</span> <span class="n">d</span><span class="p">,</span> <span class="n">values</span> <span class="ow">in</span>
+                 <span class="nb">zip</span><span class="p">(</span><span class="n">hmap</span><span class="o">.</span><span class="n">kdims</span><span class="p">,</span> <span class="n">dim_values</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="n">DynamicMap</span><span class="p">(</span><span class="n">dynamic_fn</span><span class="p">,</span> <span class="n">streams</span><span class="o">=</span><span class="n">streams</span><span class="p">,</span> <span class="o">**</span><span class="nb">dict</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">kdims</span><span class="o">=</span><span class="n">kdims</span><span class="p">))</span></div>
+</pre>
+    </div>
+   </div>
+  </div>
+  <!-- END MAIN BODY OF DOCS ––––––––––––– -->
+  <footer class="footer">
+   <div class="footer-links">
+    <ul>
+     <li>
+      <span class="footer-title">
+       Links
+      </span>
+     </li>
+     <li>
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li>
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li>
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li>
+      <a href="/Reference_Manual/index.html">
+       API Docs
+      </a>
+     </li>
+     <li>
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li>
+      <a href="/about.html">
+       About
+      </a>
+     </li>
+    </ul>
+    <ul>
+     <li>
+      <span class="footer-title">
+       Join Us
+      </span>
+     </li>
+     <li>
+      <a href="//gitter.im/ioam/holoviews.html">
+       Gitter
+      </a>
+     </li>
+     <li>
+      <a href="//twitter.com/holoviews.html">
+       Twitter
+      </a>
+     </li>
+     <li>
+      <a href="//github.com/ioam/holoviews.html">
+       Github
+      </a>
+     </li>
+    </ul>
+    <ul class="copyright">
+     <li>
+      2017 IOAM: Jean-Luc R. Stevens, Philipp Rudiger, and James A. Bednar
+     </li>
+    </ul>
+   </div>
+  </footer>
+  <!-- Google Analytics -->
+  <script>
+   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-61554933-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <!-- MathJax Config -->
+  <script type="text/x-mathjax-config">
+   MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+  </script>
+  <!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+ </body>
+</html>

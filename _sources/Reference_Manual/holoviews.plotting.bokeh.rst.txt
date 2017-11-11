@@ -1,0 +1,188 @@
+holoviews.bokeh Package
+=======================
+
+
+---------
+
+:mod:`bokeh` Package
+--------------------
+
+.. inheritance-diagram:: holoviews.plotting.bokeh
+
+
+.. automodule:: holoviews.plotting.bokeh
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`annotation` Module
+------------------------
+
+.. inheritance-diagram:: holoviews.plotting.bokeh.annotation
+
+
+.. automodule:: holoviews.plotting.bokeh.annotation
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`callbacks` Module
+-----------------------
+
+.. inheritance-diagram:: holoviews.plotting.bokeh.callbacks
+
+
+.. automodule:: holoviews.plotting.bokeh.callbacks
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`chart` Module
+-------------------
+
+.. inheritance-diagram:: holoviews.plotting.bokeh.chart
+
+
+.. automodule:: holoviews.plotting.bokeh.chart
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`element` Module
+---------------------
+
+.. inheritance-diagram:: holoviews.plotting.bokeh.element
+
+
+.. automodule:: holoviews.plotting.bokeh.element
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`graphs` Module
+--------------------
+
+.. inheritance-diagram:: holoviews.plotting.bokeh.graphs
+
+
+.. automodule:: holoviews.plotting.bokeh.graphs
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`path` Module
+------------------
+
+.. inheritance-diagram:: holoviews.plotting.bokeh.path
+
+
+.. automodule:: holoviews.plotting.bokeh.path
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`plot` Module
+------------------
+
+.. inheritance-diagram:: holoviews.plotting.bokeh.plot
+
+
+.. automodule:: holoviews.plotting.bokeh.plot
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`raster` Module
+--------------------
+
+.. inheritance-diagram:: holoviews.plotting.bokeh.raster
+
+
+.. automodule:: holoviews.plotting.bokeh.raster
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`renderer` Module
+----------------------
+
+.. inheritance-diagram:: holoviews.plotting.bokeh.renderer
+
+
+.. automodule:: holoviews.plotting.bokeh.renderer
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`stats` Module
+-------------------
+
+.. inheritance-diagram:: holoviews.plotting.bokeh.stats
+
+
+.. automodule:: holoviews.plotting.bokeh.stats
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`tabular` Module
+---------------------
+
+.. inheritance-diagram:: holoviews.plotting.bokeh.tabular
+
+
+.. automodule:: holoviews.plotting.bokeh.tabular
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`util` Module
+------------------
+
+.. inheritance-diagram:: holoviews.plotting.bokeh.util
+
+
+.. automodule:: holoviews.plotting.bokeh.util
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`widgets` Module
+---------------------
+
+.. inheritance-diagram:: holoviews.plotting.bokeh.widgets
+
+
+.. automodule:: holoviews.plotting.bokeh.widgets
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+

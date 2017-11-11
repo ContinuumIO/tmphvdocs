@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8"/>
+  <title>
+   holoviews.plotting.mpl.annotation — HoloViews
+  </title>
+  <meta content="HoloViews library, documentation site." name="description"/>
+  <meta content="HoloViews contributors" name="author"/>
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js">
+  </script>
+  <script>
+   WebFont.load({
+      google: {
+        families: ['Source Sans Pro']
+      }
+    });
+  </script>
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../../../../_static/main.css" rel="stylesheet"/>
+  <link href="../../../../_static/custom.css" rel="stylesheet"/>
+  <!-- Scripts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
+  </script>
+  <script async="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+  </script>
+  <script src="../../../../_static/js/main.js">
+  </script>
+  <script src="../../../../_static/custom.js">
+  </script>
+  <script src="../../../../_static/require.js">
+  </script>
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../../../../_static/images/favicon.ico" rel="icon" type="image/png"/>
+  <!-- Canonical
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="http://holoviews.org/_modules/holoviews/plotting/mpl/annotation.html" rel="canonical"/>
+ </head>
+ <body class="">
+  <header class="navigation">
+   <div class="wrapper">
+    <a class="logo" href="//">
+     <img alt="Logo" src="../../../../_static/images/logo.png"/>
+    </a>
+    <a class="navigation-menu logo-text" href="//">
+     HoloViews
+    </a>
+    <a class="navigation-menu-button" href="javascript:void(0)" id="js-mobile-menu">
+     Menu
+    </a>
+    <nav>
+     <ul class="navigation-menu show" id="js-navigation-menu">
+      <li class="nav-link">
+       <a href="/about.html">
+        About
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="/gallery/index.html">
+        Gallery
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="//github.com/ioam/holoviews.html">
+        Github
+       </a>
+      </li>
+     </ul>
+    </nav>
+   </div>
+  </header>
+  <div class="second-nav">
+   <nav>
+    <ul class="navigation-menu show">
+     <li class="nav-link doc-head">
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+    </ul>
+   </nav>
+   <div class="navigation-tools">
+    <div class="search-bar">
+     <form action="../../../../search.html" method="get" role="search">
+      <input name="q" placeholder="Search" type="search"/>
+      <button type="submit">
+       <img alt="Search Icon" src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/search-icon-black.png"/>
+      </button>
+     </form>
+    </div>
+   </div>
+  </div>
+  <!-- MAIN BODY OF DOCS –––––––––––––––––– -->
+  <div class="docs section">
+   <div class="toc">
+    <ul>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../../getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../../user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../../gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../../Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../../FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference external" href="http://github.com/ioam/holoviews">
+       Github source
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../../about.html">
+       About
+      </a>
+     </li>
+    </ul>
+   </div>
+   <div class="content">
+    <h1>
+     Source code for holoviews.plotting.mpl.annotation
+    </h1>
+    <div class="highlight">
+     <pre><span></span><span class="kn">import</span> <span class="nn">matplotlib</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="k">import</span> <span class="n">patches</span> <span class="k">as</span> <span class="n">patches</span>
+
+<span class="kn">from</span> <span class="nn">...core.util</span> <span class="k">import</span> <span class="n">match_spec</span>
+<span class="kn">from</span> <span class="nn">...core.options</span> <span class="k">import</span> <span class="n">abbreviated_exception</span>
+<span class="kn">from</span> <span class="nn">.element</span> <span class="k">import</span> <span class="n">ElementPlot</span>
+<span class="kn">from</span> <span class="nn">.plot</span> <span class="k">import</span> <span class="n">mpl_rc_context</span>
+
+
+<div class="viewcode-block" id="AnnotationPlot"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.mpl.html#holoviews.plotting.mpl.annotation.AnnotationPlot">[docs]</a><span class="k">class</span> <span class="nc">AnnotationPlot</span><span class="p">(</span><span class="n">ElementPlot</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    AnnotationPlot handles the display of all annotation elements.</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">annotation</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_annotation</span> <span class="o">=</span> <span class="n">annotation</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">AnnotationPlot</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">annotation</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="p">[</span><span class="s1">'annotations'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="nd">@mpl_rc_context</span>
+    <span class="k">def</span> <span class="nf">initialize_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ranges</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">annotation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">hmap</span><span class="o">.</span><span class="n">last</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">keys</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">ranges</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compute_ranges</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hmap</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">ranges</span><span class="p">)</span>
+        <span class="n">ranges</span> <span class="o">=</span> <span class="n">match_spec</span><span class="p">(</span><span class="n">annotation</span><span class="p">,</span> <span class="n">ranges</span><span class="p">)</span>
+        <span class="n">axis</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="p">[</span><span class="s1">'axis'</span><span class="p">]</span>
+        <span class="n">opts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">style</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">cyclic_index</span><span class="p">]</span>
+        <span class="k">with</span> <span class="n">abbreviated_exception</span><span class="p">():</span>
+            <span class="n">handles</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">draw_annotation</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">annotation</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">opts</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="p">[</span><span class="s1">'annotations'</span><span class="p">]</span> <span class="o">=</span> <span class="n">handles</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_finalize_axis</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">element</span><span class="o">=</span><span class="n">annotation</span><span class="p">,</span> <span class="n">ranges</span><span class="o">=</span><span class="n">ranges</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">update_handles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">annotation</span><span class="p">,</span> <span class="n">ranges</span><span class="p">,</span> <span class="n">style</span><span class="p">):</span>
+        <span class="c1"># Clear all existing annotations</span>
+        <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="p">[</span><span class="s1">'annotations'</span><span class="p">]:</span>
+            <span class="n">element</span><span class="o">.</span><span class="n">remove</span><span class="p">()</span>
+
+        <span class="k">with</span> <span class="n">abbreviated_exception</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="p">[</span><span class="s1">'annotations'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">draw_annotation</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">annotation</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">style</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="VLinePlot"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.mpl.html#holoviews.plotting.mpl.annotation.VLinePlot">[docs]</a><span class="k">class</span> <span class="nc">VLinePlot</span><span class="p">(</span><span class="n">AnnotationPlot</span><span class="p">):</span>
+    <span class="s2">"Draw a vertical line on the axis"</span>
+
+    <span class="n">style_opts</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'alpha'</span><span class="p">,</span> <span class="s1">'color'</span><span class="p">,</span> <span class="s1">'linewidth'</span><span class="p">,</span> <span class="s1">'linestyle'</span><span class="p">,</span> <span class="s1">'visible'</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">draw_annotation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">opts</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">invert_axes</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">axis</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="o">**</span><span class="n">opts</span><span class="p">)]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">axis</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="o">**</span><span class="n">opts</span><span class="p">)]</span></div>
+
+
+
+<div class="viewcode-block" id="HLinePlot"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.mpl.html#holoviews.plotting.mpl.annotation.HLinePlot">[docs]</a><span class="k">class</span> <span class="nc">HLinePlot</span><span class="p">(</span><span class="n">AnnotationPlot</span><span class="p">):</span>
+    <span class="s2">"Draw a horizontal line on the axis"</span>
+
+    <span class="n">style_opts</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'alpha'</span><span class="p">,</span> <span class="s1">'color'</span><span class="p">,</span> <span class="s1">'linewidth'</span><span class="p">,</span> <span class="s1">'linestyle'</span><span class="p">,</span> <span class="s1">'visible'</span><span class="p">]</span>
+
+<div class="viewcode-block" id="HLinePlot.draw_annotation"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.mpl.html#holoviews.plotting.mpl.annotation.HLinePlot.draw_annotation">[docs]</a>    <span class="k">def</span> <span class="nf">draw_annotation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">position</span><span class="p">,</span> <span class="n">opts</span><span class="p">):</span>
+        <span class="s2">"Draw a horizontal line on the axis"</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">invert_axes</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">axis</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="o">**</span><span class="n">opts</span><span class="p">)]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">axis</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">position</span><span class="p">,</span> <span class="o">**</span><span class="n">opts</span><span class="p">)]</span></div></div>
+
+
+<div class="viewcode-block" id="TextPlot"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.mpl.html#holoviews.plotting.mpl.annotation.TextPlot">[docs]</a><span class="k">class</span> <span class="nc">TextPlot</span><span class="p">(</span><span class="n">AnnotationPlot</span><span class="p">):</span>
+    <span class="s2">"Draw the Text annotation object"</span>
+
+    <span class="n">style_opts</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'alpha'</span><span class="p">,</span> <span class="s1">'color'</span><span class="p">,</span> <span class="s1">'family'</span><span class="p">,</span> <span class="s1">'weight'</span><span class="p">,</span> <span class="s1">'rotation'</span><span class="p">,</span> <span class="s1">'fontsize'</span><span class="p">,</span> <span class="s1">'visible'</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">draw_annotation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">opts</span><span class="p">):</span>
+        <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">fontsize</span><span class="p">,</span>
+         <span class="n">horizontalalignment</span><span class="p">,</span> <span class="n">verticalalignment</span><span class="p">,</span> <span class="n">rotation</span><span class="p">)</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">invert_axes</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span>
+        <span class="n">opts</span><span class="p">[</span><span class="s1">'fontsize'</span><span class="p">]</span> <span class="o">=</span> <span class="n">fontsize</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">axis</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span>
+                          <span class="n">horizontalalignment</span> <span class="o">=</span> <span class="n">horizontalalignment</span><span class="p">,</span>
+                          <span class="n">verticalalignment</span> <span class="o">=</span> <span class="n">verticalalignment</span><span class="p">,</span>
+                          <span class="n">rotation</span><span class="o">=</span><span class="n">rotation</span><span class="p">,</span> <span class="o">**</span><span class="n">opts</span><span class="p">)]</span></div>
+
+
+
+<div class="viewcode-block" id="ArrowPlot"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.mpl.html#holoviews.plotting.mpl.annotation.ArrowPlot">[docs]</a><span class="k">class</span> <span class="nc">ArrowPlot</span><span class="p">(</span><span class="n">AnnotationPlot</span><span class="p">):</span>
+    <span class="s2">"Draw an arrow using the information supplied to the Arrow annotation"</span>
+
+    <span class="n">_arrow_style_opts</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'alpha'</span><span class="p">,</span> <span class="s1">'color'</span><span class="p">,</span> <span class="s1">'lw'</span><span class="p">,</span> <span class="s1">'linewidth'</span><span class="p">,</span> <span class="s1">'visible'</span><span class="p">]</span>
+    <span class="n">_text_style_opts</span> <span class="o">=</span> <span class="n">TextPlot</span><span class="o">.</span><span class="n">style_opts</span>
+
+    <span class="n">style_opts</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">_arrow_style_opts</span> <span class="o">+</span> <span class="n">_text_style_opts</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">draw_annotation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">opts</span><span class="p">):</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">text</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="n">points</span><span class="p">,</span> <span class="n">arrowstyle</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">invert_axes</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span>
+        <span class="n">direction</span> <span class="o">=</span> <span class="n">direction</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="n">arrowprops</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">({</span><span class="s1">'arrowstyle'</span><span class="p">:</span><span class="n">arrowstyle</span><span class="p">},</span>
+                          <span class="o">**</span><span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">opts</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_arrow_style_opts</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">opts</span><span class="p">})</span>
+        <span class="n">textopts</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">opts</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_text_style_opts</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">opts</span><span class="p">}</span>
+        <span class="k">if</span> <span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'v'</span><span class="p">,</span> <span class="s1">'^'</span><span class="p">]:</span>
+            <span class="n">xytext</span> <span class="o">=</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">points</span> <span class="k">if</span> <span class="n">direction</span><span class="o">==</span><span class="s1">'v'</span> <span class="k">else</span> <span class="o">-</span><span class="n">points</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">direction</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'&gt;'</span><span class="p">,</span> <span class="s1">'&lt;'</span><span class="p">]:</span>
+            <span class="n">xytext</span> <span class="o">=</span> <span class="p">(</span><span class="n">points</span> <span class="k">if</span> <span class="n">direction</span><span class="o">==</span><span class="s1">'&lt;'</span> <span class="k">else</span> <span class="o">-</span><span class="n">points</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">axis</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="n">textcoords</span><span class="o">=</span><span class="s1">'offset points'</span><span class="p">,</span>
+                              <span class="n">xytext</span><span class="o">=</span><span class="n">xytext</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">"center"</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">"center"</span><span class="p">,</span>
+                              <span class="n">arrowprops</span><span class="o">=</span><span class="n">arrowprops</span><span class="p">,</span> <span class="o">**</span><span class="n">textopts</span><span class="p">)]</span></div>
+
+
+
+<div class="viewcode-block" id="SplinePlot"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.mpl.html#holoviews.plotting.mpl.annotation.SplinePlot">[docs]</a><span class="k">class</span> <span class="nc">SplinePlot</span><span class="p">(</span><span class="n">AnnotationPlot</span><span class="p">):</span>
+    <span class="s2">"Draw the supplied Spline annotation (see Spline docstring)"</span>
+
+    <span class="n">style_opts</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'alpha'</span><span class="p">,</span> <span class="s1">'edgecolor'</span><span class="p">,</span> <span class="s1">'linewidth'</span><span class="p">,</span> <span class="s1">'linestyle'</span><span class="p">,</span> <span class="s1">'visible'</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">draw_annotation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axis</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">opts</span><span class="p">):</span>
+        <span class="n">verts</span><span class="p">,</span> <span class="n">codes</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">verts</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">[]</span>
+        <span class="n">patch</span> <span class="o">=</span> <span class="n">patches</span><span class="o">.</span><span class="n">PathPatch</span><span class="p">(</span><span class="n">matplotlib</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">Path</span><span class="p">(</span><span class="n">verts</span><span class="p">,</span> <span class="n">codes</span><span class="p">),</span>
+                                  <span class="n">facecolor</span><span class="o">=</span><span class="s1">'none'</span><span class="p">,</span> <span class="o">**</span><span class="n">opts</span><span class="p">)</span>
+        <span class="n">axis</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">patch</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">patch</span><span class="p">]</span></div>
+</pre>
+    </div>
+   </div>
+  </div>
+  <!-- END MAIN BODY OF DOCS ––––––––––––– -->
+  <footer class="footer">
+   <div class="footer-links">
+    <ul>
+     <li>
+      <span class="footer-title">
+       Links
+      </span>
+     </li>
+     <li>
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li>
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li>
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li>
+      <a href="/Reference_Manual/index.html">
+       API Docs
+      </a>
+     </li>
+     <li>
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li>
+      <a href="/about.html">
+       About
+      </a>
+     </li>
+    </ul>
+    <ul>
+     <li>
+      <span class="footer-title">
+       Join Us
+      </span>
+     </li>
+     <li>
+      <a href="//gitter.im/ioam/holoviews.html">
+       Gitter
+      </a>
+     </li>
+     <li>
+      <a href="//twitter.com/holoviews.html">
+       Twitter
+      </a>
+     </li>
+     <li>
+      <a href="//github.com/ioam/holoviews.html">
+       Github
+      </a>
+     </li>
+    </ul>
+    <ul class="copyright">
+     <li>
+      2017 IOAM: Jean-Luc R. Stevens, Philipp Rudiger, and James A. Bednar
+     </li>
+    </ul>
+   </div>
+  </footer>
+  <!-- Google Analytics -->
+  <script>
+   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-61554933-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <!-- MathJax Config -->
+  <script type="text/x-mathjax-config">
+   MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+  </script>
+  <!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+ </body>
+</html>

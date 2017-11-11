@@ -1,0 +1,151 @@
+Gallery
+_______
+
+The gallery shows the breadth of what HoloViews is capable of with a
+varied collection of examples.  If you are looking for a specific
+component (or wish to view the available range of primitives), see our
+`Reference Gallery <../reference/index.html>`_. To get started with
+HoloViews, see our `Getting Started <../getting_started/index.html>`_
+guide and for more detailed documentation our `User Guide
+<../user_guide/index.html>`_.
+
+.. raw:: html
+
+    <script>
+    function gallery_toggle(input) {
+        backends = ['bokeh', 'matplotlib', 'plotly'];
+        for (i in backends) {
+            entries = $('.'+backends[i]+'_example');
+            if (backends[i] == input) {
+                entries.show();
+            } else {
+                entries.hide()
+            }
+        }
+    }
+    </script>
+
+    <ul class="tab">
+    
+        <li>
+            <input id="tab1" checked="checked" type="radio" name="tab" onclick="gallery_toggle('Bokeh'.toLowerCase())" />
+            <label for="tab1">Bokeh</label>
+        </li>
+
+        <li>
+            <input id="tab2"  type="radio" name="tab" onclick="gallery_toggle('Matplotlib'.toLowerCase())" />
+            <label for="tab2">Matplotlib</label>
+        </li>
+
+        <li>
+            <input id="tab3"  type="radio" name="tab" onclick="gallery_toggle('Plotly'.toLowerCase())" />
+            <label for="tab3">Plotly</label>
+        </li>
+
+    </ul>
+
+Apps
+====
+
+.. raw:: html
+
+
+        <div style='clear:both'></div>
+
+Notebooks
+=========
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer bokeh_example" tooltip="Area chart">
+
+.. figure:: /../_static/images/logo.png
+
+    :ref:`area_chart <bokeh_gallery_area_chart>`
+
+.. raw:: html
+
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer bokeh_example" tooltip="Autompg histogram">
+
+.. figure:: /../_static/images/logo.png
+
+    :ref:`autompg_histogram <bokeh_gallery_autompg_histogram>`
+
+.. raw:: html
+
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer matplotlib_example" tooltip="Area chart">
+
+.. figure:: /gallery/notebooks/matplotlib/thumbnails/area_chart.png
+
+    :ref:`area_chart <matplotlib_gallery_area_chart>`
+
+.. raw:: html
+
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer matplotlib_example" tooltip="Autompg histogram">
+
+.. figure:: /gallery/notebooks/matplotlib/thumbnails/autompg_histogram.png
+
+    :ref:`autompg_histogram <matplotlib_gallery_autompg_histogram>`
+
+.. raw:: html
+
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer plotly_example" tooltip="Surface 3d">
+
+.. figure:: /../_static/images/logo.png
+
+    :ref:`surface_3d <plotly_gallery_surface_3d>`
+
+.. raw:: html
+
+    </div>
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer plotly_example" tooltip="Trisurf3d demo">
+
+.. figure:: /../_static/images/logo.png
+
+    :ref:`trisurf3d_demo <plotly_gallery_trisurf3d_demo>`
+
+.. raw:: html
+
+    </div>
+
+.. raw:: html
+
+
+        <div style='clear:both'></div>
+
+
+.. raw:: html
+
+    <script>
+        $(document).ready(function () {
+            backends = ['matplotlib', 'plotly'];
+            for (var i=0; i<backends.length; i++){
+                $('.'+backends[i]+'_example').hide();
+            }
+        });
+    </script>

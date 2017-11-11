@@ -1,0 +1,14 @@
+.. _bokeh_gallery_crossfilter:
+
+Crossfilter
+___________
+
+.. literalinclude:: crossfilter.py
+
+.. figure:: http://assets.holoviews.org/gifs/gallery/apps/bokeh/crossfilter.gif
+
+
+
+-------
+
+`Download this script from GitHub (right-click to download). <https://raw.githubusercontent.com/ioam/holoviews/master/examples/gallery/apps/bokeh/crossfilter.py>`_

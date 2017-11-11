@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8"/>
+  <title>
+   holoviews.plotting.bokeh.annotation — HoloViews
+  </title>
+  <meta content="HoloViews library, documentation site." name="description"/>
+  <meta content="HoloViews contributors" name="author"/>
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js">
+  </script>
+  <script>
+   WebFont.load({
+      google: {
+        families: ['Source Sans Pro']
+      }
+    });
+  </script>
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../../../../_static/main.css" rel="stylesheet"/>
+  <link href="../../../../_static/custom.css" rel="stylesheet"/>
+  <!-- Scripts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
+  </script>
+  <script async="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+  </script>
+  <script src="../../../../_static/js/main.js">
+  </script>
+  <script src="../../../../_static/custom.js">
+  </script>
+  <script src="../../../../_static/require.js">
+  </script>
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../../../../_static/images/favicon.ico" rel="icon" type="image/png"/>
+  <!-- Canonical
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="http://holoviews.org/_modules/holoviews/plotting/bokeh/annotation.html" rel="canonical"/>
+ </head>
+ <body class="">
+  <header class="navigation">
+   <div class="wrapper">
+    <a class="logo" href="//">
+     <img alt="Logo" src="../../../../_static/images/logo.png"/>
+    </a>
+    <a class="navigation-menu logo-text" href="//">
+     HoloViews
+    </a>
+    <a class="navigation-menu-button" href="javascript:void(0)" id="js-mobile-menu">
+     Menu
+    </a>
+    <nav>
+     <ul class="navigation-menu show" id="js-navigation-menu">
+      <li class="nav-link">
+       <a href="/about.html">
+        About
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="/gallery/index.html">
+        Gallery
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="//github.com/ioam/holoviews.html">
+        Github
+       </a>
+      </li>
+     </ul>
+    </nav>
+   </div>
+  </header>
+  <div class="second-nav">
+   <nav>
+    <ul class="navigation-menu show">
+     <li class="nav-link doc-head">
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+    </ul>
+   </nav>
+   <div class="navigation-tools">
+    <div class="search-bar">
+     <form action="../../../../search.html" method="get" role="search">
+      <input name="q" placeholder="Search" type="search"/>
+      <button type="submit">
+       <img alt="Search Icon" src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/search-icon-black.png"/>
+      </button>
+     </form>
+    </div>
+   </div>
+  </div>
+  <!-- MAIN BODY OF DOCS –––––––––––––––––– -->
+  <div class="docs section">
+   <div class="toc">
+    <ul>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../../getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../../user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../../gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../../Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../../FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference external" href="http://github.com/ioam/holoviews">
+       Github source
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../../about.html">
+       About
+      </a>
+     </li>
+    </ul>
+   </div>
+   <div class="content">
+    <h1>
+     Source code for holoviews.plotting.bokeh.annotation
+    </h1>
+    <div class="highlight">
+     <pre><span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">defaultdict</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">bokeh.models</span> <span class="k">import</span> <span class="n">Span</span><span class="p">,</span> <span class="n">Arrow</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">bokeh.models.arrow_heads</span> <span class="k">import</span> <span class="n">TeeHead</span><span class="p">,</span> <span class="n">NormalHead</span>
+    <span class="n">arrow_start</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'&lt;-&gt;'</span><span class="p">:</span> <span class="n">NormalHead</span><span class="p">,</span> <span class="s1">'&lt;|-|&gt;'</span><span class="p">:</span> <span class="n">NormalHead</span><span class="p">}</span>
+    <span class="n">arrow_end</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'-&gt;'</span><span class="p">:</span> <span class="n">NormalHead</span><span class="p">,</span> <span class="s1">'-['</span><span class="p">:</span> <span class="n">TeeHead</span><span class="p">,</span> <span class="s1">'-|&gt;'</span><span class="p">:</span> <span class="n">NormalHead</span><span class="p">,</span> <span class="s1">'-'</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">bokeh.models.arrow_heads</span> <span class="k">import</span> <span class="n">OpenHead</span><span class="p">,</span> <span class="n">NormalHead</span>
+    <span class="n">arrow_start</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'&lt;-&gt;'</span><span class="p">:</span> <span class="n">NormalHead</span><span class="p">,</span> <span class="s1">'&lt;|-|&gt;'</span><span class="p">:</span> <span class="n">NormalHead</span><span class="p">}</span>
+    <span class="n">arrow_end</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'-&gt;'</span><span class="p">:</span> <span class="n">NormalHead</span><span class="p">,</span> <span class="s1">'-['</span><span class="p">:</span> <span class="n">OpenHead</span><span class="p">,</span> <span class="s1">'-|&gt;'</span><span class="p">:</span> <span class="n">NormalHead</span><span class="p">,</span> <span class="s1">'-'</span><span class="p">:</span> <span class="kc">None</span><span class="p">}</span>
+
+<span class="kn">from</span> <span class="nn">...element</span> <span class="k">import</span> <span class="n">HLine</span>
+<span class="kn">from</span> <span class="nn">...core.util</span> <span class="k">import</span> <span class="n">datetime_types</span>
+<span class="kn">from</span> <span class="nn">.element</span> <span class="k">import</span> <span class="n">ElementPlot</span><span class="p">,</span> <span class="n">CompositeElementPlot</span><span class="p">,</span> <span class="n">text_properties</span><span class="p">,</span> <span class="n">line_properties</span>
+<span class="kn">from</span> <span class="nn">.util</span> <span class="k">import</span> <span class="n">date_to_integer</span>
+
+
+<span class="k">class</span> <span class="nc">TextPlot</span><span class="p">(</span><span class="n">ElementPlot</span><span class="p">):</span>
+
+    <span class="n">style_opts</span> <span class="o">=</span> <span class="n">text_properties</span><span class="o">+</span><span class="p">[</span><span class="s1">'color'</span><span class="p">]</span>
+    <span class="n">_plot_methods</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">single</span><span class="o">=</span><span class="s1">'text'</span><span class="p">,</span> <span class="n">batched</span><span class="o">=</span><span class="s1">'text'</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">ranges</span><span class="p">,</span> <span class="n">style</span><span class="p">):</span>
+        <span class="n">mapping</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">'x'</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">'y'</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">'text'</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">static_source</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="p">[],</span> <span class="n">y</span><span class="o">=</span><span class="p">[],</span> <span class="n">text</span><span class="o">=</span><span class="p">[]),</span> <span class="n">mapping</span><span class="p">,</span> <span class="n">style</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">invert_axes</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="p">[</span><span class="n">element</span><span class="o">.</span><span class="n">y</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="p">[</span><span class="n">element</span><span class="o">.</span><span class="n">x</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="p">[</span><span class="n">element</span><span class="o">.</span><span class="n">x</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="p">[</span><span class="n">element</span><span class="o">.</span><span class="n">y</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_categorize_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="s1">'x'</span><span class="p">,</span> <span class="s1">'y'</span><span class="p">),</span> <span class="n">element</span><span class="o">.</span><span class="n">dimensions</span><span class="p">())</span>
+        <span class="n">data</span><span class="p">[</span><span class="s1">'text'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">element</span><span class="o">.</span><span class="n">text</span><span class="p">]</span>
+        <span class="n">style</span><span class="p">[</span><span class="s1">'text_align'</span><span class="p">]</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">halign</span>
+        <span class="n">style</span><span class="p">[</span><span class="s1">'text_baseline'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'middle'</span> <span class="k">if</span> <span class="n">element</span><span class="o">.</span><span class="n">valign</span> <span class="o">==</span> <span class="s1">'center'</span> <span class="k">else</span> <span class="n">element</span><span class="o">.</span><span class="n">valign</span>
+        <span class="k">if</span> <span class="s1">'color'</span> <span class="ow">in</span> <span class="n">style</span><span class="p">:</span>
+            <span class="n">style</span><span class="p">[</span><span class="s1">'text_color'</span><span class="p">]</span> <span class="o">=</span> <span class="n">style</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">'color'</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">mapping</span><span class="p">,</span> <span class="n">style</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_batched_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">ranges</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+        <span class="n">zorders</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_updated_zorders</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+        <span class="k">for</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">el</span><span class="p">),</span> <span class="n">zorder</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">zorders</span><span class="p">):</span>
+            <span class="n">style</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">lookup_options</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">last</span><span class="p">,</span> <span class="s1">'style'</span><span class="p">)</span>
+            <span class="n">style</span> <span class="o">=</span> <span class="n">style</span><span class="o">.</span><span class="n">max_cycles</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ordering</span><span class="p">))[</span><span class="n">zorder</span><span class="p">]</span>
+            <span class="n">eldata</span><span class="p">,</span> <span class="n">elmapping</span><span class="p">,</span> <span class="n">style</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="n">el</span><span class="p">,</span> <span class="n">ranges</span><span class="p">,</span> <span class="n">style</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">eld</span> <span class="ow">in</span> <span class="n">eldata</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">data</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">eld</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">data</span><span class="p">,</span> <span class="n">elmapping</span><span class="p">,</span> <span class="n">style</span>
+
+    <span class="k">def</span> <span class="nf">get_extents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">ranges</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+
+
+
+<span class="k">class</span> <span class="nc">LineAnnotationPlot</span><span class="p">(</span><span class="n">ElementPlot</span><span class="p">):</span>
+
+    <span class="n">style_opts</span> <span class="o">=</span> <span class="n">line_properties</span>
+
+    <span class="n">_plot_methods</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">single</span><span class="o">=</span><span class="s1">'Span'</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">ranges</span><span class="p">,</span> <span class="n">style</span><span class="p">):</span>
+        <span class="n">data</span><span class="p">,</span> <span class="n">mapping</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">{}</span>
+        <span class="n">dim</span> <span class="o">=</span> <span class="s1">'width'</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">HLine</span><span class="p">)</span> <span class="k">else</span> <span class="s1">'height'</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">invert_axes</span><span class="p">:</span>
+            <span class="n">dim</span> <span class="o">=</span> <span class="s1">'width'</span> <span class="k">if</span> <span class="n">dim</span> <span class="o">==</span> <span class="s1">'height'</span> <span class="k">else</span> <span class="s1">'height'</span>
+        <span class="n">mapping</span><span class="p">[</span><span class="s1">'dimension'</span><span class="p">]</span> <span class="o">=</span> <span class="n">dim</span>
+        <span class="n">loc</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">data</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">loc</span><span class="p">,</span> <span class="n">datetime_types</span><span class="p">):</span>
+            <span class="n">loc</span> <span class="o">=</span> <span class="n">date_to_integer</span><span class="p">(</span><span class="n">loc</span><span class="p">)</span>
+        <span class="n">mapping</span><span class="p">[</span><span class="s1">'location'</span><span class="p">]</span> <span class="o">=</span> <span class="n">loc</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">mapping</span><span class="p">,</span> <span class="n">style</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_init_glyph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plot</span><span class="p">,</span> <span class="n">mapping</span><span class="p">,</span> <span class="n">properties</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Returns a Bokeh glyph object.</span>
+<span class="sd">        """</span>
+        <span class="n">box</span> <span class="o">=</span> <span class="n">Span</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="s1">'annotation'</span><span class="p">,</span> <span class="o">**</span><span class="n">mapping</span><span class="p">)</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">renderers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">box</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="n">box</span>
+
+    <span class="k">def</span> <span class="nf">get_extents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">ranges</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+
+
+
+<div class="viewcode-block" id="SplinePlot"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.annotation.SplinePlot">[docs]</a><span class="k">class</span> <span class="nc">SplinePlot</span><span class="p">(</span><span class="n">ElementPlot</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Draw the supplied Spline annotation (see Spline docstring).</span>
+<span class="sd">    Does not support matplotlib Path codes.</span>
+<span class="sd">    """</span>
+
+    <span class="n">style_opts</span> <span class="o">=</span> <span class="n">line_properties</span>
+    <span class="n">_plot_methods</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">single</span><span class="o">=</span><span class="s1">'bezier'</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">ranges</span><span class="p">,</span> <span class="n">style</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">invert_axes</span><span class="p">:</span>
+            <span class="n">data_attrs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'y0'</span><span class="p">,</span> <span class="s1">'x0'</span><span class="p">,</span> <span class="s1">'cy0'</span><span class="p">,</span> <span class="s1">'cx0'</span><span class="p">,</span> <span class="s1">'cy1'</span><span class="p">,</span> <span class="s1">'cx1'</span><span class="p">,</span> <span class="s1">'y1'</span><span class="p">,</span> <span class="s1">'x1'</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">data_attrs</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'x0'</span><span class="p">,</span> <span class="s1">'y0'</span><span class="p">,</span> <span class="s1">'cx0'</span><span class="p">,</span> <span class="s1">'cy0'</span><span class="p">,</span> <span class="s1">'cx1'</span><span class="p">,</span> <span class="s1">'cy1'</span><span class="p">,</span> <span class="s1">'x1'</span><span class="p">,</span> <span class="s1">'y1'</span><span class="p">]</span>
+        <span class="n">verts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">inds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">==</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">da</span><span class="p">:</span> <span class="p">[]</span> <span class="k">for</span> <span class="n">da</span> <span class="ow">in</span> <span class="n">data_attrs</span><span class="p">}</span>
+        <span class="n">skipped</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">vs</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">verts</span><span class="p">,</span> <span class="n">inds</span><span class="p">[</span><span class="mi">1</span><span class="p">:]):</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">vs</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
+                <span class="n">skipped</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span>
+                <span class="k">continue</span>
+            <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">xl</span><span class="p">,</span> <span class="n">yl</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">vs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">vs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">data_attrs</span><span class="p">[::</span><span class="mi">2</span><span class="p">],</span> <span class="n">data_attrs</span><span class="p">[</span><span class="mi">1</span><span class="p">::</span><span class="mi">2</span><span class="p">]):</span>
+                <span class="n">data</span><span class="p">[</span><span class="n">xl</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+                <span class="n">data</span><span class="p">[</span><span class="n">yl</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">skipped</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">'Bokeh SplitPlot only support cubic splines, '</span>
+                         <span class="s1">'unsupported splines were skipped during plotting.'</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">da</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="n">da</span><span class="p">]</span> <span class="k">for</span> <span class="n">da</span> <span class="ow">in</span> <span class="n">data_attrs</span><span class="p">}</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">data_attrs</span><span class="p">,</span> <span class="n">data_attrs</span><span class="p">)),</span> <span class="n">style</span><span class="p">)</span></div>
+
+
+
+<span class="k">class</span> <span class="nc">ArrowPlot</span><span class="p">(</span><span class="n">CompositeElementPlot</span><span class="p">):</span>
+
+    <span class="n">style_opts</span> <span class="o">=</span> <span class="p">([</span><span class="s1">'arrow_</span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">line_properties</span><span class="o">+</span><span class="p">[</span><span class="s1">'size'</span><span class="p">]]</span> <span class="o">+</span> <span class="n">text_properties</span><span class="p">)</span>
+
+    <span class="n">_style_groups</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'arrow'</span><span class="p">:</span> <span class="s1">'arrow'</span><span class="p">,</span> <span class="s1">'label'</span><span class="p">:</span> <span class="s1">'text'</span><span class="p">}</span>
+
+    <span class="n">_plot_methods</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">single</span><span class="o">=</span><span class="s1">'text'</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">ranges</span><span class="p">,</span> <span class="n">style</span><span class="p">):</span>
+        <span class="n">plot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span>
+        <span class="n">label_mapping</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">'x'</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">'y'</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="s1">'text'</span><span class="p">)</span>
+
+        <span class="c1"># Compute arrow</span>
+        <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">element</span><span class="o">.</span><span class="n">y</span>
+        <span class="n">axrange</span> <span class="o">=</span> <span class="n">plot</span><span class="o">.</span><span class="n">x_range</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">invert_axes</span> <span class="k">else</span> <span class="n">plot</span><span class="o">.</span><span class="n">y_range</span>
+        <span class="n">span</span> <span class="o">=</span> <span class="p">(</span><span class="n">axrange</span><span class="o">.</span><span class="n">end</span> <span class="o">-</span> <span class="n">axrange</span><span class="o">.</span><span class="n">start</span><span class="p">)</span> <span class="o">/</span> <span class="mf">6.</span>
+        <span class="k">if</span> <span class="n">element</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s1">'^'</span><span class="p">:</span>
+            <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span> <span class="o">=</span> <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="o">-</span><span class="n">span</span>
+            <span class="n">label_mapping</span><span class="p">[</span><span class="s1">'text_baseline'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'top'</span>
+        <span class="k">elif</span> <span class="n">element</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s1">'&lt;'</span><span class="p">:</span>
+            <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span> <span class="o">=</span> <span class="n">x1</span><span class="o">+</span><span class="n">span</span><span class="p">,</span> <span class="n">y1</span>
+            <span class="n">label_mapping</span><span class="p">[</span><span class="s1">'text_align'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'left'</span>
+            <span class="n">label_mapping</span><span class="p">[</span><span class="s1">'text_baseline'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'middle'</span>
+        <span class="k">elif</span> <span class="n">element</span><span class="o">.</span><span class="n">direction</span> <span class="o">==</span> <span class="s1">'&gt;'</span><span class="p">:</span>
+            <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span> <span class="o">=</span> <span class="n">x1</span><span class="o">-</span><span class="n">span</span><span class="p">,</span> <span class="n">y1</span>
+            <span class="n">label_mapping</span><span class="p">[</span><span class="s1">'text_align'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'right'</span>
+            <span class="n">label_mapping</span><span class="p">[</span><span class="s1">'text_baseline'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'middle'</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">x2</span><span class="p">,</span> <span class="n">y2</span> <span class="o">=</span> <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="o">+</span><span class="n">span</span>
+            <span class="n">label_mapping</span><span class="p">[</span><span class="s1">'text_baseline'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'bottom'</span>
+        <span class="n">arrow_opts</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'x_end'</span><span class="p">:</span> <span class="n">x1</span><span class="p">,</span> <span class="s1">'y_end'</span><span class="p">:</span> <span class="n">y1</span><span class="p">,</span>
+                      <span class="s1">'x_start'</span><span class="p">:</span> <span class="n">x2</span><span class="p">,</span> <span class="s1">'y_start'</span><span class="p">:</span> <span class="n">y2</span><span class="p">}</span>
+
+        <span class="c1"># Define arrowhead</span>
+        <span class="n">arrow_opts</span><span class="p">[</span><span class="s1">'arrow_start'</span><span class="p">]</span> <span class="o">=</span> <span class="n">arrow_start</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">arrowstyle</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="n">arrow_opts</span><span class="p">[</span><span class="s1">'arrow_end'</span><span class="p">]</span> <span class="o">=</span> <span class="n">arrow_end</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">arrowstyle</span><span class="p">,</span> <span class="n">NormalHead</span><span class="p">)</span>
+
+        <span class="c1"># Compute label</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">invert_axes</span><span class="p">:</span>
+            <span class="n">label_data</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="p">[</span><span class="n">y2</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="p">[</span><span class="n">x2</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">label_data</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="p">[</span><span class="n">x2</span><span class="p">],</span> <span class="n">y</span><span class="o">=</span><span class="p">[</span><span class="n">y2</span><span class="p">])</span>
+        <span class="n">label_data</span><span class="p">[</span><span class="s1">'text'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">element</span><span class="o">.</span><span class="n">text</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">({</span><span class="s1">'label'</span><span class="p">:</span> <span class="n">label_data</span><span class="p">},</span>
+                <span class="p">{</span><span class="s1">'arrow'</span><span class="p">:</span> <span class="n">arrow_opts</span><span class="p">,</span> <span class="s1">'label'</span><span class="p">:</span> <span class="n">label_mapping</span><span class="p">},</span> <span class="n">style</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_init_glyph</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plot</span><span class="p">,</span> <span class="n">mapping</span><span class="p">,</span> <span class="n">properties</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Returns a Bokeh glyph object.</span>
+<span class="sd">        """</span>
+        <span class="n">properties</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">'legend'</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">'arrow'</span><span class="p">:</span>
+            <span class="n">properties</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">'source'</span><span class="p">)</span>
+            <span class="n">arrow_end</span> <span class="o">=</span> <span class="n">mapping</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">'arrow_end'</span><span class="p">)</span>
+            <span class="n">arrow_start</span> <span class="o">=</span> <span class="n">mapping</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">'arrow_start'</span><span class="p">)</span>
+            <span class="n">start</span> <span class="o">=</span> <span class="n">arrow_start</span><span class="p">(</span><span class="o">**</span><span class="n">properties</span><span class="p">)</span> <span class="k">if</span> <span class="n">arrow_start</span> <span class="k">else</span> <span class="kc">None</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="n">arrow_end</span><span class="p">(</span><span class="o">**</span><span class="n">properties</span><span class="p">)</span> <span class="k">if</span> <span class="n">arrow_end</span> <span class="k">else</span> <span class="kc">None</span>
+            <span class="n">glyph</span> <span class="o">=</span> <span class="n">Arrow</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">,</span> <span class="o">**</span><span class="nb">dict</span><span class="p">(</span><span class="o">**</span><span class="n">mapping</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">properties</span> <span class="o">=</span> <span class="p">{</span><span class="n">p</span> <span class="k">if</span> <span class="n">p</span> <span class="o">==</span> <span class="s1">'source'</span> <span class="k">else</span> <span class="s1">'text_'</span><span class="o">+</span><span class="n">p</span><span class="p">:</span> <span class="n">v</span>
+                          <span class="k">for</span> <span class="n">p</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">properties</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+            <span class="n">glyph</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">ArrowPlot</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">_init_glyph</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="n">mapping</span><span class="p">,</span> <span class="n">properties</span><span class="p">,</span> <span class="s1">'text'</span><span class="p">)</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">renderers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">glyph</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="n">glyph</span>
+
+    <span class="k">def</span> <span class="nf">get_extents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">ranges</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+</pre>
+    </div>
+   </div>
+  </div>
+  <!-- END MAIN BODY OF DOCS ––––––––––––– -->
+  <footer class="footer">
+   <div class="footer-links">
+    <ul>
+     <li>
+      <span class="footer-title">
+       Links
+      </span>
+     </li>
+     <li>
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li>
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li>
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li>
+      <a href="/Reference_Manual/index.html">
+       API Docs
+      </a>
+     </li>
+     <li>
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li>
+      <a href="/about.html">
+       About
+      </a>
+     </li>
+    </ul>
+    <ul>
+     <li>
+      <span class="footer-title">
+       Join Us
+      </span>
+     </li>
+     <li>
+      <a href="//gitter.im/ioam/holoviews.html">
+       Gitter
+      </a>
+     </li>
+     <li>
+      <a href="//twitter.com/holoviews.html">
+       Twitter
+      </a>
+     </li>
+     <li>
+      <a href="//github.com/ioam/holoviews.html">
+       Github
+      </a>
+     </li>
+    </ul>
+    <ul class="copyright">
+     <li>
+      2017 IOAM: Jean-Luc R. Stevens, Philipp Rudiger, and James A. Bednar
+     </li>
+    </ul>
+   </div>
+  </footer>
+  <!-- Google Analytics -->
+  <script>
+   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-61554933-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <!-- MathJax Config -->
+  <script type="text/x-mathjax-config">
+   MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+  </script>
+  <!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+ </body>
+</html>

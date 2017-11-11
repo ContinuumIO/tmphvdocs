@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8"/>
+  <title>
+   holoviews.plotting.bokeh.graphs — HoloViews
+  </title>
+  <meta content="HoloViews library, documentation site." name="description"/>
+  <meta content="HoloViews contributors" name="author"/>
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js">
+  </script>
+  <script>
+   WebFont.load({
+      google: {
+        families: ['Source Sans Pro']
+      }
+    });
+  </script>
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../../../../_static/main.css" rel="stylesheet"/>
+  <link href="../../../../_static/custom.css" rel="stylesheet"/>
+  <!-- Scripts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
+  </script>
+  <script async="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+  </script>
+  <script src="../../../../_static/js/main.js">
+  </script>
+  <script src="../../../../_static/custom.js">
+  </script>
+  <script src="../../../../_static/require.js">
+  </script>
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../../../../_static/images/favicon.ico" rel="icon" type="image/png"/>
+  <!-- Canonical
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="http://holoviews.org/_modules/holoviews/plotting/bokeh/graphs.html" rel="canonical"/>
+ </head>
+ <body class="">
+  <header class="navigation">
+   <div class="wrapper">
+    <a class="logo" href="//">
+     <img alt="Logo" src="../../../../_static/images/logo.png"/>
+    </a>
+    <a class="navigation-menu logo-text" href="//">
+     HoloViews
+    </a>
+    <a class="navigation-menu-button" href="javascript:void(0)" id="js-mobile-menu">
+     Menu
+    </a>
+    <nav>
+     <ul class="navigation-menu show" id="js-navigation-menu">
+      <li class="nav-link">
+       <a href="/about.html">
+        About
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="/gallery/index.html">
+        Gallery
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="//github.com/ioam/holoviews.html">
+        Github
+       </a>
+      </li>
+     </ul>
+    </nav>
+   </div>
+  </header>
+  <div class="second-nav">
+   <nav>
+    <ul class="navigation-menu show">
+     <li class="nav-link doc-head">
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+    </ul>
+   </nav>
+   <div class="navigation-tools">
+    <div class="search-bar">
+     <form action="../../../../search.html" method="get" role="search">
+      <input name="q" placeholder="Search" type="search"/>
+      <button type="submit">
+       <img alt="Search Icon" src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/search-icon-black.png"/>
+      </button>
+     </form>
+    </div>
+   </div>
+  </div>
+  <!-- MAIN BODY OF DOCS –––––––––––––––––– -->
+  <div class="docs section">
+   <div class="toc">
+    <ul>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../../getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../../user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../../gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../../Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../../FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference external" href="http://github.com/ioam/holoviews">
+       Github source
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../../about.html">
+       About
+      </a>
+     </li>
+    </ul>
+   </div>
+   <div class="content">
+    <h1>
+     Source code for holoviews.plotting.bokeh.graphs
+    </h1>
+    <div class="highlight">
+     <pre><span></span><span class="kn">import</span> <span class="nn">param</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">bokeh.models</span> <span class="k">import</span> <span class="n">Range1d</span><span class="p">,</span> <span class="n">Circle</span><span class="p">,</span> <span class="n">MultiLine</span><span class="p">,</span> <span class="n">HoverTool</span><span class="p">,</span> <span class="n">ColumnDataSource</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">bokeh.models</span> <span class="k">import</span> <span class="p">(</span><span class="n">StaticLayoutProvider</span><span class="p">,</span> <span class="n">GraphRenderer</span><span class="p">,</span> <span class="n">NodesAndLinkedEdges</span><span class="p">,</span>
+                              <span class="n">EdgesAndLinkedNodes</span><span class="p">)</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="kn">from</span> <span class="nn">...core.options</span> <span class="k">import</span> <span class="n">abbreviated_exception</span><span class="p">,</span> <span class="n">SkipRendering</span>
+<span class="kn">from</span> <span class="nn">...core.util</span> <span class="k">import</span> <span class="n">basestring</span><span class="p">,</span> <span class="n">dimension_sanitizer</span>
+<span class="kn">from</span> <span class="nn">.chart</span> <span class="k">import</span> <span class="n">ColorbarPlot</span><span class="p">,</span> <span class="n">PointPlot</span>
+<span class="kn">from</span> <span class="nn">.element</span> <span class="k">import</span> <span class="n">CompositeElementPlot</span><span class="p">,</span> <span class="n">LegendPlot</span><span class="p">,</span> <span class="n">line_properties</span><span class="p">,</span> <span class="n">fill_properties</span><span class="p">,</span> <span class="n">property_prefixes</span>
+<span class="kn">from</span> <span class="nn">.util</span> <span class="k">import</span> <span class="n">mpl_to_bokeh</span>
+
+
+<span class="k">class</span> <span class="nc">GraphPlot</span><span class="p">(</span><span class="n">CompositeElementPlot</span><span class="p">,</span> <span class="n">ColorbarPlot</span><span class="p">,</span> <span class="n">LegendPlot</span><span class="p">):</span>
+
+    <span class="n">color_index</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">ClassSelector</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">class_</span><span class="o">=</span><span class="p">(</span><span class="n">basestring</span><span class="p">,</span> <span class="nb">int</span><span class="p">),</span>
+                                      <span class="n">allow_None</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">      Index of the dimension from which the color will the drawn"""</span><span class="p">)</span>
+
+    <span class="n">selection_policy</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">ObjectSelector</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">'nodes'</span><span class="p">,</span> <span class="n">objects</span><span class="o">=</span><span class="p">[</span><span class="s1">'edges'</span><span class="p">,</span> <span class="s1">'nodes'</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        Determines policy for inspection of graph components, i.e. whether to highlight</span>
+<span class="s2">        nodes or edges when selecting connected edges and nodes respectively."""</span><span class="p">)</span>
+
+    <span class="n">inspection_policy</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">ObjectSelector</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">'nodes'</span><span class="p">,</span> <span class="n">objects</span><span class="o">=</span><span class="p">[</span><span class="s1">'edges'</span><span class="p">,</span> <span class="s1">'nodes'</span><span class="p">,</span> <span class="kc">None</span><span class="p">],</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        Determines policy for inspection of graph components, i.e. whether to highlight</span>
+<span class="s2">        nodes or edges when hovering over connected edges and nodes respectively."""</span><span class="p">)</span>
+
+    <span class="n">tools</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">List</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="p">[</span><span class="s1">'hover'</span><span class="p">,</span> <span class="s1">'tap'</span><span class="p">],</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        A list of plugin tools to use on the plot."""</span><span class="p">)</span>
+
+    <span class="c1"># X-axis is categorical</span>
+    <span class="n">_x_range_type</span> <span class="o">=</span> <span class="n">Range1d</span>
+
+    <span class="c1"># Declare that y-range should auto-range if not bounded</span>
+    <span class="n">_y_range_type</span> <span class="o">=</span> <span class="n">Range1d</span>
+
+        <span class="c1"># Map each glyph to a style group</span>
+    <span class="n">_style_groups</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'scatter'</span><span class="p">:</span> <span class="s1">'node'</span><span class="p">,</span> <span class="s1">'multi_line'</span><span class="p">:</span> <span class="s1">'edge'</span><span class="p">}</span>
+
+    <span class="n">style_opts</span> <span class="o">=</span> <span class="p">([</span><span class="s1">'edge_'</span><span class="o">+</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">line_properties</span><span class="p">]</span> <span class="o">+</span>\
+                  <span class="p">[</span><span class="s1">'node_'</span><span class="o">+</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">fill_properties</span><span class="o">+</span><span class="n">line_properties</span><span class="p">]</span><span class="o">+</span><span class="p">[</span><span class="s1">'node_size'</span><span class="p">,</span> <span class="s1">'cmap'</span><span class="p">])</span>
+
+    <span class="k">def</span> <span class="nf">_hover_opts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">inspection_policy</span> <span class="o">==</span> <span class="s1">'nodes'</span><span class="p">:</span>
+            <span class="n">dims</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">dimensions</span><span class="p">()</span>
+            <span class="n">dims</span> <span class="o">=</span> <span class="p">[(</span><span class="n">dims</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">pprint_label</span><span class="p">,</span> <span class="s1">'@</span><span class="si">{index_hover}</span><span class="s1">'</span><span class="p">)]</span><span class="o">+</span><span class="n">dims</span><span class="p">[</span><span class="mi">3</span><span class="p">:]</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">inspection_policy</span> <span class="o">==</span> <span class="s1">'edges'</span><span class="p">:</span>
+            <span class="n">kdims</span> <span class="o">=</span> <span class="p">[(</span><span class="n">kd</span><span class="o">.</span><span class="n">pprint_label</span><span class="p">,</span> <span class="s1">'@{</span><span class="si">%s</span><span class="s1">}'</span> <span class="o">%</span> <span class="n">ref</span><span class="p">)</span>
+                     <span class="k">for</span> <span class="n">kd</span><span class="p">,</span> <span class="n">ref</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">kdims</span><span class="p">,</span> <span class="p">[</span><span class="s1">'start'</span><span class="p">,</span> <span class="s1">'end'</span><span class="p">])]</span>
+            <span class="n">dims</span> <span class="o">=</span> <span class="n">kdims</span><span class="o">+</span><span class="n">element</span><span class="o">.</span><span class="n">vdims</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dims</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">return</span> <span class="n">dims</span><span class="p">,</span> <span class="p">{}</span>
+
+    <span class="k">def</span> <span class="nf">get_extents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">ranges</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Extents are set to '' and None because x-axis is categorical and</span>
+<span class="sd">        y-axis auto-ranges.</span>
+<span class="sd">        """</span>
+        <span class="n">xdim</span><span class="p">,</span> <span class="n">ydim</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">kdims</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">x0</span><span class="p">,</span> <span class="n">x1</span> <span class="o">=</span> <span class="n">ranges</span><span class="p">[</span><span class="n">xdim</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+        <span class="n">y0</span><span class="p">,</span> <span class="n">y1</span> <span class="o">=</span> <span class="n">ranges</span><span class="p">[</span><span class="n">ydim</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_axis_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Override axis labels to group all key dimensions together.</span>
+<span class="sd">        """</span>
+        <span class="n">element</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_frame</span>
+        <span class="n">xlabel</span><span class="p">,</span> <span class="n">ylabel</span> <span class="o">=</span> <span class="p">[</span><span class="n">kd</span><span class="o">.</span><span class="n">pprint_label</span> <span class="k">for</span> <span class="n">kd</span> <span class="ow">in</span> <span class="n">element</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">kdims</span><span class="p">[:</span><span class="mi">2</span><span class="p">]]</span>
+        <span class="k">return</span> <span class="n">xlabel</span><span class="p">,</span> <span class="n">ylabel</span><span class="p">,</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">ranges</span><span class="p">,</span> <span class="n">style</span><span class="p">):</span>
+        <span class="n">xidx</span><span class="p">,</span> <span class="n">yidx</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">invert_axes</span> <span class="k">else</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Get node data</span>
+        <span class="n">nodes</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">dimension_values</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">node_positions</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+        <span class="c1"># Map node indices to integers</span>
+        <span class="k">if</span> <span class="n">nodes</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">kind</span> <span class="o">!=</span> <span class="s1">'i'</span><span class="p">:</span>
+            <span class="n">node_indices</span> <span class="o">=</span> <span class="p">{</span><span class="n">v</span><span class="p">:</span> <span class="n">i</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nodes</span><span class="p">)}</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">node_indices</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+            <span class="n">layout</span> <span class="o">=</span> <span class="p">{</span><span class="n">node_indices</span><span class="p">[</span><span class="n">z</span><span class="p">]:</span> <span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">invert_axes</span> <span class="k">else</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+                      <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="ow">in</span> <span class="n">node_positions</span><span class="p">}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="n">nodes</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+            <span class="n">layout</span> <span class="o">=</span> <span class="p">{</span><span class="n">z</span><span class="p">:</span> <span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">invert_axes</span> <span class="k">else</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+                      <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="ow">in</span> <span class="n">node_positions</span><span class="p">}</span>
+        <span class="n">point_data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'index'</span><span class="p">:</span> <span class="n">index</span><span class="p">}</span>
+        <span class="n">cdata</span><span class="p">,</span> <span class="n">cmapping</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_color_data</span><span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">nodes</span><span class="p">,</span> <span class="n">ranges</span><span class="p">,</span> <span class="n">style</span><span class="p">,</span> <span class="s1">'node_fill_color'</span><span class="p">)</span>
+        <span class="n">point_data</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">cdata</span><span class="p">)</span>
+        <span class="n">point_mapping</span> <span class="o">=</span> <span class="n">cmapping</span>
+        <span class="k">if</span> <span class="s1">'node_fill_color'</span> <span class="ow">in</span> <span class="n">point_mapping</span><span class="p">:</span>
+            <span class="n">style</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">style</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span>
+                     <span class="p">[</span><span class="s1">'node_fill_color'</span><span class="p">,</span> <span class="s1">'node_nonselection_fill_color'</span><span class="p">]}</span>
+            <span class="n">point_mapping</span><span class="p">[</span><span class="s1">'node_nonselection_fill_color'</span><span class="p">]</span> <span class="o">=</span> <span class="n">point_mapping</span><span class="p">[</span><span class="s1">'node_fill_color'</span><span class="p">]</span>
+
+        <span class="c1"># Get edge data</span>
+        <span class="n">nan_node</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">max</span><span class="p">()</span><span class="o">+</span><span class="mi">1</span>
+        <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="o">=</span> <span class="p">(</span><span class="n">element</span><span class="o">.</span><span class="n">dimension_values</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">nodes</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">kind</span> <span class="ow">not</span> <span class="ow">in</span> <span class="s1">'if'</span><span class="p">:</span>
+            <span class="n">start</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">node_indices</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">nan_node</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">start</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">node_indices</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">nan_node</span><span class="p">)</span> <span class="k">for</span> <span class="n">y</span> <span class="ow">in</span> <span class="n">end</span><span class="p">],</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int32</span><span class="p">)</span>
+        <span class="n">path_data</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">element</span><span class="o">.</span><span class="n">_edgepaths</span> <span class="ow">and</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">static_source</span><span class="p">:</span>
+            <span class="n">edges</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">_split_edgepaths</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">datatype</span><span class="o">=</span><span class="s1">'array'</span><span class="p">,</span> <span class="n">dimensions</span><span class="o">=</span><span class="n">element</span><span class="o">.</span><span class="n">edgepaths</span><span class="o">.</span><span class="n">kdims</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">edges</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">start</span><span class="p">):</span>
+                <span class="n">path_data</span><span class="p">[</span><span class="s1">'xs'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">path</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">edges</span><span class="p">]</span>
+                <span class="n">path_data</span><span class="p">[</span><span class="s1">'ys'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">path</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">edges</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">'Graph edge paths do not match the number of abstract edges '</span>
+                             <span class="s1">'and will be skipped'</span><span class="p">)</span>
+
+        <span class="c1"># Get hover data</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">HoverTool</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">tools</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">inspection_policy</span> <span class="o">==</span> <span class="s1">'nodes'</span><span class="p">:</span>
+                <span class="n">index_dim</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">get_dimension</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+                <span class="n">point_data</span><span class="p">[</span><span class="s1">'index_hover'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">index_dim</span><span class="o">.</span><span class="n">pprint_value</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">element</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">dimension_values</span><span class="p">(</span><span class="mi">2</span><span class="p">)]</span>
+                <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">element</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">dimensions</span><span class="p">()[</span><span class="mi">3</span><span class="p">:]:</span>
+                    <span class="n">point_data</span><span class="p">[</span><span class="n">dimension_sanitizer</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">name</span><span class="p">)]</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">dimension_values</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">inspection_policy</span> <span class="o">==</span> <span class="s1">'edges'</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">element</span><span class="o">.</span><span class="n">vdims</span><span class="p">:</span>
+                    <span class="n">path_data</span><span class="p">[</span><span class="n">dimension_sanitizer</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">name</span><span class="p">)]</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">dimension_values</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'scatter_1'</span><span class="p">:</span> <span class="n">point_data</span><span class="p">,</span> <span class="s1">'multi_line_1'</span><span class="p">:</span> <span class="n">path_data</span><span class="p">,</span> <span class="s1">'layout'</span><span class="p">:</span> <span class="n">layout</span><span class="p">}</span>
+        <span class="n">mapping</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'scatter_1'</span><span class="p">:</span> <span class="n">point_mapping</span><span class="p">,</span> <span class="s1">'multi_line_1'</span><span class="p">:</span> <span class="p">{}}</span>
+        <span class="k">return</span> <span class="n">data</span><span class="p">,</span> <span class="n">mapping</span><span class="p">,</span> <span class="n">style</span>
+
+
+    <span class="k">def</span> <span class="nf">_update_datasource</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Update datasource with data for a new frame.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">ColumnDataSource</span><span class="p">):</span>
+            <span class="n">source</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">source</span><span class="o">.</span><span class="n">graph_layout</span> <span class="o">=</span> <span class="n">data</span>
+
+
+    <span class="k">def</span> <span class="nf">_init_glyphs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plot</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">ranges</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
+        <span class="c1"># Get data and initialize data source</span>
+        <span class="n">style</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">style</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">cyclic_index</span><span class="p">]</span>
+        <span class="n">data</span><span class="p">,</span> <span class="n">mapping</span><span class="p">,</span> <span class="n">style</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_data</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">ranges</span><span class="p">,</span> <span class="n">style</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="p">[</span><span class="s1">'previous_id'</span><span class="p">]</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">_plot_id</span>
+        <span class="n">properties</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">mappings</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">mapping</span><span class="p">:</span>
+            <span class="n">source</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_init_datasource</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="p">{}))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="p">[</span><span class="n">key</span><span class="o">+</span><span class="s1">'_source'</span><span class="p">]</span> <span class="o">=</span> <span class="n">source</span>
+            <span class="n">glyph_props</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_glyph_properties</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">source</span><span class="p">,</span> <span class="n">ranges</span><span class="p">,</span> <span class="n">style</span><span class="p">)</span>
+            <span class="n">properties</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">glyph_props</span><span class="p">)</span>
+            <span class="n">mappings</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">mapping</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="p">{}))</span>
+        <span class="n">properties</span> <span class="o">=</span> <span class="p">{</span><span class="n">p</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">p</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">properties</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">p</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'legend'</span><span class="p">,</span> <span class="s1">'source'</span><span class="p">)}</span>
+        <span class="n">properties</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">mappings</span><span class="p">)</span>
+
+        <span class="c1"># Define static layout</span>
+        <span class="n">layout</span> <span class="o">=</span> <span class="n">StaticLayoutProvider</span><span class="p">(</span><span class="n">graph_layout</span><span class="o">=</span><span class="n">data</span><span class="p">[</span><span class="s1">'layout'</span><span class="p">])</span>
+        <span class="n">node_source</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="p">[</span><span class="s1">'scatter_1_source'</span><span class="p">]</span>
+        <span class="n">edge_source</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="p">[</span><span class="s1">'multi_line_1_source'</span><span class="p">]</span>
+        <span class="n">renderer</span> <span class="o">=</span> <span class="n">plot</span><span class="o">.</span><span class="n">graph</span><span class="p">(</span><span class="n">node_source</span><span class="p">,</span> <span class="n">edge_source</span><span class="p">,</span> <span class="n">layout</span><span class="p">,</span> <span class="o">**</span><span class="n">properties</span><span class="p">)</span>
+
+        <span class="c1"># Initialize GraphRenderer</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">selection_policy</span> <span class="o">==</span> <span class="s1">'nodes'</span><span class="p">:</span>
+            <span class="n">renderer</span><span class="o">.</span><span class="n">selection_policy</span> <span class="o">=</span> <span class="n">NodesAndLinkedEdges</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">selection_policy</span> <span class="o">==</span> <span class="s1">'edges'</span><span class="p">:</span>
+            <span class="n">renderer</span><span class="o">.</span><span class="n">selection_policy</span> <span class="o">=</span> <span class="n">EdgesAndLinkedNodes</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">renderer</span><span class="o">.</span><span class="n">selection_policy</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">inspection_policy</span> <span class="o">==</span> <span class="s1">'nodes'</span><span class="p">:</span>
+            <span class="n">renderer</span><span class="o">.</span><span class="n">inspection_policy</span> <span class="o">=</span> <span class="n">NodesAndLinkedEdges</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">inspection_policy</span> <span class="o">==</span> <span class="s1">'edges'</span><span class="p">:</span>
+            <span class="n">renderer</span><span class="o">.</span><span class="n">inspection_policy</span> <span class="o">=</span> <span class="n">EdgesAndLinkedNodes</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">renderer</span><span class="o">.</span><span class="n">inspection_policy</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="p">[</span><span class="s1">'layout_source'</span><span class="p">]</span> <span class="o">=</span> <span class="n">layout</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="p">[</span><span class="s1">'glyph_renderer'</span><span class="p">]</span> <span class="o">=</span> <span class="n">renderer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="p">[</span><span class="s1">'scatter_1_glyph_renderer'</span><span class="p">]</span> <span class="o">=</span> <span class="n">renderer</span><span class="o">.</span><span class="n">node_renderer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="p">[</span><span class="s1">'multi_line_1_glyph_renderer'</span><span class="p">]</span> <span class="o">=</span> <span class="n">renderer</span><span class="o">.</span><span class="n">edge_renderer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="p">[</span><span class="s1">'scatter_1_glyph'</span><span class="p">]</span> <span class="o">=</span> <span class="n">renderer</span><span class="o">.</span><span class="n">node_renderer</span><span class="o">.</span><span class="n">glyph</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="p">[</span><span class="s1">'multi_line_1_glyph'</span><span class="p">]</span> <span class="o">=</span> <span class="n">renderer</span><span class="o">.</span><span class="n">edge_renderer</span><span class="o">.</span><span class="n">glyph</span>
+        <span class="k">if</span> <span class="s1">'hover'</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="p">[</span><span class="s1">'hover'</span><span class="p">]</span><span class="o">.</span><span class="n">renderers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">renderer</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="NodePlot"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.graphs.NodePlot">[docs]</a><span class="k">class</span> <span class="nc">NodePlot</span><span class="p">(</span><span class="n">PointPlot</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Simple subclass of PointPlot which hides x, y position on hover.</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span> <span class="nf">_hover_opts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">element</span><span class="o">.</span><span class="n">dimensions</span><span class="p">()[</span><span class="mi">2</span><span class="p">:],</span> <span class="p">{}</span></div>
+
+</pre>
+    </div>
+   </div>
+  </div>
+  <!-- END MAIN BODY OF DOCS ––––––––––––– -->
+  <footer class="footer">
+   <div class="footer-links">
+    <ul>
+     <li>
+      <span class="footer-title">
+       Links
+      </span>
+     </li>
+     <li>
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li>
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li>
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li>
+      <a href="/Reference_Manual/index.html">
+       API Docs
+      </a>
+     </li>
+     <li>
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li>
+      <a href="/about.html">
+       About
+      </a>
+     </li>
+    </ul>
+    <ul>
+     <li>
+      <span class="footer-title">
+       Join Us
+      </span>
+     </li>
+     <li>
+      <a href="//gitter.im/ioam/holoviews.html">
+       Gitter
+      </a>
+     </li>
+     <li>
+      <a href="//twitter.com/holoviews.html">
+       Twitter
+      </a>
+     </li>
+     <li>
+      <a href="//github.com/ioam/holoviews.html">
+       Github
+      </a>
+     </li>
+    </ul>
+    <ul class="copyright">
+     <li>
+      2017 IOAM: Jean-Luc R. Stevens, Philipp Rudiger, and James A. Bednar
+     </li>
+    </ul>
+   </div>
+  </footer>
+  <!-- Google Analytics -->
+  <script>
+   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-61554933-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <!-- MathJax Config -->
+  <script type="text/x-mathjax-config">
+   MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+  </script>
+  <!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+ </body>
+</html>

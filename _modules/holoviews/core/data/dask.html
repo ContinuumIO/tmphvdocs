@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8"/>
+  <title>
+   holoviews.core.data.dask — HoloViews
+  </title>
+  <meta content="HoloViews library, documentation site." name="description"/>
+  <meta content="HoloViews contributors" name="author"/>
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js">
+  </script>
+  <script>
+   WebFont.load({
+      google: {
+        families: ['Source Sans Pro']
+      }
+    });
+  </script>
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../../../../_static/main.css" rel="stylesheet"/>
+  <link href="../../../../_static/custom.css" rel="stylesheet"/>
+  <!-- Scripts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
+  </script>
+  <script async="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+  </script>
+  <script src="../../../../_static/js/main.js">
+  </script>
+  <script src="../../../../_static/custom.js">
+  </script>
+  <script src="../../../../_static/require.js">
+  </script>
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../../../../_static/images/favicon.ico" rel="icon" type="image/png"/>
+  <!-- Canonical
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="http://holoviews.org/_modules/holoviews/core/data/dask.html" rel="canonical"/>
+ </head>
+ <body class="">
+  <header class="navigation">
+   <div class="wrapper">
+    <a class="logo" href="//">
+     <img alt="Logo" src="../../../../_static/images/logo.png"/>
+    </a>
+    <a class="navigation-menu logo-text" href="//">
+     HoloViews
+    </a>
+    <a class="navigation-menu-button" href="javascript:void(0)" id="js-mobile-menu">
+     Menu
+    </a>
+    <nav>
+     <ul class="navigation-menu show" id="js-navigation-menu">
+      <li class="nav-link">
+       <a href="/about.html">
+        About
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="/gallery/index.html">
+        Gallery
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="//github.com/ioam/holoviews.html">
+        Github
+       </a>
+      </li>
+     </ul>
+    </nav>
+   </div>
+  </header>
+  <div class="second-nav">
+   <nav>
+    <ul class="navigation-menu show">
+     <li class="nav-link doc-head">
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+    </ul>
+   </nav>
+   <div class="navigation-tools">
+    <div class="search-bar">
+     <form action="../../../../search.html" method="get" role="search">
+      <input name="q" placeholder="Search" type="search"/>
+      <button type="submit">
+       <img alt="Search Icon" src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/search-icon-black.png"/>
+      </button>
+     </form>
+    </div>
+   </div>
+  </div>
+  <!-- MAIN BODY OF DOCS –––––––––––––––––– -->
+  <div class="docs section">
+   <div class="toc">
+    <ul>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../../getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../../user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../../gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../../Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../../FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference external" href="http://github.com/ioam/holoviews">
+       Github source
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../../about.html">
+       About
+      </a>
+     </li>
+    </ul>
+   </div>
+   <div class="content">
+    <h1>
+     Source code for holoviews.core.data.dask
+    </h1>
+    <div class="highlight">
+     <pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">itertools.izip</span> <span class="k">as</span> <span class="nn">zip</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">dask.dataframe</span> <span class="k">as</span> <span class="nn">dd</span>
+<span class="kn">from</span> <span class="nn">dask.dataframe</span> <span class="k">import</span> <span class="n">DataFrame</span>
+
+<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">util</span>
+<span class="kn">from</span> <span class="nn">..element</span> <span class="k">import</span> <span class="n">Element</span>
+<span class="kn">from</span> <span class="nn">..ndmapping</span> <span class="k">import</span> <span class="n">NdMapping</span><span class="p">,</span> <span class="n">item_check</span><span class="p">,</span> <span class="n">OrderedDict</span>
+<span class="kn">from</span> <span class="nn">.interface</span> <span class="k">import</span> <span class="n">Interface</span>
+<span class="kn">from</span> <span class="nn">.pandas</span> <span class="k">import</span> <span class="n">PandasInterface</span>
+
+
+<div class="viewcode-block" id="DaskInterface"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.core.data.html#holoviews.core.data.dask.DaskInterface">[docs]</a><span class="k">class</span> <span class="nc">DaskInterface</span><span class="p">(</span><span class="n">PandasInterface</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    The DaskInterface allows a Dataset objects to wrap a dask</span>
+<span class="sd">    DataFrame object. Using dask allows loading data lazily</span>
+<span class="sd">    and performing out-of-core operations on the data, making</span>
+<span class="sd">    it possible to work on datasets larger than memory.</span>
+
+<span class="sd">    The DaskInterface covers almost the complete API exposed</span>
+<span class="sd">    by the PandasInterface with two notable exceptions:</span>
+
+<span class="sd">    1) Sorting is not supported and any attempt at sorting will</span>
+<span class="sd">       be ignored with an warning.</span>
+<span class="sd">    2) Dask does not easily support adding a new column to an existing</span>
+<span class="sd">       dataframe unless it is a scalar, add_dimension will therefore</span>
+<span class="sd">       error when supplied a non-scalar value.</span>
+<span class="sd">    4) Not all functions can be easily applied to a dask dataframe so</span>
+<span class="sd">       some functions applied with aggregate and reduce will not work.</span>
+<span class="sd">    """</span>
+
+    <span class="n">types</span> <span class="o">=</span> <span class="p">(</span><span class="n">DataFrame</span><span class="p">,)</span>
+
+    <span class="n">datatype</span> <span class="o">=</span> <span class="s1">'dask'</span>
+
+    <span class="n">default_partitions</span> <span class="o">=</span> <span class="mi">100</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">eltype</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">kdims</span><span class="p">,</span> <span class="n">vdims</span><span class="p">):</span>
+        <span class="n">data</span><span class="p">,</span> <span class="n">kdims</span><span class="p">,</span> <span class="n">vdims</span> <span class="o">=</span> <span class="n">PandasInterface</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="n">eltype</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">kdims</span><span class="p">,</span> <span class="n">vdims</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">DataFrame</span><span class="p">):</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">dd</span><span class="o">.</span><span class="n">from_pandas</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">npartitions</span><span class="o">=</span><span class="bp">cls</span><span class="o">.</span><span class="n">default_partitions</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">data</span><span class="p">,</span> <span class="n">kdims</span><span class="p">,</span> <span class="n">vdims</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">shape</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">dataset</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">data</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">))</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">range</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">dimension</span><span class="p">):</span>
+        <span class="n">column</span> <span class="o">=</span> <span class="n">columns</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">columns</span><span class="o">.</span><span class="n">get_dimension</span><span class="p">(</span><span class="n">dimension</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">column</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">kind</span> <span class="o">==</span> <span class="s1">'O'</span><span class="p">:</span>
+            <span class="n">column</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">column</span><span class="p">[</span><span class="n">column</span><span class="o">.</span><span class="n">notnull</span><span class="p">()]</span><span class="o">.</span><span class="n">compute</span><span class="p">())</span>
+            <span class="k">return</span> <span class="n">column</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">column</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">dd</span><span class="o">.</span><span class="n">compute</span><span class="p">(</span><span class="n">column</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">column</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">sort</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="p">[],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">columns</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">'Dask dataframes do not support sorting'</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">columns</span><span class="o">.</span><span class="n">data</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">values</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">dim</span><span class="p">,</span> <span class="n">expanded</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">dim</span> <span class="o">=</span> <span class="n">columns</span><span class="o">.</span><span class="n">get_dimension</span><span class="p">(</span><span class="n">dim</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">columns</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">dim</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">expanded</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span><span class="o">.</span><span class="n">values</span>
+
+<div class="viewcode-block" id="DaskInterface.select_mask"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.core.data.html#holoviews.core.data.dask.DaskInterface.select_mask">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">select_mask</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">selection</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Given a Dataset object and a dictionary with dimension keys and</span>
+<span class="sd">        selection keys (i.e tuple ranges, slices, sets, lists or literals)</span>
+<span class="sd">        return a boolean mask over the rows in the Dataset object that</span>
+<span class="sd">        have been selected.</span>
+<span class="sd">        """</span>
+        <span class="n">select_mask</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">dim</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">selection</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+                <span class="n">k</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="o">*</span><span class="n">k</span><span class="p">)</span>
+            <span class="n">masks</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">alias</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">get_dimension</span><span class="p">(</span><span class="n">dim</span><span class="p">)</span><span class="o">.</span><span class="n">name</span>
+            <span class="n">series</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">alias</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="nb">slice</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">start</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">masks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">k</span><span class="o">.</span><span class="n">start</span> <span class="o">&lt;=</span> <span class="n">series</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">stop</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">masks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">series</span> <span class="o">&lt;</span> <span class="n">k</span><span class="o">.</span><span class="n">stop</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="p">(</span><span class="nb">set</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
+                <span class="n">iter_slc</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="k">for</span> <span class="n">ik</span> <span class="ow">in</span> <span class="n">k</span><span class="p">:</span>
+                    <span class="n">mask</span> <span class="o">=</span> <span class="n">series</span> <span class="o">==</span> <span class="n">ik</span>
+                    <span class="k">if</span> <span class="n">iter_slc</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">iter_slc</span> <span class="o">=</span> <span class="n">mask</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">iter_slc</span> <span class="o">|=</span> <span class="n">mask</span>
+                <span class="n">masks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">iter_slc</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">callable</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+                <span class="n">masks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">k</span><span class="p">(</span><span class="n">series</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">masks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">series</span> <span class="o">==</span> <span class="n">k</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">mask</span> <span class="ow">in</span> <span class="n">masks</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">select_mask</span><span class="p">:</span>
+                    <span class="n">select_mask</span> <span class="o">&amp;=</span> <span class="n">mask</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">select_mask</span> <span class="o">=</span> <span class="n">mask</span>
+        <span class="k">return</span> <span class="n">select_mask</span></div>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">select</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">selection_mask</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">selection</span><span class="p">):</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">columns</span><span class="o">.</span><span class="n">data</span>
+        <span class="k">if</span> <span class="n">selection_mask</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">df</span><span class="p">[</span><span class="n">selection_mask</span><span class="p">]</span>
+        <span class="n">selection_mask</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">select_mask</span><span class="p">(</span><span class="n">columns</span><span class="p">,</span> <span class="n">selection</span><span class="p">)</span>
+        <span class="n">indexed</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">indexed</span><span class="p">(</span><span class="n">columns</span><span class="p">,</span> <span class="n">selection</span><span class="p">)</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">df</span> <span class="k">if</span> <span class="n">selection_mask</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">df</span><span class="p">[</span><span class="n">selection_mask</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">indexed</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">columns</span><span class="o">.</span><span class="n">vdims</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">df</span><span class="p">[</span><span class="n">columns</span><span class="o">.</span><span class="n">vdims</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">df</span>
+    
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">groupby</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">dimensions</span><span class="p">,</span> <span class="n">container_type</span><span class="p">,</span> <span class="n">group_type</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">index_dims</span> <span class="o">=</span> <span class="p">[</span><span class="n">columns</span><span class="o">.</span><span class="n">get_dimension</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dimensions</span><span class="p">]</span>
+        <span class="n">element_dims</span> <span class="o">=</span> <span class="p">[</span><span class="n">kdim</span> <span class="k">for</span> <span class="n">kdim</span> <span class="ow">in</span> <span class="n">columns</span><span class="o">.</span><span class="n">kdims</span>
+                        <span class="k">if</span> <span class="n">kdim</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">index_dims</span><span class="p">]</span>
+
+        <span class="n">group_kwargs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">group_type</span> <span class="o">!=</span> <span class="s1">'raw'</span> <span class="ow">and</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">group_type</span><span class="p">,</span> <span class="n">Element</span><span class="p">):</span>
+            <span class="n">group_kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">util</span><span class="o">.</span><span class="n">get_param_values</span><span class="p">(</span><span class="n">columns</span><span class="p">),</span>
+                                <span class="n">kdims</span><span class="o">=</span><span class="n">element_dims</span><span class="p">)</span>
+        <span class="n">group_kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">group_by</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">index_dims</span><span class="p">]</span>
+        <span class="n">groupby</span> <span class="o">=</span> <span class="n">columns</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">group_by</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">group_by</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">column</span> <span class="o">=</span> <span class="n">columns</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">group_by</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+            <span class="k">if</span> <span class="n">column</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">'category'</span><span class="p">:</span>
+                <span class="n">indices</span> <span class="o">=</span> <span class="p">((</span><span class="n">ind</span><span class="p">,)</span> <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">column</span><span class="o">.</span><span class="n">cat</span><span class="o">.</span><span class="n">categories</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">indices</span> <span class="o">=</span> <span class="p">((</span><span class="n">ind</span><span class="p">,)</span> <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">column</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">compute</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">group_tuples</span> <span class="o">=</span> <span class="n">columns</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">group_by</span><span class="p">]</span><span class="o">.</span><span class="n">itertuples</span><span class="p">()</span>
+            <span class="n">indices</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">unique_iterator</span><span class="p">(</span><span class="n">ind</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">group_tuples</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">coord</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">coord</span><span class="p">):</span>
+                <span class="k">continue</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">coord</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">coord</span> <span class="o">=</span> <span class="n">coord</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">group</span> <span class="o">=</span> <span class="n">group_type</span><span class="p">(</span><span class="n">groupby</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="n">coord</span><span class="p">),</span> <span class="o">**</span><span class="n">group_kwargs</span><span class="p">)</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">coord</span><span class="p">,</span> <span class="n">group</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">container_type</span><span class="p">,</span> <span class="n">NdMapping</span><span class="p">):</span>
+            <span class="k">with</span> <span class="n">item_check</span><span class="p">(</span><span class="kc">False</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">container_type</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">kdims</span><span class="o">=</span><span class="n">index_dims</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">container_type</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">aggregate</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">dimensions</span><span class="p">,</span> <span class="n">function</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">columns</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">columns</span><span class="o">.</span><span class="n">kdims</span> <span class="k">if</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dimensions</span><span class="p">]</span>
+        <span class="n">vdims</span> <span class="o">=</span> <span class="n">columns</span><span class="o">.</span><span class="n">dimensions</span><span class="p">(</span><span class="s1">'value'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'name'</span><span class="p">)</span>
+        <span class="n">dtypes</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">dtypes</span>
+        <span class="n">numeric</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">dtype</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">dtypes</span><span class="o">.</span><span class="n">index</span><span class="p">,</span> <span class="n">dtypes</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+                   <span class="k">if</span> <span class="n">dtype</span><span class="o">.</span><span class="n">kind</span> <span class="ow">in</span> <span class="s1">'iufc'</span> <span class="ow">and</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">vdims</span><span class="p">]</span>
+        <span class="n">reindexed</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">cols</span><span class="o">+</span><span class="n">numeric</span><span class="p">]</span>
+
+        <span class="n">inbuilts</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'amin'</span><span class="p">:</span> <span class="s1">'min'</span><span class="p">,</span> <span class="s1">'amax'</span><span class="p">:</span> <span class="s1">'max'</span><span class="p">,</span> <span class="s1">'mean'</span><span class="p">:</span> <span class="s1">'mean'</span><span class="p">,</span>
+                    <span class="s1">'std'</span><span class="p">:</span> <span class="s1">'std'</span><span class="p">,</span> <span class="s1">'sum'</span><span class="p">:</span> <span class="s1">'sum'</span><span class="p">,</span> <span class="s1">'var'</span><span class="p">:</span> <span class="s1">'var'</span><span class="p">}</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dimensions</span><span class="p">):</span>
+            <span class="n">groups</span> <span class="o">=</span> <span class="n">reindexed</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">cols</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">function</span><span class="o">.</span><span class="vm">__name__</span> <span class="ow">in</span> <span class="n">inbuilts</span><span class="p">):</span>
+                <span class="n">agg</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">groups</span><span class="p">,</span> <span class="n">inbuilts</span><span class="p">[</span><span class="n">function</span><span class="o">.</span><span class="vm">__name__</span><span class="p">])()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">agg</span> <span class="o">=</span> <span class="n">groups</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">function</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">agg</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">function</span><span class="o">.</span><span class="vm">__name__</span> <span class="ow">in</span> <span class="n">inbuilts</span><span class="p">):</span>
+                <span class="n">agg</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">reindexed</span><span class="p">,</span> <span class="n">inbuilts</span><span class="p">[</span><span class="n">function</span><span class="o">.</span><span class="vm">__name__</span><span class="p">])()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">NotImplementedError</span>
+            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">agg</span><span class="o">.</span><span class="n">compute</span><span class="p">())</span><span class="o">.</span><span class="n">T</span>
+
+<div class="viewcode-block" id="DaskInterface.unpack_scalar"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.core.data.html#holoviews.core.data.dask.DaskInterface.unpack_scalar">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">unpack_scalar</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Given a columns object and data in the appropriate format for</span>
+<span class="sd">        the interface, return a simple scalar.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">data</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">dd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">iat</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span></div>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">samples</span><span class="o">=</span><span class="p">[]):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">columns</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">dims</span> <span class="o">=</span> <span class="n">columns</span><span class="o">.</span><span class="n">dimensions</span><span class="p">(</span><span class="s1">'key'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'name'</span><span class="p">)</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="n">samples</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">sample</span><span class="p">):</span> <span class="n">sample</span> <span class="o">=</span> <span class="p">[</span><span class="n">sample</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">dims</span><span class="p">,</span> <span class="n">sample</span><span class="p">)):</span>
+                <span class="n">dim_mask</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">==</span><span class="n">v</span>
+                <span class="k">if</span> <span class="n">mask</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">mask</span> <span class="o">=</span> <span class="n">dim_mask</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">mask</span> <span class="o">|=</span> <span class="n">dim_mask</span>
+        <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">add_dimension</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">dimension</span><span class="p">,</span> <span class="n">dim_pos</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">vdim</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">columns</span><span class="o">.</span><span class="n">data</span>
+        <span class="k">if</span> <span class="n">dimension</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">values</span><span class="p">):</span>
+                <span class="n">err</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'Dask dataframe does not support assigning '</span>
+                       <span class="s1">'non-scalar value.'</span><span class="p">)</span>
+                <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="n">err</span><span class="p">)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">assign</span><span class="p">(</span><span class="o">**</span><span class="p">{</span><span class="n">dimension</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">values</span><span class="p">})</span>
+        <span class="k">return</span> <span class="n">data</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">concat</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">columns_objs</span><span class="p">):</span>
+        <span class="n">cast_objs</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">columns_objs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">dd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">col</span><span class="o">.</span><span class="n">data</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">cast_objs</span><span class="p">])</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">dframe</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">columns</span><span class="p">,</span> <span class="n">dimensions</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">dimensions</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">columns</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">dimensions</span><span class="p">]</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">columns</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">nonzero</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">dataset</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span>
+
+<div class="viewcode-block" id="DaskInterface.iloc"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.core.data.html#holoviews.core.data.dask.DaskInterface.iloc">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">iloc</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Dask does not support iloc, therefore iloc will execute</span>
+<span class="sd">        the call graph and lose the laziness of the operation.</span>
+<span class="sd">        """</span>
+        <span class="n">rows</span><span class="p">,</span> <span class="n">cols</span> <span class="o">=</span> <span class="n">index</span>
+        <span class="n">scalar</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cols</span><span class="p">,</span> <span class="nb">slice</span><span class="p">):</span>
+            <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">dimensions</span><span class="p">()][</span><span class="n">cols</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">cols</span><span class="p">):</span>
+            <span class="n">scalar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span>
+            <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_dimension</span><span class="p">(</span><span class="n">cols</span><span class="p">)</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_dimension</span><span class="p">(</span><span class="n">d</span><span class="p">)</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">index</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">rows</span><span class="p">):</span>
+            <span class="n">rows</span> <span class="o">=</span> <span class="p">[</span><span class="n">rows</span><span class="p">]</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">:</span>
+            <span class="n">data</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">c</span><span class="p">]</span><span class="o">.</span><span class="n">compute</span><span class="p">()</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">rows</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="k">if</span> <span class="n">scalar</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="n">cols</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">values</span><span class="p">())</span></div></div>
+
+
+<span class="n">Interface</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">DaskInterface</span><span class="p">)</span>
+</pre>
+    </div>
+   </div>
+  </div>
+  <!-- END MAIN BODY OF DOCS ––––––––––––– -->
+  <footer class="footer">
+   <div class="footer-links">
+    <ul>
+     <li>
+      <span class="footer-title">
+       Links
+      </span>
+     </li>
+     <li>
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li>
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li>
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li>
+      <a href="/Reference_Manual/index.html">
+       API Docs
+      </a>
+     </li>
+     <li>
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li>
+      <a href="/about.html">
+       About
+      </a>
+     </li>
+    </ul>
+    <ul>
+     <li>
+      <span class="footer-title">
+       Join Us
+      </span>
+     </li>
+     <li>
+      <a href="//gitter.im/ioam/holoviews.html">
+       Gitter
+      </a>
+     </li>
+     <li>
+      <a href="//twitter.com/holoviews.html">
+       Twitter
+      </a>
+     </li>
+     <li>
+      <a href="//github.com/ioam/holoviews.html">
+       Github
+      </a>
+     </li>
+    </ul>
+    <ul class="copyright">
+     <li>
+      2017 IOAM: Jean-Luc R. Stevens, Philipp Rudiger, and James A. Bednar
+     </li>
+    </ul>
+   </div>
+  </footer>
+  <!-- Google Analytics -->
+  <script>
+   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-61554933-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <!-- MathJax Config -->
+  <script type="text/x-mathjax-config">
+   MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+  </script>
+  <!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+ </body>
+</html>

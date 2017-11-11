@@ -1,0 +1,19 @@
+holoviews.widgets Package
+=========================
+
+
+---------
+
+:mod:`widgets` Package
+----------------------
+
+.. inheritance-diagram:: holoviews.plotting.widgets
+
+
+.. automodule:: holoviews.plotting.widgets
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+

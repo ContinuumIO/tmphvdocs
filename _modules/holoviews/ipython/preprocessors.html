@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8"/>
+  <title>
+   holoviews.ipython.preprocessors — HoloViews
+  </title>
+  <meta content="HoloViews library, documentation site." name="description"/>
+  <meta content="HoloViews contributors" name="author"/>
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js">
+  </script>
+  <script>
+   WebFont.load({
+      google: {
+        families: ['Source Sans Pro']
+      }
+    });
+  </script>
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../../../_static/main.css" rel="stylesheet"/>
+  <link href="../../../_static/custom.css" rel="stylesheet"/>
+  <!-- Scripts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
+  </script>
+  <script async="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+  </script>
+  <script src="../../../_static/js/main.js">
+  </script>
+  <script src="../../../_static/custom.js">
+  </script>
+  <script src="../../../_static/require.js">
+  </script>
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../../../_static/images/favicon.ico" rel="icon" type="image/png"/>
+  <!-- Canonical
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="http://holoviews.org/_modules/holoviews/ipython/preprocessors.html" rel="canonical"/>
+ </head>
+ <body class="">
+  <header class="navigation">
+   <div class="wrapper">
+    <a class="logo" href="//">
+     <img alt="Logo" src="../../../_static/images/logo.png"/>
+    </a>
+    <a class="navigation-menu logo-text" href="//">
+     HoloViews
+    </a>
+    <a class="navigation-menu-button" href="javascript:void(0)" id="js-mobile-menu">
+     Menu
+    </a>
+    <nav>
+     <ul class="navigation-menu show" id="js-navigation-menu">
+      <li class="nav-link">
+       <a href="/about.html">
+        About
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="/gallery/index.html">
+        Gallery
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="//github.com/ioam/holoviews.html">
+        Github
+       </a>
+      </li>
+     </ul>
+    </nav>
+   </div>
+  </header>
+  <div class="second-nav">
+   <nav>
+    <ul class="navigation-menu show">
+     <li class="nav-link doc-head">
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+    </ul>
+   </nav>
+   <div class="navigation-tools">
+    <div class="search-bar">
+     <form action="../../../search.html" method="get" role="search">
+      <input name="q" placeholder="Search" type="search"/>
+      <button type="submit">
+       <img alt="Search Icon" src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/search-icon-black.png"/>
+      </button>
+     </form>
+    </div>
+   </div>
+  </div>
+  <!-- MAIN BODY OF DOCS –––––––––––––––––– -->
+  <div class="docs section">
+   <div class="toc">
+    <ul>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference external" href="http://github.com/ioam/holoviews">
+       Github source
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../about.html">
+       About
+      </a>
+     </li>
+    </ul>
+   </div>
+   <div class="content">
+    <h1>
+     Source code for holoviews.ipython.preprocessors
+    </h1>
+    <div class="highlight">
+     <pre><span></span><span class="sd">"""</span>
+<span class="sd">Prototype demo:</span>
+
+<span class="sd">python holoviews/ipython/convert.py Conversion_Example.ipynb | python</span>
+<span class="sd">"""</span>
+<span class="kn">import</span> <span class="nn">ast</span>
+<span class="kn">from</span> <span class="nn">nbconvert.preprocessors</span> <span class="k">import</span> <span class="n">Preprocessor</span>
+
+
+<div class="viewcode-block" id="comment_out_magics"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.ipython.html#holoviews.ipython.preprocessors.comment_out_magics">[docs]</a><span class="k">def</span> <span class="nf">comment_out_magics</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Utility used to make sure AST parser does not choke on unrecognized</span>
+<span class="sd">    magics.</span>
+<span class="sd">    """</span>
+    <span class="n">filtered</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">source</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'%'</span><span class="p">):</span>
+            <span class="n">filtered</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'# '</span> <span class="o">+</span>  <span class="n">line</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">filtered</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">filtered</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="wrap_cell_expression"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.ipython.html#holoviews.ipython.preprocessors.wrap_cell_expression">[docs]</a><span class="k">def</span> <span class="nf">wrap_cell_expression</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">template</span><span class="o">=</span><span class="s1">'</span><span class="si">{expr}</span><span class="s1">'</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    If a cell ends in an expression that could be displaying a HoloViews</span>
+<span class="sd">    object (as determined using the AST), wrap it with a given prefix</span>
+<span class="sd">    and suffix string.</span>
+
+<span class="sd">    If the cell doesn't end in an expression, return the source unchanged.</span>
+<span class="sd">    """</span>
+    <span class="n">cell_output_types</span> <span class="o">=</span> <span class="p">(</span><span class="n">ast</span><span class="o">.</span><span class="n">IfExp</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">BoolOp</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">BinOp</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">Call</span><span class="p">,</span>
+                         <span class="n">ast</span><span class="o">.</span><span class="n">Name</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">Attribute</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">node</span> <span class="o">=</span> <span class="n">ast</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">comment_out_magics</span><span class="p">(</span><span class="n">source</span><span class="p">))</span>
+    <span class="k">except</span> <span class="ne">SyntaxError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">source</span>
+    <span class="n">filtered</span> <span class="o">=</span> <span class="n">source</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">node</span><span class="o">.</span><span class="n">body</span> <span class="o">!=</span> <span class="p">[]:</span>
+        <span class="n">last_expr</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">body</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">last_expr</span><span class="p">,</span> <span class="n">ast</span><span class="o">.</span><span class="n">Expr</span><span class="p">):</span>
+            <span class="k">pass</span> <span class="c1"># Not an expression</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">last_expr</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">cell_output_types</span><span class="p">):</span>
+            <span class="c1"># CAREFUL WITH UTF8!</span>
+            <span class="n">expr_end_slice</span> <span class="o">=</span> <span class="n">filtered</span><span class="p">[</span><span class="n">last_expr</span><span class="o">.</span><span class="n">lineno</span><span class="o">-</span><span class="mi">1</span><span class="p">][:</span><span class="n">last_expr</span><span class="o">.</span><span class="n">col_offset</span><span class="p">]</span>
+            <span class="n">expr_start_slice</span> <span class="o">=</span> <span class="n">filtered</span><span class="p">[</span><span class="n">last_expr</span><span class="o">.</span><span class="n">lineno</span><span class="o">-</span><span class="mi">1</span><span class="p">][</span><span class="n">last_expr</span><span class="o">.</span><span class="n">col_offset</span><span class="p">:]</span>
+            <span class="n">start</span> <span class="o">=</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">filtered</span><span class="p">[:</span><span class="n">last_expr</span><span class="o">.</span><span class="n">lineno</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                              <span class="o">+</span> <span class="p">([</span><span class="n">expr_end_slice</span><span class="p">]</span> <span class="k">if</span> <span class="n">expr_end_slice</span> <span class="k">else</span> <span class="p">[]))</span>
+            <span class="n">ending</span> <span class="o">=</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">join</span><span class="p">(([</span><span class="n">expr_start_slice</span><span class="p">]</span> <span class="k">if</span> <span class="n">expr_start_slice</span> <span class="k">else</span> <span class="p">[])</span>
+                            <span class="o">+</span> <span class="n">filtered</span><span class="p">[</span><span class="n">last_expr</span><span class="o">.</span><span class="n">lineno</span><span class="p">:])</span>
+            <span class="c1"># BUG!! Adds newline for 'foo'; &lt;expr&gt;</span>
+            <span class="k">return</span> <span class="n">start</span> <span class="o">+</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span> <span class="o">+</span> <span class="n">template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">expr</span><span class="o">=</span><span class="n">ending</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">source</span></div>
+
+
+<div class="viewcode-block" id="filter_magic"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.ipython.html#holoviews.ipython.preprocessors.filter_magic">[docs]</a><span class="k">def</span> <span class="nf">filter_magic</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">magic</span><span class="p">,</span> <span class="n">strip</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Given the source of a cell, filter out the given magic and collect</span>
+<span class="sd">    the lines using the magic into a list.</span>
+
+<span class="sd">    If strip is True, the IPython syntax part of the magic (e.g %magic</span>
+<span class="sd">    or %%magic) is stripped from the returned lines.</span>
+<span class="sd">    """</span>
+    <span class="n">filtered</span><span class="p">,</span> <span class="n">magic_lines</span><span class="o">=</span><span class="p">[],[]</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">source</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">magic</span><span class="p">):</span>
+            <span class="n">magic_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">filtered</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">strip</span><span class="p">:</span>
+        <span class="n">magic_lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">el</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">magic</span><span class="p">,</span><span class="s1">''</span><span class="p">)</span> <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">magic_lines</span><span class="p">]</span>
+    <span class="k">return</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">filtered</span><span class="p">),</span> <span class="n">magic_lines</span></div>
+
+
+<div class="viewcode-block" id="strip_magics"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.ipython.html#holoviews.ipython.preprocessors.strip_magics">[docs]</a><span class="k">def</span> <span class="nf">strip_magics</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Given the source of a cell, filter out all cell and line magics.</span>
+<span class="sd">    """</span>
+    <span class="n">filtered</span><span class="o">=</span><span class="p">[]</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">source</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'%'</span><span class="p">)</span> <span class="ow">or</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'</span><span class="si">%%</span><span class="s1">'</span><span class="p">):</span>
+            <span class="n">filtered</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">filtered</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="replace_line_magic"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.ipython.html#holoviews.ipython.preprocessors.replace_line_magic">[docs]</a><span class="k">def</span> <span class="nf">replace_line_magic</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">magic</span><span class="p">,</span> <span class="n">template</span><span class="o">=</span><span class="s1">'</span><span class="si">{line}</span><span class="s1">'</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Given a cell's source, replace line magics using a formatting</span>
+<span class="sd">    template, where {line} is the string that follows the magic.</span>
+<span class="sd">    """</span>
+    <span class="n">filtered</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">source</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">magic</span><span class="p">):</span>
+            <span class="n">substitution</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">line</span><span class="o">=</span><span class="n">line</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">magic</span><span class="p">,</span> <span class="s1">''</span><span class="p">))</span>
+            <span class="n">filtered</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">substitution</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">filtered</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">filtered</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="OptsMagicProcessor"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.ipython.html#holoviews.ipython.preprocessors.OptsMagicProcessor">[docs]</a><span class="k">class</span> <span class="nc">OptsMagicProcessor</span><span class="p">(</span><span class="n">Preprocessor</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Preprocessor to convert notebooks to Python source to convert use of</span>
+<span class="sd">    opts magic to use the util.opts utility instead.</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span> <span class="nf">preprocess_cell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cell</span><span class="p">,</span> <span class="n">resources</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">cell</span><span class="p">[</span><span class="s1">'cell_type'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'code'</span><span class="p">:</span>
+            <span class="n">source</span> <span class="o">=</span> <span class="n">replace_line_magic</span><span class="p">(</span><span class="n">cell</span><span class="p">[</span><span class="s1">'source'</span><span class="p">],</span> <span class="s1">'</span><span class="si">%o</span><span class="s1">pts'</span><span class="p">,</span>
+                                        <span class="n">template</span><span class="o">=</span><span class="s1">'hv.util.opts(</span><span class="si">{line!r}</span><span class="s1">)'</span><span class="p">)</span>
+            <span class="n">source</span><span class="p">,</span> <span class="n">opts_lines</span> <span class="o">=</span> <span class="n">filter_magic</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="s1">'</span><span class="si">%%</span><span class="s1">opts'</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">opts_lines</span><span class="p">:</span>
+                <span class="c1"># Escape braces e.g normalization options as they pass through format</span>
+                <span class="n">template</span> <span class="o">=</span> <span class="s1">'hv.util.opts(</span><span class="si">{options!r}</span><span class="s1">, {{expr}})'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">options</span><span class="o">=</span><span class="s1">' '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">opts_lines</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'{'</span><span class="p">,</span><span class="s1">'{{'</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'}'</span><span class="p">,</span><span class="s1">'}}'</span><span class="p">))</span>
+                <span class="n">source</span> <span class="o">=</span> <span class="n">wrap_cell_expression</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">template</span><span class="p">)</span>
+            <span class="n">cell</span><span class="p">[</span><span class="s1">'source'</span><span class="p">]</span> <span class="o">=</span> <span class="n">source</span>
+        <span class="k">return</span> <span class="n">cell</span><span class="p">,</span> <span class="n">resources</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nb</span><span class="p">,</span> <span class="n">resources</span><span class="p">):</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">preprocess</span><span class="p">(</span><span class="n">nb</span><span class="p">,</span><span class="n">resources</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="OutputMagicProcessor"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.ipython.html#holoviews.ipython.preprocessors.OutputMagicProcessor">[docs]</a><span class="k">class</span> <span class="nc">OutputMagicProcessor</span><span class="p">(</span><span class="n">Preprocessor</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Preprocessor to convert notebooks to Python source to convert use of</span>
+<span class="sd">    output magic to use the util.output utility instead.</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span> <span class="nf">preprocess_cell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cell</span><span class="p">,</span> <span class="n">resources</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">cell</span><span class="p">[</span><span class="s1">'cell_type'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'code'</span><span class="p">:</span>
+            <span class="n">source</span> <span class="o">=</span> <span class="n">replace_line_magic</span><span class="p">(</span><span class="n">cell</span><span class="p">[</span><span class="s1">'source'</span><span class="p">],</span> <span class="s1">'</span><span class="si">%o</span><span class="s1">utput'</span><span class="p">,</span>
+                                        <span class="n">template</span><span class="o">=</span><span class="s1">'hv.util.output(</span><span class="si">{line!r}</span><span class="s1">)'</span><span class="p">)</span>
+            <span class="n">source</span><span class="p">,</span> <span class="n">output_lines</span> <span class="o">=</span> <span class="n">filter_magic</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="s1">'</span><span class="si">%%</span><span class="s1">output'</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">output_lines</span><span class="p">:</span>
+                <span class="n">template</span> <span class="o">=</span> <span class="s1">'hv.util.output(</span><span class="si">{options!r}</span><span class="s1">, {{expr}})'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">options</span><span class="o">=</span><span class="n">output_lines</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+                <span class="n">source</span> <span class="o">=</span> <span class="n">wrap_cell_expression</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">template</span><span class="p">)</span>
+
+            <span class="n">cell</span><span class="p">[</span><span class="s1">'source'</span><span class="p">]</span> <span class="o">=</span> <span class="n">source</span>
+        <span class="k">return</span> <span class="n">cell</span><span class="p">,</span> <span class="n">resources</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nb</span><span class="p">,</span> <span class="n">resources</span><span class="p">):</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">preprocess</span><span class="p">(</span><span class="n">nb</span><span class="p">,</span><span class="n">resources</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="StripMagicsProcessor"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.ipython.html#holoviews.ipython.preprocessors.StripMagicsProcessor">[docs]</a><span class="k">class</span> <span class="nc">StripMagicsProcessor</span><span class="p">(</span><span class="n">Preprocessor</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Preprocessor to convert notebooks to Python source to strips out all</span>
+<span class="sd">    magics. To be applied after the preprocessors that can handle</span>
+<span class="sd">    holoviews magics appropriately.</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span> <span class="nf">preprocess_cell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cell</span><span class="p">,</span> <span class="n">resources</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">cell</span><span class="p">[</span><span class="s1">'cell_type'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'code'</span><span class="p">:</span>
+            <span class="n">cell</span><span class="p">[</span><span class="s1">'source'</span><span class="p">]</span> <span class="o">=</span> <span class="n">strip_magics</span><span class="p">(</span><span class="n">cell</span><span class="p">[</span><span class="s1">'source'</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">cell</span><span class="p">,</span> <span class="n">resources</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nb</span><span class="p">,</span> <span class="n">resources</span><span class="p">):</span> <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">preprocess</span><span class="p">(</span><span class="n">nb</span><span class="p">,</span><span class="n">resources</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Substitute"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.ipython.html#holoviews.ipython.preprocessors.Substitute">[docs]</a><span class="k">class</span> <span class="nc">Substitute</span><span class="p">(</span><span class="n">Preprocessor</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    An nbconvert preprocessor that substitutes one set of HTML data</span>
+<span class="sd">    output for another, adding annotation to the output as required.</span>
+
+<span class="sd">    The constructor accepts the notebook format version and a</span>
+<span class="sd">    substitutions dictionary:</span>
+
+<span class="sd">    {source_html:(target_html, annotation)}</span>
+
+<span class="sd">    Where the annotation may be None (i.e. no annotation).</span>
+<span class="sd">    """</span>
+    <span class="n">annotation</span> <span class="o">=</span> <span class="s1">'&lt;center&gt;&lt;b&gt;</span><span class="si">%s</span><span class="s1">&lt;/b&gt;&lt;/center&gt;'</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="n">substitutions</span><span class="p">,</span> <span class="o">**</span><span class="n">kw</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nbversion</span> <span class="o">=</span> <span class="n">version</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">substitutions</span> <span class="o">=</span> <span class="n">substitutions</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Preprocessor</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">kw</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nb</span><span class="p">,</span> <span class="n">resources</span><span class="p">):</span> <span class="c1"># Temporary hack around 'enabled' flag</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">preprocess</span><span class="p">(</span><span class="n">nb</span><span class="p">,</span><span class="n">resources</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Substitute.replace"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.ipython.html#holoviews.ipython.preprocessors.Substitute.replace">[docs]</a>    <span class="k">def</span> <span class="nf">replace</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">src</span><span class="p">):</span>
+        <span class="s2">"Given some source html substitute and annotated as applicable"</span>
+        <span class="k">for</span> <span class="n">html</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">substitutions</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">src</span> <span class="o">==</span> <span class="n">html</span><span class="p">:</span>
+                <span class="n">annotation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">annotation</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">substitutions</span><span class="p">[</span><span class="n">src</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+                <span class="k">return</span> <span class="n">annotation</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">substitutions</span><span class="p">[</span><span class="n">src</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">src</span></div>
+
+
+    <span class="k">def</span> <span class="nf">preprocess_cell</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cell</span><span class="p">,</span> <span class="n">resources</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="n">v4</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">nbversion</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">cell</span><span class="p">[</span><span class="s1">'cell_type'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'code'</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">outputs</span> <span class="ow">in</span> <span class="n">cell</span><span class="p">[</span><span class="s1">'outputs'</span><span class="p">]:</span>
+                <span class="n">output_key</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'execute_result'</span> <span class="k">if</span> <span class="n">v4</span> <span class="k">else</span> <span class="s1">'pyout'</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">outputs</span><span class="p">[</span><span class="s1">'output_type'</span><span class="p">]</span> <span class="o">==</span> <span class="n">output_key</span><span class="p">:</span>
+                    <span class="c1"># V1-3</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">v4</span> <span class="ow">and</span> <span class="s1">'html'</span> <span class="ow">in</span> <span class="n">outputs</span><span class="p">:</span>
+                        <span class="n">outputs</span><span class="p">[</span><span class="s1">'html'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="s1">'html'</span><span class="p">])</span>
+                    <span class="c1"># V4</span>
+                    <span class="k">for</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">outputs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'data'</span><span class="p">,[]):</span>
+                        <span class="k">if</span> <span class="n">v4</span> <span class="ow">and</span> <span class="n">data</span> <span class="o">==</span> <span class="s1">'text/html'</span><span class="p">:</span>
+                            <span class="n">substitution</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">outputs</span><span class="p">[</span><span class="s1">'data'</span><span class="p">][</span><span class="s1">'text/html'</span><span class="p">])</span>
+                            <span class="n">outputs</span><span class="p">[</span><span class="s1">'data'</span><span class="p">][</span><span class="s1">'text/html'</span><span class="p">]</span> <span class="o">=</span> <span class="n">substitution</span>
+        <span class="k">return</span> <span class="n">cell</span><span class="p">,</span> <span class="n">resources</span></div>
+</pre>
+    </div>
+   </div>
+  </div>
+  <!-- END MAIN BODY OF DOCS ––––––––––––– -->
+  <footer class="footer">
+   <div class="footer-links">
+    <ul>
+     <li>
+      <span class="footer-title">
+       Links
+      </span>
+     </li>
+     <li>
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li>
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li>
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li>
+      <a href="/Reference_Manual/index.html">
+       API Docs
+      </a>
+     </li>
+     <li>
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li>
+      <a href="/about.html">
+       About
+      </a>
+     </li>
+    </ul>
+    <ul>
+     <li>
+      <span class="footer-title">
+       Join Us
+      </span>
+     </li>
+     <li>
+      <a href="//gitter.im/ioam/holoviews.html">
+       Gitter
+      </a>
+     </li>
+     <li>
+      <a href="//twitter.com/holoviews.html">
+       Twitter
+      </a>
+     </li>
+     <li>
+      <a href="//github.com/ioam/holoviews.html">
+       Github
+      </a>
+     </li>
+    </ul>
+    <ul class="copyright">
+     <li>
+      2017 IOAM: Jean-Luc R. Stevens, Philipp Rudiger, and James A. Bednar
+     </li>
+    </ul>
+   </div>
+  </footer>
+  <!-- Google Analytics -->
+  <script>
+   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-61554933-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <!-- MathJax Config -->
+  <script type="text/x-mathjax-config">
+   MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+  </script>
+  <!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+ </body>
+</html>

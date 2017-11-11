@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8"/>
+  <title>
+   Gallery — HoloViews
+  </title>
+  <meta content="HoloViews library, documentation site." name="description"/>
+  <meta content="HoloViews contributors" name="author"/>
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js">
+  </script>
+  <script>
+   WebFont.load({
+      google: {
+        families: ['Source Sans Pro']
+      }
+    });
+  </script>
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../_static/main.css" rel="stylesheet"/>
+  <link href="../_static/custom.css" rel="stylesheet"/>
+  <!-- Scripts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
+  </script>
+  <script async="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+  </script>
+  <script src="../_static/js/main.js">
+  </script>
+  <script src="../_static/custom.js">
+  </script>
+  <script src="../_static/require.js">
+  </script>
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../_static/images/favicon.ico" rel="icon" type="image/png"/>
+  <!-- Canonical
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="http://holoviews.org/gallery/index.html" rel="canonical"/>
+ </head>
+ <body class="">
+  <header class="navigation">
+   <div class="wrapper">
+    <a class="logo" href="//">
+     <img alt="Logo" src="../_static/images/logo.png"/>
+    </a>
+    <a class="navigation-menu logo-text" href="//">
+     HoloViews
+    </a>
+    <a class="navigation-menu-button" href="javascript:void(0)" id="js-mobile-menu">
+     Menu
+    </a>
+    <nav>
+     <ul class="navigation-menu show" id="js-navigation-menu">
+      <li class="nav-link">
+       <a href="/about.html">
+        About
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="/gallery/index.html">
+        Gallery
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="//github.com/ioam/holoviews.html">
+        Github
+       </a>
+      </li>
+     </ul>
+    </nav>
+   </div>
+  </header>
+  <div class="second-nav">
+   <nav>
+    <ul class="navigation-menu show">
+     <li class="nav-link doc-head">
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+    </ul>
+   </nav>
+   <div class="navigation-tools">
+    <div class="search-bar">
+     <form action="../search.html" method="get" role="search">
+      <input name="q" placeholder="Search" type="search"/>
+      <button type="submit">
+       <img alt="Search Icon" src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/search-icon-black.png"/>
+      </button>
+     </form>
+    </div>
+   </div>
+  </div>
+  <!-- MAIN BODY OF DOCS –––––––––––––––––– -->
+  <div class="docs section">
+   <div class="toc">
+    <ul class="current">
+     <li class="toctree-l1">
+      <a class="reference internal" href="../getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="toctree-l1 current">
+      <a class="current reference internal" href="#">
+       Gallery
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference external" href="http://github.com/ioam/holoviews">
+       Github source
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../about.html">
+       About
+      </a>
+     </li>
+    </ul>
+   </div>
+   <div class="content">
+    <div class="section" id="gallery">
+     <h1>
+      Gallery
+      <a class="headerlink" href="#gallery" title="Permalink to this headline">
+       ¶
+      </a>
+     </h1>
+     <p>
+      The gallery shows the breadth of what HoloViews is capable of with a
+varied collection of examples.  If you are looking for a specific
+component (or wish to view the available range of primitives), see our
+      <a class="reference external" href="../reference/index.html">
+       Reference Gallery
+      </a>
+      . To get started with
+HoloViews, see our
+      <a class="reference external" href="../getting_started/index.html">
+       Getting Started
+      </a>
+      guide and for more detailed documentation our
+      <a class="reference external" href="../user_guide/index.html">
+       User Guide
+      </a>
+      .
+     </p>
+     <script>
+      function gallery_toggle(input) {
+    backends = ['bokeh', 'matplotlib', 'plotly'];
+    for (i in backends) {
+        entries = $('.'+backends[i]+'_example');
+        if (backends[i] == input) {
+            entries.show();
+        } else {
+            entries.hide()
+        }
+    }
+}
+     </script>
+     <ul class="tab">
+      <li>
+       <input checked="checked" id="tab1" name="tab" onclick="gallery_toggle('Bokeh'.toLowerCase())" type="radio"/>
+       <label for="tab1">
+        Bokeh
+       </label>
+      </li>
+      <li>
+       <input id="tab2" name="tab" onclick="gallery_toggle('Matplotlib'.toLowerCase())" type="radio"/>
+       <label for="tab2">
+        Matplotlib
+       </label>
+      </li>
+      <li>
+       <input id="tab3" name="tab" onclick="gallery_toggle('Plotly'.toLowerCase())" type="radio"/>
+       <label for="tab3">
+        Plotly
+       </label>
+      </li>
+     </ul>
+     <div class="section" id="apps">
+      <h2>
+       Apps
+       <a class="headerlink" href="#apps" title="Permalink to this headline">
+        ¶
+       </a>
+      </h2>
+      <div style="clear:both">
+      </div>
+     </div>
+     <div class="section" id="notebooks">
+      <h2>
+       Notebooks
+       <a class="headerlink" href="#notebooks" title="Permalink to this headline">
+        ¶
+       </a>
+      </h2>
+      <div class="sphx-glr-thumbcontainer bokeh_example" tooltip="Area chart">
+       <div class="figure" id="id1">
+        <img alt="../_static/images/logo.png" src="../_static/images/logo.png"/>
+        <p class="caption">
+         <span class="caption-text">
+          <a class="reference internal" href="notebooks/bokeh/area_chart.html#bokeh-gallery-area-chart">
+           <span class="std std-ref">
+            area_chart
+           </span>
+          </a>
+         </span>
+        </p>
+       </div>
+      </div>
+      <div class="sphx-glr-thumbcontainer bokeh_example" tooltip="Autompg histogram">
+       <div class="figure" id="id2">
+        <img alt="../_static/images/logo.png" src="../_static/images/logo.png"/>
+        <p class="caption">
+         <span class="caption-text">
+          <a class="reference internal" href="notebooks/bokeh/autompg_histogram.html#bokeh-gallery-autompg-histogram">
+           <span class="std std-ref">
+            autompg_histogram
+           </span>
+          </a>
+         </span>
+        </p>
+       </div>
+      </div>
+      <div class="sphx-glr-thumbcontainer matplotlib_example" tooltip="Area chart">
+       <div class="figure" id="id3">
+        <img alt="../_images/area_chart.png" src="../_images/area_chart.png"/>
+        <p class="caption">
+         <span class="caption-text">
+          <a class="reference internal" href="notebooks/matplotlib/area_chart.html#matplotlib-gallery-area-chart">
+           <span class="std std-ref">
+            area_chart
+           </span>
+          </a>
+         </span>
+        </p>
+       </div>
+      </div>
+      <div class="sphx-glr-thumbcontainer matplotlib_example" tooltip="Autompg histogram">
+       <div class="figure" id="id4">
+        <img alt="../_images/autompg_histogram.png" src="../_images/autompg_histogram.png"/>
+        <p class="caption">
+         <span class="caption-text">
+          <a class="reference internal" href="notebooks/matplotlib/autompg_histogram.html#matplotlib-gallery-autompg-histogram">
+           <span class="std std-ref">
+            autompg_histogram
+           </span>
+          </a>
+         </span>
+        </p>
+       </div>
+      </div>
+      <div class="sphx-glr-thumbcontainer plotly_example" tooltip="Surface 3d">
+       <div class="figure" id="id5">
+        <img alt="../_static/images/logo.png" src="../_static/images/logo.png"/>
+        <p class="caption">
+         <span class="caption-text">
+          <a class="reference internal" href="notebooks/plotly/surface_3d.html#plotly-gallery-surface-3d">
+           <span class="std std-ref">
+            surface_3d
+           </span>
+          </a>
+         </span>
+        </p>
+       </div>
+      </div>
+      <div class="sphx-glr-thumbcontainer plotly_example" tooltip="Trisurf3d demo">
+       <div class="figure" id="id6">
+        <img alt="../_static/images/logo.png" src="../_static/images/logo.png"/>
+        <p class="caption">
+         <span class="caption-text">
+          <a class="reference internal" href="notebooks/plotly/trisurf3d_demo.html#plotly-gallery-trisurf3d-demo">
+           <span class="std std-ref">
+            trisurf3d_demo
+           </span>
+          </a>
+         </span>
+        </p>
+       </div>
+      </div>
+      <div style="clear:both">
+      </div>
+      <script>
+       $(document).ready(function () {
+        backends = ['matplotlib', 'plotly'];
+        for (var i=0; i<backends.length; i++){
+            $('.'+backends[i]+'_example').hide();
+        }
+    });
+      </script>
+     </div>
+    </div>
+   </div>
+  </div>
+  <!-- END MAIN BODY OF DOCS ––––––––––––– -->
+  <footer class="footer">
+   <div class="footer-links">
+    <ul>
+     <li>
+      <span class="footer-title">
+       Links
+      </span>
+     </li>
+     <li>
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li>
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li>
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li>
+      <a href="/Reference_Manual/index.html">
+       API Docs
+      </a>
+     </li>
+     <li>
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li>
+      <a href="/about.html">
+       About
+      </a>
+     </li>
+    </ul>
+    <ul>
+     <li>
+      <span class="footer-title">
+       Join Us
+      </span>
+     </li>
+     <li>
+      <a href="//gitter.im/ioam/holoviews.html">
+       Gitter
+      </a>
+     </li>
+     <li>
+      <a href="//twitter.com/holoviews.html">
+       Twitter
+      </a>
+     </li>
+     <li>
+      <a href="//github.com/ioam/holoviews.html">
+       Github
+      </a>
+     </li>
+    </ul>
+    <ul class="copyright">
+     <li>
+      2017 IOAM: Jean-Luc R. Stevens, Philipp Rudiger, and James A. Bednar
+     </li>
+    </ul>
+   </div>
+  </footer>
+  <!-- Google Analytics -->
+  <script>
+   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-61554933-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <!-- MathJax Config -->
+  <script type="text/x-mathjax-config">
+   MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+  </script>
+  <!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+ </body>
+</html>

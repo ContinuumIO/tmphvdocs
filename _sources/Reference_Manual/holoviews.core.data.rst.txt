@@ -1,0 +1,149 @@
+holoviews.data Package
+======================
+
+
+---------
+
+:mod:`data` Package
+-------------------
+
+.. inheritance-diagram:: holoviews.core.data
+
+
+.. automodule:: holoviews.core.data
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`array` Module
+-------------------
+
+.. inheritance-diagram:: holoviews.core.data.array
+
+
+.. automodule:: holoviews.core.data.array
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`dask` Module
+------------------
+
+.. inheritance-diagram:: holoviews.core.data.dask
+
+
+.. automodule:: holoviews.core.data.dask
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`dictionary` Module
+------------------------
+
+.. inheritance-diagram:: holoviews.core.data.dictionary
+
+
+.. automodule:: holoviews.core.data.dictionary
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`grid` Module
+------------------
+
+.. inheritance-diagram:: holoviews.core.data.grid
+
+
+.. automodule:: holoviews.core.data.grid
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`image` Module
+-------------------
+
+.. inheritance-diagram:: holoviews.core.data.image
+
+
+.. automodule:: holoviews.core.data.image
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`interface` Module
+-----------------------
+
+.. inheritance-diagram:: holoviews.core.data.interface
+
+
+.. automodule:: holoviews.core.data.interface
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`iris` Module
+------------------
+
+.. inheritance-diagram:: holoviews.core.data.iris
+
+
+.. automodule:: holoviews.core.data.iris
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`multipath` Module
+-----------------------
+
+.. inheritance-diagram:: holoviews.core.data.multipath
+
+
+.. automodule:: holoviews.core.data.multipath
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`pandas` Module
+--------------------
+
+.. inheritance-diagram:: holoviews.core.data.pandas
+
+
+.. automodule:: holoviews.core.data.pandas
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`xarray` Module
+--------------------
+
+.. inheritance-diagram:: holoviews.core.data.xarray
+
+
+.. automodule:: holoviews.core.data.xarray
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+

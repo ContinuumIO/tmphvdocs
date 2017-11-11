@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8"/>
+  <title>
+   Crossfilter — HoloViews
+  </title>
+  <meta content="HoloViews library, documentation site." name="description"/>
+  <meta content="HoloViews contributors" name="author"/>
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js">
+  </script>
+  <script>
+   WebFont.load({
+      google: {
+        families: ['Source Sans Pro']
+      }
+    });
+  </script>
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../../../_static/main.css" rel="stylesheet"/>
+  <link href="../../../_static/custom.css" rel="stylesheet"/>
+  <!-- Scripts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
+  </script>
+  <script async="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+  </script>
+  <script src="../../../_static/js/main.js">
+  </script>
+  <script src="../../../_static/custom.js">
+  </script>
+  <script src="../../../_static/require.js">
+  </script>
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../../../_static/images/favicon.ico" rel="icon" type="image/png"/>
+  <!-- Canonical
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="http://holoviews.org/gallery/apps/bokeh/crossfilter.html" rel="canonical"/>
+ </head>
+ <body class="">
+  <header class="navigation">
+   <div class="wrapper">
+    <a class="logo" href="//">
+     <img alt="Logo" src="../../../_static/images/logo.png"/>
+    </a>
+    <a class="navigation-menu logo-text" href="//">
+     HoloViews
+    </a>
+    <a class="navigation-menu-button" href="javascript:void(0)" id="js-mobile-menu">
+     Menu
+    </a>
+    <nav>
+     <ul class="navigation-menu show" id="js-navigation-menu">
+      <li class="nav-link">
+       <a href="/about.html">
+        About
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="/gallery/index.html">
+        Gallery
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="//github.com/ioam/holoviews.html">
+        Github
+       </a>
+      </li>
+     </ul>
+    </nav>
+   </div>
+  </header>
+  <div class="second-nav">
+   <nav>
+    <ul class="navigation-menu show">
+     <li class="nav-link doc-head">
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+    </ul>
+   </nav>
+   <div class="navigation-tools">
+    <div class="search-bar">
+     <form action="../../../search.html" method="get" role="search">
+      <input name="q" placeholder="Search" type="search"/>
+      <button type="submit">
+       <img alt="Search Icon" src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/search-icon-black.png"/>
+      </button>
+     </form>
+    </div>
+   </div>
+  </div>
+  <!-- MAIN BODY OF DOCS –––––––––––––––––– -->
+  <div class="docs section">
+   <div class="toc">
+    <ul>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference external" href="http://github.com/ioam/holoviews">
+       Github source
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../about.html">
+       About
+      </a>
+     </li>
+    </ul>
+   </div>
+   <div class="content">
+    <div class="section" id="crossfilter">
+     <span id="bokeh-gallery-crossfilter">
+     </span>
+     <h1>
+      Crossfilter
+      <a class="headerlink" href="#crossfilter" title="Permalink to this headline">
+       ¶
+      </a>
+     </h1>
+     <div class="highlight-default">
+      <div class="highlight">
+       <pre><span></span><span class="sd">"""</span>
+<span class="sd">An example demonstrating how to put together a crossfilter app based</span>
+<span class="sd">on the Auto MPG dataset. Demonstrates how to dynamically generate</span>
+<span class="sd">bokeh plots using the HoloViews API and replacing the bokeh plot</span>
+<span class="sd">based on the current widget selections.</span>
+<span class="sd">"""</span>
+<span class="kn">import</span> <span class="nn">holoviews</span> <span class="k">as</span> <span class="nn">hv</span>
+
+<span class="kn">from</span> <span class="nn">bokeh.layouts</span> <span class="k">import</span> <span class="n">row</span><span class="p">,</span> <span class="n">widgetbox</span>
+<span class="kn">from</span> <span class="nn">bokeh.models</span> <span class="k">import</span> <span class="n">Select</span>
+<span class="kn">from</span> <span class="nn">bokeh.plotting</span> <span class="k">import</span> <span class="n">curdoc</span>
+<span class="kn">from</span> <span class="nn">bokeh.sampledata.autompg</span> <span class="k">import</span> <span class="n">autompg</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">autompg</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+<span class="n">SIZES</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">22</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+<span class="n">ORIGINS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'North America'</span><span class="p">,</span> <span class="s1">'Europe'</span><span class="p">,</span> <span class="s1">'Asia'</span><span class="p">]</span>
+
+<span class="c1"># data cleanup</span>
+<span class="n">df</span><span class="o">.</span><span class="n">cyl</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">cyl</span><span class="p">]</span>
+<span class="n">df</span><span class="o">.</span><span class="n">origin</span> <span class="o">=</span> <span class="p">[</span><span class="n">ORIGINS</span><span class="p">[</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">origin</span><span class="p">]</span>
+
+<span class="n">df</span><span class="p">[</span><span class="s1">'year'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">yr</span><span class="p">]</span>
+<span class="k">del</span> <span class="n">df</span><span class="p">[</span><span class="s1">'yr'</span><span class="p">]</span>
+
+<span class="n">df</span><span class="p">[</span><span class="s1">'mfr'</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">mfr</span><span class="o">==</span><span class="s1">'chevy'</span><span class="p">,</span> <span class="s1">'mfr'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'chevrolet'</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">mfr</span><span class="o">==</span><span class="s1">'chevroelt'</span><span class="p">,</span> <span class="s1">'mfr'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'chevrolet'</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">mfr</span><span class="o">==</span><span class="s1">'maxda'</span><span class="p">,</span> <span class="s1">'mfr'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'mazda'</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">mfr</span><span class="o">==</span><span class="s1">'mercedes-benz'</span><span class="p">,</span> <span class="s1">'mfr'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'mercedes'</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">mfr</span><span class="o">==</span><span class="s1">'toyouta'</span><span class="p">,</span> <span class="s1">'mfr'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'toyota'</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">mfr</span><span class="o">==</span><span class="s1">'vokswagen'</span><span class="p">,</span> <span class="s1">'mfr'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'volkswagen'</span>
+<span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">df</span><span class="o">.</span><span class="n">mfr</span><span class="o">==</span><span class="s1">'vw'</span><span class="p">,</span> <span class="s1">'mfr'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'volkswagen'</span>
+<span class="k">del</span> <span class="n">df</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]</span>
+
+<span class="n">columns</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+<span class="n">discrete</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">columns</span> <span class="k">if</span> <span class="n">df</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="nb">object</span><span class="p">]</span>
+<span class="n">continuous</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">columns</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">discrete</span><span class="p">]</span>
+<span class="n">quantileable</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">continuous</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">x</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">())</span> <span class="o">&gt;</span> <span class="mi">20</span><span class="p">]</span>
+
+<span class="n">renderer</span> <span class="o">=</span> <span class="n">hv</span><span class="o">.</span><span class="n">renderer</span><span class="p">(</span><span class="s1">'bokeh'</span><span class="p">)</span>
+<span class="n">options</span> <span class="o">=</span> <span class="n">hv</span><span class="o">.</span><span class="n">Store</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">backend</span><span class="o">=</span><span class="s1">'bokeh'</span><span class="p">)</span>
+<span class="n">options</span><span class="o">.</span><span class="n">Points</span> <span class="o">=</span> <span class="n">hv</span><span class="o">.</span><span class="n">Options</span><span class="p">(</span><span class="s1">'plot'</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">size_index</span><span class="o">=</span><span class="kc">None</span><span class="p">,)</span>
+<span class="n">options</span><span class="o">.</span><span class="n">Points</span> <span class="o">=</span> <span class="n">hv</span><span class="o">.</span><span class="n">Options</span><span class="p">(</span><span class="s1">'style'</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">'rainbow'</span><span class="p">,</span> <span class="n">line_color</span><span class="o">=</span><span class="s1">'black'</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">create_figure</span><span class="p">():</span>
+    <span class="n">label</span> <span class="o">=</span> <span class="s2">"</span><span class="si">%s</span><span class="s2"> vs </span><span class="si">%s</span><span class="s2">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">title</span><span class="p">(),</span> <span class="n">y</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">title</span><span class="p">())</span>
+    <span class="n">kdims</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">value</span><span class="p">,</span> <span class="n">y</span><span class="o">.</span><span class="n">value</span><span class="p">]</span>
+
+    <span class="n">opts</span><span class="p">,</span> <span class="n">style</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">{}</span>
+    <span class="n">opts</span><span class="p">[</span><span class="s1">'color_index'</span><span class="p">]</span> <span class="o">=</span> <span class="n">color</span><span class="o">.</span><span class="n">value</span> <span class="k">if</span> <span class="n">color</span><span class="o">.</span><span class="n">value</span> <span class="o">!=</span> <span class="s1">'None'</span> <span class="k">else</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">size</span><span class="o">.</span><span class="n">value</span> <span class="o">!=</span> <span class="s1">'None'</span><span class="p">:</span>
+        <span class="n">opts</span><span class="p">[</span><span class="s1">'size_index'</span><span class="p">]</span> <span class="o">=</span> <span class="n">size</span><span class="o">.</span><span class="n">value</span>
+        <span class="n">opts</span><span class="p">[</span><span class="s1">'scaling_factor'</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.</span><span class="o">/</span><span class="n">df</span><span class="p">[</span><span class="n">size</span><span class="o">.</span><span class="n">value</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">())</span><span class="o">*</span><span class="mi">200</span>
+    <span class="n">points</span> <span class="o">=</span> <span class="n">hv</span><span class="o">.</span><span class="n">Points</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">kdims</span><span class="o">=</span><span class="n">kdims</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span><span class="o">.</span><span class="n">opts</span><span class="p">(</span><span class="n">plot</span><span class="o">=</span><span class="n">opts</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="n">style</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">renderer</span><span class="o">.</span><span class="n">get_plot</span><span class="p">(</span><span class="n">points</span><span class="p">)</span><span class="o">.</span><span class="n">state</span>
+
+<span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="n">attr</span><span class="p">,</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="p">):</span>
+    <span class="n">layout</span><span class="o">.</span><span class="n">children</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">create_figure</span><span class="p">()</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">Select</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">'X-Axis'</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s1">'mpg'</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">quantileable</span><span class="p">)</span>
+<span class="n">x</span><span class="o">.</span><span class="n">on_change</span><span class="p">(</span><span class="s1">'value'</span><span class="p">,</span> <span class="n">update</span><span class="p">)</span>
+
+<span class="n">y</span> <span class="o">=</span> <span class="n">Select</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">'Y-Axis'</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s1">'hp'</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">quantileable</span><span class="p">)</span>
+<span class="n">y</span><span class="o">.</span><span class="n">on_change</span><span class="p">(</span><span class="s1">'value'</span><span class="p">,</span> <span class="n">update</span><span class="p">)</span>
+
+<span class="n">size</span> <span class="o">=</span> <span class="n">Select</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">'Size'</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s1">'None'</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s1">'None'</span><span class="p">]</span> <span class="o">+</span> <span class="n">quantileable</span><span class="p">)</span>
+<span class="n">size</span><span class="o">.</span><span class="n">on_change</span><span class="p">(</span><span class="s1">'value'</span><span class="p">,</span> <span class="n">update</span><span class="p">)</span>
+
+<span class="n">color</span> <span class="o">=</span> <span class="n">Select</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">'Color'</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="s1">'None'</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">[</span><span class="s1">'None'</span><span class="p">]</span> <span class="o">+</span> <span class="n">quantileable</span><span class="p">)</span>
+<span class="n">color</span><span class="o">.</span><span class="n">on_change</span><span class="p">(</span><span class="s1">'value'</span><span class="p">,</span> <span class="n">update</span><span class="p">)</span>
+
+<span class="n">controls</span> <span class="o">=</span> <span class="n">widgetbox</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">size</span><span class="p">],</span> <span class="n">width</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">layout</span> <span class="o">=</span> <span class="n">row</span><span class="p">(</span><span class="n">controls</span><span class="p">,</span> <span class="n">create_figure</span><span class="p">())</span>
+
+<span class="n">curdoc</span><span class="p">()</span><span class="o">.</span><span class="n">add_root</span><span class="p">(</span><span class="n">layout</span><span class="p">)</span>
+<span class="n">curdoc</span><span class="p">()</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="s2">"Crossfilter"</span>
+</pre>
+      </div>
+     </div>
+     <div class="figure">
+      <img alt="http://assets.holoviews.org/gifs/gallery/apps/bokeh/crossfilter.gif" src="http://assets.holoviews.org/gifs/gallery/apps/bokeh/crossfilter.gif"/>
+     </div>
+     <hr class="docutils"/>
+     <p>
+      <a class="reference external" href="https://raw.githubusercontent.com/ioam/holoviews/master/examples/gallery/apps/bokeh/crossfilter.py">
+       Download this script from GitHub (right-click to download).
+      </a>
+     </p>
+    </div>
+   </div>
+  </div>
+  <!-- END MAIN BODY OF DOCS ––––––––––––– -->
+  <footer class="footer">
+   <div class="footer-links">
+    <ul>
+     <li>
+      <span class="footer-title">
+       Links
+      </span>
+     </li>
+     <li>
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li>
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li>
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li>
+      <a href="/Reference_Manual/index.html">
+       API Docs
+      </a>
+     </li>
+     <li>
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li>
+      <a href="/about.html">
+       About
+      </a>
+     </li>
+    </ul>
+    <ul>
+     <li>
+      <span class="footer-title">
+       Join Us
+      </span>
+     </li>
+     <li>
+      <a href="//gitter.im/ioam/holoviews.html">
+       Gitter
+      </a>
+     </li>
+     <li>
+      <a href="//twitter.com/holoviews.html">
+       Twitter
+      </a>
+     </li>
+     <li>
+      <a href="//github.com/ioam/holoviews.html">
+       Github
+      </a>
+     </li>
+    </ul>
+    <ul class="copyright">
+     <li>
+      2017 IOAM: Jean-Luc R. Stevens, Philipp Rudiger, and James A. Bednar
+     </li>
+    </ul>
+   </div>
+  </footer>
+  <!-- Google Analytics -->
+  <script>
+   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-61554933-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <!-- MathJax Config -->
+  <script type="text/x-mathjax-config">
+   MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+  </script>
+  <!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+ </body>
+</html>

@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8"/>
+  <title>
+   holoviews.util.parser — HoloViews
+  </title>
+  <meta content="HoloViews library, documentation site." name="description"/>
+  <meta content="HoloViews contributors" name="author"/>
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js">
+  </script>
+  <script>
+   WebFont.load({
+      google: {
+        families: ['Source Sans Pro']
+      }
+    });
+  </script>
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../../../_static/main.css" rel="stylesheet"/>
+  <link href="../../../_static/custom.css" rel="stylesheet"/>
+  <!-- Scripts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
+  </script>
+  <script async="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+  </script>
+  <script src="../../../_static/js/main.js">
+  </script>
+  <script src="../../../_static/custom.js">
+  </script>
+  <script src="../../../_static/require.js">
+  </script>
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../../../_static/images/favicon.ico" rel="icon" type="image/png"/>
+  <!-- Canonical
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="http://holoviews.org/_modules/holoviews/util/parser.html" rel="canonical"/>
+ </head>
+ <body class="">
+  <header class="navigation">
+   <div class="wrapper">
+    <a class="logo" href="//">
+     <img alt="Logo" src="../../../_static/images/logo.png"/>
+    </a>
+    <a class="navigation-menu logo-text" href="//">
+     HoloViews
+    </a>
+    <a class="navigation-menu-button" href="javascript:void(0)" id="js-mobile-menu">
+     Menu
+    </a>
+    <nav>
+     <ul class="navigation-menu show" id="js-navigation-menu">
+      <li class="nav-link">
+       <a href="/about.html">
+        About
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="/gallery/index.html">
+        Gallery
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="//github.com/ioam/holoviews.html">
+        Github
+       </a>
+      </li>
+     </ul>
+    </nav>
+   </div>
+  </header>
+  <div class="second-nav">
+   <nav>
+    <ul class="navigation-menu show">
+     <li class="nav-link doc-head">
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+    </ul>
+   </nav>
+   <div class="navigation-tools">
+    <div class="search-bar">
+     <form action="../../../search.html" method="get" role="search">
+      <input name="q" placeholder="Search" type="search"/>
+      <button type="submit">
+       <img alt="Search Icon" src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/search-icon-black.png"/>
+      </button>
+     </form>
+    </div>
+   </div>
+  </div>
+  <!-- MAIN BODY OF DOCS –––––––––––––––––– -->
+  <div class="docs section">
+   <div class="toc">
+    <ul>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference external" href="http://github.com/ioam/holoviews">
+       Github source
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../about.html">
+       About
+      </a>
+     </li>
+    </ul>
+   </div>
+   <div class="content">
+    <h1>
+     Source code for holoviews.util.parser
+    </h1>
+    <div class="highlight">
+     <pre><span></span><span class="sd">"""</span>
+<span class="sd">The magics offered by the HoloViews IPython extension are powerful and</span>
+<span class="sd">support rich, compositional specifications. To avoid the the brittle,</span>
+<span class="sd">convoluted code that results from trying to support the syntax in pure</span>
+<span class="sd">Python, this file defines suitable parsers using pyparsing that are</span>
+<span class="sd">cleaner and easier to understand.</span>
+
+<span class="sd">Pyparsing is required by matplotlib and will therefore be available if</span>
+<span class="sd">HoloViews is being used in conjunction with matplotlib.</span>
+<span class="sd">"""</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span>
+<span class="kn">import</span> <span class="nn">param</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="n">groupby</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pyparsing</span> <span class="k">as</span> <span class="nn">pp</span>
+
+<span class="kn">from</span> <span class="nn">..core.options</span> <span class="k">import</span> <span class="n">Options</span><span class="p">,</span> <span class="n">Cycle</span><span class="p">,</span> <span class="n">Palette</span>
+<span class="kn">from</span> <span class="nn">..operation</span> <span class="k">import</span> <span class="n">Compositor</span>
+
+<span class="n">ascii_uppercase</span> <span class="o">=</span> <span class="s1">'ABCDEFGHIJKLMNOPQRSTUVWXYZ'</span>
+<span class="n">allowed</span> <span class="o">=</span> <span class="s1">'0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!#$%&amp;\()*+,-./:;&lt;=&gt;?@</span><span class="se">\\</span><span class="s1">^_`{|}~'</span>
+
+
+<span class="c1"># To generate warning in the standard param style</span>
+<span class="c1"># Parameterize Parser and use warning method once param supports</span>
+<span class="c1"># logging at the class level.</span>
+<span class="k">class</span> <span class="nc">ParserWarning</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">Parameterized</span><span class="p">):</span><span class="k">pass</span>
+<span class="n">parsewarning</span> <span class="o">=</span> <span class="n">ParserWarning</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">'Warning'</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Parser"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.util.html#holoviews.util.parser.Parser">[docs]</a><span class="k">class</span> <span class="nc">Parser</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Base class for magic line parsers, designed for forgiving parsing</span>
+<span class="sd">    of keyword lists.</span>
+<span class="sd">    """</span>
+
+    <span class="c1"># Static namespace set in __init__.py of the extension</span>
+    <span class="n">namespace</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'np'</span><span class="p">:</span> <span class="n">np</span><span class="p">,</span> <span class="s1">'Cycle'</span><span class="p">:</span> <span class="n">Cycle</span><span class="p">,</span> <span class="s1">'Palette'</span><span class="p">:</span> <span class="n">Palette</span><span class="p">}</span>
+    <span class="c1"># If True, raise SyntaxError on eval error otherwise warn</span>
+    <span class="n">abort_on_eval_failure</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_strip_commas</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">kw</span><span class="p">):</span>
+        <span class="s2">"Strip out any leading/training commas from the token"</span>
+        <span class="n">kw</span> <span class="o">=</span> <span class="n">kw</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="n">kw</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">==</span><span class="s1">','</span> <span class="k">else</span> <span class="n">kw</span>
+        <span class="k">return</span> <span class="n">kw</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="k">if</span> <span class="n">kw</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">==</span><span class="s1">','</span> <span class="k">else</span> <span class="n">kw</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">recurse_token</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">token</span><span class="p">,</span> <span class="n">inner</span><span class="p">):</span>
+        <span class="n">recursed</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">tok</span> <span class="ow">in</span> <span class="n">token</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">tok</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="n">new_tok</span> <span class="o">=</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tok</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span>
+                           <span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">recurse_token</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">inner</span><span class="p">)</span>
+                            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="p">[</span><span class="n">t</span><span class="p">])]</span>
+                <span class="n">recursed</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">inner</span> <span class="o">%</span> <span class="s1">''</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">new_tok</span><span class="p">)))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">recursed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tok</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">inner</span> <span class="o">%</span> <span class="s1">''</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">recursed</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Parser.collect_tokens"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.util.html#holoviews.util.parser.Parser.collect_tokens">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">collect_tokens</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parseresult</span><span class="p">,</span> <span class="n">mode</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Collect the tokens from a (potentially) nested parse result.</span>
+<span class="sd">        """</span>
+        <span class="n">inner</span> <span class="o">=</span> <span class="s1">'(</span><span class="si">%s</span><span class="s1">)'</span> <span class="k">if</span> <span class="n">mode</span><span class="o">==</span><span class="s1">'parens'</span> <span class="k">else</span> <span class="s1">'[</span><span class="si">%s</span><span class="s1">]'</span>
+        <span class="k">if</span> <span class="n">parseresult</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="k">return</span> <span class="p">[]</span>
+        <span class="n">tokens</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">parseresult</span><span class="o">.</span><span class="n">asList</span><span class="p">():</span>
+            <span class="c1"># If value is a tuple, the token will be a list</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="n">token</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">recurse_token</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">inner</span><span class="p">)</span>
+                <span class="n">tokens</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">tokens</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">token</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s1">','</span><span class="p">:</span> <span class="k">continue</span>
+                <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">_strip_commas</span><span class="p">(</span><span class="n">token</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">tokens</span></div>
+
+<div class="viewcode-block" id="Parser.todict"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.util.html#holoviews.util.parser.Parser.todict">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">todict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parseresult</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">'parens'</span><span class="p">,</span> <span class="n">ns</span><span class="o">=</span><span class="p">{}):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Helper function to return dictionary given the parse results</span>
+<span class="sd">        from a pyparsing.nestedExpr object (containing keywords).</span>
+
+<span class="sd">        The ns is a dynamic namespace (typically the IPython Notebook</span>
+<span class="sd">        namespace) used to update the class-level namespace.</span>
+<span class="sd">        """</span>
+        <span class="n">grouped</span><span class="p">,</span> <span class="n">kwargs</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">{}</span>
+        <span class="n">tokens</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">collect_tokens</span><span class="p">(</span><span class="n">parseresult</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
+        <span class="c1"># Group tokens without '=' and append to last token containing '='</span>
+        <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">groupby</span><span class="p">(</span><span class="n">tokens</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">el</span><span class="p">:</span> <span class="s1">'='</span> <span class="ow">in</span> <span class="n">el</span><span class="p">):</span>
+            <span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="n">items</span><span class="p">)</span> <span class="o">=</span> <span class="n">group</span>
+            <span class="k">if</span> <span class="n">val</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">grouped</span> <span class="o">+=</span> <span class="nb">list</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">val</span> <span class="ow">is</span> <span class="kc">False</span><span class="p">:</span>
+                <span class="n">elements</span> <span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="n">items</span><span class="p">)</span>
+                <span class="c1"># Assume anything before ) or } can be joined with commas</span>
+                <span class="c1"># (e.g tuples with spaces in them)</span>
+                <span class="n">joiner</span><span class="o">=</span><span class="s1">','</span> <span class="k">if</span> <span class="nb">any</span><span class="p">(((</span><span class="s1">')'</span> <span class="ow">in</span> <span class="n">el</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="s1">'}'</span> <span class="ow">in</span> <span class="n">el</span><span class="p">))</span>
+                                  <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">elements</span><span class="p">)</span> <span class="k">else</span> <span class="s1">''</span>
+                <span class="n">grouped</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+=</span> <span class="n">joiner</span> <span class="o">+</span> <span class="n">joiner</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">elements</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">keyword</span> <span class="ow">in</span> <span class="n">grouped</span><span class="p">:</span>
+            <span class="c1"># Tuple ('a', 3) becomes (,'a',3) and '(,' is never valid</span>
+            <span class="c1"># Same for some of the other joining errors corrected here</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">fst</span><span class="p">,</span><span class="n">snd</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[(</span><span class="s1">'(,'</span><span class="p">,</span> <span class="s1">'('</span><span class="p">),</span> <span class="p">(</span><span class="s1">'{,'</span><span class="p">,</span> <span class="s1">'{'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'=,'</span><span class="p">,</span><span class="s1">'='</span><span class="p">),</span>
+                              <span class="p">(</span><span class="s1">',:'</span><span class="p">,</span><span class="s1">':'</span><span class="p">),</span> <span class="p">(</span><span class="s1">':,'</span><span class="p">,</span> <span class="s1">':'</span><span class="p">),</span> <span class="p">(</span><span class="s1">',,'</span><span class="p">,</span> <span class="s1">','</span><span class="p">),</span>
+                              <span class="p">(</span><span class="s1">',.'</span><span class="p">,</span> <span class="s1">'.'</span><span class="p">)]:</span>
+                <span class="n">keyword</span> <span class="o">=</span> <span class="n">keyword</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">fst</span><span class="p">,</span> <span class="n">snd</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">eval</span><span class="p">(</span><span class="s1">'dict(</span><span class="si">%s</span><span class="s1">)'</span> <span class="o">%</span> <span class="n">keyword</span><span class="p">,</span>
+                                   <span class="nb">dict</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">namespace</span><span class="p">,</span> <span class="o">**</span><span class="n">ns</span><span class="p">)))</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">abort_on_eval_failure</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">SyntaxError</span><span class="p">(</span><span class="s2">"Could not evaluate keyword: </span><span class="si">%r</span><span class="s2">"</span>
+                                      <span class="o">%</span> <span class="n">keyword</span><span class="p">)</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="s2">"Ignoring keyword pair that fails to evaluate: '</span><span class="si">%s</span><span class="s2">'"</span>
+                <span class="n">parsewarning</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">msg</span> <span class="o">%</span> <span class="n">keyword</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">kwargs</span></div></div>
+
+
+
+<div class="viewcode-block" id="OptsSpec"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.util.html#holoviews.util.parser.OptsSpec">[docs]</a><span class="k">class</span> <span class="nc">OptsSpec</span><span class="p">(</span><span class="n">Parser</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    An OptsSpec is a string specification that describes an</span>
+<span class="sd">    OptionTree. It is a list of tree path specifications (using dotted</span>
+<span class="sd">    syntax) separated by keyword lists for any of the style, plotting</span>
+<span class="sd">    or normalization options. These keyword lists are denoted</span>
+<span class="sd">    'plot(..)', 'style(...)' and 'norm(...)'  respectively.  These</span>
+<span class="sd">    three groups may be specified even more concisely using keyword</span>
+<span class="sd">    lists delimited by square brackets, parentheses and braces</span>
+<span class="sd">    respectively.  All these sets are optional and may be supplied in</span>
+<span class="sd">    any order.</span>
+
+<span class="sd">    For instance, the following string:</span>
+
+<span class="sd">    Image (interpolation=None) plot(show_title=False) Curve style(color='r')</span>
+
+<span class="sd">    Would specify an OptionTree where Image has "interpolation=None"</span>
+<span class="sd">    for style and 'show_title=False' for plot options. The Curve has a</span>
+<span class="sd">    style set such that color='r'.</span>
+
+<span class="sd">    The parser is fairly forgiving; commas between keywords are</span>
+<span class="sd">    optional and additional spaces are often allowed. The only</span>
+<span class="sd">    restriction is that keywords *must* be immediately followed by the</span>
+<span class="sd">    '=' sign (no space).</span>
+<span class="sd">    """</span>
+
+    <span class="n">plot_options_short</span> <span class="o">=</span> <span class="n">pp</span><span class="o">.</span><span class="n">nestedExpr</span><span class="p">(</span><span class="s1">'['</span><span class="p">,</span>
+                                       <span class="s1">']'</span><span class="p">,</span>
+                                       <span class="n">content</span><span class="o">=</span><span class="n">pp</span><span class="o">.</span><span class="n">OneOrMore</span><span class="p">(</span><span class="n">pp</span><span class="o">.</span><span class="n">Word</span><span class="p">(</span><span class="n">allowed</span><span class="p">)</span> <span class="o">^</span> <span class="n">pp</span><span class="o">.</span><span class="n">quotedString</span><span class="p">)</span>
+                                   <span class="p">)</span><span class="o">.</span><span class="n">setResultsName</span><span class="p">(</span><span class="s1">'plot_options'</span><span class="p">)</span>
+
+    <span class="n">plot_options_long</span> <span class="o">=</span> <span class="n">pp</span><span class="o">.</span><span class="n">nestedExpr</span><span class="p">(</span><span class="n">opener</span><span class="o">=</span><span class="s1">'plot['</span><span class="p">,</span>
+                                      <span class="n">closer</span><span class="o">=</span><span class="s1">']'</span><span class="p">,</span>
+                                      <span class="n">content</span><span class="o">=</span><span class="n">pp</span><span class="o">.</span><span class="n">OneOrMore</span><span class="p">(</span><span class="n">pp</span><span class="o">.</span><span class="n">Word</span><span class="p">(</span><span class="n">allowed</span><span class="p">)</span> <span class="o">^</span> <span class="n">pp</span><span class="o">.</span><span class="n">quotedString</span><span class="p">)</span>
+                                  <span class="p">)</span><span class="o">.</span><span class="n">setResultsName</span><span class="p">(</span><span class="s1">'plot_options'</span><span class="p">)</span>
+
+    <span class="n">plot_options</span> <span class="o">=</span> <span class="p">(</span><span class="n">plot_options_short</span> <span class="o">|</span> <span class="n">plot_options_long</span><span class="p">)</span>
+
+    <span class="n">style_options_short</span> <span class="o">=</span> <span class="n">pp</span><span class="o">.</span><span class="n">nestedExpr</span><span class="p">(</span><span class="n">opener</span><span class="o">=</span><span class="s1">'('</span><span class="p">,</span>
+                                        <span class="n">closer</span><span class="o">=</span><span class="s1">')'</span><span class="p">,</span>
+                                        <span class="n">ignoreExpr</span><span class="o">=</span><span class="kc">None</span>
+                                    <span class="p">)</span><span class="o">.</span><span class="n">setResultsName</span><span class="p">(</span><span class="s2">"style_options"</span><span class="p">)</span>
+
+    <span class="n">style_options_long</span> <span class="o">=</span> <span class="n">pp</span><span class="o">.</span><span class="n">nestedExpr</span><span class="p">(</span><span class="n">opener</span><span class="o">=</span><span class="s1">'style('</span><span class="p">,</span>
+                                       <span class="n">closer</span><span class="o">=</span><span class="s1">')'</span><span class="p">,</span>
+                                       <span class="n">ignoreExpr</span><span class="o">=</span><span class="kc">None</span>
+                                   <span class="p">)</span><span class="o">.</span><span class="n">setResultsName</span><span class="p">(</span><span class="s2">"style_options"</span><span class="p">)</span>
+
+    <span class="n">style_options</span> <span class="o">=</span> <span class="p">(</span><span class="n">style_options_short</span> <span class="o">|</span> <span class="n">style_options_long</span><span class="p">)</span>
+
+
+    <span class="n">norm_options_short</span> <span class="o">=</span> <span class="n">pp</span><span class="o">.</span><span class="n">nestedExpr</span><span class="p">(</span><span class="n">opener</span><span class="o">=</span><span class="s1">'{'</span><span class="p">,</span>
+                                       <span class="n">closer</span><span class="o">=</span><span class="s1">'}'</span><span class="p">,</span>
+                                       <span class="n">ignoreExpr</span><span class="o">=</span><span class="kc">None</span>
+                                   <span class="p">)</span><span class="o">.</span><span class="n">setResultsName</span><span class="p">(</span><span class="s2">"norm_options"</span><span class="p">)</span>
+
+    <span class="n">norm_options_long</span> <span class="o">=</span> <span class="n">pp</span><span class="o">.</span><span class="n">nestedExpr</span><span class="p">(</span><span class="n">opener</span><span class="o">=</span><span class="s1">'norm{'</span><span class="p">,</span>
+                                      <span class="n">closer</span><span class="o">=</span><span class="s1">'}'</span><span class="p">,</span>
+                                      <span class="n">ignoreExpr</span><span class="o">=</span><span class="kc">None</span>
+                                  <span class="p">)</span><span class="o">.</span><span class="n">setResultsName</span><span class="p">(</span><span class="s2">"norm_options"</span><span class="p">)</span>
+
+    <span class="n">norm_options</span> <span class="o">=</span> <span class="p">(</span><span class="n">norm_options_short</span> <span class="o">|</span> <span class="n">norm_options_long</span><span class="p">)</span>
+
+    <span class="n">compositor_ops</span> <span class="o">=</span> <span class="n">pp</span><span class="o">.</span><span class="n">MatchFirst</span><span class="p">(</span>
+        <span class="p">[</span><span class="n">pp</span><span class="o">.</span><span class="n">Literal</span><span class="p">(</span><span class="n">el</span><span class="o">.</span><span class="n">group</span><span class="p">)</span> <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">Compositor</span><span class="o">.</span><span class="n">definitions</span> <span class="k">if</span> <span class="n">el</span><span class="o">.</span><span class="n">group</span><span class="p">])</span>
+
+    <span class="n">dotted_path</span> <span class="o">=</span> <span class="n">pp</span><span class="o">.</span><span class="n">Combine</span><span class="p">(</span> <span class="n">pp</span><span class="o">.</span><span class="n">Word</span><span class="p">(</span><span class="n">ascii_uppercase</span><span class="p">,</span> <span class="n">exact</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+                              <span class="o">+</span> <span class="n">pp</span><span class="o">.</span><span class="n">Word</span><span class="p">(</span><span class="n">pp</span><span class="o">.</span><span class="n">alphanums</span><span class="o">+</span><span class="s1">'._'</span><span class="p">))</span>
+
+
+    <span class="n">pathspec</span> <span class="o">=</span> <span class="p">(</span><span class="n">dotted_path</span> <span class="o">|</span> <span class="n">compositor_ops</span><span class="p">)</span><span class="o">.</span><span class="n">setResultsName</span><span class="p">(</span><span class="s2">"pathspec"</span><span class="p">)</span>
+
+
+    <span class="n">spec_group</span> <span class="o">=</span> <span class="n">pp</span><span class="o">.</span><span class="n">Group</span><span class="p">(</span><span class="n">pathspec</span> <span class="o">+</span>
+                          <span class="p">(</span><span class="n">pp</span><span class="o">.</span><span class="n">Optional</span><span class="p">(</span><span class="n">norm_options</span><span class="p">)</span>
+                           <span class="o">&amp;</span> <span class="n">pp</span><span class="o">.</span><span class="n">Optional</span><span class="p">(</span><span class="n">plot_options</span><span class="p">)</span>
+                           <span class="o">&amp;</span> <span class="n">pp</span><span class="o">.</span><span class="n">Optional</span><span class="p">(</span><span class="n">style_options</span><span class="p">)))</span>
+
+    <span class="n">opts_spec</span> <span class="o">=</span> <span class="n">pp</span><span class="o">.</span><span class="n">OneOrMore</span><span class="p">(</span><span class="n">spec_group</span><span class="p">)</span>
+
+    <span class="c1"># Aliases that map to the current option name for backward compatibility</span>
+    <span class="n">aliases</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'horizontal_spacing'</span><span class="p">:</span><span class="s1">'hspace'</span><span class="p">,</span>
+               <span class="s1">'vertical_spacing'</span><span class="p">:</span>  <span class="s1">'vspace'</span><span class="p">,</span>
+               <span class="s1">'figure_alpha'</span><span class="p">:</span><span class="s1">'    fig_alpha'</span><span class="p">,</span>
+               <span class="s1">'figure_bounds'</span><span class="p">:</span>   <span class="s1">'fig_bounds'</span><span class="p">,</span>
+               <span class="s1">'figure_inches'</span><span class="p">:</span>   <span class="s1">'fig_inches'</span><span class="p">,</span>
+               <span class="s1">'figure_latex'</span><span class="p">:</span>    <span class="s1">'fig_latex'</span><span class="p">,</span>
+               <span class="s1">'figure_rcparams'</span><span class="p">:</span> <span class="s1">'fig_rcparams'</span><span class="p">,</span>
+               <span class="s1">'figure_size'</span><span class="p">:</span>     <span class="s1">'fig_size'</span><span class="p">,</span>
+               <span class="s1">'show_xaxis'</span><span class="p">:</span>      <span class="s1">'xaxis'</span><span class="p">,</span>
+               <span class="s1">'show_yaxis'</span><span class="p">:</span>      <span class="s1">'yaxis'</span><span class="p">}</span>
+
+    <span class="n">deprecations</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">'GridImage'</span><span class="p">,</span> <span class="s1">'Image'</span><span class="p">)]</span>
+
+<div class="viewcode-block" id="OptsSpec.process_normalization"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.util.html#holoviews.util.parser.OptsSpec.process_normalization">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">process_normalization</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">parse_group</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Given a normalization parse group (i.e. the contents of the</span>
+<span class="sd">        braces), validate the option list and compute the appropriate</span>
+<span class="sd">        integer value for the normalization plotting option.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="p">(</span><span class="s1">'norm_options'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">parse_group</span><span class="p">):</span> <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">opts</span> <span class="o">=</span> <span class="n">parse_group</span><span class="p">[</span><span class="s1">'norm_options'</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">asList</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">opts</span> <span class="o">==</span> <span class="p">[]:</span> <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">options</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'+framewise'</span><span class="p">,</span> <span class="s1">'-framewise'</span><span class="p">,</span> <span class="s1">'+axiswise'</span><span class="p">,</span> <span class="s1">'-axiswise'</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">normopt</span> <span class="ow">in</span> <span class="n">options</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">opts</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">normopt</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">SyntaxError</span><span class="p">(</span><span class="s2">"Normalization specification must not"</span>
+                                  <span class="s2">" contain repeated </span><span class="si">%r</span><span class="s2">"</span> <span class="o">%</span> <span class="n">normopt</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">opt</span> <span class="ow">in</span> <span class="n">options</span> <span class="k">for</span> <span class="n">opt</span> <span class="ow">in</span> <span class="n">opts</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">SyntaxError</span><span class="p">(</span><span class="s2">"Normalization option not one of </span><span class="si">%s</span><span class="s2">"</span>
+                              <span class="o">%</span> <span class="s2">", "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">options</span><span class="p">))</span>
+        <span class="n">excluded</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">'+framewise'</span><span class="p">,</span> <span class="s1">'-framewise'</span><span class="p">),</span> <span class="p">(</span><span class="s1">'+axiswise'</span><span class="p">,</span> <span class="s1">'-axiswise'</span><span class="p">)]</span>
+        <span class="k">for</span> <span class="n">pair</span> <span class="ow">in</span> <span class="n">excluded</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">exclude</span> <span class="ow">in</span> <span class="n">opts</span> <span class="k">for</span> <span class="n">exclude</span> <span class="ow">in</span> <span class="n">pair</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">SyntaxError</span><span class="p">(</span><span class="s2">"Normalization specification cannot"</span>
+                                  <span class="s2">" contain both </span><span class="si">%s</span><span class="s2"> and </span><span class="si">%s</span><span class="s2">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">pair</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+
+        <span class="c1"># If unspecified, default is -axiswise and -framewise</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">opts</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">opts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">'framewise'</span><span class="p">):</span>
+            <span class="n">axiswise</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">framewise</span> <span class="o">=</span> <span class="kc">True</span> <span class="k">if</span> <span class="s1">'+framewise'</span> <span class="ow">in</span> <span class="n">opts</span> <span class="k">else</span> <span class="kc">False</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">opts</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">opts</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">'axiswise'</span><span class="p">):</span>
+            <span class="n">framewise</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">axiswise</span> <span class="o">=</span> <span class="kc">True</span> <span class="k">if</span> <span class="s1">'+axiswise'</span> <span class="ow">in</span> <span class="n">opts</span> <span class="k">else</span> <span class="kc">False</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">axiswise</span> <span class="o">=</span> <span class="kc">True</span> <span class="k">if</span> <span class="s1">'+axiswise'</span> <span class="ow">in</span> <span class="n">opts</span> <span class="k">else</span> <span class="kc">False</span>
+            <span class="n">framewise</span> <span class="o">=</span> <span class="kc">True</span> <span class="k">if</span> <span class="s1">'+framewise'</span> <span class="ow">in</span> <span class="n">opts</span> <span class="k">else</span> <span class="kc">False</span>
+
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">axiswise</span><span class="o">=</span><span class="n">axiswise</span><span class="p">,</span>
+                    <span class="n">framewise</span><span class="o">=</span><span class="n">framewise</span><span class="p">)</span></div>
+
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_group_paths_without_options</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">line_parse_result</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Given a parsed options specification as a list of groups, combine</span>
+<span class="sd">        groups without options with the first subsequent group which has</span>
+<span class="sd">        options.</span>
+<span class="sd">        A line of the form</span>
+<span class="sd">            'A B C [opts] D E [opts_2]'</span>
+<span class="sd">        results in</span>
+<span class="sd">            [({A, B, C}, [opts]), ({D, E}, [opts_2])]</span>
+<span class="sd">        """</span>
+        <span class="n">active_pathspecs</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">line_parse_result</span><span class="p">:</span>
+            <span class="n">active_pathspecs</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">group</span><span class="p">[</span><span class="s1">'pathspec'</span><span class="p">])</span>
+
+            <span class="n">has_options</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="s1">'norm_options'</span> <span class="ow">in</span> <span class="n">group</span> <span class="ow">or</span>
+                <span class="s1">'plot_options'</span> <span class="ow">in</span> <span class="n">group</span> <span class="ow">or</span>
+                <span class="s1">'style_options'</span> <span class="ow">in</span> <span class="n">group</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">has_options</span><span class="p">:</span>
+                <span class="k">yield</span> <span class="n">active_pathspecs</span><span class="p">,</span> <span class="n">group</span>
+                <span class="n">active_pathspecs</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">active_pathspecs</span><span class="p">:</span>
+            <span class="k">yield</span> <span class="n">active_pathspecs</span><span class="p">,</span> <span class="p">{}</span>
+
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_merge_options</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">old_opts</span><span class="p">,</span> <span class="n">new_opts</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Update the old_opts option dictionary with the options defined in</span>
+<span class="sd">        new_opts. Instead of a shallow update as would be performed by calling</span>
+<span class="sd">        old_opts.update(new_opts), this updates the dictionaries of all option</span>
+<span class="sd">        types separately.</span>
+
+<span class="sd">        Given two dictionaries</span>
+<span class="sd">            old_opts = {'a': {'x': 'old', 'y': 'old'}}</span>
+<span class="sd">        and</span>
+<span class="sd">            new_opts = {'a': {'y': 'new', 'z': 'new'}, 'b': {'k': 'new'}}</span>
+<span class="sd">        this returns a dictionary</span>
+<span class="sd">            {'a': {'x': 'old', 'y': 'new', 'z': 'new'}, 'b': {'k': 'new'}}</span>
+<span class="sd">        """</span>
+        <span class="n">merged</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">old_opts</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">option_type</span><span class="p">,</span> <span class="n">options</span> <span class="ow">in</span> <span class="n">new_opts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">option_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">merged</span><span class="p">:</span>
+                <span class="n">merged</span><span class="p">[</span><span class="n">option_type</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+            <span class="n">merged</span><span class="p">[</span><span class="n">option_type</span><span class="p">]</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">options</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">merged</span>
+
+<div class="viewcode-block" id="OptsSpec.apply_deprecations"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.util.html#holoviews.util.parser.OptsSpec.apply_deprecations">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">apply_deprecations</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+        <span class="s2">"Convert any potentially deprecated paths and issue appropriate warnings"</span>
+        <span class="n">split</span> <span class="o">=</span> <span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'.'</span><span class="p">)</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="s1">'Element </span><span class="si">{old}</span><span class="s1"> deprecated. Use </span><span class="si">{new}</span><span class="s1"> instead.'</span>
+        <span class="k">for</span> <span class="n">old</span><span class="p">,</span> <span class="n">new</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">deprecations</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">split</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">old</span><span class="p">:</span>
+                <span class="n">parsewarning</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">old</span><span class="o">=</span><span class="n">old</span><span class="p">,</span> <span class="n">new</span><span class="o">=</span><span class="n">new</span><span class="p">))</span>
+                <span class="k">return</span> <span class="s1">'.'</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">new</span><span class="p">]</span> <span class="o">+</span> <span class="n">split</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+        <span class="k">return</span> <span class="n">path</span></div>
+
+
+<div class="viewcode-block" id="OptsSpec.parse"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.util.html#holoviews.util.parser.OptsSpec.parse">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">ns</span><span class="o">=</span><span class="p">{}):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Parse an options specification, returning a dictionary with</span>
+<span class="sd">        path keys and {'plot':&lt;options&gt;, 'style':&lt;options&gt;} values.</span>
+<span class="sd">        """</span>
+        <span class="n">parses</span>  <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">opts_spec</span><span class="o">.</span><span class="n">scanString</span><span class="p">(</span><span class="n">line</span><span class="p">)]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parses</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">SyntaxError</span><span class="p">(</span><span class="s2">"Invalid specification syntax."</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">e</span> <span class="o">=</span> <span class="n">parses</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">processed</span> <span class="o">=</span> <span class="n">line</span><span class="p">[:</span><span class="n">e</span><span class="p">]</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">processed</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">!=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()):</span>
+                <span class="k">raise</span> <span class="ne">SyntaxError</span><span class="p">(</span><span class="s2">"Failed to parse remainder of string: </span><span class="si">%r</span><span class="s2">"</span> <span class="o">%</span> <span class="n">line</span><span class="p">[</span><span class="n">e</span><span class="p">:])</span>
+
+        <span class="n">grouped_paths</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_group_paths_without_options</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">opts_spec</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="n">line</span><span class="p">))</span>
+        <span class="n">parse</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">pathspecs</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">grouped_paths</span><span class="p">:</span>
+            <span class="n">options</span> <span class="o">=</span> <span class="p">{}</span>
+
+            <span class="n">normalization</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">process_normalization</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">normalization</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">options</span><span class="p">[</span><span class="s1">'norm'</span><span class="p">]</span> <span class="o">=</span> <span class="n">normalization</span>
+
+            <span class="k">if</span> <span class="s1">'plot_options'</span> <span class="ow">in</span> <span class="n">group</span><span class="p">:</span>
+                <span class="n">plotopts</span> <span class="o">=</span>  <span class="n">group</span><span class="p">[</span><span class="s1">'plot_options'</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">opts</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">todict</span><span class="p">(</span><span class="n">plotopts</span><span class="p">,</span> <span class="s1">'brackets'</span><span class="p">,</span> <span class="n">ns</span><span class="o">=</span><span class="n">ns</span><span class="p">)</span>
+                <span class="n">options</span><span class="p">[</span><span class="s1">'plot'</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">aliases</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">k</span><span class="p">):</span><span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">opts</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+
+            <span class="k">if</span> <span class="s1">'style_options'</span> <span class="ow">in</span> <span class="n">group</span><span class="p">:</span>
+                <span class="n">styleopts</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="s1">'style_options'</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">opts</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">todict</span><span class="p">(</span><span class="n">styleopts</span><span class="p">,</span> <span class="s1">'parens'</span><span class="p">,</span> <span class="n">ns</span><span class="o">=</span><span class="n">ns</span><span class="p">)</span>
+                <span class="n">options</span><span class="p">[</span><span class="s1">'style'</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="bp">cls</span><span class="o">.</span><span class="n">aliases</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">k</span><span class="p">):</span><span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">opts</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+
+            <span class="k">for</span> <span class="n">pathspec</span> <span class="ow">in</span> <span class="n">pathspecs</span><span class="p">:</span>
+                <span class="n">parse</span><span class="p">[</span><span class="n">pathspec</span><span class="p">]</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_merge_options</span><span class="p">(</span><span class="n">parse</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">pathspec</span><span class="p">,</span> <span class="p">{}),</span> <span class="n">options</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">apply_deprecations</span><span class="p">(</span><span class="n">path</span><span class="p">):</span> <span class="p">{</span>
+                <span class="n">option_type</span><span class="p">:</span> <span class="n">Options</span><span class="p">(</span><span class="o">**</span><span class="n">option_pairs</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">option_type</span><span class="p">,</span> <span class="n">option_pairs</span> <span class="ow">in</span> <span class="n">options</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+            <span class="p">}</span>
+            <span class="k">for</span> <span class="n">path</span><span class="p">,</span> <span class="n">options</span> <span class="ow">in</span> <span class="n">parse</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="p">}</span></div></div>
+
+
+
+<div class="viewcode-block" id="CompositorSpec"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.util.html#holoviews.util.parser.CompositorSpec">[docs]</a><span class="k">class</span> <span class="nc">CompositorSpec</span><span class="p">(</span><span class="n">Parser</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    The syntax for defining a set of compositor is as follows:</span>
+
+<span class="sd">    [ mode op(spec) [settings] value ]+</span>
+
+<span class="sd">    The components are:</span>
+
+<span class="sd">    mode      : Operation mode, either 'data' or 'display'.</span>
+<span class="sd">    group     : Value identifier with capitalized initial letter.</span>
+<span class="sd">    op        : The name of the operation to apply.</span>
+<span class="sd">    spec      : Overlay specification of form (A * B) where A and B are</span>
+<span class="sd">                 dotted path specifications.</span>
+<span class="sd">    settings  : Optional list of keyword arguments to be used as</span>
+<span class="sd">                parameters to the operation (in square brackets).</span>
+<span class="sd">    """</span>
+
+    <span class="n">mode</span> <span class="o">=</span> <span class="n">pp</span><span class="o">.</span><span class="n">Word</span><span class="p">(</span><span class="n">pp</span><span class="o">.</span><span class="n">alphas</span><span class="o">+</span><span class="n">pp</span><span class="o">.</span><span class="n">nums</span><span class="o">+</span><span class="s1">'_'</span><span class="p">)</span><span class="o">.</span><span class="n">setResultsName</span><span class="p">(</span><span class="s2">"mode"</span><span class="p">)</span>
+
+    <span class="n">op</span> <span class="o">=</span> <span class="n">pp</span><span class="o">.</span><span class="n">Word</span><span class="p">(</span><span class="n">pp</span><span class="o">.</span><span class="n">alphas</span><span class="o">+</span><span class="n">pp</span><span class="o">.</span><span class="n">nums</span><span class="o">+</span><span class="s1">'_'</span><span class="p">)</span><span class="o">.</span><span class="n">setResultsName</span><span class="p">(</span><span class="s2">"op"</span><span class="p">)</span>
+
+    <span class="n">overlay_spec</span> <span class="o">=</span> <span class="n">pp</span><span class="o">.</span><span class="n">nestedExpr</span><span class="p">(</span><span class="n">opener</span><span class="o">=</span><span class="s1">'('</span><span class="p">,</span>
+                                 <span class="n">closer</span><span class="o">=</span><span class="s1">')'</span><span class="p">,</span>
+                                 <span class="n">ignoreExpr</span><span class="o">=</span><span class="kc">None</span>
+                             <span class="p">)</span><span class="o">.</span><span class="n">setResultsName</span><span class="p">(</span><span class="s2">"spec"</span><span class="p">)</span>
+
+    <span class="n">value</span> <span class="o">=</span> <span class="n">pp</span><span class="o">.</span><span class="n">Word</span><span class="p">(</span><span class="n">pp</span><span class="o">.</span><span class="n">alphas</span><span class="o">+</span><span class="n">pp</span><span class="o">.</span><span class="n">nums</span><span class="o">+</span><span class="s1">'_'</span><span class="p">)</span><span class="o">.</span><span class="n">setResultsName</span><span class="p">(</span><span class="s2">"value"</span><span class="p">)</span>
+
+    <span class="n">op_settings</span> <span class="o">=</span> <span class="n">pp</span><span class="o">.</span><span class="n">nestedExpr</span><span class="p">(</span><span class="n">opener</span><span class="o">=</span><span class="s1">'['</span><span class="p">,</span>
+                                <span class="n">closer</span><span class="o">=</span><span class="s1">']'</span><span class="p">,</span>
+                                <span class="n">ignoreExpr</span><span class="o">=</span><span class="kc">None</span>
+                            <span class="p">)</span><span class="o">.</span><span class="n">setResultsName</span><span class="p">(</span><span class="s2">"op_settings"</span><span class="p">)</span>
+
+    <span class="n">compositor_spec</span> <span class="o">=</span> <span class="n">pp</span><span class="o">.</span><span class="n">OneOrMore</span><span class="p">(</span><span class="n">pp</span><span class="o">.</span><span class="n">Group</span><span class="p">(</span><span class="n">mode</span> <span class="o">+</span> <span class="n">op</span> <span class="o">+</span> <span class="n">overlay_spec</span> <span class="o">+</span> <span class="n">value</span>
+                                            <span class="o">+</span> <span class="n">pp</span><span class="o">.</span><span class="n">Optional</span><span class="p">(</span><span class="n">op_settings</span><span class="p">)))</span>
+
+
+<div class="viewcode-block" id="CompositorSpec.parse"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.util.html#holoviews.util.parser.CompositorSpec.parse">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">ns</span><span class="o">=</span><span class="p">{}):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Parse compositor specifications, returning a list Compositors</span>
+<span class="sd">        """</span>
+        <span class="n">definitions</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">parses</span>  <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">compositor_spec</span><span class="o">.</span><span class="n">scanString</span><span class="p">(</span><span class="n">line</span><span class="p">)]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">parses</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">SyntaxError</span><span class="p">(</span><span class="s2">"Invalid specification syntax."</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">e</span> <span class="o">=</span> <span class="n">parses</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">processed</span> <span class="o">=</span> <span class="n">line</span><span class="p">[:</span><span class="n">e</span><span class="p">]</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">processed</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">!=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()):</span>
+                <span class="k">raise</span> <span class="ne">SyntaxError</span><span class="p">(</span><span class="s2">"Failed to parse remainder of string: </span><span class="si">%r</span><span class="s2">"</span> <span class="o">%</span> <span class="n">line</span><span class="p">[</span><span class="n">e</span><span class="p">:])</span>
+
+        <span class="n">opmap</span> <span class="o">=</span> <span class="p">{</span><span class="n">op</span><span class="o">.</span><span class="vm">__name__</span><span class="p">:</span><span class="n">op</span> <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">Compositor</span><span class="o">.</span><span class="n">operations</span><span class="p">}</span>
+        <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="bp">cls</span><span class="o">.</span><span class="n">compositor_spec</span><span class="o">.</span><span class="n">parseString</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+
+            <span class="k">if</span> <span class="p">(</span><span class="s1">'mode'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">group</span><span class="p">)</span> <span class="ow">or</span> <span class="n">group</span><span class="p">[</span><span class="s1">'mode'</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'data'</span><span class="p">,</span> <span class="s1">'display'</span><span class="p">]:</span>
+                <span class="k">raise</span> <span class="ne">SyntaxError</span><span class="p">(</span><span class="s2">"Either data or display mode must be specified."</span><span class="p">)</span>
+            <span class="n">mode</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="s1">'mode'</span><span class="p">]</span>
+
+            <span class="n">kwargs</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">operation</span> <span class="o">=</span> <span class="n">opmap</span><span class="p">[</span><span class="n">group</span><span class="p">[</span><span class="s1">'op'</span><span class="p">]]</span>
+            <span class="n">spec</span> <span class="o">=</span> <span class="s1">' '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">group</span><span class="p">[</span><span class="s1">'spec'</span><span class="p">]</span><span class="o">.</span><span class="n">asList</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+
+            <span class="k">if</span>  <span class="n">group</span><span class="p">[</span><span class="s1">'op'</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">opmap</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">SyntaxError</span><span class="p">(</span><span class="s2">"Operation </span><span class="si">%s</span><span class="s2"> not available for use with compositors."</span>
+                                  <span class="o">%</span> <span class="n">group</span><span class="p">[</span><span class="s1">'op'</span><span class="p">])</span>
+            <span class="k">if</span>  <span class="s1">'op_settings'</span> <span class="ow">in</span> <span class="n">group</span><span class="p">:</span>
+                <span class="n">kwargs</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">todict</span><span class="p">(</span><span class="n">group</span><span class="p">[</span><span class="s1">'op_settings'</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="s1">'brackets'</span><span class="p">,</span> <span class="n">ns</span><span class="o">=</span><span class="n">ns</span><span class="p">)</span>
+
+            <span class="n">definition</span> <span class="o">=</span> <span class="n">Compositor</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">spec</span><span class="p">),</span> <span class="n">operation</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">group</span><span class="p">[</span><span class="s1">'value'</span><span class="p">]),</span> <span class="n">mode</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="n">definitions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">definition</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">definitions</span></div></div>
+</pre>
+    </div>
+   </div>
+  </div>
+  <!-- END MAIN BODY OF DOCS ––––––––––––– -->
+  <footer class="footer">
+   <div class="footer-links">
+    <ul>
+     <li>
+      <span class="footer-title">
+       Links
+      </span>
+     </li>
+     <li>
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li>
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li>
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li>
+      <a href="/Reference_Manual/index.html">
+       API Docs
+      </a>
+     </li>
+     <li>
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li>
+      <a href="/about.html">
+       About
+      </a>
+     </li>
+    </ul>
+    <ul>
+     <li>
+      <span class="footer-title">
+       Join Us
+      </span>
+     </li>
+     <li>
+      <a href="//gitter.im/ioam/holoviews.html">
+       Gitter
+      </a>
+     </li>
+     <li>
+      <a href="//twitter.com/holoviews.html">
+       Twitter
+      </a>
+     </li>
+     <li>
+      <a href="//github.com/ioam/holoviews.html">
+       Github
+      </a>
+     </li>
+    </ul>
+    <ul class="copyright">
+     <li>
+      2017 IOAM: Jean-Luc R. Stevens, Philipp Rudiger, and James A. Bednar
+     </li>
+    </ul>
+   </div>
+  </footer>
+  <!-- Google Analytics -->
+  <script>
+   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-61554933-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <!-- MathJax Config -->
+  <script type="text/x-mathjax-config">
+   MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+  </script>
+  <!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+ </body>
+</html>

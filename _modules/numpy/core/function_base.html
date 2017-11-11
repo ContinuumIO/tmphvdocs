@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8"/>
+  <title>
+   numpy.core.function_base — HoloViews
+  </title>
+  <meta content="HoloViews library, documentation site." name="description"/>
+  <meta content="HoloViews contributors" name="author"/>
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js">
+  </script>
+  <script>
+   WebFont.load({
+      google: {
+        families: ['Source Sans Pro']
+      }
+    });
+  </script>
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../../../_static/main.css" rel="stylesheet"/>
+  <link href="../../../_static/custom.css" rel="stylesheet"/>
+  <!-- Scripts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
+  </script>
+  <script async="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+  </script>
+  <script src="../../../_static/js/main.js">
+  </script>
+  <script src="../../../_static/custom.js">
+  </script>
+  <script src="../../../_static/require.js">
+  </script>
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../../../_static/images/favicon.ico" rel="icon" type="image/png"/>
+  <!-- Canonical
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="http://holoviews.org/_modules/numpy/core/function_base.html" rel="canonical"/>
+ </head>
+ <body class="">
+  <header class="navigation">
+   <div class="wrapper">
+    <a class="logo" href="//">
+     <img alt="Logo" src="../../../_static/images/logo.png"/>
+    </a>
+    <a class="navigation-menu logo-text" href="//">
+     HoloViews
+    </a>
+    <a class="navigation-menu-button" href="javascript:void(0)" id="js-mobile-menu">
+     Menu
+    </a>
+    <nav>
+     <ul class="navigation-menu show" id="js-navigation-menu">
+      <li class="nav-link">
+       <a href="/about.html">
+        About
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="/gallery/index.html">
+        Gallery
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="//github.com/ioam/holoviews.html">
+        Github
+       </a>
+      </li>
+     </ul>
+    </nav>
+   </div>
+  </header>
+  <div class="second-nav">
+   <nav>
+    <ul class="navigation-menu show">
+     <li class="nav-link doc-head">
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+    </ul>
+   </nav>
+   <div class="navigation-tools">
+    <div class="search-bar">
+     <form action="../../../search.html" method="get" role="search">
+      <input name="q" placeholder="Search" type="search"/>
+      <button type="submit">
+       <img alt="Search Icon" src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/search-icon-black.png"/>
+      </button>
+     </form>
+    </div>
+   </div>
+  </div>
+  <!-- MAIN BODY OF DOCS –––––––––––––––––– -->
+  <div class="docs section">
+   <div class="toc">
+    <ul>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference external" href="http://github.com/ioam/holoviews">
+       Github source
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../about.html">
+       About
+      </a>
+     </li>
+    </ul>
+   </div>
+   <div class="content">
+    <h1>
+     Source code for numpy.core.function_base
+    </h1>
+    <div class="highlight">
+     <pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">division</span><span class="p">,</span> <span class="n">absolute_import</span><span class="p">,</span> <span class="n">print_function</span>
+
+<span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'logspace'</span><span class="p">,</span> <span class="s1">'linspace'</span><span class="p">]</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">numeric</span> <span class="k">as</span> <span class="n">_nx</span>
+<span class="kn">from</span> <span class="nn">.numeric</span> <span class="k">import</span> <span class="n">result_type</span><span class="p">,</span> <span class="n">NaN</span><span class="p">,</span> <span class="n">shares_memory</span><span class="p">,</span> <span class="n">MAY_SHARE_BOUNDS</span><span class="p">,</span> <span class="n">TooHardError</span>
+
+
+<span class="k">def</span> <span class="nf">linspace</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">retstep</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Return evenly spaced numbers over a specified interval.</span>
+
+<span class="sd">    Returns `num` evenly spaced samples, calculated over the</span>
+<span class="sd">    interval [`start`, `stop`].</span>
+
+<span class="sd">    The endpoint of the interval can optionally be excluded.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    start : scalar</span>
+<span class="sd">        The starting value of the sequence.</span>
+<span class="sd">    stop : scalar</span>
+<span class="sd">        The end value of the sequence, unless `endpoint` is set to False.</span>
+<span class="sd">        In that case, the sequence consists of all but the last of ``num + 1``</span>
+<span class="sd">        evenly spaced samples, so that `stop` is excluded.  Note that the step</span>
+<span class="sd">        size changes when `endpoint` is False.</span>
+<span class="sd">    num : int, optional</span>
+<span class="sd">        Number of samples to generate. Default is 50. Must be non-negative.</span>
+<span class="sd">    endpoint : bool, optional</span>
+<span class="sd">        If True, `stop` is the last sample. Otherwise, it is not included.</span>
+<span class="sd">        Default is True.</span>
+<span class="sd">    retstep : bool, optional</span>
+<span class="sd">        If True, return (`samples`, `step`), where `step` is the spacing</span>
+<span class="sd">        between samples.</span>
+<span class="sd">    dtype : dtype, optional</span>
+<span class="sd">        The type of the output array.  If `dtype` is not given, infer the data</span>
+<span class="sd">        type from the other input arguments.</span>
+
+<span class="sd">        .. versionadded:: 1.9.0</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    samples : ndarray</span>
+<span class="sd">        There are `num` equally spaced samples in the closed interval</span>
+<span class="sd">        ``[start, stop]`` or the half-open interval ``[start, stop)``</span>
+<span class="sd">        (depending on whether `endpoint` is True or False).</span>
+<span class="sd">    step : float</span>
+<span class="sd">        Only returned if `retstep` is True</span>
+
+<span class="sd">        Size of spacing between samples.</span>
+
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    arange : Similar to `linspace`, but uses a step size (instead of the</span>
+<span class="sd">             number of samples).</span>
+<span class="sd">    logspace : Samples uniformly distributed in log space.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; np.linspace(2.0, 3.0, num=5)</span>
+<span class="sd">        array([ 2.  ,  2.25,  2.5 ,  2.75,  3.  ])</span>
+<span class="sd">    &gt;&gt;&gt; np.linspace(2.0, 3.0, num=5, endpoint=False)</span>
+<span class="sd">        array([ 2. ,  2.2,  2.4,  2.6,  2.8])</span>
+<span class="sd">    &gt;&gt;&gt; np.linspace(2.0, 3.0, num=5, retstep=True)</span>
+<span class="sd">        (array([ 2.  ,  2.25,  2.5 ,  2.75,  3.  ]), 0.25)</span>
+
+<span class="sd">    Graphical illustration:</span>
+
+<span class="sd">    &gt;&gt;&gt; import matplotlib.pyplot as plt</span>
+<span class="sd">    &gt;&gt;&gt; N = 8</span>
+<span class="sd">    &gt;&gt;&gt; y = np.zeros(N)</span>
+<span class="sd">    &gt;&gt;&gt; x1 = np.linspace(0, 10, N, endpoint=True)</span>
+<span class="sd">    &gt;&gt;&gt; x2 = np.linspace(0, 10, N, endpoint=False)</span>
+<span class="sd">    &gt;&gt;&gt; plt.plot(x1, y, 'o')</span>
+<span class="sd">    [&lt;matplotlib.lines.Line2D object at 0x...&gt;]</span>
+<span class="sd">    &gt;&gt;&gt; plt.plot(x2, y + 0.5, 'o')</span>
+<span class="sd">    [&lt;matplotlib.lines.Line2D object at 0x...&gt;]</span>
+<span class="sd">    &gt;&gt;&gt; plt.ylim([-0.5, 1])</span>
+<span class="sd">    (-0.5, 1)</span>
+<span class="sd">    &gt;&gt;&gt; plt.show()</span>
+
+<span class="sd">    """</span>
+    <span class="n">num</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">num</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">num</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Number of samples, </span><span class="si">%s</span><span class="s2">, must be non-negative."</span> <span class="o">%</span> <span class="n">num</span><span class="p">)</span>
+    <span class="n">div</span> <span class="o">=</span> <span class="p">(</span><span class="n">num</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">endpoint</span> <span class="k">else</span> <span class="n">num</span>
+
+    <span class="c1"># Convert float/complex array scalars to float, gh-3504</span>
+    <span class="n">start</span> <span class="o">=</span> <span class="n">start</span> <span class="o">*</span> <span class="mf">1.</span>
+    <span class="n">stop</span> <span class="o">=</span> <span class="n">stop</span> <span class="o">*</span> <span class="mf">1.</span>
+
+    <span class="n">dt</span> <span class="o">=</span> <span class="n">result_type</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">num</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">dtype</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">dtype</span> <span class="o">=</span> <span class="n">dt</span>
+
+    <span class="n">y</span> <span class="o">=</span> <span class="n">_nx</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">num</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">dt</span><span class="p">)</span>
+
+    <span class="n">delta</span> <span class="o">=</span> <span class="n">stop</span> <span class="o">-</span> <span class="n">start</span>
+    <span class="k">if</span> <span class="n">num</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">step</span> <span class="o">=</span> <span class="n">delta</span> <span class="o">/</span> <span class="n">div</span>
+        <span class="k">if</span> <span class="n">step</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># Special handling for denormal numbers, gh-5437</span>
+            <span class="n">y</span> <span class="o">/=</span> <span class="n">div</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">*</span> <span class="n">delta</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># One might be tempted to use faster, in-place multiplication here,</span>
+            <span class="c1"># but this prevents step from overriding what class is produced,</span>
+            <span class="c1"># and thus prevents, e.g., use of Quantities; see gh-7142.</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">*</span> <span class="n">step</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># 0 and 1 item long sequences have an undefined step</span>
+        <span class="n">step</span> <span class="o">=</span> <span class="n">NaN</span>
+        <span class="c1"># Multiply with delta to allow possible override of output class.</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">*</span> <span class="n">delta</span>
+
+    <span class="n">y</span> <span class="o">+=</span> <span class="n">start</span>
+
+    <span class="k">if</span> <span class="n">endpoint</span> <span class="ow">and</span> <span class="n">num</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">y</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">stop</span>
+
+    <span class="k">if</span> <span class="n">retstep</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">y</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span> <span class="n">step</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">y</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="p">,</span> <span class="n">copy</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">logspace</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Return numbers spaced evenly on a log scale.</span>
+
+<span class="sd">    In linear space, the sequence starts at ``base ** start``</span>
+<span class="sd">    (`base` to the power of `start`) and ends with ``base ** stop``</span>
+<span class="sd">    (see `endpoint` below).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    start : float</span>
+<span class="sd">        ``base ** start`` is the starting value of the sequence.</span>
+<span class="sd">    stop : float</span>
+<span class="sd">        ``base ** stop`` is the final value of the sequence, unless `endpoint`</span>
+<span class="sd">        is False.  In that case, ``num + 1`` values are spaced over the</span>
+<span class="sd">        interval in log-space, of which all but the last (a sequence of</span>
+<span class="sd">        length ``num``) are returned.</span>
+<span class="sd">    num : integer, optional</span>
+<span class="sd">        Number of samples to generate.  Default is 50.</span>
+<span class="sd">    endpoint : boolean, optional</span>
+<span class="sd">        If true, `stop` is the last sample. Otherwise, it is not included.</span>
+<span class="sd">        Default is True.</span>
+<span class="sd">    base : float, optional</span>
+<span class="sd">        The base of the log space. The step size between the elements in</span>
+<span class="sd">        ``ln(samples) / ln(base)`` (or ``log_base(samples)``) is uniform.</span>
+<span class="sd">        Default is 10.0.</span>
+<span class="sd">    dtype : dtype</span>
+<span class="sd">        The type of the output array.  If `dtype` is not given, infer the data</span>
+<span class="sd">        type from the other input arguments.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    samples : ndarray</span>
+<span class="sd">        `num` samples, equally spaced on a log scale.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    arange : Similar to linspace, with the step size specified instead of the</span>
+<span class="sd">             number of samples. Note that, when used with a float endpoint, the</span>
+<span class="sd">             endpoint may or may not be included.</span>
+<span class="sd">    linspace : Similar to logspace, but with the samples uniformly distributed</span>
+<span class="sd">               in linear space, instead of log space.</span>
+
+<span class="sd">    Notes</span>
+<span class="sd">    -----</span>
+<span class="sd">    Logspace is equivalent to the code</span>
+
+<span class="sd">    &gt;&gt;&gt; y = np.linspace(start, stop, num=num, endpoint=endpoint)</span>
+<span class="sd">    ... # doctest: +SKIP</span>
+<span class="sd">    &gt;&gt;&gt; power(base, y).astype(dtype)</span>
+<span class="sd">    ... # doctest: +SKIP</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; np.logspace(2.0, 3.0, num=4)</span>
+<span class="sd">        array([  100.        ,   215.443469  ,   464.15888336,  1000.        ])</span>
+<span class="sd">    &gt;&gt;&gt; np.logspace(2.0, 3.0, num=4, endpoint=False)</span>
+<span class="sd">        array([ 100.        ,  177.827941  ,  316.22776602,  562.34132519])</span>
+<span class="sd">    &gt;&gt;&gt; np.logspace(2.0, 3.0, num=4, base=2.0)</span>
+<span class="sd">        array([ 4.        ,  5.0396842 ,  6.34960421,  8.        ])</span>
+
+<span class="sd">    Graphical illustration:</span>
+
+<span class="sd">    &gt;&gt;&gt; import matplotlib.pyplot as plt</span>
+<span class="sd">    &gt;&gt;&gt; N = 10</span>
+<span class="sd">    &gt;&gt;&gt; x1 = np.logspace(0.1, 1, N, endpoint=True)</span>
+<span class="sd">    &gt;&gt;&gt; x2 = np.logspace(0.1, 1, N, endpoint=False)</span>
+<span class="sd">    &gt;&gt;&gt; y = np.zeros(N)</span>
+<span class="sd">    &gt;&gt;&gt; plt.plot(x1, y, 'o')</span>
+<span class="sd">    [&lt;matplotlib.lines.Line2D object at 0x...&gt;]</span>
+<span class="sd">    &gt;&gt;&gt; plt.plot(x2, y + 0.5, 'o')</span>
+<span class="sd">    [&lt;matplotlib.lines.Line2D object at 0x...&gt;]</span>
+<span class="sd">    &gt;&gt;&gt; plt.ylim([-0.5, 1])</span>
+<span class="sd">    (-0.5, 1)</span>
+<span class="sd">    &gt;&gt;&gt; plt.show()</span>
+
+<span class="sd">    """</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">linspace</span><span class="p">(</span><span class="n">start</span><span class="p">,</span> <span class="n">stop</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="n">num</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="n">endpoint</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">dtype</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">_nx</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_nx</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">base</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">dtype</span><span class="p">)</span>
+</pre>
+    </div>
+   </div>
+  </div>
+  <!-- END MAIN BODY OF DOCS ––––––––––––– -->
+  <footer class="footer">
+   <div class="footer-links">
+    <ul>
+     <li>
+      <span class="footer-title">
+       Links
+      </span>
+     </li>
+     <li>
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li>
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li>
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li>
+      <a href="/Reference_Manual/index.html">
+       API Docs
+      </a>
+     </li>
+     <li>
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li>
+      <a href="/about.html">
+       About
+      </a>
+     </li>
+    </ul>
+    <ul>
+     <li>
+      <span class="footer-title">
+       Join Us
+      </span>
+     </li>
+     <li>
+      <a href="//gitter.im/ioam/holoviews.html">
+       Gitter
+      </a>
+     </li>
+     <li>
+      <a href="//twitter.com/holoviews.html">
+       Twitter
+      </a>
+     </li>
+     <li>
+      <a href="//github.com/ioam/holoviews.html">
+       Github
+      </a>
+     </li>
+    </ul>
+    <ul class="copyright">
+     <li>
+      2017 IOAM: Jean-Luc R. Stevens, Philipp Rudiger, and James A. Bednar
+     </li>
+    </ul>
+   </div>
+  </footer>
+  <!-- Google Analytics -->
+  <script>
+   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-61554933-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <!-- MathJax Config -->
+  <script type="text/x-mathjax-config">
+   MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+  </script>
+  <!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+ </body>
+</html>

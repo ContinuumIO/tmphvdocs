@@ -1,0 +1,1036 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8"/>
+  <title>
+   Autompg histogram — HoloViews
+  </title>
+  <meta content="HoloViews library, documentation site." name="description"/>
+  <meta content="HoloViews contributors" name="author"/>
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js">
+  </script>
+  <script>
+   WebFont.load({
+      google: {
+        families: ['Source Sans Pro']
+      }
+    });
+  </script>
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../../../_static/main.css" rel="stylesheet"/>
+  <link href="../../../_static/custom.css" rel="stylesheet"/>
+  <!-- Scripts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
+  </script>
+  <script async="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+  </script>
+  <script src="../../../_static/js/main.js">
+  </script>
+  <script src="../../../_static/custom.js">
+  </script>
+  <script src="../../../_static/require.js">
+  </script>
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../../../_static/images/favicon.ico" rel="icon" type="image/png"/>
+  <!-- Canonical
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="http://holoviews.org/gallery/notebooks/matplotlib/autompg_histogram.html" rel="canonical"/>
+ </head>
+ <body class="">
+  <header class="navigation">
+   <div class="wrapper">
+    <a class="logo" href="//">
+     <img alt="Logo" src="../../../_static/images/logo.png"/>
+    </a>
+    <a class="navigation-menu logo-text" href="//">
+     HoloViews
+    </a>
+    <a class="navigation-menu-button" href="javascript:void(0)" id="js-mobile-menu">
+     Menu
+    </a>
+    <nav>
+     <ul class="navigation-menu show" id="js-navigation-menu">
+      <li class="nav-link">
+       <a href="/about.html">
+        About
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="/gallery/index.html">
+        Gallery
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="//github.com/ioam/holoviews.html">
+        Github
+       </a>
+      </li>
+     </ul>
+    </nav>
+   </div>
+  </header>
+  <div class="second-nav">
+   <nav>
+    <ul class="navigation-menu show">
+     <li class="nav-link doc-head">
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+    </ul>
+   </nav>
+   <div class="navigation-tools">
+    <div class="search-bar">
+     <form action="../../../search.html" method="get" role="search">
+      <input name="q" placeholder="Search" type="search"/>
+      <button type="submit">
+       <img alt="Search Icon" src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/search-icon-black.png"/>
+      </button>
+     </form>
+    </div>
+   </div>
+  </div>
+  <!-- MAIN BODY OF DOCS –––––––––––––––––– -->
+  <div class="docs section">
+   <div class="toc">
+    <ul>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference external" href="http://github.com/ioam/holoviews">
+       Github source
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../about.html">
+       About
+      </a>
+     </li>
+    </ul>
+   </div>
+   <div class="content">
+    <div class="section" id="autompg-histogram">
+     <span id="matplotlib-gallery-autompg-histogram">
+     </span>
+     <h1>
+      Autompg histogram
+      <a class="headerlink" href="#autompg-histogram" title="Permalink to this headline">
+       ¶
+      </a>
+     </h1>
+     <div class="cell border-box-sizing text_cell rendered">
+      <div class="prompt input_prompt">
+      </div>
+      <div class="inner_cell">
+       <div class="text_cell_render border-box-sizing rendered_html">
+        <p>
+         Most examples work across multiple plotting backends, this example is also available for:
+        </p>
+        <ul>
+         <li>
+          <a href="../bokeh/autompg_histogram.html">
+           Bokeh - autompg_histogram
+          </a>
+         </li>
+        </ul>
+       </div>
+      </div>
+     </div>
+     <div class="cell border-box-sizing code_cell rendered">
+      <div class="input">
+       <div class="prompt input_prompt">
+        In [1]:
+       </div>
+       <div class="inner_cell">
+        <div class="input_area">
+         <div class=" highlight hl-ipython3">
+          <pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">holoviews</span> <span class="k">as</span> <span class="nn">hv</span>
+<span class="n">hv</span><span class="o">.</span><span class="n">extension</span><span class="p">(</span><span class="s1">'matplotlib'</span><span class="p">)</span>
+</pre>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="output_wrapper">
+       <div class="output">
+        <div class="output_area">
+         <div class="prompt">
+         </div>
+         <div class="output_html rendered_html output_subarea ">
+          <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.min.js" type="text/javascript">
+          </script>
+          <script type="text/javascript">
+           function HoloViewsWidget(){
+}
+
+HoloViewsWidget.comms = {};
+HoloViewsWidget.comm_state = {};
+
+HoloViewsWidget.prototype.init_slider = function(init_val){
+  if(this.load_json) {
+    this.from_json()
+  } else {
+    this.update_cache();
+  }
+}
+
+HoloViewsWidget.prototype.populate_cache = function(idx){
+  this.cache[idx].html(this.frames[idx]);
+  if (this.embed) {
+    delete this.frames[idx];
+  }
+}
+
+HoloViewsWidget.prototype.process_error = function(msg){
+
+}
+
+HoloViewsWidget.prototype.from_json = function() {
+  var data_url = this.json_path + this.id + '.json';
+  $.getJSON(data_url, $.proxy(function(json_data) {
+    this.frames = json_data;
+    this.update_cache();
+    this.update(0);
+  }, this));
+}
+
+HoloViewsWidget.prototype.dynamic_update = function(current){
+  if (current === undefined) {
+    return
+  }
+  if(this.dynamic) {
+    current = JSON.stringify(current);
+  }
+  function callback(initialized, msg){
+    /* This callback receives data from Python as a string
+       in order to parse it correctly quotes are sliced off*/
+    if (msg.content.ename != undefined) {
+      this.process_error(msg);
+    }
+    if (msg.msg_type != "execute_result") {
+      console.log("Warning: HoloViews callback returned unexpected data for key: (", current, ") with the following content:", msg.content)
+    } else {
+      if (msg.content.data['text/plain'].includes('Complete')) {
+        if (this.queue.length > 0) {
+          this.time = Date.now();
+          this.dynamic_update(this.queue[this.queue.length-1]);
+          this.queue = [];
+        } else {
+          this.wait = false;
+        }
+        return
+      }
+    }
+  }
+  this.current = current;
+  if ((window.Jupyter !== undefined) && (Jupyter.notebook.kernel != null)) {
+    var kernel = Jupyter.notebook.kernel;
+    callbacks = {iopub: {output: $.proxy(callback, this, this.initialized)}};
+    var cmd = "holoviews.plotting.widgets.NdWidget.widgets['" + this.id + "'].update(" + current + ")";
+    kernel.execute("import holoviews;" + cmd, callbacks, {silent : false});
+  }
+}
+
+HoloViewsWidget.prototype.update_cache = function(force){
+  var frame_len = Object.keys(this.frames).length;
+  for (var i=0; i<frame_len; i++) {
+    if(!this.load_json || this.dynamic)  {
+      frame = Object.keys(this.frames)[i];
+    } else {
+      frame = i;
+    }
+    if(!(frame in this.cache) || force) {
+      if ((frame in this.cache) && force) { this.cache[frame].remove() }
+      this.cache[frame] = $('<div />').appendTo("#"+"_anim_img"+this.id).hide();
+      var cache_id = "_anim_img"+this.id+"_"+frame;
+      this.cache[frame].attr("id", cache_id);
+      this.populate_cache(frame);
+    }
+  }
+}
+
+HoloViewsWidget.prototype.update = function(current){
+  if(current in this.cache) {
+    $.each(this.cache, function(index, value) {
+      value.hide();
+    });
+    this.cache[current].show();
+    this.wait = false;
+  }
+}
+
+HoloViewsWidget.prototype.init_comms = function() {
+  if ((window.Jupyter !== undefined) && (Jupyter.notebook.kernel !== undefined)) {
+    var widget = this;
+    comm_manager = Jupyter.notebook.kernel.comm_manager;
+    comm_manager.register_target(this.id, function (comm) {
+      comm.on_msg(function (msg) { widget.process_msg(msg) });
+    });
+  }
+}
+
+HoloViewsWidget.prototype.process_msg = function(msg) {
+}
+
+function SelectionWidget(frames, id, slider_ids, keyMap, dim_vals, notFound, load_json, mode, cached, json_path, dynamic){
+  this.frames = frames;
+  this.id = id;
+  this.slider_ids = slider_ids;
+  this.keyMap = keyMap
+  this.current_frame = 0;
+  this.current_vals = dim_vals;
+  this.load_json = load_json;
+  this.mode = mode;
+  this.notFound = notFound;
+  this.cached = cached;
+  this.dynamic = dynamic;
+  this.cache = {};
+  this.json_path = json_path;
+  this.init_slider(this.current_vals[0]);
+  this.queue = [];
+  this.wait = false;
+  if (!this.cached || this.dynamic) {
+    this.init_comms()
+  }
+}
+
+SelectionWidget.prototype = new HoloViewsWidget;
+
+
+SelectionWidget.prototype.get_key = function(current_vals) {
+  var key = "(";
+  for (var i=0; i<this.slider_ids.length; i++)
+  {
+    val = this.current_vals[i];
+    if (!(typeof val === 'string')) {
+      if (val % 1 === 0) { val = val.toFixed(1); }
+      else { val = val.toFixed(10); val = val.slice(0, val.length-1);}
+    }
+    key += "'" + val + "'";
+    if(i != this.slider_ids.length-1) { key += ', ';}
+    else if(this.slider_ids.length == 1) { key += ',';}
+  }
+  key += ")";
+  return this.keyMap[key];
+}
+
+SelectionWidget.prototype.set_frame = function(dim_val, dim_idx){
+  this.current_vals[dim_idx] = dim_val;
+  var key = this.current_vals;
+  if (!this.dynamic) {
+    key = this.get_key(key)
+  }
+  if (this.dynamic || !this.cached) {
+    if ((this.time !== undefined) && ((this.wait) && ((this.time + 10000) > Date.now()))) {
+      this.queue.push(key);
+      return
+    }
+    this.queue = [];
+    this.time = Date.now();
+    this.current_frame = key;
+    this.wait = true;
+    this.dynamic_update(key)
+  } else if (key !== undefined) {
+    this.update(key)
+  }
+}
+
+
+/* Define the ScrubberWidget class */
+function ScrubberWidget(frames, num_frames, id, interval, load_json, mode, cached, json_path, dynamic){
+  this.slider_id = "_anim_slider" + id;
+  this.loop_select_id = "_anim_loop_select" + id;
+  this.id = id;
+  this.interval = interval;
+  this.current_frame = 0;
+  this.direction = 0;
+  this.dynamic = dynamic;
+  this.timer = null;
+  this.load_json = load_json;
+  this.mode = mode;
+  this.cached = cached;
+  this.frames = frames;
+  this.cache = {};
+  this.length = num_frames;
+  this.json_path = json_path;
+  document.getElementById(this.slider_id).max = this.length - 1;
+  this.init_slider(0);
+  this.wait = false;
+  this.queue = [];
+  if (!this.cached || this.dynamic) {
+    this.init_comms()
+  }
+}
+
+ScrubberWidget.prototype = new HoloViewsWidget;
+
+ScrubberWidget.prototype.set_frame = function(frame){
+  this.current_frame = frame;
+  widget = document.getElementById(this.slider_id);
+  if (widget === null) {
+    this.pause_animation();
+    return
+  }
+  widget.value = this.current_frame;
+  if(this.cached) {
+    this.update(frame)
+  } else {
+    this.dynamic_update(frame)
+  }
+}
+
+
+ScrubberWidget.prototype.get_loop_state = function(){
+  var button_group = document[this.loop_select_id].state;
+  for (var i = 0; i < button_group.length; i++) {
+    var button = button_group[i];
+    if (button.checked) {
+      return button.value;
+    }
+  }
+  return undefined;
+}
+
+
+ScrubberWidget.prototype.next_frame = function() {
+  this.set_frame(Math.min(this.length - 1, this.current_frame + 1));
+}
+
+ScrubberWidget.prototype.previous_frame = function() {
+  this.set_frame(Math.max(0, this.current_frame - 1));
+}
+
+ScrubberWidget.prototype.first_frame = function() {
+  this.set_frame(0);
+}
+
+ScrubberWidget.prototype.last_frame = function() {
+  this.set_frame(this.length - 1);
+}
+
+ScrubberWidget.prototype.slower = function() {
+  this.interval /= 0.7;
+  if(this.direction > 0){this.play_animation();}
+  else if(this.direction < 0){this.reverse_animation();}
+}
+
+ScrubberWidget.prototype.faster = function() {
+  this.interval *= 0.7;
+  if(this.direction > 0){this.play_animation();}
+  else if(this.direction < 0){this.reverse_animation();}
+}
+
+ScrubberWidget.prototype.anim_step_forward = function() {
+  if(this.current_frame < this.length - 1){
+    this.next_frame();
+  }else{
+    var loop_state = this.get_loop_state();
+    if(loop_state == "loop"){
+      this.first_frame();
+    }else if(loop_state == "reflect"){
+      this.last_frame();
+      this.reverse_animation();
+    }else{
+      this.pause_animation();
+      this.last_frame();
+    }
+  }
+}
+
+ScrubberWidget.prototype.anim_step_reverse = function() {
+  if(this.current_frame > 0){
+    this.previous_frame();
+  } else {
+    var loop_state = this.get_loop_state();
+    if(loop_state == "loop"){
+      this.last_frame();
+    }else if(loop_state == "reflect"){
+      this.first_frame();
+      this.play_animation();
+    }else{
+      this.pause_animation();
+      this.first_frame();
+    }
+  }
+}
+
+ScrubberWidget.prototype.pause_animation = function() {
+  this.direction = 0;
+  if (this.timer){
+    clearInterval(this.timer);
+    this.timer = null;
+  }
+}
+
+ScrubberWidget.prototype.play_animation = function() {
+  this.pause_animation();
+  this.direction = 1;
+  var t = this;
+  if (!this.timer) this.timer = setInterval(function(){t.anim_step_forward();}, this.interval);
+}
+
+ScrubberWidget.prototype.reverse_animation = function() {
+  this.pause_animation();
+  this.direction = -1;
+  var t = this;
+  if (!this.timer) this.timer = setInterval(function(){t.anim_step_reverse();}, this.interval);
+}
+
+function extend(destination, source) {
+  for (var k in source) {
+    if (source.hasOwnProperty(k)) {
+      destination[k] = source[k];
+    }
+  }
+  return destination;
+}
+
+function update_widget(widget, values) {
+  if (widget.hasClass("ui-slider")) {
+    widget.slider('option', {
+      min: 0,
+      max: values.length-1,
+      dim_vals: values,
+      value: 0,
+      dim_labels: values
+	})
+    widget.slider('option', 'slide').call(widget, event, {value: 0})
+  } else {
+    widget.empty();
+    for (var i=0; i<values.length; i++){
+      widget.append($("<option>", {
+        value: i,
+        text: values[i]
+      }))
+    };
+    widget.data('values', values);
+    widget.data('value', 0);
+    widget.trigger("change");
+  };
+}
+
+// Define MPL specific subclasses
+function MPLSelectionWidget() {
+    SelectionWidget.apply(this, arguments);
+}
+
+function MPLScrubberWidget() {
+    ScrubberWidget.apply(this, arguments);
+}
+
+// Let them inherit from the baseclasses
+MPLSelectionWidget.prototype = Object.create(SelectionWidget.prototype);
+MPLScrubberWidget.prototype = Object.create(ScrubberWidget.prototype);
+
+// Define methods to override on widgets
+var MPLMethods = {
+    init_slider : function(init_val){
+        if(this.load_json) {
+            this.from_json()
+        } else {
+            this.update_cache();
+        }
+        this.update(0);
+        if(this.mode == 'nbagg') {
+            this.set_frame(init_val, 0);
+        }
+    },
+    populate_cache : function(idx){
+        var cache_id = "_anim_img"+this.id+"_"+idx;
+        this.cache[idx].html(this.frames[idx]);
+        if (this.embed) {
+            delete this.frames[idx];
+        }
+    },
+    process_msg : function(msg) {
+        if (!(this.mode == 'nbagg')) {
+            var data = msg.content.data;
+            this.frames[this.current] = data;
+            this.update_cache(true);
+            this.update(this.current);
+        }
+    }
+}
+// Extend MPL widgets with backend specific methods
+extend(MPLSelectionWidget.prototype, MPLMethods);
+extend(MPLScrubberWidget.prototype, MPLMethods);
+
+// Define Bokeh specific subclasses
+function BokehSelectionWidget() {
+	SelectionWidget.apply(this, arguments);
+}
+
+function BokehScrubberWidget() {
+	ScrubberWidget.apply(this, arguments);
+}
+
+// Let them inherit from the baseclasses
+BokehSelectionWidget.prototype = Object.create(SelectionWidget.prototype);
+BokehScrubberWidget.prototype = Object.create(ScrubberWidget.prototype);
+
+// Define methods to override on widgets
+var BokehMethods = {
+	update_cache : function(){
+		$.each(this.frames, $.proxy(function(index, frame) {
+			this.frames[index] = JSON.parse(frame);
+		}, this));
+	},
+	update : function(current){
+		if (current === undefined) {
+			var data = undefined;
+		} else {
+			var data = this.frames[current];
+		}
+		if (data !== undefined) {
+			var doc = Bokeh.index[data.root].model.document;
+			doc.apply_json_patch(data.content);
+		}
+	},
+	init_comms : function() {
+	}
+}
+
+// Extend Bokeh widgets with backend specific methods
+extend(BokehSelectionWidget.prototype, BokehMethods);
+extend(BokehScrubberWidget.prototype, BokehMethods);
+          </script>
+          <link href="https://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="stylesheet"/>
+          <style>
+           div.hololayout {
+    display: flex;
+    align-items: center;
+    margin: 0;
+}
+
+div.holoframe {
+	width: 75%;
+}
+
+div.holowell {
+    display: flex;
+    align-items: center;
+    margin: 0;
+}
+
+form.holoform {
+    background-color: #fafafa;
+    border-radius: 5px;
+    overflow: hidden;
+	padding-left: 0.8em;
+    padding-right: 0.8em;
+    padding-top: 0.4em;
+    padding-bottom: 0.4em;
+}
+
+div.holowidgets {
+    padding-right: 0;
+	width: 25%;
+}
+
+div.holoslider {
+    min-height: 0 !important;
+    height: 0.8em;
+    width: 60%;
+}
+
+div.holoformgroup {
+    padding-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+div.hologroup {
+    padding-left: 0;
+    padding-right: 0.8em;
+    width: 50%;
+}
+
+.holoselect {
+    width: 92%;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.holotext {
+    width: 100%;
+    padding-left:  0.5em;
+    padding-right: 0;
+}
+
+.holowidgets .ui-resizable-se {
+	visibility: hidden
+}
+
+.holoframe > .ui-resizable-se {
+	visibility: hidden
+}
+
+.holowidgets .ui-resizable-s {
+	visibility: hidden
+}
+
+div.bk-hbox {
+    display: flex;
+    justify-content: center;
+}
+
+div.bk-hbox div.bk-plot {
+    padding: 8px;
+}
+
+div.bk-hbox div.bk-data-table {
+    padding: 20px;
+}
+          </style>
+          <div class="logo-block">
+           <img src="data:image/png;base64,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
+roTBs2RqAAAAAElFTkSuQmCC" style="height:25px; border-radius:12px; display: inline-block; float: left; vertical-align: middle"/>
+           <img src="data:image/png;base64,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" style="height:15px; border-radius:12px; display: inline-block; float: left"/>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="cell border-box-sizing text_cell rendered">
+      <div class="prompt input_prompt">
+      </div>
+      <div class="inner_cell">
+       <div class="text_cell_render border-box-sizing rendered_html">
+        <h2 id="Declaring-data">
+         Declaring data
+         <a class="anchor-link" href="#Declaring-data">
+          ¶
+         </a>
+        </h2>
+       </div>
+      </div>
+     </div>
+     <div class="cell border-box-sizing code_cell rendered">
+      <div class="input">
+       <div class="prompt input_prompt">
+        In [2]:
+       </div>
+       <div class="inner_cell">
+        <div class="input_area">
+         <div class=" highlight hl-ipython3">
+          <pre><span></span><span class="kn">from</span> <span class="nn">bokeh.sampledata.autompg</span> <span class="k">import</span> <span class="n">autompg</span>
+
+<span class="n">autompg_ds</span> <span class="o">=</span> <span class="n">hv</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="n">autompg</span><span class="p">)</span>
+</pre>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="cell border-box-sizing text_cell rendered">
+      <div class="prompt input_prompt">
+      </div>
+      <div class="inner_cell">
+       <div class="text_cell_render border-box-sizing rendered_html">
+        <h2 id="Plot">
+         Plot
+         <a class="anchor-link" href="#Plot">
+          ¶
+         </a>
+        </h2>
+       </div>
+      </div>
+     </div>
+     <div class="cell border-box-sizing code_cell rendered">
+      <div class="input">
+       <div class="prompt input_prompt">
+        In [3]:
+       </div>
+       <div class="inner_cell">
+        <div class="input_area">
+         <div class=" highlight hl-ipython3">
+          <pre><span></span><span class="o">%%</span><span class="k">opts</span> Histogram [fig_size=200 aspect=2]
+autompg_ds.hist(dimension='mpg', groupby='cyl', adjoin=False)
+</pre>
+         </div>
+        </div>
+       </div>
+      </div>
+      <div class="output_wrapper">
+       <div class="output">
+        <div class="output_area">
+         <div class="prompt output_prompt">
+          Out[3]:
+         </div>
+         <div class="output_html rendered_html output_subarea output_execute_result">
+          <img src="data:image/png;base64,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" style="max-width:100%; margin: auto; display: block; "/>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+     <hr class="docutils"/>
+     <p>
+      <a class="reference external" href="https://raw.githubusercontent.com/ioam/holoviews/master/examples/gallery/notebooks/matplotlib/autompg_histogram.ipynb">
+       Download this notebook from GitHub (right-click to download).
+      </a>
+     </p>
+    </div>
+   </div>
+  </div>
+  <!-- END MAIN BODY OF DOCS ––––––––––––– -->
+  <footer class="footer">
+   <div class="footer-links">
+    <ul>
+     <li>
+      <span class="footer-title">
+       Links
+      </span>
+     </li>
+     <li>
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li>
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li>
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li>
+      <a href="/Reference_Manual/index.html">
+       API Docs
+      </a>
+     </li>
+     <li>
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li>
+      <a href="/about.html">
+       About
+      </a>
+     </li>
+    </ul>
+    <ul>
+     <li>
+      <span class="footer-title">
+       Join Us
+      </span>
+     </li>
+     <li>
+      <a href="//gitter.im/ioam/holoviews.html">
+       Gitter
+      </a>
+     </li>
+     <li>
+      <a href="//twitter.com/holoviews.html">
+       Twitter
+      </a>
+     </li>
+     <li>
+      <a href="//github.com/ioam/holoviews.html">
+       Github
+      </a>
+     </li>
+    </ul>
+    <ul class="copyright">
+     <li>
+      2017 IOAM: Jean-Luc R. Stevens, Philipp Rudiger, and James A. Bednar
+     </li>
+    </ul>
+   </div>
+  </footer>
+  <!-- Google Analytics -->
+  <script>
+   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-61554933-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <!-- MathJax Config -->
+  <script type="text/x-mathjax-config">
+   MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+  </script>
+  <!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+ </body>
+</html>

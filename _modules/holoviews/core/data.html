@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8"/>
+  <title>
+   holoviews.core.data — HoloViews
+  </title>
+  <meta content="HoloViews library, documentation site." name="description"/>
+  <meta content="HoloViews contributors" name="author"/>
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js">
+  </script>
+  <script>
+   WebFont.load({
+      google: {
+        families: ['Source Sans Pro']
+      }
+    });
+  </script>
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../../../_static/main.css" rel="stylesheet"/>
+  <link href="../../../_static/custom.css" rel="stylesheet"/>
+  <!-- Scripts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
+  </script>
+  <script async="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+  </script>
+  <script src="../../../_static/js/main.js">
+  </script>
+  <script src="../../../_static/custom.js">
+  </script>
+  <script src="../../../_static/require.js">
+  </script>
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../../../_static/images/favicon.ico" rel="icon" type="image/png"/>
+  <!-- Canonical
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="http://holoviews.org/_modules/holoviews/core/data.html" rel="canonical"/>
+ </head>
+ <body class="">
+  <header class="navigation">
+   <div class="wrapper">
+    <a class="logo" href="//">
+     <img alt="Logo" src="../../../_static/images/logo.png"/>
+    </a>
+    <a class="navigation-menu logo-text" href="//">
+     HoloViews
+    </a>
+    <a class="navigation-menu-button" href="javascript:void(0)" id="js-mobile-menu">
+     Menu
+    </a>
+    <nav>
+     <ul class="navigation-menu show" id="js-navigation-menu">
+      <li class="nav-link">
+       <a href="/about.html">
+        About
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="/gallery/index.html">
+        Gallery
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="//github.com/ioam/holoviews.html">
+        Github
+       </a>
+      </li>
+     </ul>
+    </nav>
+   </div>
+  </header>
+  <div class="second-nav">
+   <nav>
+    <ul class="navigation-menu show">
+     <li class="nav-link doc-head">
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+    </ul>
+   </nav>
+   <div class="navigation-tools">
+    <div class="search-bar">
+     <form action="../../../search.html" method="get" role="search">
+      <input name="q" placeholder="Search" type="search"/>
+      <button type="submit">
+       <img alt="Search Icon" src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/search-icon-black.png"/>
+      </button>
+     </form>
+    </div>
+   </div>
+  </div>
+  <!-- MAIN BODY OF DOCS –––––––––––––––––– -->
+  <div class="docs section">
+   <div class="toc">
+    <ul>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference external" href="http://github.com/ioam/holoviews">
+       Github source
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../about.html">
+       About
+      </a>
+     </li>
+    </ul>
+   </div>
+   <div class="content">
+    <h1>
+     Source code for holoviews.core.data
+    </h1>
+    <div class="highlight">
+     <pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">absolute_import</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">itertools.izip</span> <span class="k">as</span> <span class="nn">zip</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">param</span>
+
+<span class="kn">from</span> <span class="nn">..dimension</span> <span class="k">import</span> <span class="n">redim</span>
+<span class="kn">from</span> <span class="nn">..util</span> <span class="k">import</span> <span class="n">dimension_range</span><span class="p">,</span> <span class="n">basestring</span>
+<span class="kn">from</span> <span class="nn">.interface</span> <span class="k">import</span> <span class="n">Interface</span><span class="p">,</span> <span class="n">iloc</span><span class="p">,</span> <span class="n">ndloc</span>
+<span class="kn">from</span> <span class="nn">.array</span> <span class="k">import</span> <span class="n">ArrayInterface</span>
+<span class="kn">from</span> <span class="nn">.dictionary</span> <span class="k">import</span> <span class="n">DictInterface</span>
+<span class="kn">from</span> <span class="nn">.grid</span> <span class="k">import</span> <span class="n">GridInterface</span>
+<span class="kn">from</span> <span class="nn">.multipath</span> <span class="k">import</span> <span class="n">MultiInterface</span>         <span class="c1"># noqa (API import)</span>
+<span class="kn">from</span> <span class="nn">.image</span> <span class="k">import</span> <span class="n">ImageInterface</span>             <span class="c1"># noqa (API import)</span>
+
+<span class="n">datatypes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'array'</span><span class="p">,</span> <span class="s1">'dictionary'</span><span class="p">,</span> <span class="s1">'grid'</span><span class="p">]</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span> <span class="c1"># noqa (Availability import)</span>
+    <span class="kn">from</span> <span class="nn">.pandas</span> <span class="k">import</span> <span class="n">PandasInterface</span>
+    <span class="n">datatypes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'array'</span><span class="p">,</span> <span class="s1">'dataframe'</span><span class="p">,</span> <span class="s1">'dictionary'</span><span class="p">,</span> <span class="s1">'grid'</span><span class="p">,</span> <span class="s1">'ndelement'</span><span class="p">]</span>
+    <span class="n">DFColumns</span> <span class="o">=</span> <span class="n">PandasInterface</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="k">pass</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="n">param</span><span class="o">.</span><span class="n">main</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">'Pandas interface failed to import with '</span>
+                       <span class="s1">'following error: </span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="n">e</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">iris</span> <span class="c1"># noqa (Availability import)</span>
+    <span class="kn">from</span> <span class="nn">.iris</span> <span class="k">import</span> <span class="n">CubeInterface</span> <span class="c1"># noqa (Conditional API import)</span>
+    <span class="n">datatypes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'cube'</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="k">pass</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="n">param</span><span class="o">.</span><span class="n">main</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">'Iris interface failed to import with '</span>
+                       <span class="s1">'following error: </span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="n">e</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">xarray</span> <span class="c1"># noqa (Availability import)</span>
+    <span class="kn">from</span> <span class="nn">.xarray</span> <span class="k">import</span> <span class="n">XArrayInterface</span> <span class="c1"># noqa (Conditional API import)</span>
+    <span class="n">datatypes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'xarray'</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">.dask</span> <span class="k">import</span> <span class="n">DaskInterface</span>   <span class="c1"># noqa (Conditional API import)</span>
+    <span class="n">datatypes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'dask'</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="kn">from</span> <span class="nn">..dimension</span> <span class="k">import</span> <span class="n">Dimension</span><span class="p">,</span> <span class="n">process_dimensions</span>
+<span class="kn">from</span> <span class="nn">..element</span> <span class="k">import</span> <span class="n">Element</span>
+<span class="kn">from</span> <span class="nn">..ndmapping</span> <span class="k">import</span> <span class="n">OrderedDict</span>
+<span class="kn">from</span> <span class="nn">..spaces</span> <span class="k">import</span> <span class="n">HoloMap</span><span class="p">,</span> <span class="n">DynamicMap</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">util</span>
+
+
+<div class="viewcode-block" id="DataConversion"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.core.data.html#holoviews.core.DataConversion">[docs]</a><span class="k">class</span> <span class="nc">DataConversion</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    DataConversion is a very simple container object which can be</span>
+<span class="sd">    given an existing Dataset Element and provides methods to convert</span>
+<span class="sd">    the Dataset into most other Element types.</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">element</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_element</span> <span class="o">=</span> <span class="n">element</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_type</span><span class="p">,</span> <span class="n">kdims</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vdims</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">groupby</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">sort</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Generic conversion method for Dataset based Element</span>
+<span class="sd">        types. Supply the Dataset Element type to convert to and</span>
+<span class="sd">        optionally the key dimensions (kdims), value dimensions</span>
+<span class="sd">        (vdims) and the dimensions.  to group over. Converted Columns</span>
+<span class="sd">        can be automatically sorted via the sort option and kwargs can</span>
+<span class="sd">        be passed through.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="s1">'mdims'</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">groupby</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'Cannot supply both mdims and groupby'</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">"'mdims' keyword has been renamed "</span>
+                                      <span class="s2">"to 'groupby'; the name mdims is "</span>
+                                      <span class="s2">"deprecated and will be removed "</span>
+                                      <span class="s2">"after version 1.7."</span><span class="p">)</span>
+                <span class="n">groupby</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">'mdims'</span><span class="p">)</span>
+
+        <span class="n">element_params</span> <span class="o">=</span> <span class="n">new_type</span><span class="o">.</span><span class="n">params</span><span class="p">()</span>
+        <span class="n">kdim_param</span> <span class="o">=</span> <span class="n">element_params</span><span class="p">[</span><span class="s1">'kdims'</span><span class="p">]</span>
+        <span class="n">vdim_param</span> <span class="o">=</span> <span class="n">element_params</span><span class="p">[</span><span class="s1">'vdims'</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">kdim_param</span><span class="o">.</span><span class="n">bounds</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="n">ndim</span> <span class="o">=</span> <span class="nb">min</span><span class="p">([</span><span class="n">kdim_param</span><span class="o">.</span><span class="n">bounds</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">len</span><span class="p">(</span><span class="n">kdim_param</span><span class="o">.</span><span class="n">default</span><span class="p">)])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ndim</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">nvdim</span> <span class="o">=</span> <span class="n">vdim_param</span><span class="o">.</span><span class="n">bounds</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">vdim_param</span><span class="o">.</span><span class="n">bounds</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">int</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">kdims</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">kd_filter</span> <span class="o">=</span> <span class="n">groupby</span> <span class="ow">or</span> <span class="p">[]</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">kd_filter</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                <span class="n">kd_filter</span> <span class="o">=</span> <span class="p">[</span><span class="n">groupby</span><span class="p">]</span>
+            <span class="n">kdims</span> <span class="o">=</span> <span class="p">[</span><span class="n">kd</span> <span class="k">for</span> <span class="n">kd</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">kdims</span> <span class="k">if</span> <span class="n">kd</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kd_filter</span><span class="p">][:</span><span class="n">ndim</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">kdims</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">kdims</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span> <span class="n">kdims</span> <span class="o">=</span> <span class="p">[</span><span class="n">kdims</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">vdims</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">vdims</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">vdims</span> <span class="k">if</span> <span class="n">d</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kdims</span><span class="p">][:</span><span class="n">nvdim</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">vdims</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">vdims</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span> <span class="n">vdims</span> <span class="o">=</span> <span class="p">[</span><span class="n">vdims</span><span class="p">]</span>
+
+        <span class="c1"># Checks Element type supports dimensionality</span>
+        <span class="n">type_name</span> <span class="o">=</span> <span class="n">new_type</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="k">for</span> <span class="n">dim_type</span><span class="p">,</span> <span class="n">dims</span> <span class="ow">in</span> <span class="p">((</span><span class="s1">'kdims'</span><span class="p">,</span> <span class="n">kdims</span><span class="p">),</span> <span class="p">(</span><span class="s1">'vdims'</span><span class="p">,</span> <span class="n">vdims</span><span class="p">)):</span>
+            <span class="n">min_d</span><span class="p">,</span> <span class="n">max_d</span> <span class="o">=</span> <span class="n">new_type</span><span class="o">.</span><span class="n">params</span><span class="p">(</span><span class="n">dim_type</span><span class="p">)</span><span class="o">.</span><span class="n">bounds</span>
+            <span class="k">if</span> <span class="p">((</span><span class="n">min_d</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">dims</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">min_d</span><span class="p">)</span> <span class="ow">or</span>
+                <span class="p">(</span><span class="n">max_d</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">dims</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">max_d</span><span class="p">)):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"</span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> must be between length </span><span class="si">%s</span><span class="s2"> and </span><span class="si">%s</span><span class="s2">."</span> <span class="o">%</span>
+                                 <span class="p">(</span><span class="n">type_name</span><span class="p">,</span> <span class="n">dim_type</span><span class="p">,</span> <span class="n">min_d</span><span class="p">,</span> <span class="n">max_d</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">groupby</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">groupby</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">kdims</span> <span class="k">if</span> <span class="n">d</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kdims</span><span class="o">+</span><span class="n">vdims</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">groupby</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">groupby</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="n">groupby</span> <span class="o">=</span> <span class="p">[</span><span class="n">groupby</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">interface</span><span class="o">.</span><span class="n">gridded</span><span class="p">:</span>
+            <span class="n">dropped_kdims</span> <span class="o">=</span> <span class="p">[</span><span class="n">kd</span> <span class="k">for</span> <span class="n">kd</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">kdims</span> <span class="k">if</span> <span class="n">kd</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">groupby</span><span class="o">+</span><span class="n">kdims</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">dropped_kdims</span><span class="p">:</span>
+                <span class="n">selected</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">groupby</span><span class="o">+</span><span class="n">kdims</span><span class="p">,</span> <span class="n">vdims</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">selected</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">selected</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_element</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">groupby</span><span class="o">+</span><span class="n">kdims</span><span class="p">,</span> <span class="n">vdims</span><span class="p">)</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'kdims'</span><span class="p">:</span> <span class="p">[</span><span class="n">selected</span><span class="o">.</span><span class="n">get_dimension</span><span class="p">(</span><span class="n">kd</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">kd</span> <span class="ow">in</span> <span class="n">kdims</span><span class="p">],</span>
+                  <span class="s1">'vdims'</span><span class="p">:</span> <span class="p">[</span><span class="n">selected</span><span class="o">.</span><span class="n">get_dimension</span><span class="p">(</span><span class="n">vd</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">vd</span> <span class="ow">in</span> <span class="n">vdims</span><span class="p">],</span>
+                  <span class="s1">'label'</span><span class="p">:</span> <span class="n">selected</span><span class="o">.</span><span class="n">label</span><span class="p">}</span>
+        <span class="k">if</span> <span class="n">selected</span><span class="o">.</span><span class="n">group</span> <span class="o">!=</span> <span class="n">selected</span><span class="o">.</span><span class="n">params</span><span class="p">()[</span><span class="s1">'group'</span><span class="p">]</span><span class="o">.</span><span class="n">default</span><span class="p">:</span>
+            <span class="n">params</span><span class="p">[</span><span class="s1">'group'</span><span class="p">]</span> <span class="o">=</span> <span class="n">selected</span><span class="o">.</span><span class="n">group</span>
+        <span class="n">params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">kdims</span><span class="p">)</span> <span class="o">==</span> <span class="n">selected</span><span class="o">.</span><span class="n">ndims</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">groupby</span><span class="p">:</span>
+            <span class="n">element</span> <span class="o">=</span> <span class="n">new_type</span><span class="p">(</span><span class="n">selected</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">element</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span> <span class="k">if</span> <span class="n">sort</span> <span class="k">else</span> <span class="n">element</span>
+        <span class="n">group</span> <span class="o">=</span> <span class="n">selected</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">groupby</span><span class="p">,</span> <span class="n">container_type</span><span class="o">=</span><span class="n">HoloMap</span><span class="p">,</span>
+                                 <span class="n">group_type</span><span class="o">=</span><span class="n">new_type</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">sort</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">group</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">sort</span><span class="p">(),</span> <span class="p">[</span><span class="n">new_type</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">group</span></div>
+
+
+
+<div class="viewcode-block" id="Dataset"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.element.html#holoviews.core.Dataset">[docs]</a><span class="k">class</span> <span class="nc">Dataset</span><span class="p">(</span><span class="n">Element</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Dataset provides a general baseclass for Element types that</span>
+<span class="sd">    contain structured data and supports a range of data formats.</span>
+
+<span class="sd">    The Dataset class supports various methods offering a consistent way</span>
+<span class="sd">    of working with the stored data regardless of the storage format</span>
+<span class="sd">    used. These operations include indexing, selection and various ways</span>
+<span class="sd">    of aggregating or collapsing the data with a supplied function.</span>
+<span class="sd">    """</span>
+
+    <span class="n">datatype</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">List</span><span class="p">(</span><span class="n">datatypes</span><span class="p">,</span>
+        <span class="n">doc</span><span class="o">=</span><span class="s2">""" A priority list of the data types to be used for storage</span>
+<span class="s2">        on the .data attribute. If the input supplied to the element</span>
+<span class="s2">        constructor cannot be put into the requested format, the next</span>
+<span class="s2">        format listed will be used until a suitable format is found (or</span>
+<span class="s2">        the data fails to be understood)."""</span><span class="p">)</span>
+
+    <span class="n">group</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">'Dataset'</span><span class="p">,</span> <span class="n">constant</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="c1"># In the 1D case the interfaces should not automatically add x-values</span>
+    <span class="c1"># to supplied data</span>
+    <span class="n">_auto_indexable_1d</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="c1"># Define a class used to transform Datasets into other Element types</span>
+    <span class="n">_conversion_interface</span> <span class="o">=</span> <span class="n">DataConversion</span>
+
+    <span class="n">_vdim_reductions</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">_kdim_reductions</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">kdims</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vdims</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">Element</span><span class="p">):</span>
+            <span class="n">pvals</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">get_param_values</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="n">kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">([(</span><span class="n">l</span><span class="p">,</span> <span class="n">pvals</span><span class="p">[</span><span class="n">l</span><span class="p">])</span> <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'group'</span><span class="p">,</span> <span class="s1">'label'</span><span class="p">]</span>
+                           <span class="k">if</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">pvals</span> <span class="ow">and</span> <span class="n">l</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">])</span>
+        <span class="n">kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">process_dimensions</span><span class="p">(</span><span class="n">kdims</span><span class="p">,</span> <span class="n">vdims</span><span class="p">))</span>
+        <span class="n">kdims</span><span class="p">,</span> <span class="n">vdims</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'kdims'</span><span class="p">),</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'vdims'</span><span class="p">)</span>
+
+        <span class="n">initialized</span> <span class="o">=</span> <span class="n">Interface</span><span class="o">.</span><span class="n">initialize</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="n">data</span><span class="p">,</span> <span class="n">kdims</span><span class="p">,</span> <span class="n">vdims</span><span class="p">,</span>
+                                           <span class="n">datatype</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'datatype'</span><span class="p">))</span>
+        <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">interface</span><span class="p">,</span> <span class="n">dims</span><span class="p">,</span> <span class="n">extra_kws</span><span class="p">)</span> <span class="o">=</span> <span class="n">initialized</span>
+        <span class="n">validate_vdims</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">'_validate_vdims'</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Dataset</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="nb">dict</span><span class="p">(</span><span class="n">kwargs</span><span class="p">,</span> <span class="o">**</span><span class="nb">dict</span><span class="p">(</span><span class="n">dims</span><span class="p">,</span> <span class="o">**</span><span class="n">extra_kws</span><span class="p">)))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">interface</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">validate_vdims</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">redim</span> <span class="o">=</span> <span class="n">redim</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">'dataset'</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Dataset.closest"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.element.html#holoviews.core.Dataset.closest">[docs]</a>    <span class="k">def</span> <span class="nf">closest</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coords</span><span class="o">=</span><span class="p">[],</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Given a single coordinate or multiple coordinates as</span>
+<span class="sd">        a tuple or list of tuples or keyword arguments matching</span>
+<span class="sd">        the dimension closest will find the closest actual x/y</span>
+<span class="sd">        coordinates. Different Element types should implement this</span>
+<span class="sd">        appropriately depending on the space they represent, if the</span>
+<span class="sd">        Element does not support snapping raise NotImplementedError.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndims</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">"Closest method currently only "</span>
+                                      <span class="s2">"implemented for 1D Elements"</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">"Closest method currently only "</span>
+                                          <span class="s2">"supports 1D indexes"</span><span class="p">)</span>
+            <span class="n">samples</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">kwargs</span><span class="o">.</span><span class="n">values</span><span class="p">())[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">coords</span> <span class="o">=</span> <span class="n">samples</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">samples</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="p">[</span><span class="n">samples</span><span class="p">]</span>
+
+        <span class="n">xs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimension_values</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">xs</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">kind</span> <span class="ow">in</span> <span class="s1">'SO'</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">"Closest only supported for numeric types"</span><span class="p">)</span>
+        <span class="n">idxs</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">xs</span><span class="o">-</span><span class="n">coord</span><span class="p">))</span> <span class="k">for</span> <span class="n">coord</span> <span class="ow">in</span> <span class="n">coords</span><span class="p">]</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">xs</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span> <span class="k">for</span> <span class="n">idx</span> <span class="ow">in</span> <span class="n">idxs</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="Dataset.sort"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.element.html#holoviews.core.Dataset.sort">[docs]</a>    <span class="k">def</span> <span class="nf">sort</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="p">[],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Sorts the data by the values along the supplied dimensions.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">by</span><span class="p">:</span> <span class="n">by</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kdims</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">by</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span> <span class="n">by</span> <span class="o">=</span> <span class="p">[</span><span class="n">by</span><span class="p">]</span>
+
+        <span class="n">sorted_columns</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">interface</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">by</span><span class="p">,</span> <span class="n">reverse</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">sorted_columns</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Dataset.range"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.element.html#holoviews.core.Dataset.range">[docs]</a>    <span class="k">def</span> <span class="nf">range</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dim</span><span class="p">,</span> <span class="n">data_range</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Computes the range of values along a supplied dimension, taking</span>
+<span class="sd">        into account the range and soft_range defined on the Dimension</span>
+<span class="sd">        object.</span>
+<span class="sd">        """</span>
+        <span class="n">dim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_dimension</span><span class="p">(</span><span class="n">dim</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">dim</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">all</span><span class="p">(</span><span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">dim</span><span class="o">.</span><span class="n">range</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">dim</span><span class="o">.</span><span class="n">range</span>
+        <span class="k">elif</span> <span class="n">dim</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="p">()</span> <span class="ow">and</span> <span class="n">data_range</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">interface</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dim</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">lower</span><span class="p">,</span> <span class="n">upper</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">NaN</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">NaN</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">dimension_range</span><span class="p">(</span><span class="n">lower</span><span class="p">,</span> <span class="n">upper</span><span class="p">,</span> <span class="n">dim</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Dataset.add_dimension"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.element.html#holoviews.core.Dataset.add_dimension">[docs]</a>    <span class="k">def</span> <span class="nf">add_dimension</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dimension</span><span class="p">,</span> <span class="n">dim_pos</span><span class="p">,</span> <span class="n">dim_val</span><span class="p">,</span> <span class="n">vdim</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Create a new object with an additional key dimensions.  Requires</span>
+<span class="sd">        the dimension name or object, the desired position in the key</span>
+<span class="sd">        dimensions and a key value scalar or sequence of the same length</span>
+<span class="sd">        as the existing keys.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dimension</span><span class="p">,</span> <span class="p">(</span><span class="n">util</span><span class="o">.</span><span class="n">basestring</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+            <span class="n">dimension</span> <span class="o">=</span> <span class="n">Dimension</span><span class="p">(</span><span class="n">dimension</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">dimension</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">kdims</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">'</span><span class="si">{dim}</span><span class="s1"> dimension already defined'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="n">dimension</span><span class="o">.</span><span class="n">name</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">vdim</span><span class="p">:</span>
+            <span class="n">dims</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vdims</span><span class="p">[:]</span>
+            <span class="n">dims</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">dim_pos</span><span class="p">,</span> <span class="n">dimension</span><span class="p">)</span>
+            <span class="n">dimensions</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">vdims</span><span class="o">=</span><span class="n">dims</span><span class="p">)</span>
+            <span class="n">dim_pos</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndims</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dims</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kdims</span><span class="p">[:]</span>
+            <span class="n">dims</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">dim_pos</span><span class="p">,</span> <span class="n">dimension</span><span class="p">)</span>
+            <span class="n">dimensions</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">kdims</span><span class="o">=</span><span class="n">dims</span><span class="p">)</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">interface</span><span class="o">.</span><span class="n">add_dimension</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dimension</span><span class="p">,</span> <span class="n">dim_pos</span><span class="p">,</span> <span class="n">dim_val</span><span class="p">,</span> <span class="n">vdim</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">dimensions</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Dataset.select"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.element.html#holoviews.core.Dataset.select">[docs]</a>    <span class="k">def</span> <span class="nf">select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">selection_specs</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">selection</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Allows selecting data by the slices, sets and scalar values</span>
+<span class="sd">        along a particular dimension. The indices should be supplied as</span>
+<span class="sd">        keywords mapping between the selected dimension and</span>
+<span class="sd">        value. Additionally selection_specs (taking the form of a list</span>
+<span class="sd">        of type.group.label strings, types or functions) may be</span>
+<span class="sd">        supplied, which will ensure the selection is only applied if the</span>
+<span class="sd">        specs match the selected object.</span>
+<span class="sd">        """</span>
+        <span class="n">selection</span> <span class="o">=</span> <span class="p">{</span><span class="n">dim</span><span class="p">:</span> <span class="n">sel</span> <span class="k">for</span> <span class="n">dim</span><span class="p">,</span> <span class="n">sel</span> <span class="ow">in</span> <span class="n">selection</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                     <span class="k">if</span> <span class="n">dim</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="p">()</span><span class="o">+</span><span class="p">[</span><span class="s1">'selection_mask'</span><span class="p">]}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">selection_specs</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">matches</span><span class="p">(</span><span class="n">sp</span><span class="p">)</span> <span class="k">for</span> <span class="n">sp</span> <span class="ow">in</span> <span class="n">selection_specs</span><span class="p">)</span>
+            <span class="ow">or</span> <span class="ow">not</span> <span class="n">selection</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">interface</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">selection</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">data</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Dataset.reindex"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.element.html#holoviews.core.Dataset.reindex">[docs]</a>    <span class="k">def</span> <span class="nf">reindex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kdims</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">vdims</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Create a new object with a re-ordered set of dimensions.  Allows</span>
+<span class="sd">        converting key dimensions to value dimensions and vice versa.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">kdims</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">key_dims</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">kdims</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">vdims</span> <span class="ow">or</span> <span class="n">d</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">vdims</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">key_dims</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">get_dimension</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">kdims</span><span class="p">]</span>
+
+        <span class="n">new_type</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">vdims</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">val_dims</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">vdims</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">kdims</span> <span class="ow">or</span> <span class="n">d</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kdims</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">val_dims</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">get_dimension</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">vdims</span><span class="p">]</span>
+            <span class="n">new_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_vdim_reductions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">val_dims</span><span class="p">),</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">interface</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key_dims</span><span class="p">,</span> <span class="n">val_dims</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">kdims</span><span class="o">=</span><span class="n">key_dims</span><span class="p">,</span> <span class="n">vdims</span><span class="o">=</span><span class="n">val_dims</span><span class="p">,</span>
+                          <span class="n">new_type</span><span class="o">=</span><span class="n">new_type</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span> <span class="nf">__getitem__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slices</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Allows slicing and selecting values in the Dataset object.</span>
+<span class="sd">        Supports multiple indexing modes:</span>
+
+<span class="sd">           (1) Slicing and indexing along the values of each dimension</span>
+<span class="sd">               in the columns object using either scalars, slices or</span>
+<span class="sd">               sets of values.</span>
+<span class="sd">           (2) Supplying the name of a dimension as the first argument</span>
+<span class="sd">               will return the values along that dimension as a numpy</span>
+<span class="sd">               array.</span>
+<span class="sd">           (3) Slicing of all key dimensions and selecting a single</span>
+<span class="sd">               value dimension by name.</span>
+<span class="sd">           (4) A boolean array index matching the length of the Dataset</span>
+<span class="sd">               object.</span>
+<span class="sd">        """</span>
+        <span class="n">slices</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">process_ellipses</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">slices</span><span class="p">,</span> <span class="n">vdim_selection</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">slices</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="ow">and</span> <span class="n">slices</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">kind</span> <span class="o">==</span> <span class="s1">'b'</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">slices</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s2">"Boolean index must match length of sliced object"</span><span class="p">)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">selection_mask</span><span class="o">=</span><span class="n">slices</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">slices</span> <span class="ow">in</span> <span class="p">[(),</span> <span class="bp">Ellipsis</span><span class="p">]:</span>
+            <span class="k">return</span> <span class="bp">self</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">slices</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span> <span class="n">slices</span> <span class="o">=</span> <span class="p">(</span><span class="n">slices</span><span class="p">,)</span>
+        <span class="n">value_select</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">slices</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">slices</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="p">():</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimension_values</span><span class="p">(</span><span class="n">slices</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">slices</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndims</span><span class="o">+</span><span class="mi">1</span> <span class="ow">and</span> <span class="n">slices</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ndims</span><span class="p">]</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="p">():</span>
+            <span class="n">selection</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="p">(</span><span class="s1">'key'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">slices</span><span class="p">))</span>
+            <span class="n">value_select</span> <span class="o">=</span> <span class="n">slices</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ndims</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">slices</span><span class="p">)</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndims</span><span class="o">+</span><span class="mi">1</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">slices</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ndims</span><span class="p">],</span>
+                                                        <span class="p">(</span><span class="n">Dimension</span><span class="p">,</span><span class="nb">str</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">"</span><span class="si">%r</span><span class="s2"> is not an available value dimension"</span> <span class="o">%</span> <span class="n">slices</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">ndims</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">selection</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">slices</span><span class="p">))</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="o">**</span><span class="n">selection</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">value_select</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">data</span><span class="p">[</span><span class="n">value_select</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">vdims</span><span class="o">=</span><span class="p">[</span><span class="n">value_select</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">data</span>
+
+
+<div class="viewcode-block" id="Dataset.sample"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.element.html#holoviews.core.Dataset.sample">[docs]</a>    <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">samples</span><span class="o">=</span><span class="p">[],</span> <span class="n">closest</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Allows sampling of Dataset as an iterator of coordinates</span>
+<span class="sd">        matching the key dimensions, returning a new object containing</span>
+<span class="sd">        just the selected samples. Alternatively may supply kwargs</span>
+<span class="sd">        to sample a coordinate on an object. By default it will attempt</span>
+<span class="sd">        to snap to the nearest coordinate if the Element supports it,</span>
+<span class="sd">        snapping may be disabled with the closest argument.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">kwargs</span> <span class="ow">and</span> <span class="n">samples</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">'Supply explicit list of samples or kwargs, not both.'</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="n">sample</span> <span class="o">=</span> <span class="p">[</span><span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ndims</span><span class="p">)]</span>
+            <span class="k">for</span> <span class="n">dim</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">sample</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">get_dimension_index</span><span class="p">(</span><span class="n">dim</span><span class="p">)]</span> <span class="o">=</span> <span class="n">val</span>
+            <span class="n">samples</span> <span class="o">=</span> <span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">sample</span><span class="p">)]</span>
+
+        <span class="c1"># Note: Special handling sampling of gridded 2D data as Curve</span>
+        <span class="c1"># may be replaced with more general handling</span>
+        <span class="c1"># see https://github.com/ioam/holoviews/issues/1173</span>
+        <span class="kn">from</span> <span class="nn">...element</span> <span class="k">import</span> <span class="n">Table</span><span class="p">,</span> <span class="n">Curve</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">sel</span> <span class="o">=</span> <span class="p">{</span><span class="n">kd</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">s</span> <span class="k">for</span> <span class="n">kd</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">kdims</span><span class="p">,</span> <span class="n">samples</span><span class="p">[</span><span class="mi">0</span><span class="p">])}</span>
+            <span class="n">dims</span> <span class="o">=</span> <span class="p">[</span><span class="n">kd</span> <span class="k">for</span> <span class="n">kd</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">sel</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">v</span><span class="p">)]</span>
+            <span class="n">selection</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="o">**</span><span class="n">sel</span><span class="p">)</span>
+
+            <span class="c1"># If a 1D cross-section of 2D space return Curve</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">interface</span><span class="o">.</span><span class="n">gridded</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">ndims</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">dims</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">new_type</span> <span class="o">=</span> <span class="n">Curve</span>
+                <span class="n">kdims</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">get_dimension</span><span class="p">(</span><span class="n">kd</span><span class="p">)</span> <span class="k">for</span> <span class="n">kd</span> <span class="ow">in</span> <span class="n">dims</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">new_type</span> <span class="o">=</span> <span class="n">Table</span>
+                <span class="n">kdims</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kdims</span>
+
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">selection</span><span class="p">):</span>
+                <span class="n">selection</span> <span class="o">=</span> <span class="p">[</span><span class="n">samples</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="p">(</span><span class="n">selection</span><span class="p">,)]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">selection</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">selection</span><span class="o">.</span><span class="n">columns</span><span class="p">(</span><span class="n">kdims</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">vdims</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+            <span class="n">datatype</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">util</span><span class="o">.</span><span class="n">unique_iterator</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">datatype</span><span class="o">+</span><span class="p">[</span><span class="s1">'dataframe'</span><span class="p">,</span> <span class="s1">'dict'</span><span class="p">]))</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">selection</span><span class="p">,</span> <span class="n">kdims</span><span class="o">=</span><span class="n">kdims</span><span class="p">,</span> <span class="n">new_type</span><span class="o">=</span><span class="n">new_type</span><span class="p">,</span>
+                              <span class="n">datatype</span><span class="o">=</span><span class="n">datatype</span><span class="p">)</span>
+
+        <span class="n">lens</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">util</span><span class="o">.</span><span class="n">wrap_tuple</span><span class="p">(</span><span class="n">s</span><span class="p">))</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">samples</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">lens</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s1">'Sample coordinates must all be of the same length.'</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">closest</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">samples</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">closest</span><span class="p">(</span><span class="n">samples</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">NotImplementedError</span><span class="p">:</span>
+                <span class="k">pass</span>
+        <span class="n">samples</span> <span class="o">=</span> <span class="p">[</span><span class="n">util</span><span class="o">.</span><span class="n">wrap_tuple</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">samples</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">interface</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">samples</span><span class="p">),</span> <span class="n">new_type</span><span class="o">=</span><span class="n">Table</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Dataset.reduce"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.element.html#holoviews.core.Dataset.reduce">[docs]</a>    <span class="k">def</span> <span class="nf">reduce</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dimensions</span><span class="o">=</span><span class="p">[],</span> <span class="n">function</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">spreadfn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">reduce_map</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Allows reducing the values along one or more key dimension with</span>
+<span class="sd">        the supplied function. The dimensions may be supplied as a list</span>
+<span class="sd">        and a function to apply or a mapping between the dimensions and</span>
+<span class="sd">        functions to apply along each dimension.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">dim</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">vdims</span> <span class="k">for</span> <span class="n">dim</span> <span class="ow">in</span> <span class="n">dimensions</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">"Reduce cannot be applied to value dimensions"</span><span class="p">)</span>
+        <span class="n">function</span><span class="p">,</span> <span class="n">dims</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_reduce_map</span><span class="p">(</span><span class="n">dimensions</span><span class="p">,</span> <span class="n">function</span><span class="p">,</span> <span class="n">reduce_map</span><span class="p">)</span>
+        <span class="n">dims</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">kdims</span> <span class="k">if</span> <span class="n">d</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dims</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">dims</span><span class="p">,</span> <span class="n">function</span><span class="p">,</span> <span class="n">spreadfn</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Dataset.aggregate"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.element.html#holoviews.core.Dataset.aggregate">[docs]</a>    <span class="k">def</span> <span class="nf">aggregate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dimensions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">function</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">spreadfn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Aggregates over the supplied key dimensions with the defined</span>
+<span class="sd">        function.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">function</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"The aggregate method requires a function to be specified"</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">dimensions</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">dimensions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">kdims</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dimensions</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span> <span class="n">dimensions</span> <span class="o">=</span> <span class="p">[</span><span class="n">dimensions</span><span class="p">]</span>
+        <span class="n">kdims</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">get_dimension</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dimensions</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">spreadfn</span><span class="p">:</span>
+                <span class="n">spread_name</span> <span class="o">=</span> <span class="n">spreadfn</span><span class="o">.</span><span class="vm">__name__</span>
+                <span class="n">vdims</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span> <span class="k">for</span> <span class="n">vd</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">vdims</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="p">[</span><span class="n">vd</span><span class="p">,</span> <span class="n">vd</span><span class="p">(</span><span class="s1">'_'</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">vd</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">spread_name</span><span class="p">]))]]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">vdims</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vdims</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">clone</span><span class="p">([],</span> <span class="n">kdims</span><span class="o">=</span><span class="n">kdims</span><span class="p">,</span> <span class="n">vdims</span><span class="o">=</span><span class="n">vdims</span><span class="p">)</span>
+
+        <span class="n">aggregated</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">interface</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">kdims</span><span class="p">,</span> <span class="n">function</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">aggregated</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">interface</span><span class="o">.</span><span class="n">unpack_scalar</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">aggregated</span><span class="p">)</span>
+
+        <span class="n">ndims</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">dimensions</span><span class="p">)</span>
+        <span class="n">min_d</span><span class="p">,</span> <span class="n">max_d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">(</span><span class="s1">'kdims'</span><span class="p">)</span><span class="o">.</span><span class="n">bounds</span>
+        <span class="n">generic_type</span> <span class="o">=</span> <span class="p">(</span><span class="n">min_d</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">ndims</span> <span class="o">&lt;</span> <span class="n">min_d</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">max_d</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">ndims</span> <span class="o">&gt;</span> <span class="n">max_d</span><span class="p">)</span>
+
+        <span class="n">vdims</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vdims</span>
+        <span class="k">if</span> <span class="n">spreadfn</span><span class="p">:</span>
+            <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">interface</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dimensions</span><span class="p">,</span> <span class="n">spreadfn</span><span class="p">)</span>
+            <span class="n">spread_name</span> <span class="o">=</span> <span class="n">spreadfn</span><span class="o">.</span><span class="vm">__name__</span>
+            <span class="n">ndims</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">vdims</span><span class="p">)</span>
+            <span class="n">error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">error</span><span class="p">,</span> <span class="n">kdims</span><span class="o">=</span><span class="n">kdims</span><span class="p">,</span> <span class="n">new_type</span><span class="o">=</span><span class="n">Dataset</span><span class="p">)</span>
+            <span class="n">combined</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">aggregated</span><span class="p">,</span> <span class="n">kdims</span><span class="o">=</span><span class="n">kdims</span><span class="p">,</span> <span class="n">new_type</span><span class="o">=</span><span class="n">Dataset</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">d</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">vdims</span><span class="p">):</span>
+                <span class="n">dim</span> <span class="o">=</span> <span class="n">d</span><span class="p">(</span><span class="s1">'_'</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">d</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">spread_name</span><span class="p">]))</span>
+                <span class="n">dvals</span> <span class="o">=</span> <span class="n">error</span><span class="o">.</span><span class="n">dimension_values</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                <span class="n">combined</span> <span class="o">=</span> <span class="n">combined</span><span class="o">.</span><span class="n">add_dimension</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="n">ndims</span><span class="o">+</span><span class="n">i</span><span class="p">,</span> <span class="n">dvals</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">combined</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">new_type</span><span class="o">=</span><span class="n">Dataset</span> <span class="k">if</span> <span class="n">generic_type</span> <span class="k">else</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">aggregated</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">aggregated</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="c1"># Should be checking the dimensions declared on the element are compatible</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">aggregated</span><span class="p">,</span> <span class="n">kdims</span><span class="o">=</span><span class="n">kdims</span><span class="p">,</span> <span class="n">vdims</span><span class="o">=</span><span class="n">vdims</span><span class="p">)</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">datatype</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">(</span><span class="s1">'datatype'</span><span class="p">)</span><span class="o">.</span><span class="n">default</span>
+                <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">clone</span><span class="p">(</span><span class="n">aggregated</span><span class="p">,</span> <span class="n">kdims</span><span class="o">=</span><span class="n">kdims</span><span class="p">,</span> <span class="n">vdims</span><span class="o">=</span><span class="n">vdims</span><span class="p">,</span>
+                                  <span class="n">new_type</span><span class="o">=</span><span class="n">Dataset</span> <span class="k">if</span> <span class="n">generic_type</span> <span class="k">else</span> <span class="kc">None</span><span class="p">,</span>
+                                  <span class="n">datatype</span><span class="o">=</span><span class="n">datatype</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Dataset.groupby"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.element.html#holoviews.core.Dataset.groupby">[docs]</a>    <span class="k">def</span> <span class="nf">groupby</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dimensions</span><span class="o">=</span><span class="p">[],</span> <span class="n">container_type</span><span class="o">=</span><span class="n">HoloMap</span><span class="p">,</span> <span class="n">group_type</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                <span class="n">dynamic</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">"""Return the results of a groupby operation over the specified</span>
+<span class="sd">        dimensions as an object of type container_type (expected to be</span>
+<span class="sd">        dictionary-like).</span>
+
+<span class="sd">        Keys vary over the columns (dimensions) and the corresponding</span>
+<span class="sd">        values are collections of group_type (e.g an Element, list, tuple)</span>
+<span class="sd">        constructed with kwargs (if supplied).</span>
+
+<span class="sd">        If dynamic is requested container_type is automatically set to</span>
+<span class="sd">        a DynamicMap, allowing dynamic exploration of large</span>
+<span class="sd">        datasets. If the data does not represent a full cartesian grid</span>
+<span class="sd">        of the requested dimensions some Elements will be empty.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dimensions</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span> <span class="n">dimensions</span> <span class="o">=</span> <span class="p">[</span><span class="n">dimensions</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">dimensions</span><span class="p">):</span> <span class="n">dimensions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="p">(</span><span class="s1">'key'</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">group_type</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="n">group_type</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="n">dimensions</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">get_dimension</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dimensions</span><span class="p">]</span>
+        <span class="n">dim_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dimensions</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">dynamic</span><span class="p">:</span>
+            <span class="n">group_dims</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">kdims</span> <span class="k">if</span> <span class="n">d</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dimensions</span><span class="p">]</span>
+            <span class="n">kdims</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">get_dimension</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">group_dims</span><span class="p">]</span>
+            <span class="n">group_kwargs</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">util</span><span class="o">.</span><span class="n">get_param_values</span><span class="p">(</span><span class="bp">self</span><span class="p">),</span> <span class="n">kdims</span><span class="o">=</span><span class="n">kdims</span><span class="p">)</span>
+            <span class="n">group_kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="n">drop_dim</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">kdims</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">group_kwargs</span><span class="p">[</span><span class="s1">'kdims'</span><span class="p">])</span>
+            <span class="k">def</span> <span class="nf">load_subset</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+                <span class="n">constraint</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">dim_names</span><span class="p">,</span> <span class="n">args</span><span class="p">))</span>
+                <span class="n">group</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="o">**</span><span class="n">constraint</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">group</span><span class="p">):</span>
+                    <span class="k">return</span> <span class="n">group_type</span><span class="p">(([</span><span class="n">group</span><span class="p">],),</span> <span class="n">group</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">group</span><span class="p">,</span>
+                                      <span class="n">label</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">label</span><span class="p">,</span> <span class="n">vdims</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">vdims</span><span class="p">)</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">reindex</span><span class="p">(</span><span class="n">group_dims</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">drop_dim</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">interface</span><span class="o">.</span><span class="n">gridded</span><span class="p">:</span>
+                    <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">()</span>
+                <span class="k">return</span> <span class="n">group_type</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">group_kwargs</span><span class="p">)</span>
+            <span class="n">dynamic_dims</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">interface</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">d</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="kc">False</span><span class="p">)))</span>
+                            <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dimensions</span><span class="p">]</span>
+            <span class="k">return</span> <span class="n">DynamicMap</span><span class="p">(</span><span class="n">load_subset</span><span class="p">,</span> <span class="n">kdims</span><span class="o">=</span><span class="n">dynamic_dims</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">interface</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dim_names</span><span class="p">,</span> <span class="n">container_type</span><span class="p">,</span>
+                                      <span class="n">group_type</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">__len__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Returns the number of rows in the Dataset object.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">interface</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__nonzero__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">interface</span><span class="o">.</span><span class="n">nonzero</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+    <span class="fm">__bool__</span> <span class="o">=</span> <span class="n">__nonzero__</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">shape</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s2">"Returns the shape of the data."</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">interface</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Dataset.dimension_values"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.element.html#holoviews.core.Dataset.dimension_values">[docs]</a>    <span class="k">def</span> <span class="nf">dimension_values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dim</span><span class="p">,</span> <span class="n">expanded</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Returns the values along a particular dimension. If unique</span>
+<span class="sd">        values are requested will return only unique values.</span>
+<span class="sd">        """</span>
+        <span class="n">dim</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_dimension</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">interface</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dim</span><span class="p">,</span> <span class="n">expanded</span><span class="p">,</span> <span class="n">flat</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Dataset.get_dimension_type"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.element.html#holoviews.core.Dataset.get_dimension_type">[docs]</a>    <span class="k">def</span> <span class="nf">get_dimension_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dim</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Returns the specified Dimension type if specified or</span>
+<span class="sd">        if the dimension_values types are consistent otherwise</span>
+<span class="sd">        None is returned.</span>
+<span class="sd">        """</span>
+        <span class="n">dim_obj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_dimension</span><span class="p">(</span><span class="n">dim</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">dim_obj</span> <span class="ow">and</span> <span class="n">dim_obj</span><span class="o">.</span><span class="n">type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">dim_obj</span><span class="o">.</span><span class="n">type</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">interface</span><span class="o">.</span><span class="n">dimension_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dim_obj</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Dataset.dframe"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.element.html#holoviews.core.Dataset.dframe">[docs]</a>    <span class="k">def</span> <span class="nf">dframe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dimensions</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Returns the data in the form of a DataFrame. Supplying a list</span>
+<span class="sd">        of dimensions filters the dataframe. If the data is already</span>
+<span class="sd">        a DataFrame a copy is returned.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">dimensions</span><span class="p">:</span>
+            <span class="n">dimensions</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">get_dimension</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dimensions</span><span class="p">]</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">interface</span><span class="o">.</span><span class="n">dframe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dimensions</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span> <span class="nf">columns</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dimensions</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">dimensions</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">dimensions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimensions</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">dimensions</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">get_dimension</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dimensions</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">OrderedDict</span><span class="p">([(</span><span class="n">d</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">dimension_values</span><span class="p">(</span><span class="n">d</span><span class="p">))</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dimensions</span><span class="p">])</span>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">to</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Property to create a conversion interface with methods to</span>
+<span class="sd">        convert to other Element types.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_conversion_interface</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">iloc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Returns an iloc object providing a convenient interface to</span>
+<span class="sd">        slice and index into the Dataset using row and column indices.</span>
+<span class="sd">        Allow selection by integer index, slice and list of integer</span>
+<span class="sd">        indices and boolean arrays.</span>
+
+<span class="sd">        Examples:</span>
+
+<span class="sd">        * Index the first row and column:</span>
+
+<span class="sd">            dataset.iloc[0, 0]</span>
+
+<span class="sd">        * Select rows 1 and 2 with a slice:</span>
+
+<span class="sd">            dataset.iloc[1:3, :]</span>
+
+<span class="sd">        * Select with a list of integer coordinates:</span>
+
+<span class="sd">            dataset.iloc[[0, 2, 3]]</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="n">iloc</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">ndloc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Returns an ndloc object providing nd-array like indexing for</span>
+<span class="sd">        gridded datasets. Follows NumPy array indexing conventions,</span>
+<span class="sd">        allowing for indexing, slicing and selecting a list of indices</span>
+<span class="sd">        on multi-dimensional arrays using integer indices. The order</span>
+<span class="sd">        of array indices is inverted relative to the Dataset key</span>
+<span class="sd">        dimensions, e.g. an Image with key dimensions 'x' and 'y' can</span>
+<span class="sd">        be indexed with ``image.ndloc[iy, ix]``, where ``iy`` and</span>
+<span class="sd">        ``ix`` are integer indices along the y and x dimensions.</span>
+
+<span class="sd">        Examples:</span>
+
+<span class="sd">        * Index value in 2D array:</span>
+
+<span class="sd">            dataset.ndloc[3, 1]</span>
+
+<span class="sd">        * Slice along y-axis of 2D array:</span>
+
+<span class="sd">            dataset.ndloc[2:5, :]</span>
+
+<span class="sd">        * Vectorized (non-orthogonal) indexing along x- and y-axes:</span>
+
+<span class="sd">            dataset.ndloc[[1, 2, 3], [0, 2, 3]]</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="n">ndloc</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+
+<span class="c1"># Aliases for pickle backward compatibility</span>
+<span class="n">Columns</span>      <span class="o">=</span> <span class="n">Dataset</span>
+<span class="n">ArrayColumns</span> <span class="o">=</span> <span class="n">ArrayInterface</span>
+<span class="n">DictColumns</span>  <span class="o">=</span> <span class="n">DictInterface</span>
+<span class="n">GridColumns</span>  <span class="o">=</span> <span class="n">GridInterface</span>
+</pre>
+    </div>
+   </div>
+  </div>
+  <!-- END MAIN BODY OF DOCS ––––––––––––– -->
+  <footer class="footer">
+   <div class="footer-links">
+    <ul>
+     <li>
+      <span class="footer-title">
+       Links
+      </span>
+     </li>
+     <li>
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li>
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li>
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li>
+      <a href="/Reference_Manual/index.html">
+       API Docs
+      </a>
+     </li>
+     <li>
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li>
+      <a href="/about.html">
+       About
+      </a>
+     </li>
+    </ul>
+    <ul>
+     <li>
+      <span class="footer-title">
+       Join Us
+      </span>
+     </li>
+     <li>
+      <a href="//gitter.im/ioam/holoviews.html">
+       Gitter
+      </a>
+     </li>
+     <li>
+      <a href="//twitter.com/holoviews.html">
+       Twitter
+      </a>
+     </li>
+     <li>
+      <a href="//github.com/ioam/holoviews.html">
+       Github
+      </a>
+     </li>
+    </ul>
+    <ul class="copyright">
+     <li>
+      2017 IOAM: Jean-Luc R. Stevens, Philipp Rudiger, and James A. Bednar
+     </li>
+    </ul>
+   </div>
+  </footer>
+  <!-- Google Analytics -->
+  <script>
+   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-61554933-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <!-- MathJax Config -->
+  <script type="text/x-mathjax-config">
+   MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+  </script>
+  <!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+ </body>
+</html>

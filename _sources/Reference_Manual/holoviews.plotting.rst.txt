@@ -1,0 +1,81 @@
+holoviews.plotting Package
+==========================
+
+
+---------
+
+:mod:`plotting` Package
+-----------------------
+
+.. inheritance-diagram:: holoviews.plotting
+
+
+.. automodule:: holoviews.plotting
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`comms` Module
+-------------------
+
+.. inheritance-diagram:: holoviews.plotting.comms
+
+
+.. automodule:: holoviews.plotting.comms
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`plot` Module
+------------------
+
+.. inheritance-diagram:: holoviews.plotting.plot
+
+
+.. automodule:: holoviews.plotting.plot
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`renderer` Module
+----------------------
+
+.. inheritance-diagram:: holoviews.plotting.renderer
+
+
+.. automodule:: holoviews.plotting.renderer
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`util` Module
+------------------
+
+.. inheritance-diagram:: holoviews.plotting.util
+
+
+.. automodule:: holoviews.plotting.util
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+Subpackages
+-----------
+
+.. toctree::
+
+    holoviews.plotting.bokeh
+    holoviews.plotting.mpl
+    holoviews.plotting.plotly
+    holoviews.plotting.widgets
+

@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8"/>
+  <title>
+   holoviews.plotting.util — HoloViews
+  </title>
+  <meta content="HoloViews library, documentation site." name="description"/>
+  <meta content="HoloViews contributors" name="author"/>
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js">
+  </script>
+  <script>
+   WebFont.load({
+      google: {
+        families: ['Source Sans Pro']
+      }
+    });
+  </script>
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../../../_static/main.css" rel="stylesheet"/>
+  <link href="../../../_static/custom.css" rel="stylesheet"/>
+  <!-- Scripts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
+  </script>
+  <script async="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+  </script>
+  <script src="../../../_static/js/main.js">
+  </script>
+  <script src="../../../_static/custom.js">
+  </script>
+  <script src="../../../_static/require.js">
+  </script>
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../../../_static/images/favicon.ico" rel="icon" type="image/png"/>
+  <!-- Canonical
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="http://holoviews.org/_modules/holoviews/plotting/util.html" rel="canonical"/>
+ </head>
+ <body class="">
+  <header class="navigation">
+   <div class="wrapper">
+    <a class="logo" href="//">
+     <img alt="Logo" src="../../../_static/images/logo.png"/>
+    </a>
+    <a class="navigation-menu logo-text" href="//">
+     HoloViews
+    </a>
+    <a class="navigation-menu-button" href="javascript:void(0)" id="js-mobile-menu">
+     Menu
+    </a>
+    <nav>
+     <ul class="navigation-menu show" id="js-navigation-menu">
+      <li class="nav-link">
+       <a href="/about.html">
+        About
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="/gallery/index.html">
+        Gallery
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="//github.com/ioam/holoviews.html">
+        Github
+       </a>
+      </li>
+     </ul>
+    </nav>
+   </div>
+  </header>
+  <div class="second-nav">
+   <nav>
+    <ul class="navigation-menu show">
+     <li class="nav-link doc-head">
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+    </ul>
+   </nav>
+   <div class="navigation-tools">
+    <div class="search-bar">
+     <form action="../../../search.html" method="get" role="search">
+      <input name="q" placeholder="Search" type="search"/>
+      <button type="submit">
+       <img alt="Search Icon" src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/search-icon-black.png"/>
+      </button>
+     </form>
+    </div>
+   </div>
+  </div>
+  <!-- MAIN BODY OF DOCS –––––––––––––––––– -->
+  <div class="docs section">
+   <div class="toc">
+    <ul>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference external" href="http://github.com/ioam/holoviews">
+       Github source
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../about.html">
+       About
+      </a>
+     </li>
+    </ul>
+   </div>
+   <div class="content">
+    <h1>
+     Source code for holoviews.plotting.util
+    </h1>
+    <div class="highlight">
+     <pre><span></span><span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">unicode_literals</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">defaultdict</span>
+<span class="kn">import</span> <span class="nn">traceback</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">param</span>
+
+<span class="kn">from</span> <span class="nn">..core</span> <span class="k">import</span> <span class="p">(</span><span class="n">HoloMap</span><span class="p">,</span> <span class="n">DynamicMap</span><span class="p">,</span> <span class="n">CompositeOverlay</span><span class="p">,</span> <span class="n">Layout</span><span class="p">,</span>
+                    <span class="n">Overlay</span><span class="p">,</span> <span class="n">GridSpace</span><span class="p">,</span> <span class="n">NdLayout</span><span class="p">,</span> <span class="n">Store</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">..core.spaces</span> <span class="k">import</span> <span class="n">get_nested_streams</span>
+<span class="kn">from</span> <span class="nn">..core.util</span> <span class="k">import</span> <span class="p">(</span><span class="n">match_spec</span><span class="p">,</span> <span class="n">is_number</span><span class="p">,</span> <span class="n">wrap_tuple</span><span class="p">,</span> <span class="n">basestring</span><span class="p">,</span>
+                         <span class="n">get_overlay_spec</span><span class="p">,</span> <span class="n">unique_iterator</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">..element</span> <span class="k">import</span> <span class="n">Area</span><span class="p">,</span> <span class="n">Polygons</span>
+<span class="kn">from</span> <span class="nn">..operation.stats</span> <span class="k">import</span> <span class="n">univariate_kde</span><span class="p">,</span> <span class="n">bivariate_kde</span><span class="p">,</span> <span class="n">Operation</span>
+<span class="kn">from</span> <span class="nn">..streams</span> <span class="k">import</span> <span class="n">LinkedStream</span>
+
+<div class="viewcode-block" id="displayable"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.plotting.html#holoviews.plotting.util.displayable">[docs]</a><span class="k">def</span> <span class="nf">displayable</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Predicate that returns whether the object is displayable or not</span>
+<span class="sd">    (i.e whether the object obeys the nesting hierarchy</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Overlay</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="p">(</span><span class="n">HoloMap</span><span class="p">,</span> <span class="n">GridSpace</span><span class="p">))</span>
+                                        <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">HoloMap</span><span class="p">):</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="p">[</span><span class="n">Layout</span><span class="p">,</span> <span class="n">GridSpace</span><span class="p">,</span> <span class="n">NdLayout</span><span class="p">])</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="p">(</span><span class="n">GridSpace</span><span class="p">,</span> <span class="n">Layout</span><span class="p">,</span> <span class="n">NdLayout</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">displayable</span><span class="p">(</span><span class="n">el</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<span class="k">class</span> <span class="nc">Warning</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">Parameterized</span><span class="p">):</span> <span class="k">pass</span>
+<span class="n">display_warning</span> <span class="o">=</span> <span class="ne">Warning</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">'Warning'</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">collate</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Overlay</span><span class="p">):</span>
+        <span class="n">nested_type</span> <span class="o">=</span> <span class="p">[</span><span class="nb">type</span><span class="p">(</span><span class="n">o</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">obj</span>
+                       <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="p">(</span><span class="n">HoloMap</span><span class="p">,</span> <span class="n">GridSpace</span><span class="p">))][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">display_warning</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">"Nesting </span><span class="si">%s</span><span class="s2">s within an Overlay makes it difficult "</span>
+                                <span class="s2">"to access your data or control how it appears; "</span>
+                                <span class="s2">"we recommend calling .collate() on the Overlay "</span>
+                                <span class="s2">"in order to follow the recommended nesting "</span>
+                                <span class="s2">"structure shown in the Composing Data tutorial"</span>
+                                <span class="s2">"(http://goo.gl/2YS8LJ)"</span> <span class="o">%</span> <span class="n">nested_type</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">collate</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">DynamicMap</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">collate</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">HoloMap</span><span class="p">):</span>
+        <span class="n">display_warning</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">"Nesting </span><span class="si">{0}</span><span class="s2">s within a </span><span class="si">{1}</span><span class="s2"> makes it difficult "</span>
+                                <span class="s2">"to access your data or control how it appears; "</span>
+                                <span class="s2">"we recommend calling .collate() on the </span><span class="si">{1}</span><span class="s2"> "</span>
+                                <span class="s2">"in order to follow the recommended nesting "</span>
+                                <span class="s2">"structure shown in the Composing Data tutorial"</span>
+                                <span class="s2">"(https://goo.gl/2YS8LJ)"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">collate</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="p">(</span><span class="n">Layout</span><span class="p">,</span> <span class="n">NdLayout</span><span class="p">)):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">display_warning</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s2">"Layout contains HoloMaps which are not nested in the "</span>
+                <span class="s2">"recommended format for accessing your data; calling "</span>
+                <span class="s2">".collate() on these objects will resolve any violations "</span>
+                <span class="s2">"of the recommended nesting presented in the Composing Data "</span>
+                <span class="s2">"tutorial (https://goo.gl/2YS8LJ)"</span><span class="p">)</span>
+            <span class="n">expanded</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">el</span><span class="p">,</span> <span class="n">HoloMap</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">displayable</span><span class="p">(</span><span class="n">el</span><span class="p">):</span>
+                    <span class="n">collated_layout</span> <span class="o">=</span> <span class="n">Layout</span><span class="o">.</span><span class="n">from_values</span><span class="p">(</span><span class="n">el</span><span class="o">.</span><span class="n">collate</span><span class="p">())</span>
+                    <span class="n">expanded</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">collated_layout</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+            <span class="k">return</span> <span class="n">Layout</span><span class="p">(</span><span class="n">expanded</span><span class="p">)</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">undisplayable_info</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">undisplayable_info</span><span class="p">(</span><span class="n">obj</span><span class="p">))</span>
+
+
+<div class="viewcode-block" id="isoverlay_fn"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.plotting.html#holoviews.plotting.util.isoverlay_fn">[docs]</a><span class="k">def</span> <span class="nf">isoverlay_fn</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Determines whether object is a DynamicMap returning (Nd)Overlay types.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">DynamicMap</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">last</span><span class="p">,</span> <span class="n">CompositeOverlay</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="overlay_depth"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.plotting.html#holoviews.plotting.util.overlay_depth">[docs]</a><span class="k">def</span> <span class="nf">overlay_depth</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Computes the depth of a DynamicMap overlay if it can be determined</span>
+<span class="sd">    otherwise return None.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">DynamicMap</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">last</span><span class="p">,</span> <span class="n">CompositeOverlay</span><span class="p">):</span>
+            <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">last</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">obj</span><span class="o">.</span><span class="n">last</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="mi">1</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">1</span></div>
+
+
+<div class="viewcode-block" id="compute_overlayable_zorders"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.plotting.html#holoviews.plotting.util.compute_overlayable_zorders">[docs]</a><span class="k">def</span> <span class="nf">compute_overlayable_zorders</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="p">[]):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Traverses an overlayable composite container to determine which</span>
+<span class="sd">    objects are associated with specific (Nd)Overlay layers by</span>
+<span class="sd">    z-order, making sure to take DynamicMap Callables into</span>
+<span class="sd">    account. Returns a mapping between the zorders of each layer and a</span>
+<span class="sd">    corresponding lists of objects.</span>
+
+<span class="sd">    Used to determine which overlaid subplots should be linked with</span>
+<span class="sd">    Stream callbacks.</span>
+<span class="sd">    """</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">path</span><span class="o">+</span><span class="p">[</span><span class="n">obj</span><span class="p">]</span>
+    <span class="n">zorder_map</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+
+    <span class="c1"># Process non-dynamic layers</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">DynamicMap</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">CompositeOverlay</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">z</span><span class="p">,</span> <span class="n">o</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+                <span class="n">zorder_map</span><span class="p">[</span><span class="n">z</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">o</span><span class="p">,</span> <span class="n">obj</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">obj</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">zorder_map</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+                <span class="n">zorder_map</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">zorder_map</span>
+
+    <span class="n">isoverlay</span> <span class="o">=</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">last</span><span class="p">,</span> <span class="n">CompositeOverlay</span><span class="p">)</span>
+    <span class="n">isdynoverlay</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">callback</span><span class="o">.</span><span class="n">_is_overlay</span>
+    <span class="k">if</span> <span class="n">obj</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">zorder_map</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">isoverlay</span><span class="p">:</span>
+        <span class="n">zorder_map</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+    <span class="n">depth</span> <span class="o">=</span> <span class="n">overlay_depth</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+
+    <span class="c1"># Process the inputs of the DynamicMap callback</span>
+    <span class="n">dmap_inputs</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">callback</span><span class="o">.</span><span class="n">inputs</span> <span class="k">if</span> <span class="n">obj</span><span class="o">.</span><span class="n">callback</span><span class="o">.</span><span class="n">link_inputs</span> <span class="k">else</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">z</span><span class="p">,</span> <span class="n">inp</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">dmap_inputs</span><span class="p">):</span>
+        <span class="n">no_zorder_increment</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="ow">not</span> <span class="p">(</span><span class="n">isoverlay_fn</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="ow">or</span> <span class="n">p</span><span class="o">.</span><span class="n">last</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">path</span><span class="p">)</span> <span class="ow">and</span> <span class="n">isoverlay_fn</span><span class="p">(</span><span class="n">inp</span><span class="p">):</span>
+            <span class="c1"># If overlay has been collapsed do not increment zorder</span>
+            <span class="n">no_zorder_increment</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="n">input_depth</span> <span class="o">=</span> <span class="n">overlay_depth</span><span class="p">(</span><span class="n">inp</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">depth</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">input_depth</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">depth</span> <span class="o">&lt;</span> <span class="n">input_depth</span><span class="p">:</span>
+            <span class="c1"># Skips branch of graph where the number of elements in an</span>
+            <span class="c1"># overlay has been reduced but still contains more than one layer</span>
+            <span class="k">if</span> <span class="n">depth</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">no_zorder_increment</span> <span class="o">=</span> <span class="kc">True</span>
+
+        <span class="c1"># Recurse into DynamicMap.callback.inputs and update zorder_map</span>
+        <span class="n">z</span> <span class="o">=</span> <span class="n">z</span> <span class="k">if</span> <span class="n">isdynoverlay</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="n">deep_zorders</span> <span class="o">=</span> <span class="n">compute_overlayable_zorders</span><span class="p">(</span><span class="n">inp</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">)</span>
+        <span class="n">offset</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">zorder_map</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="k">for</span> <span class="n">dz</span><span class="p">,</span> <span class="n">objs</span> <span class="ow">in</span> <span class="n">deep_zorders</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">global_z</span> <span class="o">=</span> <span class="n">offset</span><span class="o">+</span><span class="n">z</span> <span class="k">if</span> <span class="n">no_zorder_increment</span> <span class="k">else</span> <span class="n">offset</span><span class="o">+</span><span class="n">dz</span><span class="o">+</span><span class="n">z</span>
+            <span class="n">zorder_map</span><span class="p">[</span><span class="n">global_z</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">unique_iterator</span><span class="p">(</span><span class="n">zorder_map</span><span class="p">[</span><span class="n">global_z</span><span class="p">]</span><span class="o">+</span><span class="n">objs</span><span class="p">))</span>
+
+    <span class="c1"># If object branches but does not declare inputs (e.g. user defined</span>
+    <span class="c1"># DynamicMaps returning (Nd)Overlay) add the items on the DynamicMap.last</span>
+    <span class="n">found</span> <span class="o">=</span> <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">DynamicMap</span><span class="p">)</span> <span class="ow">and</span> <span class="n">p</span><span class="o">.</span><span class="n">callback</span><span class="o">.</span><span class="n">_is_overlay</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">path</span><span class="p">)</span>
+    <span class="n">linked</span> <span class="o">=</span>  <span class="nb">any</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">LinkedStream</span><span class="p">)</span> <span class="ow">and</span> <span class="n">s</span><span class="o">.</span><span class="n">linked</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">streams</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">found</span> <span class="ow">or</span> <span class="n">linked</span><span class="p">)</span> <span class="ow">and</span> <span class="n">isoverlay</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">isdynoverlay</span><span class="p">:</span>
+        <span class="n">offset</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">zorder_map</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="k">for</span> <span class="n">z</span><span class="p">,</span> <span class="n">o</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">last</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">isoverlay</span> <span class="ow">and</span> <span class="n">linked</span><span class="p">:</span>
+                <span class="n">zorder_map</span><span class="p">[</span><span class="n">offset</span><span class="o">+</span><span class="n">z</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">o</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">zorder_map</span><span class="p">[</span><span class="n">offset</span><span class="o">+</span><span class="n">z</span><span class="p">]:</span>
+                <span class="n">zorder_map</span><span class="p">[</span><span class="n">offset</span><span class="o">+</span><span class="n">z</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">o</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">zorder_map</span></div>
+
+
+<div class="viewcode-block" id="initialize_dynamic"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.plotting.html#holoviews.plotting.util.initialize_dynamic">[docs]</a><span class="k">def</span> <span class="nf">initialize_dynamic</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Initializes all DynamicMap objects contained by the object</span>
+<span class="sd">    """</span>
+    <span class="n">dmaps</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">traverse</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="n">specs</span><span class="o">=</span><span class="p">[</span><span class="n">DynamicMap</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">dmap</span> <span class="ow">in</span> <span class="n">dmaps</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">dmap</span><span class="o">.</span><span class="n">unbounded</span><span class="p">:</span>
+            <span class="c1"># Skip initialization until plotting code</span>
+            <span class="k">continue</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">dmap</span><span class="p">):</span>
+            <span class="n">dmap</span><span class="p">[</span><span class="n">dmap</span><span class="o">.</span><span class="n">_initial_key</span><span class="p">()]</span></div>
+
+
+<div class="viewcode-block" id="get_plot_frame"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.plotting.html#holoviews.plotting.util.get_plot_frame">[docs]</a><span class="k">def</span> <span class="nf">get_plot_frame</span><span class="p">(</span><span class="n">map_obj</span><span class="p">,</span> <span class="n">key_map</span><span class="p">,</span> <span class="n">cached</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Returns an item in a HoloMap or DynamicMap given a mapping key</span>
+<span class="sd">    dimensions and their values.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">map_obj</span><span class="o">.</span><span class="n">kdims</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">map_obj</span><span class="o">.</span><span class="n">kdims</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">map_obj</span><span class="o">.</span><span class="n">kdims</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'Frame'</span><span class="p">:</span>
+        <span class="c1"># Special handling for static plots</span>
+        <span class="k">return</span> <span class="n">map_obj</span><span class="o">.</span><span class="n">last</span>
+    <span class="n">key</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">key_map</span><span class="p">[</span><span class="n">kd</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="k">for</span> <span class="n">kd</span> <span class="ow">in</span> <span class="n">map_obj</span><span class="o">.</span><span class="n">kdims</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">map_obj</span><span class="o">.</span><span class="n">data</span> <span class="ow">and</span> <span class="n">cached</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">map_obj</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">map_obj</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">except</span> <span class="ne">StopIteration</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">e</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="undisplayable_info"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.plotting.html#holoviews.plotting.util.undisplayable_info">[docs]</a><span class="k">def</span> <span class="nf">undisplayable_info</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">html</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="s2">"Generate helpful message regarding an undisplayable object"</span>
+
+    <span class="n">collate</span> <span class="o">=</span> <span class="s1">'&lt;tt&gt;collate&lt;/tt&gt;'</span> <span class="k">if</span> <span class="n">html</span> <span class="k">else</span> <span class="s1">'collate'</span>
+    <span class="n">info</span> <span class="o">=</span> <span class="s2">"For more information, please consult the Composing Data tutorial (http://git.io/vtIQh)"</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">HoloMap</span><span class="p">):</span>
+        <span class="n">error</span> <span class="o">=</span> <span class="s2">"HoloMap of </span><span class="si">%s</span><span class="s2"> objects cannot be displayed."</span> <span class="o">%</span> <span class="n">obj</span><span class="o">.</span><span class="n">type</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="n">remedy</span> <span class="o">=</span> <span class="s2">"Please call the </span><span class="si">%s</span><span class="s2"> method to generate a displayable object"</span> <span class="o">%</span> <span class="n">collate</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">Layout</span><span class="p">):</span>
+        <span class="n">error</span> <span class="o">=</span> <span class="s2">"Layout containing HoloMaps of Layout or GridSpace objects cannot be displayed."</span>
+        <span class="n">remedy</span> <span class="o">=</span> <span class="s2">"Please call the </span><span class="si">%s</span><span class="s2"> method on the appropriate elements."</span> <span class="o">%</span> <span class="n">collate</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">GridSpace</span><span class="p">):</span>
+        <span class="n">error</span> <span class="o">=</span> <span class="s2">"GridSpace containing HoloMaps of Layouts cannot be displayed."</span>
+        <span class="n">remedy</span> <span class="o">=</span> <span class="s2">"Please call the </span><span class="si">%s</span><span class="s2"> method on the appropriate elements."</span> <span class="o">%</span> <span class="n">collate</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">html</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">error</span><span class="p">,</span> <span class="n">remedy</span><span class="p">,</span> <span class="n">info</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">"&lt;center&gt;</span><span class="si">{msg}</span><span class="s2">&lt;/center&gt;"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">msg</span><span class="o">=</span><span class="p">(</span><span class="s1">'&lt;br&gt;'</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="p">[</span><span class="s1">'&lt;b&gt;</span><span class="si">%s</span><span class="s1">&lt;/b&gt;'</span> <span class="o">%</span> <span class="n">error</span><span class="p">,</span> <span class="n">remedy</span><span class="p">,</span> <span class="s1">'&lt;i&gt;</span><span class="si">%s</span><span class="s1">&lt;/i&gt;'</span> <span class="o">%</span> <span class="n">info</span><span class="p">])))</span></div>
+
+
+<div class="viewcode-block" id="compute_sizes"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.plotting.html#holoviews.plotting.util.compute_sizes">[docs]</a><span class="k">def</span> <span class="nf">compute_sizes</span><span class="p">(</span><span class="n">sizes</span><span class="p">,</span> <span class="n">size_fn</span><span class="p">,</span> <span class="n">scaling_factor</span><span class="p">,</span> <span class="n">scaling_method</span><span class="p">,</span> <span class="n">base_size</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Scales point sizes according to a scaling factor,</span>
+<span class="sd">    base size and size_fn, which will be applied before</span>
+<span class="sd">    scaling.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">sizes</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">kind</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'i'</span><span class="p">,</span> <span class="s1">'f'</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">scaling_method</span> <span class="o">==</span> <span class="s1">'area'</span><span class="p">:</span>
+        <span class="k">pass</span>
+    <span class="k">elif</span> <span class="n">scaling_method</span> <span class="o">==</span> <span class="s1">'width'</span><span class="p">:</span>
+        <span class="n">scaling_factor</span> <span class="o">=</span> <span class="n">scaling_factor</span><span class="o">**</span><span class="mi">2</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+            <span class="s1">'Invalid value for argument "scaling_method": "</span><span class="si">{}</span><span class="s1">". '</span>
+            <span class="s1">'Valid values are: "width", "area".'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">scaling_method</span><span class="p">))</span>
+    <span class="n">sizes</span> <span class="o">=</span> <span class="n">size_fn</span><span class="p">(</span><span class="n">sizes</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">base_size</span><span class="o">*</span><span class="n">scaling_factor</span><span class="o">*</span><span class="n">sizes</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_sideplot_ranges"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.plotting.html#holoviews.plotting.util.get_sideplot_ranges">[docs]</a><span class="k">def</span> <span class="nf">get_sideplot_ranges</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="n">element</span><span class="p">,</span> <span class="n">main</span><span class="p">,</span> <span class="n">ranges</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Utility to find the range for an adjoined</span>
+<span class="sd">    plot given the plot, the element, the</span>
+<span class="sd">    Element the plot is adjoined to and the</span>
+<span class="sd">    dictionary of ranges.</span>
+<span class="sd">    """</span>
+    <span class="n">key</span> <span class="o">=</span> <span class="n">plot</span><span class="o">.</span><span class="n">current_key</span>
+    <span class="n">dims</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">dimensions</span><span class="p">()</span>
+    <span class="n">dim</span> <span class="o">=</span> <span class="n">dims</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="s1">'frequency'</span> <span class="ow">in</span> <span class="n">dims</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">name</span> <span class="k">else</span> <span class="n">dims</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">range_item</span> <span class="o">=</span> <span class="n">main</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">main</span><span class="p">,</span> <span class="n">HoloMap</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">main</span><span class="o">.</span><span class="n">type</span><span class="p">,</span> <span class="n">CompositeOverlay</span><span class="p">):</span>
+            <span class="n">range_item</span> <span class="o">=</span> <span class="p">[</span><span class="n">hm</span> <span class="k">for</span> <span class="n">hm</span> <span class="ow">in</span> <span class="n">main</span><span class="o">.</span><span class="n">split_overlays</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span>
+                          <span class="k">if</span> <span class="n">dim</span> <span class="ow">in</span> <span class="n">hm</span><span class="o">.</span><span class="n">dimensions</span><span class="p">(</span><span class="s1">'all'</span><span class="p">)][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">range_item</span> <span class="o">=</span> <span class="n">HoloMap</span><span class="p">({</span><span class="mi">0</span><span class="p">:</span> <span class="n">main</span><span class="p">},</span> <span class="n">kdims</span><span class="o">=</span><span class="p">[</span><span class="s1">'Frame'</span><span class="p">])</span>
+        <span class="n">ranges</span> <span class="o">=</span> <span class="n">match_spec</span><span class="p">(</span><span class="n">range_item</span><span class="o">.</span><span class="n">last</span><span class="p">,</span> <span class="n">ranges</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">dim</span><span class="o">.</span><span class="n">name</span> <span class="ow">in</span> <span class="n">ranges</span><span class="p">:</span>
+        <span class="n">main_range</span> <span class="o">=</span> <span class="n">ranges</span><span class="p">[</span><span class="n">dim</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">framewise</span> <span class="o">=</span> <span class="n">plot</span><span class="o">.</span><span class="n">lookup_options</span><span class="p">(</span><span class="n">range_item</span><span class="o">.</span><span class="n">last</span><span class="p">,</span> <span class="s1">'norm'</span><span class="p">)</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'framewise'</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">framewise</span> <span class="ow">and</span> <span class="n">range_item</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="n">main_range</span> <span class="o">=</span> <span class="n">range_item</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="n">dim</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">main_range</span> <span class="o">=</span> <span class="n">range_item</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="n">dim</span><span class="p">)</span>
+
+    <span class="c1"># If .main is an NdOverlay or a HoloMap of Overlays get the correct style</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">range_item</span><span class="p">,</span> <span class="n">HoloMap</span><span class="p">):</span>
+        <span class="n">range_item</span> <span class="o">=</span> <span class="n">range_item</span><span class="o">.</span><span class="n">last</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">range_item</span><span class="p">,</span> <span class="n">CompositeOverlay</span><span class="p">):</span>
+        <span class="n">range_item</span> <span class="o">=</span> <span class="p">[</span><span class="n">ov</span> <span class="k">for</span> <span class="n">ov</span> <span class="ow">in</span> <span class="n">range_item</span>
+                      <span class="k">if</span> <span class="n">dim</span> <span class="ow">in</span> <span class="n">ov</span><span class="o">.</span><span class="n">dimensions</span><span class="p">(</span><span class="s1">'all'</span><span class="p">)][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">range_item</span><span class="p">,</span> <span class="n">main_range</span><span class="p">,</span> <span class="n">dim</span></div>
+
+
+<div class="viewcode-block" id="within_range"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.plotting.html#holoviews.plotting.util.within_range">[docs]</a><span class="k">def</span> <span class="nf">within_range</span><span class="p">(</span><span class="n">range1</span><span class="p">,</span> <span class="n">range2</span><span class="p">):</span>
+    <span class="sd">"""Checks whether range1 is within the range specified by range2."""</span>
+    <span class="n">range1</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">range1</span><span class="p">]</span>
+    <span class="n">range2</span> <span class="o">=</span> <span class="p">[</span><span class="n">r</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">r</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">range2</span><span class="p">]</span>
+    <span class="k">return</span> <span class="p">((</span><span class="n">range1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">range2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">range1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="n">range2</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="ow">and</span>
+            <span class="p">(</span><span class="n">range1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">range2</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">range1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">range2</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span></div>
+
+
+<span class="k">def</span> <span class="nf">validate_unbounded_mode</span><span class="p">(</span><span class="n">holomaps</span><span class="p">,</span> <span class="n">dynmaps</span><span class="p">):</span>
+    <span class="n">composite</span> <span class="o">=</span> <span class="n">HoloMap</span><span class="p">(</span><span class="nb">enumerate</span><span class="p">(</span><span class="n">holomaps</span><span class="p">),</span> <span class="n">kdims</span><span class="o">=</span><span class="p">[</span><span class="s1">'testing_kdim'</span><span class="p">])</span>
+    <span class="n">holomap_kdims</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">unique_iterator</span><span class="p">([</span><span class="n">kd</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">dm</span> <span class="ow">in</span> <span class="n">holomaps</span> <span class="k">for</span> <span class="n">kd</span> <span class="ow">in</span> <span class="n">dm</span><span class="o">.</span><span class="n">kdims</span><span class="p">]))</span>
+    <span class="n">hmranges</span> <span class="o">=</span> <span class="p">{</span><span class="n">d</span><span class="p">:</span> <span class="n">composite</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">holomap_kdims</span><span class="p">}</span>
+    <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="ow">not</span> <span class="nb">set</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dm</span><span class="o">.</span><span class="n">kdims</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">holomap_kdims</span>
+                        <span class="k">for</span> <span class="n">dm</span> <span class="ow">in</span> <span class="n">dynmaps</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">'DynamicMap that are unbounded must have key dimensions that are a '</span>
+                        <span class="s1">'subset of dimensions of the HoloMap(s) defining the keys.'</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="n">within_range</span><span class="p">(</span><span class="n">hmrange</span><span class="p">,</span> <span class="n">dm</span><span class="o">.</span><span class="n">range</span><span class="p">(</span><span class="n">d</span><span class="p">))</span> <span class="k">for</span> <span class="n">dm</span> <span class="ow">in</span> <span class="n">dynmaps</span>
+                              <span class="k">for</span> <span class="n">d</span><span class="p">,</span> <span class="n">hmrange</span> <span class="ow">in</span> <span class="n">hmranges</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dm</span><span class="o">.</span><span class="n">kdims</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">'HoloMap(s) have keys outside the ranges specified on '</span>
+                        <span class="s1">'the DynamicMap(s).'</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="get_dynamic_mode"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.plotting.html#holoviews.plotting.util.get_dynamic_mode">[docs]</a><span class="k">def</span> <span class="nf">get_dynamic_mode</span><span class="p">(</span><span class="n">composite</span><span class="p">):</span>
+    <span class="s2">"Returns the common mode of the dynamic maps in given composite object"</span>
+    <span class="n">dynmaps</span> <span class="o">=</span> <span class="n">composite</span><span class="o">.</span><span class="n">traverse</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="n">DynamicMap</span><span class="p">])</span>
+    <span class="n">holomaps</span> <span class="o">=</span> <span class="n">composite</span><span class="o">.</span><span class="n">traverse</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span> <span class="p">[</span><span class="s1">'HoloMap'</span><span class="p">])</span>
+    <span class="n">dynamic_unbounded</span> <span class="o">=</span> <span class="nb">any</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">unbounded</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">dynmaps</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">holomaps</span><span class="p">:</span>
+        <span class="n">validate_unbounded_mode</span><span class="p">(</span><span class="n">holomaps</span><span class="p">,</span> <span class="n">dynmaps</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">dynamic_unbounded</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">holomaps</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">"DynamicMaps in unbounded mode must be displayed alongside "</span>
+                        <span class="s2">"a HoloMap to define the sampling."</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">dynmaps</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">holomaps</span><span class="p">,</span> <span class="n">dynamic_unbounded</span></div>
+
+
+<div class="viewcode-block" id="initialize_unbounded"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.plotting.html#holoviews.plotting.util.initialize_unbounded">[docs]</a><span class="k">def</span> <span class="nf">initialize_unbounded</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">dimensions</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Initializes any DynamicMaps in unbounded mode.</span>
+<span class="sd">    """</span>
+    <span class="n">select</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">([</span><span class="n">d</span><span class="o">.</span><span class="n">name</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dimensions</span><span class="p">],</span> <span class="n">key</span><span class="p">))</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">obj</span><span class="o">.</span><span class="n">select</span><span class="p">([</span><span class="n">DynamicMap</span><span class="p">],</span> <span class="o">**</span><span class="n">select</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+        <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="save_frames"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.plotting.html#holoviews.plotting.util.save_frames">[docs]</a><span class="k">def</span> <span class="nf">save_frames</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Utility to export object to files frame by frame, numbered individually.</span>
+<span class="sd">    Will use default backend and figure format by default.</span>
+<span class="sd">    """</span>
+    <span class="n">backend</span> <span class="o">=</span> <span class="n">Store</span><span class="o">.</span><span class="n">current_backend</span> <span class="k">if</span> <span class="n">backend</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">backend</span>
+    <span class="n">renderer</span> <span class="o">=</span> <span class="n">Store</span><span class="o">.</span><span class="n">renderers</span><span class="p">[</span><span class="n">backend</span><span class="p">]</span>
+    <span class="n">fmt</span> <span class="o">=</span> <span class="n">renderer</span><span class="o">.</span><span class="n">params</span><span class="p">(</span><span class="s1">'fig'</span><span class="p">)</span><span class="o">.</span><span class="n">objects</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">fmt</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">fmt</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="n">renderer</span><span class="o">.</span><span class="n">get_plot</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">plot</span><span class="p">)):</span>
+        <span class="n">plot</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+        <span class="n">renderer</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="s1">'</span><span class="si">%s</span><span class="s1">_</span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">i</span><span class="p">),</span> <span class="n">fmt</span><span class="o">=</span><span class="n">fmt</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="n">options</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="dynamic_update"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.plotting.html#holoviews.plotting.util.dynamic_update">[docs]</a><span class="k">def</span> <span class="nf">dynamic_update</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="n">subplot</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">overlay</span><span class="p">,</span> <span class="n">items</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Given a plot, subplot and dynamically generated (Nd)Overlay</span>
+<span class="sd">    find the closest matching Element for that plot.</span>
+<span class="sd">    """</span>
+    <span class="n">match_spec</span> <span class="o">=</span> <span class="n">get_overlay_spec</span><span class="p">(</span><span class="n">overlay</span><span class="p">,</span>
+                                  <span class="n">wrap_tuple</span><span class="p">(</span><span class="n">key</span><span class="p">),</span>
+                                  <span class="n">subplot</span><span class="o">.</span><span class="n">current_frame</span><span class="p">)</span>
+    <span class="n">specs</span> <span class="o">=</span> <span class="p">[(</span><span class="n">i</span><span class="p">,</span> <span class="n">get_overlay_spec</span><span class="p">(</span><span class="n">overlay</span><span class="p">,</span> <span class="n">wrap_tuple</span><span class="p">(</span><span class="n">k</span><span class="p">),</span> <span class="n">el</span><span class="p">))</span>
+             <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">el</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">items</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="n">closest_match</span><span class="p">(</span><span class="n">match_spec</span><span class="p">,</span> <span class="n">specs</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="closest_match"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.plotting.html#holoviews.plotting.util.closest_match">[docs]</a><span class="k">def</span> <span class="nf">closest_match</span><span class="p">(</span><span class="n">match</span><span class="p">,</span> <span class="n">specs</span><span class="p">,</span> <span class="n">depth</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Recursively iterates over type, group, label and overlay key,</span>
+<span class="sd">    finding the closest matching spec.</span>
+<span class="sd">    """</span>
+    <span class="n">new_specs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">match_lengths</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">spec</span> <span class="ow">in</span> <span class="n">specs</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">spec</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">match</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="n">new_specs</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="n">spec</span><span class="p">[</span><span class="mi">1</span><span class="p">:]))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">is_number</span><span class="p">(</span><span class="n">match</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="ow">and</span> <span class="n">is_number</span><span class="p">(</span><span class="n">spec</span><span class="p">[</span><span class="mi">0</span><span class="p">]):</span>
+                <span class="n">match_length</span> <span class="o">=</span> <span class="o">-</span><span class="nb">abs</span><span class="p">(</span><span class="n">match</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">-</span><span class="n">spec</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">elif</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">s</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">basestring</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="p">[</span><span class="n">spec</span><span class="p">,</span> <span class="n">match</span><span class="p">]):</span>
+                <span class="n">match_length</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">match</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+                                   <span class="k">if</span> <span class="n">match</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">spec</span><span class="p">[</span><span class="mi">0</span><span class="p">][:</span><span class="n">i</span><span class="p">]))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">match_length</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">match_lengths</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">i</span><span class="p">,</span> <span class="n">match_length</span><span class="p">,</span> <span class="n">spec</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_specs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">new_specs</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">new_specs</span><span class="p">:</span>
+        <span class="n">depth</span> <span class="o">=</span> <span class="n">depth</span><span class="o">+</span><span class="mi">1</span>
+        <span class="k">return</span> <span class="n">closest_match</span><span class="p">(</span><span class="n">match</span><span class="p">[</span><span class="mi">1</span><span class="p">:],</span> <span class="n">new_specs</span><span class="p">,</span> <span class="n">depth</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">depth</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">match_lengths</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">match_lengths</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="o">-</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span></div>
+
+
+<div class="viewcode-block" id="map_colors"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.plotting.html#holoviews.plotting.util.map_colors">[docs]</a><span class="k">def</span> <span class="nf">map_colors</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">crange</span><span class="p">,</span> <span class="n">cmap</span><span class="p">,</span> <span class="nb">hex</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Maps an array of values to RGB hex strings, given</span>
+<span class="sd">    a color range and colormap.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">crange</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="n">xsorted</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">crange</span><span class="p">)</span>
+        <span class="n">ypos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">searchsorted</span><span class="p">(</span><span class="n">crange</span><span class="p">[</span><span class="n">xsorted</span><span class="p">],</span> <span class="n">arr</span><span class="p">)</span>
+        <span class="n">arr</span> <span class="o">=</span> <span class="n">xsorted</span><span class="p">[</span><span class="n">ypos</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">crange</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="n">cmin</span><span class="p">,</span> <span class="n">cmax</span> <span class="o">=</span> <span class="n">crange</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">cmin</span><span class="p">,</span> <span class="n">cmax</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmin</span><span class="p">(</span><span class="n">arr</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">nanmax</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+        <span class="n">arr</span> <span class="o">=</span> <span class="p">(</span><span class="n">arr</span> <span class="o">-</span> <span class="n">cmin</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">cmax</span><span class="o">-</span><span class="n">cmin</span><span class="p">)</span>
+        <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ma</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">mask</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">logical_not</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">arr</span><span class="p">)))</span>
+    <span class="n">arr</span> <span class="o">=</span> <span class="n">cmap</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">hex</span><span class="p">:</span>
+        <span class="n">arr</span> <span class="o">*=</span> <span class="mi">255</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s2">"#</span><span class="si">{0:02x}{1:02x}{2:02x}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">c</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+                <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">arr</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">arr</span></div>
+
+
+<div class="viewcode-block" id="dim_axis_label"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.plotting.html#holoviews.plotting.util.dim_axis_label">[docs]</a><span class="k">def</span> <span class="nf">dim_axis_label</span><span class="p">(</span><span class="n">dimensions</span><span class="p">,</span> <span class="n">separator</span><span class="o">=</span><span class="s1">', '</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Returns an axis label for one or more dimensions.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dimensions</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span> <span class="n">dimensions</span> <span class="o">=</span> <span class="p">[</span><span class="n">dimensions</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">separator</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">d</span><span class="o">.</span><span class="n">pprint_label</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dimensions</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="attach_streams"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.plotting.html#holoviews.plotting.util.attach_streams">[docs]</a><span class="k">def</span> <span class="nf">attach_streams</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">precedence</span><span class="o">=</span><span class="mf">1.1</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Attaches plot refresh to all streams on the object.</span>
+<span class="sd">    """</span>
+    <span class="k">def</span> <span class="nf">append_refresh</span><span class="p">(</span><span class="n">dmap</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">stream</span> <span class="ow">in</span> <span class="n">get_nested_streams</span><span class="p">(</span><span class="n">dmap</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">plot</span><span class="o">.</span><span class="n">refresh</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stream</span><span class="o">.</span><span class="n">_subscribers</span><span class="p">:</span>
+                <span class="n">stream</span><span class="o">.</span><span class="n">add_subscriber</span><span class="p">(</span><span class="n">plot</span><span class="o">.</span><span class="n">refresh</span><span class="p">,</span> <span class="n">precedence</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">traverse</span><span class="p">(</span><span class="n">append_refresh</span><span class="p">,</span> <span class="p">[</span><span class="n">DynamicMap</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="traverse_setter"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.plotting.html#holoviews.plotting.util.traverse_setter">[docs]</a><span class="k">def</span> <span class="nf">traverse_setter</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">attribute</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Traverses the object and sets the supplied attribute on the</span>
+<span class="sd">    object. Supports Dimensioned and DimensionedPlot types.</span>
+<span class="sd">    """</span>
+    <span class="n">obj</span><span class="o">.</span><span class="n">traverse</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">setattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">attribute</span><span class="p">,</span> <span class="n">value</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="get_min_distance"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.plotting.html#holoviews.plotting.util.get_min_distance">[docs]</a><span class="k">def</span> <span class="nf">get_min_distance</span><span class="p">(</span><span class="n">element</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Gets the minimum sampling distance of the x- and y-coordinates</span>
+<span class="sd">    in a grid.</span>
+<span class="sd">    """</span>
+    <span class="n">xys</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">'float64'</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">complex128</span><span class="p">)</span>
+    <span class="n">m</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">xys</span><span class="p">,</span> <span class="n">xys</span><span class="p">)</span>
+    <span class="n">distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">m</span><span class="o">-</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">fill_diagonal</span><span class="p">(</span><span class="n">distances</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span><span class="p">)</span>
+    <span class="n">distances</span> <span class="o">=</span> <span class="n">distances</span><span class="p">[</span><span class="n">distances</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">distances</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">distances</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+    <span class="k">return</span> <span class="mi">0</span></div>
+
+
+<div class="viewcode-block" id="rgb2hex"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.plotting.html#holoviews.plotting.util.rgb2hex">[docs]</a><span class="k">def</span> <span class="nf">rgb2hex</span><span class="p">(</span><span class="n">rgb</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Convert RGB(A) tuple to hex.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">rgb</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">rgb</span> <span class="o">=</span> <span class="n">rgb</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">return</span> <span class="s2">"#</span><span class="si">{0:02x}{1:02x}{2:02x}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">v</span><span class="o">*</span><span class="mi">255</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">rgb</span><span class="p">))</span></div>
+
+
+<span class="c1"># linear_kryw_0_100_c71 (aka "fire"):</span>
+<span class="c1"># A perceptually uniform equivalent of matplotlib's "hot" colormap, from</span>
+<span class="c1"># http://peterkovesi.com/projects/colourmaps</span>
+
+<span class="n">fire_colors</span> <span class="o">=</span> <span class="n">linear_kryw_0_100_c71</span> <span class="o">=</span> <span class="p">[</span>\
+<span class="p">[</span><span class="mi">0</span><span class="p">,</span>        <span class="mi">0</span><span class="p">,</span>           <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mf">0.027065</span><span class="p">,</span> <span class="mf">2.143e-05</span><span class="p">,</span>   <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.052054</span><span class="p">,</span> <span class="mf">7.4728e-05</span><span class="p">,</span>  <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mf">0.071511</span><span class="p">,</span> <span class="mf">0.00013914</span><span class="p">,</span>  <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.08742</span><span class="p">,</span>  <span class="mf">0.0002088</span><span class="p">,</span>   <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mf">0.10109</span><span class="p">,</span>  <span class="mf">0.00028141</span><span class="p">,</span>  <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.11337</span><span class="p">,</span>  <span class="mf">0.000356</span><span class="p">,</span>    <span class="mf">2.4266e-17</span><span class="p">],</span>  <span class="p">[</span><span class="mf">0.12439</span><span class="p">,</span>  <span class="mf">0.00043134</span><span class="p">,</span>  <span class="mf">3.3615e-17</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.13463</span><span class="p">,</span>  <span class="mf">0.00050796</span><span class="p">,</span>  <span class="mf">2.1604e-17</span><span class="p">],</span>  <span class="p">[</span><span class="mf">0.14411</span><span class="p">,</span>  <span class="mf">0.0005856</span><span class="p">,</span>   <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.15292</span><span class="p">,</span>  <span class="mf">0.00070304</span><span class="p">,</span>  <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mf">0.16073</span><span class="p">,</span>  <span class="mf">0.0013432</span><span class="p">,</span>   <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.16871</span><span class="p">,</span>  <span class="mf">0.0014516</span><span class="p">,</span>   <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mf">0.17657</span><span class="p">,</span>  <span class="mf">0.0012408</span><span class="p">,</span>   <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.18364</span><span class="p">,</span>  <span class="mf">0.0015336</span><span class="p">,</span>   <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mf">0.19052</span><span class="p">,</span>  <span class="mf">0.0017515</span><span class="p">,</span>   <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.19751</span><span class="p">,</span>  <span class="mf">0.0015146</span><span class="p">,</span>   <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mf">0.20401</span><span class="p">,</span>  <span class="mf">0.0015249</span><span class="p">,</span>   <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.20994</span><span class="p">,</span>  <span class="mf">0.0019639</span><span class="p">,</span>   <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mf">0.21605</span><span class="p">,</span>  <span class="mf">0.002031</span><span class="p">,</span>    <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.22215</span><span class="p">,</span>  <span class="mf">0.0017559</span><span class="p">,</span>   <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mf">0.22808</span><span class="p">,</span>  <span class="mf">0.001546</span><span class="p">,</span>    <span class="mf">1.8755e-05</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.23378</span><span class="p">,</span>  <span class="mf">0.0016315</span><span class="p">,</span>   <span class="mf">3.5012e-05</span><span class="p">],</span>  <span class="p">[</span><span class="mf">0.23955</span><span class="p">,</span>  <span class="mf">0.0017194</span><span class="p">,</span>   <span class="mf">3.3352e-05</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.24531</span><span class="p">,</span>  <span class="mf">0.0018097</span><span class="p">,</span>   <span class="mf">1.8559e-05</span><span class="p">],</span>  <span class="p">[</span><span class="mf">0.25113</span><span class="p">,</span>  <span class="mf">0.0019038</span><span class="p">,</span>   <span class="mf">1.9139e-05</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.25694</span><span class="p">,</span>  <span class="mf">0.0020015</span><span class="p">,</span>   <span class="mf">3.5308e-05</span><span class="p">],</span>  <span class="p">[</span><span class="mf">0.26278</span><span class="p">,</span>  <span class="mf">0.0021017</span><span class="p">,</span>   <span class="mf">3.2613e-05</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.26864</span><span class="p">,</span>  <span class="mf">0.0022048</span><span class="p">,</span>   <span class="mf">2.0338e-05</span><span class="p">],</span>  <span class="p">[</span><span class="mf">0.27451</span><span class="p">,</span>  <span class="mf">0.0023119</span><span class="p">,</span>   <span class="mf">2.2453e-05</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.28041</span><span class="p">,</span>  <span class="mf">0.0024227</span><span class="p">,</span>   <span class="mf">3.6003e-05</span><span class="p">],</span>  <span class="p">[</span><span class="mf">0.28633</span><span class="p">,</span>  <span class="mf">0.0025363</span><span class="p">,</span>   <span class="mf">2.9817e-05</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.29229</span><span class="p">,</span>  <span class="mf">0.0026532</span><span class="p">,</span>   <span class="mf">1.9559e-05</span><span class="p">],</span>  <span class="p">[</span><span class="mf">0.29824</span><span class="p">,</span>  <span class="mf">0.0027747</span><span class="p">,</span>   <span class="mf">2.7666e-05</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.30423</span><span class="p">,</span>  <span class="mf">0.0028999</span><span class="p">,</span>   <span class="mf">3.5752e-05</span><span class="p">],</span>  <span class="p">[</span><span class="mf">0.31026</span><span class="p">,</span>  <span class="mf">0.0030279</span><span class="p">,</span>   <span class="mf">2.3231e-05</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.31628</span><span class="p">,</span>  <span class="mf">0.0031599</span><span class="p">,</span>   <span class="mf">1.2902e-05</span><span class="p">],</span>  <span class="p">[</span><span class="mf">0.32232</span><span class="p">,</span>  <span class="mf">0.0032974</span><span class="p">,</span>   <span class="mf">3.2915e-05</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.32838</span><span class="p">,</span>  <span class="mf">0.0034379</span><span class="p">,</span>   <span class="mf">3.2803e-05</span><span class="p">],</span>  <span class="p">[</span><span class="mf">0.33447</span><span class="p">,</span>  <span class="mf">0.0035819</span><span class="p">,</span>   <span class="mf">2.0757e-05</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.34057</span><span class="p">,</span>  <span class="mf">0.003731</span><span class="p">,</span>    <span class="mf">2.3831e-05</span><span class="p">],</span>  <span class="p">[</span><span class="mf">0.34668</span><span class="p">,</span>  <span class="mf">0.0038848</span><span class="p">,</span>   <span class="mf">3.502e-05</span> <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.35283</span><span class="p">,</span>  <span class="mf">0.0040418</span><span class="p">,</span>   <span class="mf">2.4468e-05</span><span class="p">],</span>  <span class="p">[</span><span class="mf">0.35897</span><span class="p">,</span>  <span class="mf">0.0042032</span><span class="p">,</span>   <span class="mf">1.1444e-05</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.36515</span><span class="p">,</span>  <span class="mf">0.0043708</span><span class="p">,</span>   <span class="mf">3.2793e-05</span><span class="p">],</span>  <span class="p">[</span><span class="mf">0.37134</span><span class="p">,</span>  <span class="mf">0.0045418</span><span class="p">,</span>   <span class="mf">3.012e-05</span> <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.37756</span><span class="p">,</span>  <span class="mf">0.0047169</span><span class="p">,</span>   <span class="mf">1.4846e-05</span><span class="p">],</span>  <span class="p">[</span><span class="mf">0.38379</span><span class="p">,</span>  <span class="mf">0.0048986</span><span class="p">,</span>   <span class="mf">2.796e-05</span> <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.39003</span><span class="p">,</span>  <span class="mf">0.0050848</span><span class="p">,</span>   <span class="mf">3.2782e-05</span><span class="p">],</span>  <span class="p">[</span><span class="mf">0.3963</span><span class="p">,</span>   <span class="mf">0.0052751</span><span class="p">,</span>   <span class="mf">1.9244e-05</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.40258</span><span class="p">,</span>  <span class="mf">0.0054715</span><span class="p">,</span>   <span class="mf">2.2667e-05</span><span class="p">],</span>  <span class="p">[</span><span class="mf">0.40888</span><span class="p">,</span>  <span class="mf">0.0056736</span><span class="p">,</span>   <span class="mf">3.3223e-05</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.41519</span><span class="p">,</span>  <span class="mf">0.0058798</span><span class="p">,</span>   <span class="mf">2.159e-05</span> <span class="p">],</span>  <span class="p">[</span><span class="mf">0.42152</span><span class="p">,</span>  <span class="mf">0.0060922</span><span class="p">,</span>   <span class="mf">1.8214e-05</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.42788</span><span class="p">,</span>  <span class="mf">0.0063116</span><span class="p">,</span>   <span class="mf">3.2525e-05</span><span class="p">],</span>  <span class="p">[</span><span class="mf">0.43424</span><span class="p">,</span>  <span class="mf">0.0065353</span><span class="p">,</span>   <span class="mf">2.2247e-05</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.44062</span><span class="p">,</span>  <span class="mf">0.006765</span><span class="p">,</span>    <span class="mf">1.5852e-05</span><span class="p">],</span>  <span class="p">[</span><span class="mf">0.44702</span><span class="p">,</span>  <span class="mf">0.0070024</span><span class="p">,</span>   <span class="mf">3.1769e-05</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.45344</span><span class="p">,</span>  <span class="mf">0.0072442</span><span class="p">,</span>   <span class="mf">2.1245e-05</span><span class="p">],</span>  <span class="p">[</span><span class="mf">0.45987</span><span class="p">,</span>  <span class="mf">0.0074929</span><span class="p">,</span>   <span class="mf">1.5726e-05</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.46631</span><span class="p">,</span>  <span class="mf">0.0077499</span><span class="p">,</span>   <span class="mf">3.0976e-05</span><span class="p">],</span>  <span class="p">[</span><span class="mf">0.47277</span><span class="p">,</span>  <span class="mf">0.0080108</span><span class="p">,</span>   <span class="mf">1.8722e-05</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.47926</span><span class="p">,</span>  <span class="mf">0.0082789</span><span class="p">,</span>   <span class="mf">1.9285e-05</span><span class="p">],</span>  <span class="p">[</span><span class="mf">0.48574</span><span class="p">,</span>  <span class="mf">0.0085553</span><span class="p">,</span>   <span class="mf">3.0063e-05</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.49225</span><span class="p">,</span>  <span class="mf">0.0088392</span><span class="p">,</span>   <span class="mf">1.4313e-05</span><span class="p">],</span>  <span class="p">[</span><span class="mf">0.49878</span><span class="p">,</span>  <span class="mf">0.0091356</span><span class="p">,</span>   <span class="mf">2.3404e-05</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.50531</span><span class="p">,</span>  <span class="mf">0.0094374</span><span class="p">,</span>   <span class="mf">2.8099e-05</span><span class="p">],</span>  <span class="p">[</span><span class="mf">0.51187</span><span class="p">,</span>  <span class="mf">0.0097365</span><span class="p">,</span>   <span class="mf">6.4695e-06</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.51844</span><span class="p">,</span>  <span class="mf">0.010039</span><span class="p">,</span>    <span class="mf">2.5791e-05</span><span class="p">],</span>  <span class="p">[</span><span class="mf">0.52501</span><span class="p">,</span>  <span class="mf">0.010354</span><span class="p">,</span>    <span class="mf">2.4393e-05</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.53162</span><span class="p">,</span>  <span class="mf">0.010689</span><span class="p">,</span>    <span class="mf">1.6037e-05</span><span class="p">],</span>  <span class="p">[</span><span class="mf">0.53825</span><span class="p">,</span>  <span class="mf">0.011031</span><span class="p">,</span>    <span class="mf">2.7295e-05</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.54489</span><span class="p">,</span>  <span class="mf">0.011393</span><span class="p">,</span>    <span class="mf">1.5848e-05</span><span class="p">],</span>  <span class="p">[</span><span class="mf">0.55154</span><span class="p">,</span>  <span class="mf">0.011789</span><span class="p">,</span>    <span class="mf">2.3111e-05</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.55818</span><span class="p">,</span>  <span class="mf">0.012159</span><span class="p">,</span>    <span class="mf">2.5416e-05</span><span class="p">],</span>  <span class="p">[</span><span class="mf">0.56485</span><span class="p">,</span>  <span class="mf">0.012508</span><span class="p">,</span>    <span class="mf">1.5064e-05</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.57154</span><span class="p">,</span>  <span class="mf">0.012881</span><span class="p">,</span>    <span class="mf">2.541e-05</span> <span class="p">],</span>  <span class="p">[</span><span class="mf">0.57823</span><span class="p">,</span>  <span class="mf">0.013283</span><span class="p">,</span>    <span class="mf">1.6166e-05</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.58494</span><span class="p">,</span>  <span class="mf">0.013701</span><span class="p">,</span>    <span class="mf">2.263e-05</span> <span class="p">],</span>  <span class="p">[</span><span class="mf">0.59166</span><span class="p">,</span>  <span class="mf">0.014122</span><span class="p">,</span>    <span class="mf">2.3316e-05</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.59839</span><span class="p">,</span>  <span class="mf">0.014551</span><span class="p">,</span>    <span class="mf">1.9432e-05</span><span class="p">],</span>  <span class="p">[</span><span class="mf">0.60514</span><span class="p">,</span>  <span class="mf">0.014994</span><span class="p">,</span>    <span class="mf">2.4323e-05</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.6119</span><span class="p">,</span>   <span class="mf">0.01545</span><span class="p">,</span>     <span class="mf">1.3929e-05</span><span class="p">],</span>  <span class="p">[</span><span class="mf">0.61868</span><span class="p">,</span>  <span class="mf">0.01592</span><span class="p">,</span>     <span class="mf">2.1615e-05</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.62546</span><span class="p">,</span>  <span class="mf">0.016401</span><span class="p">,</span>    <span class="mf">1.5846e-05</span><span class="p">],</span>  <span class="p">[</span><span class="mf">0.63226</span><span class="p">,</span>  <span class="mf">0.016897</span><span class="p">,</span>    <span class="mf">2.0838e-05</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.63907</span><span class="p">,</span>  <span class="mf">0.017407</span><span class="p">,</span>    <span class="mf">1.9549e-05</span><span class="p">],</span>  <span class="p">[</span><span class="mf">0.64589</span><span class="p">,</span>  <span class="mf">0.017931</span><span class="p">,</span>    <span class="mf">2.0961e-05</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.65273</span><span class="p">,</span>  <span class="mf">0.018471</span><span class="p">,</span>    <span class="mf">2.0737e-05</span><span class="p">],</span>  <span class="p">[</span><span class="mf">0.65958</span><span class="p">,</span>  <span class="mf">0.019026</span><span class="p">,</span>    <span class="mf">2.0621e-05</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.66644</span><span class="p">,</span>  <span class="mf">0.019598</span><span class="p">,</span>    <span class="mf">2.0675e-05</span><span class="p">],</span>  <span class="p">[</span><span class="mf">0.67332</span><span class="p">,</span>  <span class="mf">0.020187</span><span class="p">,</span>    <span class="mf">2.0301e-05</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.68019</span><span class="p">,</span>  <span class="mf">0.020793</span><span class="p">,</span>    <span class="mf">2.0029e-05</span><span class="p">],</span>  <span class="p">[</span><span class="mf">0.68709</span><span class="p">,</span>  <span class="mf">0.021418</span><span class="p">,</span>    <span class="mf">2.0088e-05</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.69399</span><span class="p">,</span>  <span class="mf">0.022062</span><span class="p">,</span>    <span class="mf">1.9102e-05</span><span class="p">],</span>  <span class="p">[</span><span class="mf">0.70092</span><span class="p">,</span>  <span class="mf">0.022727</span><span class="p">,</span>    <span class="mf">1.9662e-05</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.70784</span><span class="p">,</span>  <span class="mf">0.023412</span><span class="p">,</span>    <span class="mf">1.7757e-05</span><span class="p">],</span>  <span class="p">[</span><span class="mf">0.71478</span><span class="p">,</span>  <span class="mf">0.024121</span><span class="p">,</span>    <span class="mf">1.8236e-05</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.72173</span><span class="p">,</span>  <span class="mf">0.024852</span><span class="p">,</span>    <span class="mf">1.4944e-05</span><span class="p">],</span>  <span class="p">[</span><span class="mf">0.7287</span><span class="p">,</span>   <span class="mf">0.025608</span><span class="p">,</span>    <span class="mf">2.0245e-06</span><span class="p">],</span>
+<span class="p">[</span><span class="mf">0.73567</span><span class="p">,</span>  <span class="mf">0.02639</span><span class="p">,</span>     <span class="mf">1.5013e-07</span><span class="p">],</span>  <span class="p">[</span><span class="mf">0.74266</span><span class="p">,</span>  <span class="mf">0.027199</span><span class="p">,</span>    <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.74964</span><span class="p">,</span>  <span class="mf">0.028038</span><span class="p">,</span>    <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mf">0.75665</span><span class="p">,</span>  <span class="mf">0.028906</span><span class="p">,</span>    <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.76365</span><span class="p">,</span>  <span class="mf">0.029806</span><span class="p">,</span>    <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mf">0.77068</span><span class="p">,</span>  <span class="mf">0.030743</span><span class="p">,</span>    <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.77771</span><span class="p">,</span>  <span class="mf">0.031711</span><span class="p">,</span>    <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mf">0.78474</span><span class="p">,</span>  <span class="mf">0.032732</span><span class="p">,</span>    <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.79179</span><span class="p">,</span>  <span class="mf">0.033741</span><span class="p">,</span>    <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mf">0.79886</span><span class="p">,</span>  <span class="mf">0.034936</span><span class="p">,</span>    <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.80593</span><span class="p">,</span>  <span class="mf">0.036031</span><span class="p">,</span>    <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mf">0.81299</span><span class="p">,</span>  <span class="mf">0.03723</span><span class="p">,</span>     <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.82007</span><span class="p">,</span>  <span class="mf">0.038493</span><span class="p">,</span>    <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mf">0.82715</span><span class="p">,</span>  <span class="mf">0.039819</span><span class="p">,</span>    <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.83423</span><span class="p">,</span>  <span class="mf">0.041236</span><span class="p">,</span>    <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mf">0.84131</span><span class="p">,</span>  <span class="mf">0.042647</span><span class="p">,</span>    <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.84838</span><span class="p">,</span>  <span class="mf">0.044235</span><span class="p">,</span>    <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mf">0.85545</span><span class="p">,</span>  <span class="mf">0.045857</span><span class="p">,</span>    <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.86252</span><span class="p">,</span>  <span class="mf">0.047645</span><span class="p">,</span>    <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mf">0.86958</span><span class="p">,</span>  <span class="mf">0.049578</span><span class="p">,</span>    <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.87661</span><span class="p">,</span>  <span class="mf">0.051541</span><span class="p">,</span>    <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mf">0.88365</span><span class="p">,</span>  <span class="mf">0.053735</span><span class="p">,</span>    <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.89064</span><span class="p">,</span>  <span class="mf">0.056168</span><span class="p">,</span>    <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mf">0.89761</span><span class="p">,</span>  <span class="mf">0.058852</span><span class="p">,</span>    <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.90451</span><span class="p">,</span>  <span class="mf">0.061777</span><span class="p">,</span>    <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mf">0.91131</span><span class="p">,</span>  <span class="mf">0.065281</span><span class="p">,</span>    <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.91796</span><span class="p">,</span>  <span class="mf">0.069448</span><span class="p">,</span>    <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mf">0.92445</span><span class="p">,</span>  <span class="mf">0.074684</span><span class="p">,</span>    <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.93061</span><span class="p">,</span>  <span class="mf">0.08131</span><span class="p">,</span>     <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mf">0.93648</span><span class="p">,</span>  <span class="mf">0.088878</span><span class="p">,</span>    <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.94205</span><span class="p">,</span>  <span class="mf">0.097336</span><span class="p">,</span>    <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mf">0.9473</span><span class="p">,</span>   <span class="mf">0.10665</span><span class="p">,</span>     <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.9522</span><span class="p">,</span>   <span class="mf">0.1166</span><span class="p">,</span>      <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mf">0.95674</span><span class="p">,</span>  <span class="mf">0.12716</span><span class="p">,</span>     <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.96094</span><span class="p">,</span>  <span class="mf">0.13824</span><span class="p">,</span>     <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mf">0.96479</span><span class="p">,</span>  <span class="mf">0.14963</span><span class="p">,</span>     <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.96829</span><span class="p">,</span>  <span class="mf">0.16128</span><span class="p">,</span>     <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mf">0.97147</span><span class="p">,</span>  <span class="mf">0.17303</span><span class="p">,</span>     <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.97436</span><span class="p">,</span>  <span class="mf">0.18489</span><span class="p">,</span>     <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mf">0.97698</span><span class="p">,</span>  <span class="mf">0.19672</span><span class="p">,</span>     <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.97934</span><span class="p">,</span>  <span class="mf">0.20846</span><span class="p">,</span>     <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mf">0.98148</span><span class="p">,</span>  <span class="mf">0.22013</span><span class="p">,</span>     <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.9834</span><span class="p">,</span>   <span class="mf">0.23167</span><span class="p">,</span>     <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mf">0.98515</span><span class="p">,</span>  <span class="mf">0.24301</span><span class="p">,</span>     <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.98672</span><span class="p">,</span>  <span class="mf">0.25425</span><span class="p">,</span>     <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mf">0.98815</span><span class="p">,</span>  <span class="mf">0.26525</span><span class="p">,</span>     <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.98944</span><span class="p">,</span>  <span class="mf">0.27614</span><span class="p">,</span>     <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mf">0.99061</span><span class="p">,</span>  <span class="mf">0.28679</span><span class="p">,</span>     <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.99167</span><span class="p">,</span>  <span class="mf">0.29731</span><span class="p">,</span>     <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mf">0.99263</span><span class="p">,</span>  <span class="mf">0.30764</span><span class="p">,</span>     <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.9935</span><span class="p">,</span>   <span class="mf">0.31781</span><span class="p">,</span>     <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mf">0.99428</span><span class="p">,</span>  <span class="mf">0.3278</span><span class="p">,</span>      <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.995</span><span class="p">,</span>    <span class="mf">0.33764</span><span class="p">,</span>     <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mf">0.99564</span><span class="p">,</span>  <span class="mf">0.34735</span><span class="p">,</span>     <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.99623</span><span class="p">,</span>  <span class="mf">0.35689</span><span class="p">,</span>     <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mf">0.99675</span><span class="p">,</span>  <span class="mf">0.3663</span><span class="p">,</span>      <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.99722</span><span class="p">,</span>  <span class="mf">0.37556</span><span class="p">,</span>     <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mf">0.99765</span><span class="p">,</span>  <span class="mf">0.38471</span><span class="p">,</span>     <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.99803</span><span class="p">,</span>  <span class="mf">0.39374</span><span class="p">,</span>     <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mf">0.99836</span><span class="p">,</span>  <span class="mf">0.40265</span><span class="p">,</span>     <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.99866</span><span class="p">,</span>  <span class="mf">0.41145</span><span class="p">,</span>     <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mf">0.99892</span><span class="p">,</span>  <span class="mf">0.42015</span><span class="p">,</span>     <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.99915</span><span class="p">,</span>  <span class="mf">0.42874</span><span class="p">,</span>     <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mf">0.99935</span><span class="p">,</span>  <span class="mf">0.43724</span><span class="p">,</span>     <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.99952</span><span class="p">,</span>  <span class="mf">0.44563</span><span class="p">,</span>     <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mf">0.99966</span><span class="p">,</span>  <span class="mf">0.45395</span><span class="p">,</span>     <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.99977</span><span class="p">,</span>  <span class="mf">0.46217</span><span class="p">,</span>     <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mf">0.99986</span><span class="p">,</span>  <span class="mf">0.47032</span><span class="p">,</span>     <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mf">0.99993</span><span class="p">,</span>  <span class="mf">0.47838</span><span class="p">,</span>     <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mf">0.99997</span><span class="p">,</span>  <span class="mf">0.48638</span><span class="p">,</span>     <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.4943</span><span class="p">,</span>      <span class="mi">0</span>         <span class="p">],</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.50214</span><span class="p">,</span>     <span class="mi">0</span>         <span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.50991</span><span class="p">,</span>     <span class="mf">1.2756e-05</span><span class="p">],</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.51761</span><span class="p">,</span>     <span class="mf">4.5388e-05</span><span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.52523</span><span class="p">,</span>     <span class="mf">9.6977e-05</span><span class="p">],</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.5328</span><span class="p">,</span>      <span class="mf">0.00016858</span><span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.54028</span><span class="p">,</span>     <span class="mf">0.0002582</span> <span class="p">],</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.54771</span><span class="p">,</span>     <span class="mf">0.00036528</span><span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.55508</span><span class="p">,</span>     <span class="mf">0.00049276</span><span class="p">],</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.5624</span><span class="p">,</span>      <span class="mf">0.00063955</span><span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.56965</span><span class="p">,</span>     <span class="mf">0.00080443</span><span class="p">],</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.57687</span><span class="p">,</span>     <span class="mf">0.00098902</span><span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.58402</span><span class="p">,</span>     <span class="mf">0.0011943</span> <span class="p">],</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.59113</span><span class="p">,</span>     <span class="mf">0.0014189</span> <span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.59819</span><span class="p">,</span>     <span class="mf">0.0016626</span> <span class="p">],</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.60521</span><span class="p">,</span>     <span class="mf">0.0019281</span> <span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.61219</span><span class="p">,</span>     <span class="mf">0.0022145</span> <span class="p">],</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.61914</span><span class="p">,</span>     <span class="mf">0.0025213</span> <span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.62603</span><span class="p">,</span>     <span class="mf">0.0028496</span> <span class="p">],</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.6329</span><span class="p">,</span>      <span class="mf">0.0032006</span> <span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.63972</span><span class="p">,</span>     <span class="mf">0.0035741</span> <span class="p">],</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.64651</span><span class="p">,</span>     <span class="mf">0.0039701</span> <span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.65327</span><span class="p">,</span>     <span class="mf">0.0043898</span> <span class="p">],</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.66</span><span class="p">,</span>        <span class="mf">0.0048341</span> <span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.66669</span><span class="p">,</span>     <span class="mf">0.005303</span>  <span class="p">],</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.67336</span><span class="p">,</span>     <span class="mf">0.0057969</span> <span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.67999</span><span class="p">,</span>     <span class="mf">0.006317</span>  <span class="p">],</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.68661</span><span class="p">,</span>     <span class="mf">0.0068648</span> <span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.69319</span><span class="p">,</span>     <span class="mf">0.0074406</span> <span class="p">],</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.69974</span><span class="p">,</span>     <span class="mf">0.0080433</span> <span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.70628</span><span class="p">,</span>     <span class="mf">0.0086756</span> <span class="p">],</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.71278</span><span class="p">,</span>     <span class="mf">0.0093486</span> <span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.71927</span><span class="p">,</span>     <span class="mf">0.010023</span>  <span class="p">],</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.72573</span><span class="p">,</span>     <span class="mf">0.010724</span>  <span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.73217</span><span class="p">,</span>     <span class="mf">0.011565</span>  <span class="p">],</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.73859</span><span class="p">,</span>     <span class="mf">0.012339</span>  <span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.74499</span><span class="p">,</span>     <span class="mf">0.01316</span>   <span class="p">],</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.75137</span><span class="p">,</span>     <span class="mf">0.014042</span>  <span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.75772</span><span class="p">,</span>     <span class="mf">0.014955</span>  <span class="p">],</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.76406</span><span class="p">,</span>     <span class="mf">0.015913</span>  <span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.77039</span><span class="p">,</span>     <span class="mf">0.016915</span>  <span class="p">],</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.77669</span><span class="p">,</span>     <span class="mf">0.017964</span>  <span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.78298</span><span class="p">,</span>     <span class="mf">0.019062</span>  <span class="p">],</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.78925</span><span class="p">,</span>     <span class="mf">0.020212</span>  <span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.7955</span><span class="p">,</span>      <span class="mf">0.021417</span>  <span class="p">],</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.80174</span><span class="p">,</span>     <span class="mf">0.02268</span>   <span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.80797</span><span class="p">,</span>     <span class="mf">0.024005</span>  <span class="p">],</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.81418</span><span class="p">,</span>     <span class="mf">0.025396</span>  <span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.82038</span><span class="p">,</span>     <span class="mf">0.026858</span>  <span class="p">],</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.82656</span><span class="p">,</span>     <span class="mf">0.028394</span>  <span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.83273</span><span class="p">,</span>     <span class="mf">0.030013</span>  <span class="p">],</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.83889</span><span class="p">,</span>     <span class="mf">0.031717</span>  <span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.84503</span><span class="p">,</span>     <span class="mf">0.03348</span>   <span class="p">],</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.85116</span><span class="p">,</span>     <span class="mf">0.035488</span>  <span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.85728</span><span class="p">,</span>     <span class="mf">0.037452</span>  <span class="p">],</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.8634</span><span class="p">,</span>      <span class="mf">0.039592</span>  <span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.86949</span><span class="p">,</span>     <span class="mf">0.041898</span>  <span class="p">],</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.87557</span><span class="p">,</span>     <span class="mf">0.044392</span>  <span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.88165</span><span class="p">,</span>     <span class="mf">0.046958</span>  <span class="p">],</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.88771</span><span class="p">,</span>     <span class="mf">0.04977</span>   <span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.89376</span><span class="p">,</span>     <span class="mf">0.052828</span>  <span class="p">],</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.8998</span><span class="p">,</span>      <span class="mf">0.056209</span>  <span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.90584</span><span class="p">,</span>     <span class="mf">0.059919</span>  <span class="p">],</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.91185</span><span class="p">,</span>     <span class="mf">0.063925</span>  <span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.91783</span><span class="p">,</span>     <span class="mf">0.068579</span>  <span class="p">],</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.92384</span><span class="p">,</span>     <span class="mf">0.073948</span>  <span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.92981</span><span class="p">,</span>     <span class="mf">0.080899</span>  <span class="p">],</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.93576</span><span class="p">,</span>     <span class="mf">0.090648</span>  <span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.94166</span><span class="p">,</span>     <span class="mf">0.10377</span>   <span class="p">],</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.94752</span><span class="p">,</span>     <span class="mf">0.12051</span>   <span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.9533</span><span class="p">,</span>      <span class="mf">0.14149</span>   <span class="p">],</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.959</span><span class="p">,</span>       <span class="mf">0.1672</span>    <span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.96456</span><span class="p">,</span>     <span class="mf">0.19823</span>   <span class="p">],</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.96995</span><span class="p">,</span>     <span class="mf">0.23514</span>   <span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.9751</span><span class="p">,</span>      <span class="mf">0.2786</span>    <span class="p">],</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.97992</span><span class="p">,</span>     <span class="mf">0.32883</span>   <span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.98432</span><span class="p">,</span>     <span class="mf">0.38571</span>   <span class="p">],</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.9882</span><span class="p">,</span>      <span class="mf">0.44866</span>   <span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.9915</span><span class="p">,</span>      <span class="mf">0.51653</span>   <span class="p">],</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.99417</span><span class="p">,</span>     <span class="mf">0.58754</span>   <span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.99625</span><span class="p">,</span>     <span class="mf">0.65985</span>   <span class="p">],</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.99778</span><span class="p">,</span>     <span class="mf">0.73194</span>   <span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.99885</span><span class="p">,</span>     <span class="mf">0.80259</span>   <span class="p">],</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.99953</span><span class="p">,</span>     <span class="mf">0.87115</span>   <span class="p">],</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mf">0.99989</span><span class="p">,</span>     <span class="mf">0.93683</span>   <span class="p">],</span>  <span class="p">[</span><span class="mi">1</span><span class="p">,</span>        <span class="mi">1</span><span class="p">,</span>           <span class="mi">1</span>         <span class="p">]]</span>
+
+<span class="c1"># Bokeh palette</span>
+<span class="n">fire</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="s1">'#</span><span class="si">{0:02x}{1:02x}{2:02x}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">r</span><span class="o">*</span><span class="mi">255</span><span class="p">),</span><span class="nb">int</span><span class="p">(</span><span class="n">g</span><span class="o">*</span><span class="mi">255</span><span class="p">),</span><span class="nb">int</span><span class="p">(</span><span class="n">b</span><span class="o">*</span><span class="mi">255</span><span class="p">)))</span>
+        <span class="k">for</span> <span class="n">r</span><span class="p">,</span><span class="n">g</span><span class="p">,</span><span class="n">b</span> <span class="ow">in</span> <span class="n">fire_colors</span><span class="p">]</span>
+
+<span class="c1"># Matplotlib colormap</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">matplotlib.colors</span> <span class="k">import</span> <span class="n">LinearSegmentedColormap</span>
+    <span class="kn">from</span> <span class="nn">matplotlib.cm</span> <span class="k">import</span> <span class="n">register_cmap</span>
+    <span class="n">fire_cmap</span>   <span class="o">=</span> <span class="n">LinearSegmentedColormap</span><span class="o">.</span><span class="n">from_list</span><span class="p">(</span><span class="s2">"fire"</span><span class="p">,</span>   <span class="n">fire_colors</span><span class="p">,</span> <span class="n">N</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">fire_colors</span><span class="p">))</span>
+    <span class="n">fire_r_cmap</span> <span class="o">=</span> <span class="n">LinearSegmentedColormap</span><span class="o">.</span><span class="n">from_list</span><span class="p">(</span><span class="s2">"fire_r"</span><span class="p">,</span> <span class="nb">list</span><span class="p">(</span><span class="nb">reversed</span><span class="p">(</span><span class="n">fire_colors</span><span class="p">)),</span> <span class="n">N</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">fire_colors</span><span class="p">))</span>
+    <span class="n">register_cmap</span><span class="p">(</span><span class="s2">"fire"</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">fire_cmap</span><span class="p">)</span>
+    <span class="n">register_cmap</span><span class="p">(</span><span class="s2">"fire_r"</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">fire_r_cmap</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="k">pass</span>
+</pre>
+    </div>
+   </div>
+  </div>
+  <!-- END MAIN BODY OF DOCS ––––––––––––– -->
+  <footer class="footer">
+   <div class="footer-links">
+    <ul>
+     <li>
+      <span class="footer-title">
+       Links
+      </span>
+     </li>
+     <li>
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li>
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li>
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li>
+      <a href="/Reference_Manual/index.html">
+       API Docs
+      </a>
+     </li>
+     <li>
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li>
+      <a href="/about.html">
+       About
+      </a>
+     </li>
+    </ul>
+    <ul>
+     <li>
+      <span class="footer-title">
+       Join Us
+      </span>
+     </li>
+     <li>
+      <a href="//gitter.im/ioam/holoviews.html">
+       Gitter
+      </a>
+     </li>
+     <li>
+      <a href="//twitter.com/holoviews.html">
+       Twitter
+      </a>
+     </li>
+     <li>
+      <a href="//github.com/ioam/holoviews.html">
+       Github
+      </a>
+     </li>
+    </ul>
+    <ul class="copyright">
+     <li>
+      2017 IOAM: Jean-Luc R. Stevens, Philipp Rudiger, and James A. Bednar
+     </li>
+    </ul>
+   </div>
+  </footer>
+  <!-- Google Analytics -->
+  <script>
+   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-61554933-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <!-- MathJax Config -->
+  <script type="text/x-mathjax-config">
+   MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+  </script>
+  <!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+ </body>
+</html>

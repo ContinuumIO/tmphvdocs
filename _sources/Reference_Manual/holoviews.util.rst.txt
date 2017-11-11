@@ -1,0 +1,58 @@
+holoviews.util Package
+======================
+
+
+---------
+
+:mod:`util` Package
+-------------------
+
+.. inheritance-diagram:: holoviews.util
+
+
+.. automodule:: holoviews.util
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`command` Module
+---------------------
+
+.. inheritance-diagram:: holoviews.util.command
+
+
+.. automodule:: holoviews.util.command
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`parser` Module
+--------------------
+
+.. inheritance-diagram:: holoviews.util.parser
+
+
+.. automodule:: holoviews.util.parser
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+
+:mod:`settings` Module
+----------------------
+
+.. inheritance-diagram:: holoviews.util.settings
+
+
+.. automodule:: holoviews.util.settings
+    :members:
+    :inherited-members:
+    :show-inheritance:
+
+-------
+

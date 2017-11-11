@@ -1,0 +1,10 @@
+.. _plotly_gallery_surface_3d:
+
+Surface 3d
+__________
+
+.. notebook:: holoviews surface_3d.ipynb
+
+-------
+
+`Download this notebook from GitHub (right-click to download). <https://raw.githubusercontent.com/ioam/holoviews/master/examples/gallery/notebooks/plotly/surface_3d.ipynb>`_

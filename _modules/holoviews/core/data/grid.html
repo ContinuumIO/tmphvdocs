@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8"/>
+  <title>
+   holoviews.core.data.grid — HoloViews
+  </title>
+  <meta content="HoloViews library, documentation site." name="description"/>
+  <meta content="HoloViews contributors" name="author"/>
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js">
+  </script>
+  <script>
+   WebFont.load({
+      google: {
+        families: ['Source Sans Pro']
+      }
+    });
+  </script>
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../../../../_static/main.css" rel="stylesheet"/>
+  <link href="../../../../_static/custom.css" rel="stylesheet"/>
+  <!-- Scripts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
+  </script>
+  <script async="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+  </script>
+  <script src="../../../../_static/js/main.js">
+  </script>
+  <script src="../../../../_static/custom.js">
+  </script>
+  <script src="../../../../_static/require.js">
+  </script>
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../../../../_static/images/favicon.ico" rel="icon" type="image/png"/>
+  <!-- Canonical
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="http://holoviews.org/_modules/holoviews/core/data/grid.html" rel="canonical"/>
+ </head>
+ <body class="">
+  <header class="navigation">
+   <div class="wrapper">
+    <a class="logo" href="//">
+     <img alt="Logo" src="../../../../_static/images/logo.png"/>
+    </a>
+    <a class="navigation-menu logo-text" href="//">
+     HoloViews
+    </a>
+    <a class="navigation-menu-button" href="javascript:void(0)" id="js-mobile-menu">
+     Menu
+    </a>
+    <nav>
+     <ul class="navigation-menu show" id="js-navigation-menu">
+      <li class="nav-link">
+       <a href="/about.html">
+        About
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="/gallery/index.html">
+        Gallery
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="//github.com/ioam/holoviews.html">
+        Github
+       </a>
+      </li>
+     </ul>
+    </nav>
+   </div>
+  </header>
+  <div class="second-nav">
+   <nav>
+    <ul class="navigation-menu show">
+     <li class="nav-link doc-head">
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+    </ul>
+   </nav>
+   <div class="navigation-tools">
+    <div class="search-bar">
+     <form action="../../../../search.html" method="get" role="search">
+      <input name="q" placeholder="Search" type="search"/>
+      <button type="submit">
+       <img alt="Search Icon" src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/search-icon-black.png"/>
+      </button>
+     </form>
+    </div>
+   </div>
+  </div>
+  <!-- MAIN BODY OF DOCS –––––––––––––––––– -->
+  <div class="docs section">
+   <div class="toc">
+    <ul>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../../getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../../user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../../gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../../Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../../FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference external" href="http://github.com/ioam/holoviews">
+       Github source
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../../about.html">
+       About
+      </a>
+     </li>
+    </ul>
+   </div>
+   <div class="content">
+    <h1>
+     Source code for holoviews.core.data.grid
+    </h1>
+    <div class="highlight">
+     <pre><span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">OrderedDict</span><span class="p">,</span> <span class="n">defaultdict</span><span class="p">,</span> <span class="n">Iterable</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">itertools.izip</span> <span class="k">as</span> <span class="nn">zip</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="k">pass</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">.dictionary</span> <span class="k">import</span> <span class="n">DictInterface</span>
+<span class="kn">from</span> <span class="nn">.interface</span> <span class="k">import</span> <span class="n">Interface</span><span class="p">,</span> <span class="n">DataError</span>
+<span class="kn">from</span> <span class="nn">..dimension</span> <span class="k">import</span> <span class="n">Dimension</span>
+<span class="kn">from</span> <span class="nn">..element</span> <span class="k">import</span> <span class="n">Element</span>
+<span class="kn">from</span> <span class="nn">..dimension</span> <span class="k">import</span> <span class="n">OrderedDict</span> <span class="k">as</span> <span class="n">cyODict</span>
+<span class="kn">from</span> <span class="nn">..ndmapping</span> <span class="k">import</span> <span class="n">NdMapping</span><span class="p">,</span> <span class="n">item_check</span>
+<span class="kn">from</span> <span class="nn">..</span> <span class="k">import</span> <span class="n">util</span>
+
+
+
+<div class="viewcode-block" id="GridInterface"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.core.data.html#holoviews.core.data.grid.GridInterface">[docs]</a><span class="k">class</span> <span class="nc">GridInterface</span><span class="p">(</span><span class="n">DictInterface</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Interface for simple dictionary-based dataset format using a</span>
+<span class="sd">    compressed representation that uses the cartesian product between</span>
+<span class="sd">    key dimensions. As with DictInterface, the dictionary keys correspond</span>
+<span class="sd">    to the column (i.e dimension) names and the values are NumPy arrays</span>
+<span class="sd">    representing the values in that column.</span>
+
+<span class="sd">    To use this compressed format, the key dimensions must be orthogonal</span>
+<span class="sd">    to one another with each key dimension specifying an axis of the</span>
+<span class="sd">    multidimensional space occupied by the value dimension data. For</span>
+<span class="sd">    instance, given an temperature recordings sampled regularly across</span>
+<span class="sd">    the earth surface, a list of N unique latitudes and M unique</span>
+<span class="sd">    longitudes can specify the position of NxM temperature samples.</span>
+<span class="sd">    """</span>
+
+    <span class="n">types</span> <span class="o">=</span> <span class="p">(</span><span class="nb">dict</span><span class="p">,</span> <span class="n">OrderedDict</span><span class="p">,</span> <span class="n">cyODict</span><span class="p">)</span>
+
+    <span class="n">datatype</span> <span class="o">=</span> <span class="s1">'grid'</span>
+
+    <span class="n">gridded</span> <span class="o">=</span> <span class="kc">True</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">eltype</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">kdims</span><span class="p">,</span> <span class="n">vdims</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">kdims</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">kdims</span> <span class="o">=</span> <span class="n">eltype</span><span class="o">.</span><span class="n">kdims</span>
+        <span class="k">if</span> <span class="n">vdims</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">vdims</span> <span class="o">=</span> <span class="n">eltype</span><span class="o">.</span><span class="n">vdims</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">vdims</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'GridInterface interface requires at least '</span>
+                             <span class="s1">'one value dimension.'</span><span class="p">)</span>
+
+        <span class="n">ndims</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">kdims</span><span class="p">)</span>
+        <span class="n">dimensions</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">name</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">Dimension</span><span class="p">)</span> <span class="k">else</span>
+                      <span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">kdims</span> <span class="o">+</span> <span class="n">vdims</span><span class="p">]</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">d</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">d</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">dimensions</span><span class="p">,</span> <span class="n">data</span><span class="p">)}</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="ow">and</span> <span class="n">data</span> <span class="o">==</span> <span class="p">[]:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">d</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dimensions</span><span class="p">[:</span><span class="n">ndims</span><span class="p">]}</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">d</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="mi">0</span><span class="p">,)</span> <span class="o">*</span> <span class="n">ndims</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dimensions</span><span class="p">[</span><span class="n">ndims</span><span class="p">:]})</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">'GridInterface must be instantiated as a '</span>
+                            <span class="s1">'dictionary or tuple'</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">dim</span> <span class="ow">in</span> <span class="n">kdims</span><span class="o">+</span><span class="n">vdims</span><span class="p">:</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="n">dim</span><span class="o">.</span><span class="n">name</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="n">Dimension</span><span class="p">)</span> <span class="k">else</span> <span class="n">dim</span>
+            <span class="k">if</span> <span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Values for dimension </span><span class="si">%s</span><span class="s2"> not found"</span> <span class="o">%</span> <span class="n">dim</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">name</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+                <span class="n">data</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">name</span><span class="p">])</span>
+
+        <span class="n">kdim_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">name</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">Dimension</span><span class="p">)</span> <span class="k">else</span> <span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">kdims</span><span class="p">]</span>
+        <span class="n">vdim_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">name</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">Dimension</span><span class="p">)</span> <span class="k">else</span> <span class="n">d</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">vdims</span><span class="p">]</span>
+        <span class="n">expected</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">kd</span><span class="p">])</span> <span class="k">for</span> <span class="n">kd</span> <span class="ow">in</span> <span class="n">kdim_names</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">vdim</span> <span class="ow">in</span> <span class="n">vdim_names</span><span class="p">:</span>
+            <span class="n">shape</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">vdim</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+            <span class="n">error</span> <span class="o">=</span> <span class="n">DataError</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">shape</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="ne">ValueError</span>
+            <span class="k">if</span> <span class="n">shape</span> <span class="o">!=</span> <span class="n">expected</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="ow">and</span> <span class="ow">not</span> <span class="p">(</span><span class="ow">not</span> <span class="n">expected</span> <span class="ow">and</span> <span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)):</span>
+                <span class="k">raise</span> <span class="n">error</span><span class="p">(</span><span class="s1">'Key dimension values and value array </span><span class="si">%s</span><span class="s1"> '</span>
+                            <span class="s1">'shapes do not match. Expected shape </span><span class="si">%s</span><span class="s1">, '</span>
+                            <span class="s1">'actual shape: </span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">vdim</span><span class="p">,</span> <span class="n">expected</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">shape</span><span class="p">),</span> <span class="bp">cls</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">data</span><span class="p">,</span> <span class="p">{</span><span class="s1">'kdims'</span><span class="p">:</span><span class="n">kdims</span><span class="p">,</span> <span class="s1">'vdims'</span><span class="p">:</span><span class="n">vdims</span><span class="p">},</span> <span class="p">{}</span>
+
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">isscalar</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">dim</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">dim</span><span class="p">,</span> <span class="n">expanded</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span>
+
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">vdims</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">Interface</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">vdims</span><span class="p">)</span>
+
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">dimension_type</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">dim</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">dim</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">dimensions</span><span class="p">():</span>
+            <span class="n">arr</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">dim</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">arr</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">type</span>
+
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">shape</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">gridded</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">gridded</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">dataset</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">dataset</span><span class="o">.</span><span class="n">vdims</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">length</span><span class="p">(</span><span class="n">dataset</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">dimensions</span><span class="p">()))</span>
+
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">length</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">dataset</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">product</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">name</span><span class="p">])</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">kdims</span><span class="p">])</span>
+
+
+<div class="viewcode-block" id="GridInterface.coords"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.core.data.html#holoviews.core.data.grid.GridInterface.coords">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">coords</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">dim</span><span class="p">,</span> <span class="n">ordered</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">expanded</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Returns the coordinates along a dimension.  Ordered ensures</span>
+<span class="sd">        coordinates are in ascending order and expanded creates</span>
+<span class="sd">        ND-array matching the dimensionality of the dataset.</span>
+<span class="sd">        """</span>
+        <span class="n">dim</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">get_dimension</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">expanded</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">util</span><span class="o">.</span><span class="n">expand_grid_coords</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">dim</span><span class="p">)</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">dim</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">ordered</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">&lt;</span> <span class="n">data</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">data</span></div>
+
+
+<div class="viewcode-block" id="GridInterface.canonicalize"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.core.data.html#holoviews.core.data.grid.GridInterface.canonicalize">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">canonicalize</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">coord_dims</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Canonicalize takes an array of values as input and</span>
+<span class="sd">        reorients and transposes it to match the canonical</span>
+<span class="sd">        format expected by plotting functions. In addition</span>
+<span class="sd">        to the dataset and the particular array to apply</span>
+<span class="sd">        transforms to a list of coord_dims may be supplied</span>
+<span class="sd">        in case the array indexing does not match the key</span>
+<span class="sd">        dimensions of the dataset.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">coord_dims</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">coord_dims</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">dimensions</span><span class="p">(</span><span class="s1">'key'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'name'</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="c1"># Reorient data</span>
+        <span class="n">invert</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">slices</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">coord_dims</span><span class="p">:</span>
+            <span class="n">coords</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">coords</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">d</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">coords</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="o">&lt;</span> <span class="n">coords</span><span class="p">[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]):</span>
+                <span class="n">slices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">))</span>
+                <span class="n">invert</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">slices</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">))</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">slices</span><span class="p">]</span> <span class="k">if</span> <span class="n">invert</span> <span class="k">else</span> <span class="n">data</span>
+
+        <span class="c1"># Transpose data</span>
+        <span class="n">dims</span> <span class="o">=</span> <span class="p">[</span><span class="n">name</span> <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">coord_dims</span>
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">coords</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">name</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)]</span>
+        <span class="n">dropped</span> <span class="o">=</span> <span class="p">[</span><span class="n">dims</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">d</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dims</span> <span class="k">if</span> <span class="n">d</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">kdims</span><span class="p">]</span>
+        <span class="n">inds</span> <span class="o">=</span> <span class="p">[</span><span class="n">dims</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">kd</span><span class="o">.</span><span class="n">name</span><span class="p">)</span><span class="k">for</span> <span class="n">kd</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">kdims</span><span class="p">]</span>
+        <span class="n">inds</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="nb">sum</span><span class="p">([</span><span class="mi">1</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dropped</span> <span class="k">if</span> <span class="n">i</span><span class="o">&gt;=</span><span class="n">d</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">inds</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">dropped</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">dropped</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">inds</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">inds</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="c1"># Allow lower dimensional views into data</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">kdims</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">data</span></div>
+
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">invert_index</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">length</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">index</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">length</span> <span class="o">-</span> <span class="n">index</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="nb">slice</span><span class="p">):</span>
+            <span class="n">start</span><span class="p">,</span> <span class="n">stop</span> <span class="o">=</span> <span class="n">index</span><span class="o">.</span><span class="n">start</span><span class="p">,</span> <span class="n">index</span><span class="o">.</span><span class="n">stop</span>
+            <span class="n">new_start</span><span class="p">,</span> <span class="n">new_stop</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+            <span class="k">if</span> <span class="n">start</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">new_stop</span> <span class="o">=</span> <span class="n">length</span> <span class="o">-</span> <span class="n">start</span>
+            <span class="k">if</span> <span class="n">stop</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">new_start</span> <span class="o">=</span> <span class="n">length</span> <span class="o">-</span> <span class="n">stop</span>
+            <span class="k">return</span> <span class="nb">slice</span><span class="p">(</span><span class="n">new_start</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">new_stop</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">):</span>
+            <span class="n">new_index</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">index</span><span class="p">:</span>
+                <span class="n">new_index</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">length</span><span class="o">-</span><span class="n">ind</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">new_index</span>
+
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">ndloc</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">indices</span><span class="p">):</span>
+        <span class="n">selected</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">adjusted_inds</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">all_scalar</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">for</span> <span class="n">kd</span><span class="p">,</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">kdims</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">indices</span><span class="p">):</span>
+            <span class="n">coords</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">coords</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">kd</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">ind</span><span class="p">):</span>
+                <span class="n">ind</span> <span class="o">=</span> <span class="p">[</span><span class="n">ind</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">all_scalar</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">selected</span><span class="p">[</span><span class="n">kd</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">coords</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span>
+            <span class="n">adjusted_inds</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">kd</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">kdims</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">kd</span><span class="o">.</span><span class="n">name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">selected</span><span class="p">:</span>
+                <span class="n">coords</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">coords</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">kd</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+                <span class="n">selected</span><span class="p">[</span><span class="n">kd</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">coords</span>
+                <span class="n">all_scalar</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">for</span> <span class="n">vd</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">vdims</span><span class="p">:</span>
+            <span class="n">arr</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">dimension_values</span><span class="p">(</span><span class="n">vd</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">all_scalar</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">vdims</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">arr</span><span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">ind</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">adjusted_inds</span><span class="p">)]</span>
+            <span class="n">selected</span><span class="p">[</span><span class="n">vd</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">adjusted_inds</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">selected</span><span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">dimensions</span><span class="p">())</span>
+
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">values</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">dim</span><span class="p">,</span> <span class="n">expanded</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">flat</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">dim</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">get_dimension</span><span class="p">(</span><span class="n">dim</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">dim</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">vdims</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">dim</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">canonicalize</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> <span class="k">if</span> <span class="n">flat</span> <span class="k">else</span> <span class="n">data</span>
+        <span class="k">elif</span> <span class="n">expanded</span><span class="p">:</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">coords</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">dim</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">expanded</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">data</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> <span class="k">if</span> <span class="n">flat</span> <span class="k">else</span> <span class="n">data</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">coords</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">dim</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">ordered</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">groupby</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">dim_names</span><span class="p">,</span> <span class="n">container_type</span><span class="p">,</span> <span class="n">group_type</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="c1"># Get dimensions information</span>
+        <span class="n">dimensions</span> <span class="o">=</span> <span class="p">[</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_dimension</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dim_names</span><span class="p">]</span>
+        <span class="n">kdims</span> <span class="o">=</span> <span class="p">[</span><span class="n">kdim</span> <span class="k">for</span> <span class="n">kdim</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">kdims</span> <span class="k">if</span> <span class="n">kdim</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dimensions</span><span class="p">]</span>
+
+        <span class="c1"># Update the kwargs appropriately for Element group types</span>
+        <span class="n">group_kwargs</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">group_type</span> <span class="o">=</span> <span class="nb">dict</span> <span class="k">if</span> <span class="n">group_type</span> <span class="o">==</span> <span class="s1">'raw'</span> <span class="k">else</span> <span class="n">group_type</span>
+        <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">group_type</span><span class="p">,</span> <span class="n">Element</span><span class="p">):</span>
+            <span class="n">group_kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">util</span><span class="o">.</span><span class="n">get_param_values</span><span class="p">(</span><span class="n">dataset</span><span class="p">))</span>
+            <span class="n">group_kwargs</span><span class="p">[</span><span class="s1">'kdims'</span><span class="p">]</span> <span class="o">=</span> <span class="n">kdims</span>
+        <span class="n">group_kwargs</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="n">drop_dim</span> <span class="o">=</span> <span class="nb">any</span><span class="p">(</span><span class="n">d</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">group_kwargs</span><span class="p">[</span><span class="s1">'kdims'</span><span class="p">]</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">kdims</span><span class="p">)</span>
+
+        <span class="c1"># Find all the keys along supplied dimensions</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="n">dataset</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">d</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dimensions</span><span class="p">]</span>
+
+        <span class="c1"># Iterate over the unique entries applying selection masks</span>
+        <span class="n">grouped_data</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">unique_key</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">util</span><span class="o">.</span><span class="n">cartesian_product</span><span class="p">(</span><span class="n">keys</span><span class="p">)):</span>
+            <span class="n">select</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">dim_names</span><span class="p">,</span> <span class="n">unique_key</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">drop_dim</span><span class="p">:</span>
+                <span class="n">group_data</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="o">**</span><span class="n">select</span><span class="p">)</span>
+                <span class="n">group_data</span> <span class="o">=</span> <span class="n">group_data</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">group_data</span><span class="p">)</span> <span class="k">else</span> <span class="n">group_data</span><span class="o">.</span><span class="n">columns</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">group_data</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="o">**</span><span class="n">select</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">group_data</span><span class="p">):</span>
+                <span class="n">group_data</span> <span class="o">=</span> <span class="p">{</span><span class="n">dataset</span><span class="o">.</span><span class="n">vdims</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">group_data</span><span class="p">)}</span>
+                <span class="k">for</span> <span class="n">dim</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">dim_names</span><span class="p">,</span> <span class="n">unique_key</span><span class="p">):</span>
+                    <span class="n">group_data</span><span class="p">[</span><span class="n">dim</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="ow">not</span> <span class="n">drop_dim</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">vdim</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">vdims</span><span class="p">:</span>
+                    <span class="n">group_data</span><span class="p">[</span><span class="n">vdim</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">group_data</span><span class="p">[</span><span class="n">vdim</span><span class="o">.</span><span class="n">name</span><span class="p">])</span>
+            <span class="n">group_data</span> <span class="o">=</span> <span class="n">group_type</span><span class="p">(</span><span class="n">group_data</span><span class="p">,</span> <span class="o">**</span><span class="n">group_kwargs</span><span class="p">)</span>
+            <span class="n">grouped_data</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="nb">tuple</span><span class="p">(</span><span class="n">unique_key</span><span class="p">),</span> <span class="n">group_data</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="nb">issubclass</span><span class="p">(</span><span class="n">container_type</span><span class="p">,</span> <span class="n">NdMapping</span><span class="p">):</span>
+            <span class="k">with</span> <span class="n">item_check</span><span class="p">(</span><span class="kc">False</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">container_type</span><span class="p">(</span><span class="n">grouped_data</span><span class="p">,</span> <span class="n">kdims</span><span class="o">=</span><span class="n">dimensions</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">container_type</span><span class="p">(</span><span class="n">grouped_data</span><span class="p">)</span>
+
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">key_select_mask</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">ind</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ind</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="n">ind</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="o">*</span><span class="n">ind</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ind</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">mask</span> <span class="o">=</span> <span class="n">ind</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ind</span><span class="p">,</span> <span class="nb">slice</span><span class="p">):</span>
+            <span class="n">mask</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">if</span> <span class="n">ind</span><span class="o">.</span><span class="n">start</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">mask</span> <span class="o">&amp;=</span> <span class="n">ind</span><span class="o">.</span><span class="n">start</span> <span class="o">&lt;=</span> <span class="n">values</span>
+            <span class="k">if</span> <span class="n">ind</span><span class="o">.</span><span class="n">stop</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">mask</span> <span class="o">&amp;=</span> <span class="n">values</span> <span class="o">&lt;</span> <span class="n">ind</span><span class="o">.</span><span class="n">stop</span>
+            <span class="c1"># Expand empty mask</span>
+            <span class="k">if</span> <span class="n">mask</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+                <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">bool</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ind</span><span class="p">,</span> <span class="p">(</span><span class="nb">set</span><span class="p">,</span> <span class="nb">list</span><span class="p">)):</span>
+            <span class="n">iter_slcs</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">ik</span> <span class="ow">in</span> <span class="n">ind</span><span class="p">:</span>
+                <span class="n">iter_slcs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">values</span> <span class="o">==</span> <span class="n">ik</span><span class="p">)</span>
+            <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_or</span><span class="o">.</span><span class="n">reduce</span><span class="p">(</span><span class="n">iter_slcs</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">callable</span><span class="p">(</span><span class="n">ind</span><span class="p">):</span>
+            <span class="n">mask</span> <span class="o">=</span> <span class="n">ind</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">ind</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">mask</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">index_mask</span> <span class="o">=</span> <span class="n">values</span> <span class="o">==</span> <span class="n">ind</span>
+            <span class="k">if</span> <span class="n">dataset</span><span class="o">.</span><span class="n">ndims</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">index_mask</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">data_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argmin</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">values</span> <span class="o">-</span> <span class="n">ind</span><span class="p">))</span>
+                <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">bool</span><span class="p">)</span>
+                <span class="n">mask</span><span class="p">[</span><span class="n">data_index</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">mask</span> <span class="o">=</span> <span class="n">index_mask</span>
+        <span class="k">return</span> <span class="n">mask</span>
+
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">select</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">selection_mask</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">selection</span><span class="p">):</span>
+        <span class="n">dimensions</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">kdims</span>
+        <span class="n">val_dims</span> <span class="o">=</span> <span class="p">[</span><span class="n">vdim</span> <span class="k">for</span> <span class="n">vdim</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">vdims</span> <span class="k">if</span> <span class="n">vdim</span> <span class="ow">in</span> <span class="n">selection</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">val_dims</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s1">'Cannot slice value dimensions in compressed format, '</span>
+                             <span class="s1">'convert to expanded format before slicing.'</span><span class="p">)</span>
+
+        <span class="n">indexed</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">indexed</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">selection</span><span class="p">)</span>
+        <span class="n">selection</span> <span class="o">=</span> <span class="p">[(</span><span class="n">d</span><span class="p">,</span> <span class="n">selection</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">selection</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">d</span><span class="o">.</span><span class="n">label</span><span class="p">)))</span>
+                      <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dimensions</span><span class="p">]</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">value_select</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">dim</span><span class="p">,</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">selection</span><span class="p">:</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">dim</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+            <span class="n">mask</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">key_select_mask</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">ind</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">mask</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">values</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">values</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+            <span class="n">value_select</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+            <span class="n">data</span><span class="p">[</span><span class="n">dim</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">values</span><span class="p">])</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="k">else</span> <span class="n">values</span>
+        <span class="n">int_inds</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">value_select</span><span class="p">][::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ix_</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">ind</span><span class="p">))</span> <span class="k">if</span> <span class="n">ind</span><span class="o">.</span><span class="n">ndim</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">ind</span><span class="p">)</span>
+                         <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="n">int_inds</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">vdim</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">vdims</span><span class="p">:</span>
+            <span class="n">data</span><span class="p">[</span><span class="n">vdim</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">vdim</span><span class="o">.</span><span class="n">name</span><span class="p">][</span><span class="n">index</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">indexed</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">vdims</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">dataset</span><span class="o">.</span><span class="n">vdims</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">])</span>
+                <span class="k">return</span> <span class="n">arr</span> <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span> <span class="k">else</span> <span class="n">arr</span><span class="p">[()]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="n">vd</span><span class="o">.</span><span class="n">name</span><span class="p">])</span>
+                                 <span class="k">for</span> <span class="n">vd</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">vdims</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">data</span>
+
+
+<div class="viewcode-block" id="GridInterface.sample"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.core.data.html#holoviews.core.data.grid.GridInterface.sample">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">sample</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">samples</span><span class="o">=</span><span class="p">[]):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Samples the gridded data into dataset of samples.</span>
+<span class="sd">        """</span>
+        <span class="n">ndims</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">ndims</span>
+        <span class="n">dimensions</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">dimensions</span><span class="p">(</span><span class="n">label</span><span class="o">=</span><span class="s1">'name'</span><span class="p">)</span>
+        <span class="n">arrays</span> <span class="o">=</span> <span class="p">[</span><span class="n">dataset</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">vdim</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="k">for</span> <span class="n">vdim</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">vdims</span><span class="p">]</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">sample</span> <span class="ow">in</span> <span class="n">samples</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">sample</span><span class="p">):</span> <span class="n">sample</span> <span class="o">=</span> <span class="p">[</span><span class="n">sample</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span> <span class="o">!=</span> <span class="n">ndims</span><span class="p">:</span>
+                <span class="n">sample</span> <span class="o">=</span> <span class="p">[</span><span class="n">sample</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">sample</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
+                          <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ndims</span><span class="p">)]</span>
+            <span class="n">sampled</span><span class="p">,</span> <span class="n">int_inds</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+            <span class="k">for</span> <span class="n">d</span><span class="p">,</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">dimensions</span><span class="p">,</span> <span class="n">sample</span><span class="p">):</span>
+                <span class="n">cdata</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">d</span><span class="p">]</span>
+                <span class="n">mask</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">key_select_mask</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">cdata</span><span class="p">,</span> <span class="n">ind</span><span class="p">)</span>
+                <span class="n">inds</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">cdata</span><span class="p">))</span> <span class="k">if</span> <span class="n">mask</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">argwhere</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span>
+                <span class="n">int_inds</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">inds</span><span class="p">)</span>
+                <span class="n">sampled</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">cdata</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span>
+            <span class="k">for</span> <span class="n">d</span><span class="p">,</span> <span class="n">arr</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">dimensions</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="o">*</span><span class="n">sampled</span><span class="p">)):</span>
+                <span class="n">data</span><span class="p">[</span><span class="n">d</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">arr</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">vdim</span><span class="p">,</span> <span class="n">array</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">vdims</span><span class="p">,</span> <span class="n">arrays</span><span class="p">):</span>
+                <span class="n">flat_index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ravel_multi_index</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">int_inds</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">array</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+                <span class="n">data</span><span class="p">[</span><span class="n">vdim</span><span class="o">.</span><span class="n">name</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">array</span><span class="o">.</span><span class="n">flat</span><span class="p">[</span><span class="n">flat_index</span><span class="p">])</span>
+        <span class="n">concatenated</span> <span class="o">=</span> <span class="p">{</span><span class="n">d</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span><span class="n">arrays</span><span class="p">)</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span> <span class="k">for</span> <span class="n">d</span><span class="p">,</span> <span class="n">arrays</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+        <span class="k">return</span> <span class="n">concatenated</span></div>
+
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">aggregate</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">kdims</span><span class="p">,</span> <span class="n">function</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">kdims</span> <span class="o">=</span> <span class="p">[</span><span class="n">kd</span><span class="o">.</span><span class="n">name</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">kd</span><span class="p">,</span> <span class="n">Dimension</span><span class="p">)</span> <span class="k">else</span> <span class="n">kd</span> <span class="k">for</span> <span class="n">kd</span> <span class="ow">in</span> <span class="n">kdims</span><span class="p">]</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">kdim</span><span class="p">:</span> <span class="n">dataset</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">kdim</span><span class="p">]</span> <span class="k">for</span> <span class="n">kdim</span> <span class="ow">in</span> <span class="n">kdims</span><span class="p">}</span>
+        <span class="n">axes</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">ndims</span><span class="o">-</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_dimension_index</span><span class="p">(</span><span class="n">kdim</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span>
+                     <span class="k">for</span> <span class="n">kdim</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">kdims</span> <span class="k">if</span> <span class="n">kdim</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kdims</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">vdim</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">vdims</span><span class="p">:</span>
+            <span class="n">data</span><span class="p">[</span><span class="n">vdim</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">function</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">vdim</span><span class="o">.</span><span class="n">name</span><span class="p">],</span>
+                                                      <span class="n">axis</span><span class="o">=</span><span class="n">axes</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">data</span>
+
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">reindex</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">kdims</span><span class="p">,</span> <span class="n">vdims</span><span class="p">):</span>
+        <span class="n">dropped_kdims</span> <span class="o">=</span> <span class="p">[</span><span class="n">kd</span> <span class="k">for</span> <span class="n">kd</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">kdims</span> <span class="k">if</span> <span class="n">kd</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kdims</span><span class="p">]</span>
+        <span class="n">dropped_vdims</span> <span class="o">=</span> <span class="p">([</span><span class="n">vdim</span> <span class="k">for</span> <span class="n">vdim</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">vdims</span>
+                          <span class="k">if</span> <span class="n">vdim</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">vdims</span><span class="p">]</span> <span class="k">if</span> <span class="n">vdims</span> <span class="k">else</span> <span class="p">[])</span>
+        <span class="n">constant</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">kd</span> <span class="ow">in</span> <span class="n">dropped_kdims</span><span class="p">:</span>
+            <span class="n">vals</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">values</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">kd</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">expanded</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">vals</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">constant</span><span class="p">[</span><span class="n">kd</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">vals</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">values</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">values</span> <span class="ow">in</span> <span class="n">dataset</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dropped_kdims</span><span class="o">+</span><span class="n">dropped_vdims</span><span class="p">}</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">constant</span><span class="p">)</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">dropped_kdims</span><span class="p">):</span>
+            <span class="n">joined_dims</span> <span class="o">=</span> <span class="n">kdims</span><span class="o">+</span><span class="n">dropped_kdims</span>
+            <span class="n">axes</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">ndims</span><span class="o">-</span><span class="n">dataset</span><span class="o">.</span><span class="n">kdims</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">d</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span>
+                         <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">joined_dims</span><span class="p">)</span>
+            <span class="n">dropped_axes</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">ndims</span><span class="o">-</span><span class="n">joined_dims</span><span class="o">.</span><span class="n">index</span><span class="p">(</span><span class="n">d</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span>
+                                 <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">dropped_kdims</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">vdim</span> <span class="ow">in</span> <span class="n">vdims</span><span class="p">:</span>
+                <span class="n">vdata</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">vdim</span><span class="o">.</span><span class="n">name</span><span class="p">]</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">axes</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">vdata</span> <span class="o">=</span> <span class="n">vdata</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">axes</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+                <span class="k">if</span> <span class="n">dropped_axes</span><span class="p">:</span>
+                    <span class="n">vdata</span> <span class="o">=</span> <span class="n">vdata</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="n">dropped_axes</span><span class="p">)</span>
+                <span class="n">data</span><span class="p">[</span><span class="n">vdim</span><span class="o">.</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">vdata</span>
+            <span class="k">return</span> <span class="n">data</span>
+        <span class="k">elif</span> <span class="n">dropped_kdims</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">columns</span><span class="p">(</span><span class="n">kdims</span><span class="o">+</span><span class="n">vdims</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">data</span>
+
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">add_dimension</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">dimension</span><span class="p">,</span> <span class="n">dim_pos</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">vdim</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">vdim</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">"Cannot add key dimension to a dense representation."</span><span class="p">)</span>
+        <span class="n">dim</span> <span class="o">=</span> <span class="n">dimension</span><span class="o">.</span><span class="n">name</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dimension</span><span class="p">,</span> <span class="n">Dimension</span><span class="p">)</span> <span class="k">else</span> <span class="n">dimension</span>
+        <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="p">{</span><span class="n">dim</span><span class="p">:</span> <span class="n">values</span><span class="p">})</span>
+
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">sort</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">by</span><span class="o">=</span><span class="p">[],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">by</span> <span class="ow">or</span> <span class="n">by</span> <span class="ow">in</span> <span class="p">[</span><span class="n">dataset</span><span class="o">.</span><span class="n">kdims</span><span class="p">,</span> <span class="n">dataset</span><span class="o">.</span><span class="n">dimensions</span><span class="p">()]:</span>
+            <span class="k">return</span> <span class="n">dataset</span><span class="o">.</span><span class="n">data</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">'Compressed format cannot be sorted, either instantiate '</span>
+                            <span class="s1">'in the desired order or use the expanded format.'</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">iloc</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">index</span><span class="p">):</span>
+        <span class="n">rows</span><span class="p">,</span> <span class="n">cols</span> <span class="o">=</span> <span class="n">index</span>
+        <span class="n">scalar</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">cols</span><span class="p">):</span>
+            <span class="n">scalar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span>
+            <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_dimension</span><span class="p">(</span><span class="n">cols</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)]</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">cols</span><span class="p">,</span> <span class="nb">slice</span><span class="p">):</span>
+            <span class="n">cols</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">dimensions</span><span class="p">()[</span><span class="n">cols</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="n">dataset</span><span class="o">.</span><span class="n">get_dimension</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isscalar</span><span class="p">(</span><span class="n">rows</span><span class="p">):</span>
+            <span class="n">rows</span> <span class="o">=</span> <span class="p">[</span><span class="n">rows</span><span class="p">]</span>
+
+        <span class="n">new_data</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">d</span> <span class="ow">in</span> <span class="n">cols</span><span class="p">:</span>
+            <span class="n">new_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dataset</span><span class="o">.</span><span class="n">dimension_values</span><span class="p">(</span><span class="n">d</span><span class="p">)[</span><span class="n">rows</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="n">scalar</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">new_data</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">new_data</span><span class="p">)</span></div>
+
+
+<span class="n">Interface</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">GridInterface</span><span class="p">)</span>
+</pre>
+    </div>
+   </div>
+  </div>
+  <!-- END MAIN BODY OF DOCS ––––––––––––– -->
+  <footer class="footer">
+   <div class="footer-links">
+    <ul>
+     <li>
+      <span class="footer-title">
+       Links
+      </span>
+     </li>
+     <li>
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li>
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li>
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li>
+      <a href="/Reference_Manual/index.html">
+       API Docs
+      </a>
+     </li>
+     <li>
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li>
+      <a href="/about.html">
+       About
+      </a>
+     </li>
+    </ul>
+    <ul>
+     <li>
+      <span class="footer-title">
+       Join Us
+      </span>
+     </li>
+     <li>
+      <a href="//gitter.im/ioam/holoviews.html">
+       Gitter
+      </a>
+     </li>
+     <li>
+      <a href="//twitter.com/holoviews.html">
+       Twitter
+      </a>
+     </li>
+     <li>
+      <a href="//github.com/ioam/holoviews.html">
+       Github
+      </a>
+     </li>
+    </ul>
+    <ul class="copyright">
+     <li>
+      2017 IOAM: Jean-Luc R. Stevens, Philipp Rudiger, and James A. Bednar
+     </li>
+    </ul>
+   </div>
+  </footer>
+  <!-- Google Analytics -->
+  <script>
+   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-61554933-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <!-- MathJax Config -->
+  <script type="text/x-mathjax-config">
+   MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+  </script>
+  <!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+ </body>
+</html>

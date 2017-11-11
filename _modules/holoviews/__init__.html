@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8"/>
+  <title>
+   holoviews.__init__ — HoloViews
+  </title>
+  <meta content="HoloViews library, documentation site." name="description"/>
+  <meta content="HoloViews contributors" name="author"/>
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js">
+  </script>
+  <script>
+   WebFont.load({
+      google: {
+        families: ['Source Sans Pro']
+      }
+    });
+  </script>
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../../_static/main.css" rel="stylesheet"/>
+  <link href="../../_static/custom.css" rel="stylesheet"/>
+  <!-- Scripts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
+  </script>
+  <script async="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+  </script>
+  <script src="../../_static/js/main.js">
+  </script>
+  <script src="../../_static/custom.js">
+  </script>
+  <script src="../../_static/require.js">
+  </script>
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../../_static/images/favicon.ico" rel="icon" type="image/png"/>
+  <!-- Canonical
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="http://holoviews.org/_modules/holoviews/__init__.html" rel="canonical"/>
+ </head>
+ <body class="">
+  <header class="navigation">
+   <div class="wrapper">
+    <a class="logo" href="//">
+     <img alt="Logo" src="../../_static/images/logo.png"/>
+    </a>
+    <a class="navigation-menu logo-text" href="//">
+     HoloViews
+    </a>
+    <a class="navigation-menu-button" href="javascript:void(0)" id="js-mobile-menu">
+     Menu
+    </a>
+    <nav>
+     <ul class="navigation-menu show" id="js-navigation-menu">
+      <li class="nav-link">
+       <a href="/about.html">
+        About
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="/gallery/index.html">
+        Gallery
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="//github.com/ioam/holoviews.html">
+        Github
+       </a>
+      </li>
+     </ul>
+    </nav>
+   </div>
+  </header>
+  <div class="second-nav">
+   <nav>
+    <ul class="navigation-menu show">
+     <li class="nav-link doc-head">
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+    </ul>
+   </nav>
+   <div class="navigation-tools">
+    <div class="search-bar">
+     <form action="../../search.html" method="get" role="search">
+      <input name="q" placeholder="Search" type="search"/>
+      <button type="submit">
+       <img alt="Search Icon" src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/search-icon-black.png"/>
+      </button>
+     </form>
+    </div>
+   </div>
+  </div>
+  <!-- MAIN BODY OF DOCS –––––––––––––––––– -->
+  <div class="docs section">
+   <div class="toc">
+    <ul>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference external" href="http://github.com/ioam/holoviews">
+       Github source
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../about.html">
+       About
+      </a>
+     </li>
+    </ul>
+   </div>
+   <div class="content">
+    <h1>
+     Source code for holoviews.__init__
+    </h1>
+    <div class="highlight">
+     <pre><span></span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="k">import</span> <span class="n">print_function</span><span class="p">,</span> <span class="n">absolute_import</span>
+<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">pydoc</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span> <span class="c1"># noqa (API import)</span>
+<span class="kn">import</span> <span class="nn">param</span>
+
+<span class="n">__version__</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Version</span><span class="p">(</span><span class="n">release</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="n">fpath</span><span class="o">=</span><span class="vm">__file__</span><span class="p">,</span>
+                            <span class="n">commit</span><span class="o">=</span><span class="s2">"$Format:%h$"</span><span class="p">,</span> <span class="n">reponame</span><span class="o">=</span><span class="s1">'holoviews'</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">.core</span> <span class="k">import</span> <span class="n">archive</span><span class="p">,</span> <span class="n">config</span>                        <span class="c1"># noqa (API import)</span>
+<span class="kn">from</span> <span class="nn">.core.dimension</span> <span class="k">import</span> <span class="n">OrderedDict</span><span class="p">,</span> <span class="n">Dimension</span>       <span class="c1"># noqa (API import)</span>
+<span class="kn">from</span> <span class="nn">.core.boundingregion</span> <span class="k">import</span> <span class="n">BoundingBox</span>             <span class="c1"># noqa (API import)</span>
+<span class="kn">from</span> <span class="nn">.core.options</span> <span class="k">import</span> <span class="p">(</span><span class="n">Options</span><span class="p">,</span> <span class="n">Store</span><span class="p">,</span> <span class="n">Cycle</span><span class="p">,</span>        <span class="c1"># noqa (API import)</span>
+                           <span class="n">Palette</span><span class="p">,</span> <span class="n">StoreOptions</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">.core.layout</span> <span class="k">import</span> <span class="o">*</span>                               <span class="c1"># noqa (API import)</span>
+<span class="kn">from</span> <span class="nn">.core.element</span> <span class="k">import</span> <span class="o">*</span>                              <span class="c1"># noqa (API import)</span>
+<span class="kn">from</span> <span class="nn">.core.overlay</span> <span class="k">import</span> <span class="o">*</span>                              <span class="c1"># noqa (API import)</span>
+<span class="kn">from</span> <span class="nn">.core.tree</span> <span class="k">import</span> <span class="o">*</span>                                 <span class="c1"># noqa (API import)</span>
+<span class="kn">from</span> <span class="nn">.core.spaces</span> <span class="k">import</span> <span class="p">(</span><span class="n">HoloMap</span><span class="p">,</span> <span class="n">Callable</span><span class="p">,</span> <span class="n">DynamicMap</span><span class="p">,</span> <span class="c1"># noqa (API import)</span>
+                          <span class="n">GridSpace</span><span class="p">,</span> <span class="n">GridMatrix</span><span class="p">)</span>
+
+<span class="kn">from</span> <span class="nn">.operation</span> <span class="k">import</span> <span class="n">Operation</span>                         <span class="c1"># noqa (API import)</span>
+<span class="kn">from</span> <span class="nn">.operation</span> <span class="k">import</span> <span class="n">ElementOperation</span>                  <span class="c1"># noqa (Deprecated API import)</span>
+<span class="kn">from</span> <span class="nn">.element</span> <span class="k">import</span> <span class="o">*</span>                                   <span class="c1"># noqa (API import)</span>
+<span class="kn">from</span> <span class="nn">.element</span> <span class="k">import</span> <span class="n">__all__</span> <span class="k">as</span> <span class="n">elements_list</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="k">import</span> <span class="n">util</span> <span class="c1"># noqa (API import)</span>
+<span class="kn">from</span> <span class="nn">.util</span> <span class="k">import</span> <span class="n">extension</span><span class="p">,</span> <span class="n">renderer</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">opts</span> <span class="c1"># noqa (API import)</span>
+
+<span class="c1"># Suppress warnings generated by NumPy in matplotlib</span>
+<span class="c1"># Expected to be fixed in next matplotlib release</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s2">"ignore"</span><span class="p">,</span>
+                        <span class="n">message</span><span class="o">=</span><span class="s2">"elementwise comparison failed; returning scalar instead"</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">IPython</span>                 <span class="c1"># noqa (API import)</span>
+    <span class="kn">from</span> <span class="nn">.ipython</span> <span class="k">import</span> <span class="n">notebook_extension</span>
+    <span class="n">extension</span> <span class="o">=</span> <span class="n">notebook_extension</span> <span class="c1"># noqa (name remapping)</span>
+<span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="k">class</span> <span class="nc">notebook_extension</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">ParameterizedFunction</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">opts</span><span class="p">):</span> <span class="c1"># noqa (dummy signature)</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">"IPython notebook not available: use hv.extension instead."</span><span class="p">)</span>
+
+<span class="c1"># A single holoviews.rc file may be executed if found.</span>
+<span class="k">for</span> <span class="n">rcfile</span> <span class="ow">in</span> <span class="p">[</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"HOLOVIEWSRC"</span><span class="p">,</span> <span class="s1">''</span><span class="p">),</span>
+               <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)[</span><span class="mi">0</span><span class="p">],</span>
+                                            <span class="s1">'..'</span><span class="p">,</span> <span class="s1">'holoviews.rc'</span><span class="p">)),</span>
+               <span class="s2">"~/.holoviews.rc"</span><span class="p">,</span>
+               <span class="s2">"~/.config/holoviews/holoviews.rc"</span><span class="p">]:</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">rcfile</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">code</span> <span class="o">=</span> <span class="nb">compile</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">(),</span> <span class="n">filename</span><span class="p">,</span> <span class="s1">'exec'</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">exec</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">"Warning: Could not load </span><span class="si">%r</span><span class="s2"> [</span><span class="si">%r</span><span class="s2">]"</span> <span class="o">%</span> <span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)))</span>
+        <span class="k">break</span>
+
+<div class="viewcode-block" id="help"><a class="viewcode-back" href="../../Reference_Manual/holoviews.html#holoviews.__init__.help">[docs]</a><span class="k">def</span> <span class="nf">help</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">visualization</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">ansi</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+         <span class="n">recursive</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Extended version of the built-in help that supports parameterized</span>
+<span class="sd">    functions and objects. A pattern (regular expression) may be used to</span>
+<span class="sd">    filter the output and if recursive is set to True, documentation for</span>
+<span class="sd">    the supplied object is shown. Note that the recursive option will</span>
+<span class="sd">    only work with an object instance and not a class.</span>
+
+<span class="sd">    If ansi is set to False, all ANSI color</span>
+<span class="sd">    codes are stripped out.</span>
+<span class="sd">    """</span>
+    <span class="n">backend</span> <span class="o">=</span> <span class="n">backend</span> <span class="k">if</span> <span class="n">backend</span> <span class="k">else</span> <span class="n">Store</span><span class="o">.</span><span class="n">current_backend</span>
+    <span class="n">info</span> <span class="o">=</span> <span class="n">Store</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">ansi</span><span class="o">=</span><span class="n">ansi</span><span class="p">,</span> <span class="n">backend</span><span class="o">=</span><span class="n">backend</span><span class="p">,</span> <span class="n">visualization</span><span class="o">=</span><span class="n">visualization</span><span class="p">,</span>
+                      <span class="n">recursive</span><span class="o">=</span><span class="n">recursive</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="n">pattern</span><span class="p">,</span> <span class="n">elements</span><span class="o">=</span><span class="n">elements_list</span><span class="p">)</span>
+
+    <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">To view the visualization options applicable to this "</span>
+            <span class="s2">"object or class, use:</span><span class="se">\n\n</span><span class="s2">"</span>
+            <span class="s2">"   holoviews.help(obj, visualization=True)</span><span class="se">\n\n</span><span class="s2">"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">info</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">((</span><span class="n">msg</span> <span class="k">if</span> <span class="n">visualization</span> <span class="ow">is</span> <span class="kc">False</span> <span class="k">else</span> <span class="s1">''</span><span class="p">)</span> <span class="o">+</span> <span class="n">info</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">pydoc</span><span class="o">.</span><span class="n">help</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span></div>
+</pre>
+    </div>
+   </div>
+  </div>
+  <!-- END MAIN BODY OF DOCS ––––––––––––– -->
+  <footer class="footer">
+   <div class="footer-links">
+    <ul>
+     <li>
+      <span class="footer-title">
+       Links
+      </span>
+     </li>
+     <li>
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li>
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li>
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li>
+      <a href="/Reference_Manual/index.html">
+       API Docs
+      </a>
+     </li>
+     <li>
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li>
+      <a href="/about.html">
+       About
+      </a>
+     </li>
+    </ul>
+    <ul>
+     <li>
+      <span class="footer-title">
+       Join Us
+      </span>
+     </li>
+     <li>
+      <a href="//gitter.im/ioam/holoviews.html">
+       Gitter
+      </a>
+     </li>
+     <li>
+      <a href="//twitter.com/holoviews.html">
+       Twitter
+      </a>
+     </li>
+     <li>
+      <a href="//github.com/ioam/holoviews.html">
+       Github
+      </a>
+     </li>
+    </ul>
+    <ul class="copyright">
+     <li>
+      2017 IOAM: Jean-Luc R. Stevens, Philipp Rudiger, and James A. Bednar
+     </li>
+    </ul>
+   </div>
+  </footer>
+  <!-- Google Analytics -->
+  <script>
+   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-61554933-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <!-- MathJax Config -->
+  <script type="text/x-mathjax-config">
+   MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+  </script>
+  <!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+ </body>
+</html>

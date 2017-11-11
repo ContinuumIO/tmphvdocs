@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8"/>
+  <title>
+   holoviews.plotting.bokeh.util — HoloViews
+  </title>
+  <meta content="HoloViews library, documentation site." name="description"/>
+  <meta content="HoloViews contributors" name="author"/>
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js">
+  </script>
+  <script>
+   WebFont.load({
+      google: {
+        families: ['Source Sans Pro']
+      }
+    });
+  </script>
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../../../../_static/main.css" rel="stylesheet"/>
+  <link href="../../../../_static/custom.css" rel="stylesheet"/>
+  <!-- Scripts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
+  </script>
+  <script async="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+  </script>
+  <script src="../../../../_static/js/main.js">
+  </script>
+  <script src="../../../../_static/custom.js">
+  </script>
+  <script src="../../../../_static/require.js">
+  </script>
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../../../../_static/images/favicon.ico" rel="icon" type="image/png"/>
+  <!-- Canonical
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="http://holoviews.org/_modules/holoviews/plotting/bokeh/util.html" rel="canonical"/>
+ </head>
+ <body class="">
+  <header class="navigation">
+   <div class="wrapper">
+    <a class="logo" href="//">
+     <img alt="Logo" src="../../../../_static/images/logo.png"/>
+    </a>
+    <a class="navigation-menu logo-text" href="//">
+     HoloViews
+    </a>
+    <a class="navigation-menu-button" href="javascript:void(0)" id="js-mobile-menu">
+     Menu
+    </a>
+    <nav>
+     <ul class="navigation-menu show" id="js-navigation-menu">
+      <li class="nav-link">
+       <a href="/about.html">
+        About
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="/gallery/index.html">
+        Gallery
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="//github.com/ioam/holoviews.html">
+        Github
+       </a>
+      </li>
+     </ul>
+    </nav>
+   </div>
+  </header>
+  <div class="second-nav">
+   <nav>
+    <ul class="navigation-menu show">
+     <li class="nav-link doc-head">
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+    </ul>
+   </nav>
+   <div class="navigation-tools">
+    <div class="search-bar">
+     <form action="../../../../search.html" method="get" role="search">
+      <input name="q" placeholder="Search" type="search"/>
+      <button type="submit">
+       <img alt="Search Icon" src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/search-icon-black.png"/>
+      </button>
+     </form>
+    </div>
+   </div>
+  </div>
+  <!-- MAIN BODY OF DOCS –––––––––––––––––– -->
+  <div class="docs section">
+   <div class="toc">
+    <ul>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../../getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../../user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../../gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../../Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../../FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference external" href="http://github.com/ioam/holoviews">
+       Github source
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../../about.html">
+       About
+      </a>
+     </li>
+    </ul>
+   </div>
+   <div class="content">
+    <h1>
+     Source code for holoviews.plotting.bokeh.util
+    </h1>
+    <div class="highlight">
+     <pre><span></span><span class="kn">import</span> <span class="nn">itertools</span><span class="o">,</span> <span class="nn">inspect</span><span class="o">,</span> <span class="nn">re</span><span class="o">,</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">distutils.version</span> <span class="k">import</span> <span class="n">LooseVersion</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">defaultdict</span>
+<span class="kn">import</span> <span class="nn">datetime</span> <span class="k">as</span> <span class="nn">dt</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="k">import</span> <span class="n">colors</span>
+    <span class="kn">import</span> <span class="nn">matplotlib.cm</span> <span class="k">as</span> <span class="nn">cm</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">cm</span><span class="p">,</span> <span class="n">colors</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+
+<span class="kn">import</span> <span class="nn">param</span>
+<span class="kn">import</span> <span class="nn">bokeh</span>
+
+<span class="n">bokeh_version</span> <span class="o">=</span> <span class="n">LooseVersion</span><span class="p">(</span><span class="n">bokeh</span><span class="o">.</span><span class="n">__version__</span><span class="p">)</span>  <span class="c1"># noqa</span>
+
+<span class="kn">from</span> <span class="nn">bokeh.core.enums</span> <span class="k">import</span> <span class="n">Palette</span>
+<span class="kn">from</span> <span class="nn">bokeh.core.json_encoder</span> <span class="k">import</span> <span class="n">serialize_json</span> <span class="c1"># noqa (API import)</span>
+<span class="kn">from</span> <span class="nn">bokeh.core.properties</span> <span class="k">import</span> <span class="n">value</span>
+<span class="kn">from</span> <span class="nn">bokeh.document</span> <span class="k">import</span> <span class="n">Document</span>
+<span class="kn">from</span> <span class="nn">bokeh.layouts</span> <span class="k">import</span> <span class="n">WidgetBox</span><span class="p">,</span> <span class="n">Row</span><span class="p">,</span> <span class="n">Column</span>
+<span class="kn">from</span> <span class="nn">bokeh.models</span> <span class="k">import</span> <span class="n">Model</span><span class="p">,</span> <span class="n">HasProps</span><span class="p">,</span> <span class="n">ToolbarBox</span><span class="p">,</span> <span class="n">FactorRange</span><span class="p">,</span> <span class="n">Range1d</span><span class="p">,</span> <span class="n">Plot</span><span class="p">,</span> <span class="n">Spacer</span><span class="p">,</span> <span class="n">CustomJS</span>
+<span class="kn">from</span> <span class="nn">bokeh.models.widgets</span> <span class="k">import</span> <span class="n">DataTable</span><span class="p">,</span> <span class="n">Tabs</span><span class="p">,</span> <span class="n">Div</span>
+<span class="kn">from</span> <span class="nn">bokeh.plotting</span> <span class="k">import</span> <span class="n">Figure</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">bkcharts</span> <span class="k">import</span> <span class="n">Chart</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="n">Chart</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span> <span class="c1"># Create stub for isinstance check</span>
+
+<span class="kn">from</span> <span class="nn">...core.options</span> <span class="k">import</span> <span class="n">abbreviated_exception</span>
+<span class="kn">from</span> <span class="nn">...core.overlay</span> <span class="k">import</span> <span class="n">Overlay</span>
+<span class="kn">from</span> <span class="nn">...core.util</span> <span class="k">import</span> <span class="n">basestring</span><span class="p">,</span> <span class="n">unique_array</span><span class="p">,</span> <span class="n">callable_name</span><span class="p">,</span> <span class="n">pd</span><span class="p">,</span> <span class="n">dt64_to_dt</span>
+<span class="kn">from</span> <span class="nn">...core.spaces</span> <span class="k">import</span> <span class="n">get_nested_dmaps</span><span class="p">,</span> <span class="n">DynamicMap</span>
+
+<span class="kn">from</span> <span class="nn">..util</span> <span class="k">import</span> <span class="n">dim_axis_label</span><span class="p">,</span> <span class="n">rgb2hex</span>
+
+<span class="c1"># Conversion between matplotlib and bokeh markers</span>
+<span class="n">markers</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'s'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'marker'</span><span class="p">:</span> <span class="s1">'square'</span><span class="p">},</span>
+           <span class="s1">'d'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'marker'</span><span class="p">:</span> <span class="s1">'diamond'</span><span class="p">},</span>
+           <span class="s1">'^'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'marker'</span><span class="p">:</span> <span class="s1">'triangle'</span><span class="p">,</span> <span class="s1">'angle'</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+           <span class="s1">'&gt;'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'marker'</span><span class="p">:</span> <span class="s1">'triangle'</span><span class="p">,</span> <span class="s1">'angle'</span><span class="p">:</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">},</span>
+           <span class="s1">'v'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'marker'</span><span class="p">:</span> <span class="s1">'triangle'</span><span class="p">,</span> <span class="s1">'angle'</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">},</span>
+           <span class="s1">'&lt;'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'marker'</span><span class="p">:</span> <span class="s1">'triangle'</span><span class="p">,</span> <span class="s1">'angle'</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">},</span>
+           <span class="s1">'1'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'marker'</span><span class="p">:</span> <span class="s1">'triangle'</span><span class="p">,</span> <span class="s1">'angle'</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+           <span class="s1">'2'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'marker'</span><span class="p">:</span> <span class="s1">'triangle'</span><span class="p">,</span> <span class="s1">'angle'</span><span class="p">:</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">},</span>
+           <span class="s1">'3'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'marker'</span><span class="p">:</span> <span class="s1">'triangle'</span><span class="p">,</span> <span class="s1">'angle'</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">},</span>
+           <span class="s1">'4'</span><span class="p">:</span> <span class="p">{</span><span class="s1">'marker'</span><span class="p">:</span> <span class="s1">'triangle'</span><span class="p">,</span> <span class="s1">'angle'</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="mi">2</span><span class="p">}}</span>
+
+
+<div class="viewcode-block" id="convert_timestamp"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.util.convert_timestamp">[docs]</a><span class="k">def</span> <span class="nf">convert_timestamp</span><span class="p">(</span><span class="n">timestamp</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Converts bokehJS timestamp to datetime64.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">datetime64</span><span class="p">(</span><span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">fromtimestamp</span><span class="p">(</span><span class="n">timestamp</span><span class="o">/</span><span class="mf">1000.</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="rgba_tuple"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.util.rgba_tuple">[docs]</a><span class="k">def</span> <span class="nf">rgba_tuple</span><span class="p">(</span><span class="n">rgba</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Ensures RGB(A) tuples in the range 0-1 are scaled to 0-255.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">rgba</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">c</span><span class="o">*</span><span class="mi">255</span><span class="p">)</span> <span class="k">if</span> <span class="n">i</span><span class="o">&lt;</span><span class="mi">3</span> <span class="k">else</span> <span class="n">c</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">rgba</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">rgba</span></div>
+
+
+<div class="viewcode-block" id="mplcmap_to_palette"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.util.mplcmap_to_palette">[docs]</a><span class="k">def</span> <span class="nf">mplcmap_to_palette</span><span class="p">(</span><span class="n">cmap</span><span class="p">,</span> <span class="n">ncolors</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Converts a matplotlib colormap to palette of RGB hex strings."</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">colors</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Using cmaps on objects requires matplotlib."</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">abbreviated_exception</span><span class="p">():</span>
+        <span class="n">colormap</span> <span class="o">=</span> <span class="n">cm</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="n">cmap</span><span class="p">)</span> <span class="c1">#choose any matplotlib colormap here</span>
+        <span class="k">if</span> <span class="n">ncolors</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">rgb2hex</span><span class="p">(</span><span class="n">colormap</span><span class="p">(</span><span class="n">i</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">ncolors</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">rgb2hex</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">colormap</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">colormap</span><span class="o">.</span><span class="n">N</span><span class="p">))]</span></div>
+
+
+<div class="viewcode-block" id="get_cmap"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.util.get_cmap">[docs]</a><span class="k">def</span> <span class="nf">get_cmap</span><span class="p">(</span><span class="n">cmap</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Returns matplotlib cmap generated from bokeh palette or</span>
+<span class="sd">    directly accessed from matplotlib.</span>
+<span class="sd">    """</span>
+    <span class="k">with</span> <span class="n">abbreviated_exception</span><span class="p">():</span>
+        <span class="n">rgb_vals</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">Palette</span><span class="p">,</span> <span class="n">cmap</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">rgb_vals</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">colors</span><span class="o">.</span><span class="n">ListedColormap</span><span class="p">(</span><span class="n">rgb_vals</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">cm</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="n">cmap</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="mpl_to_bokeh"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.util.mpl_to_bokeh">[docs]</a><span class="k">def</span> <span class="nf">mpl_to_bokeh</span><span class="p">(</span><span class="n">properties</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Utility to process style properties converting any</span>
+<span class="sd">    matplotlib specific options to their nearest bokeh</span>
+<span class="sd">    equivalent.</span>
+<span class="sd">    """</span>
+    <span class="n">new_properties</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">properties</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="s1">'s'</span><span class="p">:</span>
+            <span class="n">new_properties</span><span class="p">[</span><span class="s1">'size'</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+        <span class="k">elif</span> <span class="n">k</span> <span class="o">==</span> <span class="s1">'marker'</span><span class="p">:</span>
+            <span class="n">new_properties</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">markers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="p">{</span><span class="s1">'marker'</span><span class="p">:</span> <span class="n">v</span><span class="p">}))</span>
+        <span class="k">elif</span> <span class="n">k</span> <span class="o">==</span> <span class="s1">'color'</span> <span class="ow">or</span> <span class="n">k</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">'_color'</span><span class="p">):</span>
+            <span class="k">with</span> <span class="n">abbreviated_exception</span><span class="p">():</span>
+                <span class="n">v</span> <span class="o">=</span> <span class="n">colors</span><span class="o">.</span><span class="n">ColorConverter</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+                <span class="k">with</span> <span class="n">abbreviated_exception</span><span class="p">():</span>
+                    <span class="n">v</span> <span class="o">=</span> <span class="n">rgb2hex</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+            <span class="n">new_properties</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">new_properties</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+    <span class="n">new_properties</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s1">'cmap'</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">new_properties</span></div>
+
+
+<div class="viewcode-block" id="layout_padding"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.util.layout_padding">[docs]</a><span class="k">def</span> <span class="nf">layout_padding</span><span class="p">(</span><span class="n">plots</span><span class="p">,</span> <span class="n">renderer</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Pads Nones in a list of lists of plots with empty plots.</span>
+<span class="sd">    """</span>
+    <span class="n">widths</span><span class="p">,</span> <span class="n">heights</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">),</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">r</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">plots</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">p</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">renderer</span><span class="o">.</span><span class="n">get_size</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+                <span class="n">widths</span><span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">widths</span><span class="p">[</span><span class="n">c</span><span class="p">],</span> <span class="n">width</span><span class="p">)</span>
+                <span class="n">heights</span><span class="p">[</span><span class="n">r</span><span class="p">]</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">heights</span><span class="p">[</span><span class="n">r</span><span class="p">],</span> <span class="n">height</span><span class="p">)</span>
+
+    <span class="n">expanded_plots</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">r</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">plots</span><span class="p">):</span>
+        <span class="n">expanded_plots</span><span class="o">.</span><span class="n">append</span><span class="p">([])</span>
+        <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">p</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">p</span> <span class="o">=</span> <span class="n">empty_plot</span><span class="p">(</span><span class="n">widths</span><span class="p">[</span><span class="n">c</span><span class="p">],</span> <span class="n">heights</span><span class="p">[</span><span class="n">r</span><span class="p">])</span>
+            <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="s1">'plot_width'</span><span class="p">)</span> <span class="ow">and</span> <span class="n">p</span><span class="o">.</span><span class="n">plot_width</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">p</span><span class="o">.</span><span class="n">plot_height</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">p</span><span class="o">.</span><span class="n">plot_width</span> <span class="o">=</span> <span class="n">widths</span><span class="p">[</span><span class="n">c</span><span class="p">]</span>
+                <span class="n">p</span><span class="o">.</span><span class="n">plot_height</span> <span class="o">=</span> <span class="n">heights</span><span class="p">[</span><span class="n">r</span><span class="p">]</span>
+            <span class="n">expanded_plots</span><span class="p">[</span><span class="n">r</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">expanded_plots</span></div>
+
+
+<div class="viewcode-block" id="compute_plot_size"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.util.compute_plot_size">[docs]</a><span class="k">def</span> <span class="nf">compute_plot_size</span><span class="p">(</span><span class="n">plot</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Computes the size of bokeh models that make up a layout such as</span>
+<span class="sd">    figures, rows, columns, widgetboxes and Plot.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="n">Div</span><span class="p">):</span>
+        <span class="c1"># Cannot compute size for Div</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="p">(</span><span class="n">Row</span><span class="p">,</span> <span class="n">Column</span><span class="p">,</span> <span class="n">ToolbarBox</span><span class="p">,</span> <span class="n">WidgetBox</span><span class="p">,</span> <span class="n">Tabs</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">plot</span><span class="o">.</span><span class="n">children</span><span class="p">:</span> <span class="k">return</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="n">Row</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="n">ToolbarBox</span><span class="p">)</span> <span class="ow">and</span> <span class="n">plot</span><span class="o">.</span><span class="n">toolbar_location</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'right'</span><span class="p">,</span> <span class="s1">'left'</span><span class="p">]):</span>
+            <span class="n">w_agg</span><span class="p">,</span> <span class="n">h_agg</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="n">Tabs</span><span class="p">):</span>
+            <span class="n">w_agg</span><span class="p">,</span> <span class="n">h_agg</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">w_agg</span><span class="p">,</span> <span class="n">h_agg</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">)</span>
+        <span class="n">widths</span><span class="p">,</span> <span class="n">heights</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">compute_plot_size</span><span class="p">(</span><span class="n">child</span><span class="p">)</span> <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">plot</span><span class="o">.</span><span class="n">children</span><span class="p">])</span>
+        <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">w_agg</span><span class="p">(</span><span class="n">widths</span><span class="p">),</span> <span class="n">h_agg</span><span class="p">(</span><span class="n">heights</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="p">(</span><span class="n">Figure</span><span class="p">,</span> <span class="n">Chart</span><span class="p">)):</span>
+        <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">plot</span><span class="o">.</span><span class="n">plot_width</span><span class="p">,</span> <span class="n">plot</span><span class="o">.</span><span class="n">plot_height</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="p">(</span><span class="n">Plot</span><span class="p">,</span> <span class="n">DataTable</span><span class="p">,</span> <span class="n">Spacer</span><span class="p">)):</span>
+        <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="n">plot</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="n">plot</span><span class="o">.</span><span class="n">height</span>
+    <span class="k">return</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span></div>
+
+
+<div class="viewcode-block" id="empty_plot"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.util.empty_plot">[docs]</a><span class="k">def</span> <span class="nf">empty_plot</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Creates an empty and invisible plot of the specified size.</span>
+<span class="sd">    """</span>
+    <span class="n">x_range</span> <span class="o">=</span> <span class="n">Range1d</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">y_range</span> <span class="o">=</span> <span class="n">Range1d</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">Figure</span><span class="p">(</span><span class="n">plot_width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span> <span class="n">plot_height</span><span class="o">=</span><span class="n">height</span><span class="p">,</span>
+               <span class="n">x_range</span><span class="o">=</span><span class="n">x_range</span><span class="p">,</span> <span class="n">y_range</span><span class="o">=</span><span class="n">y_range</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">outline_line_alpha</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">grid_line_alpha</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="n">p</span></div>
+
+
+<div class="viewcode-block" id="font_size_to_pixels"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.util.font_size_to_pixels">[docs]</a><span class="k">def</span> <span class="nf">font_size_to_pixels</span><span class="p">(</span><span class="n">size</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Convert a fontsize to a pixel value</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="n">size</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">basestring</span><span class="p">):</span>
+        <span class="k">return</span>
+    <span class="n">conversions</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'em'</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span> <span class="s1">'pt'</span><span class="p">:</span> <span class="mi">16</span><span class="o">/</span><span class="mf">12.</span><span class="p">}</span>
+    <span class="n">val</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">'\d+'</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+    <span class="n">unit</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="s1">'[a-z]+'</span><span class="p">,</span> <span class="n">size</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">val</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">unit</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">val</span> <span class="ow">and</span> <span class="n">unit</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'px'</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="n">val</span> <span class="ow">and</span> <span class="n">unit</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">conversions</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">val</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="n">conversions</span><span class="p">[</span><span class="n">unit</span><span class="p">[</span><span class="mi">0</span><span class="p">]]))</span></div>
+
+
+<span class="k">def</span> <span class="nf">make_axis</span><span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">size</span><span class="p">,</span> <span class="n">factors</span><span class="p">,</span> <span class="n">dim</span><span class="p">,</span> <span class="n">flip</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+              <span class="n">label_size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">tick_size</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">axis_height</span><span class="o">=</span><span class="mi">35</span><span class="p">):</span>
+    <span class="n">factors</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">dim</span><span class="o">.</span><span class="n">pprint_value</span><span class="p">,</span> <span class="n">factors</span><span class="p">))</span>
+    <span class="n">nchars</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">factors</span><span class="p">])</span>
+    <span class="n">ranges</span> <span class="o">=</span> <span class="n">FactorRange</span><span class="p">(</span><span class="n">factors</span><span class="o">=</span><span class="n">factors</span><span class="p">)</span>
+    <span class="n">ranges2</span> <span class="o">=</span> <span class="n">Range1d</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">axis_label</span> <span class="o">=</span> <span class="n">dim_axis_label</span><span class="p">(</span><span class="n">dim</span><span class="p">)</span>
+    <span class="n">reset</span> <span class="o">=</span> <span class="s2">"range.setv({start: 0, end: range.factors.length})"</span>
+    <span class="n">ranges</span><span class="o">.</span><span class="n">callback</span> <span class="o">=</span> <span class="n">CustomJS</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="nb">range</span><span class="o">=</span><span class="n">ranges</span><span class="p">),</span> <span class="n">code</span><span class="o">=</span><span class="n">reset</span><span class="p">)</span>
+
+    <span class="n">axis_props</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">if</span> <span class="n">label_size</span><span class="p">:</span>
+        <span class="n">axis_props</span><span class="p">[</span><span class="s1">'axis_label_text_font_size'</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span><span class="p">(</span><span class="n">label_size</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">tick_size</span><span class="p">:</span>
+        <span class="n">axis_props</span><span class="p">[</span><span class="s1">'major_label_text_font_size'</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span><span class="p">(</span><span class="n">tick_size</span><span class="p">)</span>
+
+    <span class="n">tick_px</span> <span class="o">=</span> <span class="n">font_size_to_pixels</span><span class="p">(</span><span class="n">tick_size</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">tick_px</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">tick_px</span> <span class="o">=</span> <span class="mi">8</span>
+    <span class="n">label_px</span> <span class="o">=</span> <span class="n">font_size_to_pixels</span><span class="p">(</span><span class="n">label_size</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">label_px</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">label_px</span> <span class="o">=</span> <span class="mi">10</span>
+
+    <span class="n">rotation</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">rotation</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">axis</span> <span class="o">==</span> <span class="s1">'x'</span><span class="p">:</span>
+        <span class="n">align</span> <span class="o">=</span> <span class="s1">'center'</span>
+        <span class="c1"># Adjust height to compensate for label rotation</span>
+        <span class="n">height</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">axis_height</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">rotation</span><span class="p">))</span> <span class="o">*</span>
+                     <span class="p">((</span><span class="n">nchars</span><span class="o">*</span><span class="n">tick_px</span><span class="p">)</span><span class="o">*</span><span class="mf">0.82</span><span class="p">))</span> <span class="o">+</span> <span class="n">tick_px</span> <span class="o">+</span> <span class="n">label_px</span>
+        <span class="n">opts</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">x_axis_type</span><span class="o">=</span><span class="s1">'auto'</span><span class="p">,</span> <span class="n">x_axis_label</span><span class="o">=</span><span class="n">axis_label</span><span class="p">,</span>
+                    <span class="n">x_range</span><span class="o">=</span><span class="n">ranges</span><span class="p">,</span> <span class="n">y_range</span><span class="o">=</span><span class="n">ranges2</span><span class="p">,</span> <span class="n">plot_height</span><span class="o">=</span><span class="n">height</span><span class="p">,</span>
+                    <span class="n">plot_width</span><span class="o">=</span><span class="n">size</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Adjust width to compensate for label rotation</span>
+        <span class="n">align</span> <span class="o">=</span> <span class="s1">'left'</span> <span class="k">if</span> <span class="n">flip</span> <span class="k">else</span> <span class="s1">'right'</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">axis_height</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">rotation</span><span class="p">))</span> <span class="o">*</span>
+                    <span class="p">((</span><span class="n">nchars</span><span class="o">*</span><span class="n">tick_px</span><span class="p">)</span><span class="o">*</span><span class="mf">0.82</span><span class="p">))</span> <span class="o">+</span> <span class="n">tick_px</span> <span class="o">+</span> <span class="n">label_px</span>
+        <span class="n">opts</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">y_axis_label</span><span class="o">=</span><span class="n">axis_label</span><span class="p">,</span> <span class="n">x_range</span><span class="o">=</span><span class="n">ranges2</span><span class="p">,</span>
+                    <span class="n">y_range</span><span class="o">=</span><span class="n">ranges</span><span class="p">,</span> <span class="n">plot_width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span> <span class="n">plot_height</span><span class="o">=</span><span class="n">size</span><span class="p">)</span>
+
+    <span class="n">p</span> <span class="o">=</span> <span class="n">Figure</span><span class="p">(</span><span class="n">toolbar_location</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">opts</span><span class="p">)</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">outline_line_alpha</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">p</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">grid_line_alpha</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">if</span> <span class="n">axis</span> <span class="o">==</span> <span class="s1">'x'</span><span class="p">:</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">axis</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">xaxis</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">flip</span><span class="p">:</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">above</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">below</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">below</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">xaxis</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">above</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">visible</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">axis</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">yaxis</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">flip</span><span class="p">:</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">right</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">left</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">left</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">p</span><span class="o">.</span><span class="n">yaxis</span><span class="p">[:]</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">right</span>
+    <span class="n">axis</span><span class="o">.</span><span class="n">major_label_orientation</span> <span class="o">=</span> <span class="n">rotation</span>
+    <span class="n">axis</span><span class="o">.</span><span class="n">major_label_text_align</span> <span class="o">=</span> <span class="n">align</span>
+    <span class="n">axis</span><span class="o">.</span><span class="n">major_label_text_baseline</span> <span class="o">=</span> <span class="s1">'middle'</span>
+    <span class="n">axis</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">**</span><span class="n">axis_props</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">p</span>
+
+
+<span class="k">def</span> <span class="nf">convert_datetime</span><span class="p">(</span><span class="n">time</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">time</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s1">'datetime64[s]'</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span><span class="o">*</span><span class="mi">1000</span>
+
+
+<div class="viewcode-block" id="hsv_to_rgb"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.util.hsv_to_rgb">[docs]</a><span class="k">def</span> <span class="nf">hsv_to_rgb</span><span class="p">(</span><span class="n">hsv</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Vectorized HSV to RGB conversion, adapted from:</span>
+<span class="sd">    http://stackoverflow.com/questions/24852345/hsv-to-rgb-color-conversion</span>
+<span class="sd">    """</span>
+    <span class="n">h</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">v</span> <span class="o">=</span> <span class="p">(</span><span class="n">hsv</span><span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+    <span class="n">shape</span> <span class="o">=</span> <span class="n">h</span><span class="o">.</span><span class="n">shape</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">int_</span><span class="p">(</span><span class="n">h</span><span class="o">*</span><span class="mf">6.</span><span class="p">)</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">h</span><span class="o">*</span><span class="mf">6.</span><span class="o">-</span><span class="n">i</span>
+
+    <span class="n">q</span> <span class="o">=</span> <span class="n">f</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">-</span><span class="n">f</span>
+    <span class="n">i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">f</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+    <span class="n">i</span><span class="o">%=</span><span class="mi">6</span>
+
+    <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+    <span class="n">q</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">q</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+    <span class="n">v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+
+    <span class="n">clist</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">s</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">f</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">f</span><span class="p">),</span><span class="n">q</span><span class="p">,</span><span class="n">t</span><span class="p">]))</span><span class="o">*</span><span class="n">v</span>
+
+    <span class="c1">#0:v 1:p 2:q 3:t</span>
+    <span class="n">order</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]])</span>
+    <span class="n">rgb</span> <span class="o">=</span> <span class="n">clist</span><span class="p">[</span><span class="n">order</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">prod</span><span class="p">(</span><span class="n">shape</span><span class="p">))[:,</span><span class="kc">None</span><span class="p">]]</span>
+
+    <span class="k">return</span> <span class="n">rgb</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">shape</span><span class="o">+</span><span class="p">(</span><span class="mi">3</span><span class="p">,))</span></div>
+
+
+<div class="viewcode-block" id="pad_width"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.util.pad_width">[docs]</a><span class="k">def</span> <span class="nf">pad_width</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">table_padding</span><span class="o">=</span><span class="mf">0.85</span><span class="p">,</span> <span class="n">tabs_padding</span><span class="o">=</span><span class="mf">1.2</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Computes the width of a model and sets up appropriate padding</span>
+<span class="sd">    for Tabs and DataTable types.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">Row</span><span class="p">):</span>
+        <span class="n">vals</span> <span class="o">=</span> <span class="p">[</span><span class="n">pad_width</span><span class="p">(</span><span class="n">child</span><span class="p">)</span> <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">children</span><span class="p">]</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">([</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">vals</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">Column</span><span class="p">):</span>
+        <span class="n">vals</span> <span class="o">=</span> <span class="p">[</span><span class="n">pad_width</span><span class="p">(</span><span class="n">child</span><span class="p">)</span> <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">children</span><span class="p">]</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">vals</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">Tabs</span><span class="p">):</span>
+        <span class="n">vals</span> <span class="o">=</span> <span class="p">[</span><span class="n">pad_width</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">tabs</span><span class="p">]</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">([</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">vals</span> <span class="k">if</span> <span class="n">v</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">model</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">tabs</span><span class="p">:</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="n">width</span>
+            <span class="n">width</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">tabs_padding</span><span class="o">*</span><span class="n">width</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">DataTable</span><span class="p">):</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">width</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">table_padding</span><span class="o">*</span><span class="n">width</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">WidgetBox</span><span class="p">):</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">width</span>
+    <span class="k">elif</span> <span class="n">model</span><span class="p">:</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">plot_width</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">return</span> <span class="n">width</span></div>
+
+
+<div class="viewcode-block" id="pad_plots"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.util.pad_plots">[docs]</a><span class="k">def</span> <span class="nf">pad_plots</span><span class="p">(</span><span class="n">plots</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Accepts a grid of bokeh plots in form of a list of lists and</span>
+<span class="sd">    wraps any DataTable or Tabs in a WidgetBox with appropriate</span>
+<span class="sd">    padding. Required to avoid overlap in gridplot.</span>
+<span class="sd">    """</span>
+    <span class="n">widths</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">plots</span><span class="p">:</span>
+        <span class="n">row_widths</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">row</span><span class="p">:</span>
+            <span class="n">width</span> <span class="o">=</span> <span class="n">pad_width</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+            <span class="n">row_widths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">width</span><span class="p">)</span>
+        <span class="n">widths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row_widths</span><span class="p">)</span>
+    <span class="n">plots</span> <span class="o">=</span> <span class="p">[[</span><span class="n">WidgetBox</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="n">w</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="p">(</span><span class="n">DataTable</span><span class="p">,</span> <span class="n">Tabs</span><span class="p">))</span> <span class="k">else</span> <span class="n">p</span>
+              <span class="k">for</span> <span class="n">p</span><span class="p">,</span> <span class="n">w</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">ws</span><span class="p">)]</span> <span class="k">for</span> <span class="n">row</span><span class="p">,</span> <span class="n">ws</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">plots</span><span class="p">,</span> <span class="n">widths</span><span class="p">)]</span>
+    <span class="n">total_width</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">widths</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">plots</span><span class="p">,</span> <span class="n">total_width</span></div>
+
+
+<div class="viewcode-block" id="filter_toolboxes"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.util.filter_toolboxes">[docs]</a><span class="k">def</span> <span class="nf">filter_toolboxes</span><span class="p">(</span><span class="n">plots</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Filters out toolboxes out of a list of plots to be able to compose</span>
+<span class="sd">    them into a larger plot.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">plots</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+        <span class="n">plots</span> <span class="o">=</span> <span class="p">[</span><span class="n">filter_toolboxes</span><span class="p">(</span><span class="n">plot</span><span class="p">)</span> <span class="k">for</span> <span class="n">plot</span> <span class="ow">in</span> <span class="n">plots</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">plots</span><span class="p">,</span> <span class="s1">'children'</span><span class="p">):</span>
+        <span class="n">plots</span><span class="o">.</span><span class="n">children</span> <span class="o">=</span> <span class="p">[</span><span class="n">filter_toolboxes</span><span class="p">(</span><span class="n">child</span><span class="p">)</span> <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">plots</span><span class="o">.</span><span class="n">children</span>
+                          <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">child</span><span class="p">,</span> <span class="n">ToolbarBox</span><span class="p">)]</span>
+    <span class="k">return</span> <span class="n">plots</span></div>
+
+
+<div class="viewcode-block" id="py2js_tickformatter"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.util.py2js_tickformatter">[docs]</a><span class="k">def</span> <span class="nf">py2js_tickformatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">,</span> <span class="n">msg</span><span class="o">=</span><span class="s1">''</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Uses flexx.pyscript to compile a python tick formatter to JS code</span>
+<span class="sd">    """</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="kn">from</span> <span class="nn">flexx.pyscript</span> <span class="k">import</span> <span class="n">py2js</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="n">param</span><span class="o">.</span><span class="n">main</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">msg</span><span class="o">+</span><span class="s1">'Ensure Flexx is installed '</span>
+                           <span class="s1">'("conda install -c bokeh flexx" or '</span>
+                           <span class="s1">'"pip install flexx")'</span><span class="p">)</span>
+        <span class="k">return</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">jscode</span> <span class="o">=</span> <span class="n">py2js</span><span class="p">(</span><span class="n">formatter</span><span class="p">,</span> <span class="s1">'formatter'</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="n">error</span> <span class="o">=</span> <span class="s1">'Pyscript raised an error: </span><span class="si">{0}</span><span class="s1">'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="n">error</span> <span class="o">=</span> <span class="n">error</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'%'</span><span class="p">,</span> <span class="s1">'</span><span class="si">%%</span><span class="s1">'</span><span class="p">)</span>
+        <span class="n">param</span><span class="o">.</span><span class="n">main</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">msg</span><span class="o">+</span><span class="n">error</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="n">args</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">getargspec</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span><span class="o">.</span><span class="n">args</span>
+    <span class="n">arg_define</span> <span class="o">=</span> <span class="s1">'var </span><span class="si">%s</span><span class="s1"> = tick;'</span> <span class="o">%</span> <span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">args</span> <span class="k">else</span> <span class="s1">''</span>
+    <span class="n">return_js</span> <span class="o">=</span> <span class="s1">'return formatter();</span><span class="se">\n</span><span class="s1">'</span>
+    <span class="n">jsfunc</span> <span class="o">=</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">arg_define</span><span class="p">,</span> <span class="n">jscode</span><span class="p">,</span> <span class="n">return_js</span><span class="p">])</span>
+    <span class="n">match</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">'(function \(.*\))'</span><span class="p">,</span> <span class="n">jsfunc</span> <span class="p">)</span>
+    <span class="k">return</span> <span class="n">jsfunc</span><span class="p">[:</span><span class="n">match</span><span class="o">.</span><span class="n">start</span><span class="p">()]</span> <span class="o">+</span> <span class="s1">'function ()'</span> <span class="o">+</span> <span class="n">jsfunc</span><span class="p">[</span><span class="n">match</span><span class="o">.</span><span class="n">end</span><span class="p">():]</span></div>
+
+
+<div class="viewcode-block" id="get_tab_title"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.util.get_tab_title">[docs]</a><span class="k">def</span> <span class="nf">get_tab_title</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">frame</span><span class="p">,</span> <span class="n">overlay</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Computes a title for bokeh tabs from the key in the overlay, the</span>
+<span class="sd">    element and the containing (Nd)Overlay.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">overlay</span><span class="p">,</span> <span class="n">Overlay</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">frame</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="k">if</span> <span class="n">frame</span><span class="o">.</span><span class="n">label</span><span class="p">:</span>
+                <span class="n">title</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">label</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">frame</span><span class="o">.</span><span class="n">group</span> <span class="o">!=</span> <span class="n">frame</span><span class="o">.</span><span class="n">params</span><span class="p">(</span><span class="s1">'group'</span><span class="p">)</span><span class="o">.</span><span class="n">default</span><span class="p">:</span>
+                    <span class="n">title</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">group</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">title</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">frame</span><span class="o">.</span><span class="n">group</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="n">key</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="s1">' '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="s1">' | '</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">d</span><span class="o">.</span><span class="n">pprint_value_string</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">d</span><span class="p">,</span> <span class="n">k</span> <span class="ow">in</span>
+                            <span class="nb">zip</span><span class="p">(</span><span class="n">overlay</span><span class="o">.</span><span class="n">kdims</span><span class="p">,</span> <span class="n">key</span><span class="p">)])</span>
+    <span class="k">return</span> <span class="n">title</span></div>
+
+
+<div class="viewcode-block" id="expand_batched_style"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.util.expand_batched_style">[docs]</a><span class="k">def</span> <span class="nf">expand_batched_style</span><span class="p">(</span><span class="n">style</span><span class="p">,</span> <span class="n">opts</span><span class="p">,</span> <span class="n">mapping</span><span class="p">,</span> <span class="n">nvals</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Computes styles applied to a batched plot by iterating over the</span>
+<span class="sd">    supplied list of style options and expanding any options found in</span>
+<span class="sd">    the supplied style dictionary returning a data and mapping defining</span>
+<span class="sd">    the data that should be added to the ColumnDataSource.</span>
+<span class="sd">    """</span>
+    <span class="n">opts</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">opts</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">'color'</span><span class="p">,</span> <span class="s1">'alpha'</span><span class="p">])</span>
+    <span class="n">applied_styles</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">mapping</span><span class="p">)</span>
+    <span class="n">style_data</span><span class="p">,</span> <span class="n">style_mapping</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">opt</span> <span class="ow">in</span> <span class="n">opts</span><span class="p">:</span>
+        <span class="k">if</span> <span class="s1">'color'</span> <span class="ow">in</span> <span class="n">opt</span><span class="p">:</span>
+            <span class="n">alias</span> <span class="o">=</span> <span class="s1">'color'</span>
+        <span class="k">elif</span> <span class="s1">'alpha'</span> <span class="ow">in</span> <span class="n">opt</span><span class="p">:</span>
+            <span class="n">alias</span> <span class="o">=</span> <span class="s1">'alpha'</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">alias</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">opt</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">style</span> <span class="ow">or</span> <span class="n">opt</span> <span class="ow">in</span> <span class="n">mapping</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="k">elif</span> <span class="n">opt</span> <span class="o">==</span> <span class="n">alias</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">alias</span> <span class="ow">in</span> <span class="n">applied_styles</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="k">elif</span> <span class="s1">'line_'</span><span class="o">+</span><span class="n">alias</span> <span class="ow">in</span> <span class="n">applied_styles</span><span class="p">:</span>
+                <span class="k">if</span> <span class="s1">'fill_'</span><span class="o">+</span><span class="n">alias</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">opts</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="n">opt</span> <span class="o">=</span> <span class="s1">'fill_'</span><span class="o">+</span><span class="n">alias</span>
+                <span class="n">val</span> <span class="o">=</span> <span class="n">style</span><span class="p">[</span><span class="n">alias</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="s1">'fill_'</span><span class="o">+</span><span class="n">alias</span> <span class="ow">in</span> <span class="n">applied_styles</span><span class="p">:</span>
+                <span class="n">opt</span> <span class="o">=</span> <span class="s1">'line_'</span><span class="o">+</span><span class="n">alias</span>
+                <span class="n">val</span> <span class="o">=</span> <span class="n">style</span><span class="p">[</span><span class="n">alias</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">val</span> <span class="o">=</span> <span class="n">style</span><span class="p">[</span><span class="n">alias</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">style</span><span class="p">[</span><span class="n">opt</span><span class="p">]</span>
+        <span class="n">style_mapping</span><span class="p">[</span><span class="n">opt</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'field'</span><span class="p">:</span> <span class="n">opt</span><span class="p">}</span>
+        <span class="n">applied_styles</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">opt</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">'color'</span> <span class="ow">in</span> <span class="n">opt</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">val</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">rgb2hex</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+        <span class="n">style_data</span><span class="p">[</span><span class="n">opt</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">val</span><span class="p">]</span><span class="o">*</span><span class="n">nvals</span>
+    <span class="k">return</span> <span class="n">style_data</span><span class="p">,</span> <span class="n">style_mapping</span></div>
+
+
+<div class="viewcode-block" id="filter_batched_data"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.util.filter_batched_data">[docs]</a><span class="k">def</span> <span class="nf">filter_batched_data</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">mapping</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Iterates over the data and mapping for a ColumnDataSource and</span>
+<span class="sd">    replaces columns with repeating values with a scalar. This is</span>
+<span class="sd">    purely and optimization for scalar types.</span>
+<span class="sd">    """</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">list</span><span class="p">(</span><span class="n">mapping</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="s1">'field'</span> <span class="ow">in</span> <span class="n">v</span><span class="p">:</span>
+            <span class="k">if</span> <span class="s1">'transform'</span> <span class="ow">in</span> <span class="n">v</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">v</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="s1">'field'</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">basestring</span><span class="p">):</span>
+            <span class="k">continue</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">v</span><span class="p">]</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">unique_array</span><span class="p">(</span><span class="n">values</span><span class="p">))</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">mapping</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">del</span> <span class="n">data</span><span class="p">[</span><span class="n">v</span><span class="p">]</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="recursive_model_update"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.util.recursive_model_update">[docs]</a><span class="k">def</span> <span class="nf">recursive_model_update</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">props</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Recursively updates attributes on a model including other</span>
+<span class="sd">    models. If the type of the new model matches the old model</span>
+<span class="sd">    properties are simply updated, otherwise the model is replaced.</span>
+<span class="sd">    """</span>
+    <span class="n">updates</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">valid_properties</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">properties_with_values</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">props</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">Model</span><span class="p">):</span>
+            <span class="n">nested_model</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">type</span><span class="p">(</span><span class="n">nested_model</span><span class="p">):</span>
+                <span class="n">nested_props</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">properties_with_values</span><span class="p">(</span><span class="n">include_defaults</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                <span class="n">recursive_model_update</span><span class="p">(</span><span class="n">nested_model</span><span class="p">,</span> <span class="n">nested_props</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">setattr</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">valid_properties</span> <span class="ow">and</span> <span class="n">v</span> <span class="o">!=</span> <span class="n">valid_properties</span><span class="p">[</span><span class="n">k</span><span class="p">]:</span>
+            <span class="n">updates</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">**</span><span class="n">updates</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="update_shared_sources"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.util.update_shared_sources">[docs]</a><span class="k">def</span> <span class="nf">update_shared_sources</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Context manager to ensures data sources shared between multiple</span>
+<span class="sd">    plots are cleared and updated appropriately avoiding warnings and</span>
+<span class="sd">    allowing empty frames on subplots. Expects a list of</span>
+<span class="sd">    shared_sources and a mapping of the columns expected columns for</span>
+<span class="sd">    each source in the plots handles.</span>
+<span class="sd">    """</span>
+    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">source_cols</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'source_cols'</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="n">shared_sources</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">handles</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'shared_sources'</span><span class="p">,</span> <span class="p">[])</span>
+        <span class="k">for</span> <span class="n">source</span> <span class="ow">in</span> <span class="n">shared_sources</span><span class="p">:</span>
+            <span class="n">source</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">source</span> <span class="ow">in</span> <span class="n">shared_sources</span><span class="p">:</span>
+            <span class="n">expected</span> <span class="o">=</span> <span class="n">source_cols</span><span class="p">[</span><span class="nb">id</span><span class="p">(</span><span class="n">source</span><span class="p">)]</span>
+            <span class="n">found</span> <span class="o">=</span> <span class="p">[</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">expected</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">source</span><span class="o">.</span><span class="n">data</span><span class="p">]</span>
+            <span class="n">empty</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full_like</span><span class="p">(</span><span class="n">source</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">found</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">np</span><span class="o">.</span><span class="n">NaN</span><span class="p">)</span> <span class="k">if</span> <span class="n">found</span> <span class="k">else</span> <span class="p">[]</span>
+            <span class="n">patch</span> <span class="o">=</span> <span class="p">{</span><span class="n">c</span><span class="p">:</span> <span class="n">empty</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">expected</span> <span class="k">if</span> <span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">source</span><span class="o">.</span><span class="n">data</span><span class="p">}</span>
+            <span class="n">source</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">patch</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ret</span>
+    <span class="k">return</span> <span class="n">wrapper</span></div>
+
+
+<div class="viewcode-block" id="categorize_array"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.util.categorize_array">[docs]</a><span class="k">def</span> <span class="nf">categorize_array</span><span class="p">(</span><span class="n">array</span><span class="p">,</span> <span class="n">dim</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Uses a Dimension instance to convert an array of values to categorical</span>
+<span class="sd">    (i.e. string) values and applies escaping for colons, which bokeh</span>
+<span class="sd">    treats as a categorical suffix.</span>
+<span class="sd">    """</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">dim</span><span class="o">.</span><span class="n">pprint_value</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">array</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="periodic"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.util.periodic">[docs]</a><span class="k">class</span> <span class="nc">periodic</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Mocks the API of periodic Thread in hv.core.util, allowing a smooth</span>
+<span class="sd">    API transition on bokeh server.</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">document</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">document</span> <span class="o">=</span> <span class="n">document</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">callback</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">period</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_start_time</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">completed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="ow">is</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">document</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s1">'periodic was registered to be run on bokeh'</span>
+                               <span class="s1">'server but no document was found.'</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">add_periodic_callback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_periodic_callback</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">period</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">period</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">callback</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">count</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">count</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'Count value must be positive'</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">type</span><span class="p">(</span><span class="n">count</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'Count value must be a positive integer or None'</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">callback</span> <span class="o">=</span> <span class="n">callback</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">period</span> <span class="o">=</span> <span class="n">period</span><span class="o">*</span><span class="mf">1000.</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">count</span> <span class="o">=</span> <span class="n">count</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="bp">self</span>
+
+    <span class="k">def</span> <span class="nf">_periodic_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">callback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">counter</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">dt</span> <span class="o">=</span> <span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_start_time</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">dt</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">count</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">document</span><span class="o">.</span><span class="n">remove_periodic_callback</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_periodic_callback</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span> <span class="c1"># Already stopped</span>
+            <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">'periodic(</span><span class="si">%s</span><span class="s1">, </span><span class="si">%s</span><span class="s1">, </span><span class="si">%s</span><span class="s1">)'</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">period</span><span class="p">,</span>
+                                         <span class="bp">self</span><span class="o">.</span><span class="n">count</span><span class="p">,</span>
+                                         <span class="n">callable_name</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">callback</span><span class="p">))</span>
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="attach_periodic"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.util.attach_periodic">[docs]</a><span class="k">def</span> <span class="nf">attach_periodic</span><span class="p">(</span><span class="n">plot</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Attaches plot refresh to all streams on the object.</span>
+<span class="sd">    """</span>
+    <span class="k">def</span> <span class="nf">append_refresh</span><span class="p">(</span><span class="n">dmap</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">dmap</span> <span class="ow">in</span> <span class="n">get_nested_dmaps</span><span class="p">(</span><span class="n">dmap</span><span class="p">):</span>
+            <span class="n">dmap</span><span class="o">.</span><span class="n">periodic</span><span class="o">.</span><span class="n">_periodic_util</span> <span class="o">=</span> <span class="n">periodic</span><span class="p">(</span><span class="n">plot</span><span class="o">.</span><span class="n">document</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">plot</span><span class="o">.</span><span class="n">hmap</span><span class="o">.</span><span class="n">traverse</span><span class="p">(</span><span class="n">append_refresh</span><span class="p">,</span> <span class="p">[</span><span class="n">DynamicMap</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="date_to_integer"><a class="viewcode-back" href="../../../../Reference_Manual/holoviews.plotting.bokeh.html#holoviews.plotting.bokeh.util.date_to_integer">[docs]</a><span class="k">def</span> <span class="nf">date_to_integer</span><span class="p">(</span><span class="n">date</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Converts datetime types to bokeh's integer format.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">datetime64</span><span class="p">):</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="n">dt64_to_dt</span><span class="p">(</span><span class="n">date</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">pd</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="p">):</span>
+        <span class="n">date</span> <span class="o">=</span> <span class="n">date</span><span class="o">.</span><span class="n">to_pydatetime</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="n">dt</span><span class="o">.</span><span class="n">datetime</span><span class="p">):</span>
+        <span class="n">dt_int</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">mktime</span><span class="p">(</span><span class="n">date</span><span class="o">.</span><span class="n">timetuple</span><span class="p">())</span><span class="o">*</span><span class="mi">1000</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'Datetime type not recognized'</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">dt_int</span></div>
+</pre>
+    </div>
+   </div>
+  </div>
+  <!-- END MAIN BODY OF DOCS ––––––––––––– -->
+  <footer class="footer">
+   <div class="footer-links">
+    <ul>
+     <li>
+      <span class="footer-title">
+       Links
+      </span>
+     </li>
+     <li>
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li>
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li>
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li>
+      <a href="/Reference_Manual/index.html">
+       API Docs
+      </a>
+     </li>
+     <li>
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li>
+      <a href="/about.html">
+       About
+      </a>
+     </li>
+    </ul>
+    <ul>
+     <li>
+      <span class="footer-title">
+       Join Us
+      </span>
+     </li>
+     <li>
+      <a href="//gitter.im/ioam/holoviews.html">
+       Gitter
+      </a>
+     </li>
+     <li>
+      <a href="//twitter.com/holoviews.html">
+       Twitter
+      </a>
+     </li>
+     <li>
+      <a href="//github.com/ioam/holoviews.html">
+       Github
+      </a>
+     </li>
+    </ul>
+    <ul class="copyright">
+     <li>
+      2017 IOAM: Jean-Luc R. Stevens, Philipp Rudiger, and James A. Bednar
+     </li>
+    </ul>
+   </div>
+  </footer>
+  <!-- Google Analytics -->
+  <script>
+   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-61554933-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <!-- MathJax Config -->
+  <script type="text/x-mathjax-config">
+   MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+  </script>
+  <!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+ </body>
+</html>

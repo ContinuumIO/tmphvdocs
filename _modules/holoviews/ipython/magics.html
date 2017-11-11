@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8"/>
+  <title>
+   holoviews.ipython.magics — HoloViews
+  </title>
+  <meta content="HoloViews library, documentation site." name="description"/>
+  <meta content="HoloViews contributors" name="author"/>
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js">
+  </script>
+  <script>
+   WebFont.load({
+      google: {
+        families: ['Source Sans Pro']
+      }
+    });
+  </script>
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../../../_static/main.css" rel="stylesheet"/>
+  <link href="../../../_static/custom.css" rel="stylesheet"/>
+  <!-- Scripts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
+  </script>
+  <script async="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+  </script>
+  <script src="../../../_static/js/main.js">
+  </script>
+  <script src="../../../_static/custom.js">
+  </script>
+  <script src="../../../_static/require.js">
+  </script>
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../../../_static/images/favicon.ico" rel="icon" type="image/png"/>
+  <!-- Canonical
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="http://holoviews.org/_modules/holoviews/ipython/magics.html" rel="canonical"/>
+ </head>
+ <body class="">
+  <header class="navigation">
+   <div class="wrapper">
+    <a class="logo" href="//">
+     <img alt="Logo" src="../../../_static/images/logo.png"/>
+    </a>
+    <a class="navigation-menu logo-text" href="//">
+     HoloViews
+    </a>
+    <a class="navigation-menu-button" href="javascript:void(0)" id="js-mobile-menu">
+     Menu
+    </a>
+    <nav>
+     <ul class="navigation-menu show" id="js-navigation-menu">
+      <li class="nav-link">
+       <a href="/about.html">
+        About
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="/gallery/index.html">
+        Gallery
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="//github.com/ioam/holoviews.html">
+        Github
+       </a>
+      </li>
+     </ul>
+    </nav>
+   </div>
+  </header>
+  <div class="second-nav">
+   <nav>
+    <ul class="navigation-menu show">
+     <li class="nav-link doc-head">
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+    </ul>
+   </nav>
+   <div class="navigation-tools">
+    <div class="search-bar">
+     <form action="../../../search.html" method="get" role="search">
+      <input name="q" placeholder="Search" type="search"/>
+      <button type="submit">
+       <img alt="Search Icon" src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/search-icon-black.png"/>
+      </button>
+     </form>
+    </div>
+   </div>
+  </div>
+  <!-- MAIN BODY OF DOCS –––––––––––––––––– -->
+  <div class="docs section">
+   <div class="toc">
+    <ul>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference external" href="http://github.com/ioam/holoviews">
+       Github source
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../about.html">
+       About
+      </a>
+     </li>
+    </ul>
+   </div>
+   <div class="content">
+    <h1>
+     Source code for holoviews.ipython.magics
+    </h1>
+    <div class="highlight">
+     <pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">IPython.core.magic</span> <span class="k">import</span> <span class="n">Magics</span><span class="p">,</span> <span class="n">magics_class</span><span class="p">,</span> <span class="n">line_magic</span><span class="p">,</span> <span class="n">line_cell_magic</span>
+<span class="k">except</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">unittest</span> <span class="k">import</span> <span class="n">SkipTest</span>
+    <span class="k">raise</span> <span class="n">SkipTest</span><span class="p">(</span><span class="s2">"IPython extension requires IPython &gt;= 0.13"</span><span class="p">)</span>
+
+
+<span class="kn">from</span> <span class="nn">..core.options</span> <span class="k">import</span> <span class="n">Options</span><span class="p">,</span> <span class="n">Store</span><span class="p">,</span> <span class="n">StoreOptions</span><span class="p">,</span> <span class="n">options_policy</span>
+<span class="kn">from</span> <span class="nn">..core.pprint</span> <span class="k">import</span> <span class="n">InfoPrinter</span>
+
+<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="k">import</span> <span class="n">display</span><span class="p">,</span> <span class="n">HTML</span>
+<span class="kn">from</span> <span class="nn">..operation</span> <span class="k">import</span> <span class="n">Compositor</span>
+
+<span class="c1">#========#</span>
+<span class="c1"># Magics #</span>
+<span class="c1">#========#</span>
+
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span> <span class="nn">pyparsing</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">pyparsing</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">holoviews.util.parser</span> <span class="k">import</span> <span class="n">CompositorSpec</span>
+    <span class="kn">from</span> <span class="nn">holoviews.util.parser</span> <span class="k">import</span> <span class="n">OptsSpec</span>
+
+
+<span class="c1"># Set to True to automatically run notebooks.</span>
+<span class="n">STORE_HISTORY</span> <span class="o">=</span> <span class="kc">False</span>
+
+<span class="kn">from</span> <span class="nn">IPython.core</span> <span class="k">import</span> <span class="n">page</span>
+<span class="n">InfoPrinter</span><span class="o">.</span><span class="n">store</span> <span class="o">=</span> <span class="n">Store</span>
+
+
+<span class="nd">@magics_class</span>
+<span class="k">class</span> <span class="nc">OutputMagic</span><span class="p">(</span><span class="n">Magics</span><span class="p">):</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="n">disabled</span> <span class="o">=</span> <span class="n">Store</span><span class="o">.</span><span class="n">output_settings</span><span class="o">.</span><span class="n">_disable_info_output</span>
+        <span class="k">if</span> <span class="n">Store</span><span class="o">.</span><span class="n">output_settings</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">'info'</span><span class="p">]</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">disabled</span><span class="p">:</span>
+            <span class="n">page</span><span class="o">.</span><span class="n">page</span><span class="p">(</span><span class="n">InfoPrinter</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">ansi</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">pprint</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Pretty print the current element options with a maximum width of</span>
+<span class="sd">        cls.pprint_width.</span>
+<span class="sd">        """</span>
+        <span class="n">current</span><span class="p">,</span> <span class="n">count</span> <span class="o">=</span> <span class="s1">''</span><span class="p">,</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">Store</span><span class="o">.</span><span class="n">output_settings</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">keyword</span> <span class="o">=</span> <span class="s1">'</span><span class="si">%s</span><span class="s1">=</span><span class="si">%r</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">current</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="n">keyword</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">Store</span><span class="o">.</span><span class="n">output_settings</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">'charwidth'</span><span class="p">]:</span>
+                <span class="nb">print</span><span class="p">((</span><span class="s1">'</span><span class="si">%o</span><span class="s1">utput'</span> <span class="k">if</span> <span class="n">count</span><span class="o">==</span><span class="mi">0</span> <span class="k">else</span> <span class="s1">'      '</span><span class="p">)</span>  <span class="o">+</span> <span class="n">current</span><span class="p">)</span>
+                <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">current</span> <span class="o">=</span> <span class="n">keyword</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">current</span> <span class="o">+=</span> <span class="s1">' '</span><span class="o">+</span> <span class="n">keyword</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">((</span><span class="s1">'</span><span class="si">%o</span><span class="s1">utput'</span> <span class="k">if</span> <span class="n">count</span><span class="o">==</span><span class="mi">0</span> <span class="k">else</span> <span class="s1">'      '</span><span class="p">)</span>  <span class="o">+</span> <span class="n">current</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">option_completer</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">):</span>
+        <span class="n">raw_line</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">text_until_cursor</span>
+
+        <span class="n">line</span> <span class="o">=</span> <span class="n">raw_line</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'</span><span class="si">%o</span><span class="s1">utput'</span><span class="p">,</span><span class="s1">''</span><span class="p">)</span>
+
+        <span class="c1"># Find the last element class mentioned</span>
+        <span class="n">completion_key</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">els</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'='</span><span class="p">))</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">els</span><span class="o">.</span><span class="n">split</span><span class="p">()]</span>
+
+        <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">tokens</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">token</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="ow">in</span> <span class="n">Store</span><span class="o">.</span><span class="n">output_settings</span><span class="o">.</span><span class="n">allowed</span><span class="p">:</span>
+                <span class="n">completion_key</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                <span class="k">break</span>
+
+        <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="n">val</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">Store</span><span class="o">.</span><span class="n">output_settings</span><span class="o">.</span><span class="n">allowed</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">completion_key</span><span class="p">,</span> <span class="p">[])</span>
+                  <span class="k">if</span> <span class="n">val</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">Store</span><span class="o">.</span><span class="n">output_settings</span><span class="o">.</span><span class="n">hidden</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">completion_key</span><span class="p">,</span> <span class="p">[])]</span>
+        <span class="n">vreprs</span> <span class="o">=</span> <span class="p">[</span><span class="nb">repr</span><span class="p">(</span><span class="n">el</span><span class="p">)</span> <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">values</span> <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">el</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="n">vreprs</span> <span class="o">+</span> <span class="p">[</span><span class="n">el</span><span class="o">+</span><span class="s1">'='</span> <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">Store</span><span class="o">.</span><span class="n">output_settings</span><span class="o">.</span><span class="n">allowed</span><span class="o">.</span><span class="n">keys</span><span class="p">()]</span>
+
+    <span class="nd">@line_cell_magic</span>
+    <span class="k">def</span> <span class="nf">output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">cell</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+
+        <span class="k">if</span> <span class="n">line</span> <span class="o">==</span> <span class="s1">''</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">pprint</span><span class="p">()</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">For help with the </span><span class="si">%o</span><span class="s2">utput magic, call </span><span class="si">%o</span><span class="s2">utput?"</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="k">def</span> <span class="nf">cell_runner</span><span class="p">(</span><span class="n">cell</span><span class="p">,</span><span class="n">renderer</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">shell</span><span class="o">.</span><span class="n">run_cell</span><span class="p">(</span><span class="n">cell</span><span class="p">,</span> <span class="n">store_history</span><span class="o">=</span><span class="n">STORE_HISTORY</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">warnfn</span><span class="p">(</span><span class="n">msg</span><span class="p">):</span>
+            <span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="s2">"&lt;b&gt;Warning:&lt;/b&gt; </span><span class="si">%s</span><span class="s2">"</span> <span class="o">%</span> <span class="n">msg</span><span class="p">))</span>
+
+
+        <span class="k">if</span> <span class="n">line</span><span class="p">:</span>
+            <span class="n">help_prompt</span> <span class="o">=</span> <span class="s2">"For help with the </span><span class="si">%o</span><span class="s2">utput magic, call </span><span class="si">%o</span><span class="s2">utput?</span><span class="se">\n</span><span class="s2">"</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">help_prompt</span> <span class="o">=</span> <span class="s2">"For help with the </span><span class="si">%%</span><span class="s2">output magic, call </span><span class="si">%%</span><span class="s2">output?</span><span class="se">\n</span><span class="s2">"</span>
+
+        <span class="n">Store</span><span class="o">.</span><span class="n">output_settings</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">cell</span><span class="p">,</span> <span class="n">cell_runner</span><span class="o">=</span><span class="n">cell_runner</span><span class="p">,</span>
+                                     <span class="n">help_prompt</span><span class="o">=</span><span class="n">help_prompt</span><span class="p">,</span> <span class="n">warnfn</span><span class="o">=</span><span class="n">warnfn</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="CompositorMagic"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.ipython.html#holoviews.ipython.magics.CompositorMagic">[docs]</a><span class="nd">@magics_class</span>
+<span class="k">class</span> <span class="nc">CompositorMagic</span><span class="p">(</span><span class="n">Magics</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Magic allowing easy definition of compositor operations.</span>
+<span class="sd">    Consult %compositor? for more information.</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">CompositorMagic</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'The </span><span class="si">%c</span><span class="s1">ompositor line magic is used to define compositors.'</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">compositor</span><span class="o">.</span><span class="vm">__func__</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span> <span class="o">+</span> <span class="p">[</span><span class="n">CompositorSpec</span><span class="o">.</span><span class="vm">__doc__</span><span class="p">])</span>
+
+
+    <span class="nd">@line_magic</span>
+    <span class="k">def</span> <span class="nf">compositor</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+            <span class="k">for</span> <span class="n">definition</span> <span class="ow">in</span> <span class="n">CompositorSpec</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="n">ns</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">shell</span><span class="o">.</span><span class="n">user_ns</span><span class="p">):</span>
+                <span class="n">group</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'style'</span><span class="p">:</span><span class="n">Options</span><span class="p">(),</span> <span class="s1">'plot'</span><span class="p">:</span> <span class="n">Options</span><span class="p">(),</span> <span class="s1">'norm'</span><span class="p">:</span><span class="n">Options</span><span class="p">()}</span>
+                <span class="n">type_name</span> <span class="o">=</span> <span class="n">definition</span><span class="o">.</span><span class="n">output_type</span><span class="o">.</span><span class="vm">__name__</span>
+                <span class="n">Store</span><span class="o">.</span><span class="n">options</span><span class="p">()[</span><span class="n">type_name</span> <span class="o">+</span> <span class="s1">'.'</span> <span class="o">+</span> <span class="n">definition</span><span class="o">.</span><span class="n">group</span><span class="p">]</span> <span class="o">=</span> <span class="n">group</span>
+                <span class="n">Compositor</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">definition</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"For help with the </span><span class="si">%c</span><span class="s2">ompositor magic, call </span><span class="si">%c</span><span class="s2">ompositor?</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">option_completer</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">):</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">text_until_cursor</span>
+        <span class="n">operation_openers</span> <span class="o">=</span> <span class="p">[</span><span class="n">op</span><span class="o">.</span><span class="vm">__name__</span><span class="o">+</span><span class="s1">'('</span> <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">Compositor</span><span class="o">.</span><span class="n">operations</span><span class="p">]</span>
+
+        <span class="n">modes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'data'</span><span class="p">,</span> <span class="s1">'display'</span><span class="p">]</span>
+        <span class="n">op_declared</span> <span class="o">=</span> <span class="nb">any</span><span class="p">(</span><span class="n">op</span> <span class="ow">in</span> <span class="n">line</span> <span class="k">for</span> <span class="n">op</span> <span class="ow">in</span> <span class="n">operation_openers</span><span class="p">)</span>
+        <span class="n">mode_declared</span> <span class="o">=</span> <span class="nb">any</span><span class="p">(</span><span class="n">mode</span> <span class="ow">in</span> <span class="n">line</span> <span class="k">for</span> <span class="n">mode</span> <span class="ow">in</span> <span class="n">modes</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">mode_declared</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">modes</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="n">op_declared</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">operation_openers</span>
+        <span class="k">if</span> <span class="n">op_declared</span> <span class="ow">and</span> <span class="s1">')'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="s1">')'</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">')'</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="ow">and</span> <span class="p">(</span><span class="s1">'['</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">line</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">[</span><span class="s1">'['</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="s1">'['</span> <span class="ow">in</span> <span class="n">line</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[</span><span class="s1">']'</span><span class="p">]</span></div>
+
+
+
+<div class="viewcode-block" id="OptsCompleter"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.ipython.html#holoviews.ipython.magics.OptsCompleter">[docs]</a><span class="k">class</span> <span class="nc">OptsCompleter</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Implements the TAB-completion for the %%opts magic.</span>
+<span class="sd">    """</span>
+    <span class="n">_completions</span> <span class="o">=</span> <span class="p">{}</span> <span class="c1"># Contains valid plot and style keywords per Element</span>
+
+<div class="viewcode-block" id="OptsCompleter.setup_completer"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.ipython.html#holoviews.ipython.magics.OptsCompleter.setup_completer">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">setup_completer</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+        <span class="s2">"Get the dictionary of valid completions"</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">Store</span><span class="o">.</span><span class="n">options</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="n">options</span> <span class="o">=</span> <span class="n">Store</span><span class="o">.</span><span class="n">options</span><span class="p">()[</span><span class="s1">'.'</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">element</span><span class="p">)]</span>
+                <span class="n">plotkws</span> <span class="o">=</span> <span class="n">options</span><span class="p">[</span><span class="s1">'plot'</span><span class="p">]</span><span class="o">.</span><span class="n">allowed_keywords</span>
+                <span class="n">stylekws</span> <span class="o">=</span> <span class="n">options</span><span class="p">[</span><span class="s1">'style'</span><span class="p">]</span><span class="o">.</span><span class="n">allowed_keywords</span>
+                <span class="n">dotted</span> <span class="o">=</span> <span class="s1">'.'</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+                <span class="bp">cls</span><span class="o">.</span><span class="n">_completions</span><span class="p">[</span><span class="n">dotted</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">plotkws</span><span class="p">,</span> <span class="n">stylekws</span> <span class="k">if</span> <span class="n">stylekws</span> <span class="k">else</span> <span class="p">[])</span>
+        <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_completions</span></div>
+
+<div class="viewcode-block" id="OptsCompleter.dotted_completion"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.ipython.html#holoviews.ipython.magics.OptsCompleter.dotted_completion">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">dotted_completion</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">sorted_keys</span><span class="p">,</span> <span class="n">compositor_defs</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Supply the appropriate key in Store.options and supply</span>
+<span class="sd">        suggestions for further completion.</span>
+<span class="sd">        """</span>
+        <span class="n">completion_key</span><span class="p">,</span> <span class="n">suggestions</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="p">[]</span>
+        <span class="n">tokens</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'.'</span><span class="p">,</span> <span class="s1">' '</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">())]</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">token</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">tokens</span><span class="p">):</span>
+            <span class="n">key_checks</span> <span class="o">=</span><span class="p">[]</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># Undotted key</span>
+                <span class="n">key_checks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tokens</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>  <span class="c1"># Single dotted key</span>
+                <span class="n">key_checks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'.'</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">key_checks</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">tokens</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]]))</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">2</span><span class="p">:</span>  <span class="c1"># Double dotted key</span>
+                <span class="n">key_checks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'.'</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">key_checks</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">tokens</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">2</span><span class="p">]]))</span>
+            <span class="c1"># Check for longest potential dotted match first</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">key_checks</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">sorted_keys</span><span class="p">:</span>
+                    <span class="n">completion_key</span> <span class="o">=</span> <span class="n">key</span>
+                    <span class="n">depth</span> <span class="o">=</span> <span class="n">completion_key</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s1">'.'</span><span class="p">)</span>
+                    <span class="n">suggestions</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'.'</span><span class="p">)[</span><span class="n">depth</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">sorted_keys</span>
+                                   <span class="k">if</span> <span class="n">k</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="n">completion_key</span><span class="o">+</span><span class="s1">'.'</span><span class="p">)]</span>
+                    <span class="k">return</span> <span class="n">completion_key</span><span class="p">,</span> <span class="n">suggestions</span>
+            <span class="c1"># Attempting to match compositor definitions</span>
+            <span class="k">if</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">compositor_defs</span><span class="p">:</span>
+                <span class="n">completion_key</span> <span class="o">=</span> <span class="n">compositor_defs</span><span class="p">[</span><span class="n">token</span><span class="p">]</span>
+                <span class="k">break</span>
+        <span class="k">return</span> <span class="n">completion_key</span><span class="p">,</span> <span class="n">suggestions</span></div>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_inside_delims</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">opener</span><span class="p">,</span> <span class="n">closer</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">opener</span><span class="p">)</span> <span class="o">-</span> <span class="n">line</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">closer</span><span class="p">))</span> <span class="o">%</span> <span class="mi">2</span>
+
+<div class="viewcode-block" id="OptsCompleter.option_completer"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.ipython.html#holoviews.ipython.magics.OptsCompleter.option_completer">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">option_completer</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">):</span>
+        <span class="s2">"Tab completion hook for the </span><span class="si">%%</span><span class="s2">opts cell magic."</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">v</span><span class="o">.</span><span class="n">text_until_cursor</span>
+        <span class="n">completions</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">setup_completer</span><span class="p">()</span>
+        <span class="n">compositor_defs</span> <span class="o">=</span> <span class="p">{</span><span class="n">el</span><span class="o">.</span><span class="n">group</span><span class="p">:</span><span class="n">el</span><span class="o">.</span><span class="n">output_type</span><span class="o">.</span><span class="vm">__name__</span>
+                           <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">Compositor</span><span class="o">.</span><span class="n">definitions</span> <span class="k">if</span> <span class="n">el</span><span class="o">.</span><span class="n">group</span><span class="p">}</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">line_completer</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">completions</span><span class="p">,</span> <span class="n">compositor_defs</span><span class="p">)</span></div>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">line_completer</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">completions</span><span class="p">,</span> <span class="n">compositor_defs</span><span class="p">):</span>
+        <span class="n">sorted_keys</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">completions</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="n">type_keys</span> <span class="o">=</span> <span class="p">[</span><span class="n">key</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">sorted_keys</span> <span class="k">if</span> <span class="p">(</span><span class="s1">'.'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">key</span><span class="p">)]</span>
+        <span class="n">completion_key</span><span class="p">,</span> <span class="n">suggestions</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">dotted_completion</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">sorted_keys</span><span class="p">,</span> <span class="n">compositor_defs</span><span class="p">)</span>
+
+        <span class="n">verbose_openers</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'style('</span><span class="p">,</span> <span class="s1">'plot['</span><span class="p">,</span> <span class="s1">'norm{'</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">suggestions</span> <span class="ow">and</span> <span class="n">line</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">'.'</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">[</span><span class="s1">'.'</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">completion_key</span><span class="p">,</span> <span class="n">el</span><span class="p">])</span> <span class="k">for</span> <span class="n">el</span> <span class="ow">in</span> <span class="n">suggestions</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="n">completion_key</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">type_keys</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">compositor_defs</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">+</span> <span class="n">verbose_openers</span>
+
+        <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_inside_delims</span><span class="p">(</span><span class="n">line</span><span class="p">,</span><span class="s1">'['</span><span class="p">,</span> <span class="s1">']'</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">kw</span><span class="o">+</span><span class="s1">'='</span> <span class="k">for</span> <span class="n">kw</span> <span class="ow">in</span> <span class="n">completions</span><span class="p">[</span><span class="n">completion_key</span><span class="p">][</span><span class="mi">0</span><span class="p">]]</span>
+
+        <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_inside_delims</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="s1">'{'</span><span class="p">,</span> <span class="s1">'}'</span><span class="p">):</span>
+            <span class="k">return</span> <span class="p">[</span><span class="s1">'+axiswise'</span><span class="p">,</span> <span class="s1">'+framewise'</span><span class="p">]</span>
+
+        <span class="n">style_completions</span> <span class="o">=</span> <span class="p">[</span><span class="n">kw</span><span class="o">+</span><span class="s1">'='</span> <span class="k">for</span> <span class="n">kw</span> <span class="ow">in</span> <span class="n">completions</span><span class="p">[</span><span class="n">completion_key</span><span class="p">][</span><span class="mi">1</span><span class="p">]]</span>
+        <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">_inside_delims</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="s1">'('</span><span class="p">,</span> <span class="s1">')'</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">style_completions</span>
+
+        <span class="k">return</span> <span class="n">type_keys</span> <span class="o">+</span> <span class="nb">list</span><span class="p">(</span><span class="n">compositor_defs</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">+</span> <span class="n">verbose_openers</span></div>
+
+
+
+<div class="viewcode-block" id="OptsMagic"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.ipython.html#holoviews.ipython.magics.OptsMagic">[docs]</a><span class="nd">@magics_class</span>
+<span class="k">class</span> <span class="nc">OptsMagic</span><span class="p">(</span><span class="n">Magics</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Magic for easy customising of normalization, plot and style options.</span>
+<span class="sd">    Consult %%opts? for more information.</span>
+<span class="sd">    """</span>
+    <span class="n">error_message</span> <span class="o">=</span> <span class="kc">None</span> <span class="c1"># If not None, the error message that will be displayed</span>
+    <span class="n">opts_spec</span> <span class="o">=</span> <span class="kc">None</span>       <span class="c1"># Next id to propagate, binding displayed object together.</span>
+    <span class="n">strict</span> <span class="o">=</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="OptsMagic.process_element"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.ipython.html#holoviews.ipython.magics.OptsMagic.process_element">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">process_element</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        To be called by the display hook which supplies the element to</span>
+<span class="sd">        be displayed. Any customisation of the object can then occur</span>
+<span class="sd">        before final display. If there is any error, a HTML message</span>
+<span class="sd">        may be returned. If None is returned, display will proceed as</span>
+<span class="sd">        normal.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">error_message</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">strict</span><span class="p">:</span>
+                <span class="k">return</span> <span class="bp">cls</span><span class="o">.</span><span class="n">error_message</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">cls</span><span class="o">.</span><span class="n">error_message</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">cls</span><span class="o">.</span><span class="n">opts_spec</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">StoreOptions</span><span class="o">.</span><span class="n">set_options</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="bp">cls</span><span class="o">.</span><span class="n">opts_spec</span><span class="p">)</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">opts_spec</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">register_custom_spec</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">spec</span><span class="p">):</span>
+        <span class="n">spec</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">StoreOptions</span><span class="o">.</span><span class="n">expand_compositor_keys</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span>
+        <span class="n">errmsg</span> <span class="o">=</span> <span class="n">StoreOptions</span><span class="o">.</span><span class="n">validation_error_message</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">errmsg</span><span class="p">:</span>
+            <span class="bp">cls</span><span class="o">.</span><span class="n">error_message</span> <span class="o">=</span> <span class="n">errmsg</span>
+        <span class="bp">cls</span><span class="o">.</span><span class="n">opts_spec</span> <span class="o">=</span> <span class="n">spec</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">_partition_lines</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">cell</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Check the code for additional use of %%opts. Enables</span>
+<span class="sd">        multi-line use of %%opts in a single call to the magic.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">cell</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="k">return</span> <span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">cell</span><span class="p">)</span>
+        <span class="n">specs</span><span class="p">,</span> <span class="n">code</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="p">],</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">cell</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">'</span><span class="si">%%</span><span class="s1">opts'</span><span class="p">):</span>
+                <span class="n">specs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()[</span><span class="mi">7</span><span class="p">:])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">code</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+        <span class="k">return</span> <span class="s1">' '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">specs</span><span class="p">),</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="OptsMagic.opts"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.ipython.html#holoviews.ipython.magics.OptsMagic.opts">[docs]</a>    <span class="nd">@line_cell_magic</span>
+    <span class="k">def</span> <span class="nf">opts</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="s1">''</span><span class="p">,</span> <span class="n">cell</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        The opts line/cell magic with tab-completion.</span>
+
+<span class="sd">        %%opts [ [path] [normalization] [plotting options] [style options]]+</span>
+
+<span class="sd">        path:             A dotted type.group.label specification</span>
+<span class="sd">                          (e.g. Image.Grayscale.Photo)</span>
+
+<span class="sd">        normalization:    List of normalization options delimited by braces.</span>
+<span class="sd">                          One of | -axiswise | -framewise | +axiswise | +framewise |</span>
+<span class="sd">                          E.g. { +axiswise +framewise }</span>
+
+<span class="sd">        plotting options: List of plotting option keywords delimited by</span>
+<span class="sd">                          square brackets. E.g. [show_title=False]</span>
+
+<span class="sd">        style options:    List of style option keywords delimited by</span>
+<span class="sd">                          parentheses. E.g. (lw=10 marker='+')</span>
+
+<span class="sd">        Note that commas between keywords are optional (not</span>
+<span class="sd">        recommended) and that keywords must end in '=' without a</span>
+<span class="sd">        separating space.</span>
+
+<span class="sd">        More information may be found in the class docstring of</span>
+<span class="sd">        util.parser.OptsSpec.</span>
+<span class="sd">        """</span>
+        <span class="n">line</span><span class="p">,</span> <span class="n">cell</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_partition_lines</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">cell</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">spec</span> <span class="o">=</span> <span class="n">OptsSpec</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">line</span><span class="p">,</span> <span class="n">ns</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">shell</span><span class="o">.</span><span class="n">user_ns</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">SyntaxError</span><span class="p">:</span>
+            <span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="s2">"&lt;b&gt;Invalid syntax&lt;/b&gt;: Consult &lt;tt&gt;</span><span class="si">%%</span><span class="s2">opts?&lt;/tt&gt; for more information."</span><span class="p">))</span>
+            <span class="k">return</span>
+
+        <span class="c1"># Make sure the specified elements exist in the loaded backends</span>
+        <span class="n">available_elements</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">backend</span> <span class="ow">in</span> <span class="n">Store</span><span class="o">.</span><span class="n">loaded_backends</span><span class="p">():</span>
+            <span class="n">available_elements</span> <span class="o">|=</span> <span class="nb">set</span><span class="p">(</span><span class="n">Store</span><span class="o">.</span><span class="n">options</span><span class="p">(</span><span class="n">backend</span><span class="p">)</span><span class="o">.</span><span class="n">children</span><span class="p">)</span>
+
+        <span class="n">spec_elements</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">k</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'.'</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">spec</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="n">unknown_elements</span> <span class="o">=</span> <span class="n">spec_elements</span> <span class="o">-</span> <span class="n">available_elements</span>
+        <span class="k">if</span> <span class="n">unknown_elements</span><span class="p">:</span>
+            <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">"&lt;b&gt;WARNING:&lt;/b&gt; Unknown elements </span><span class="si">{unknown}</span><span class="s2"> not registered "</span>
+                   <span class="s2">"with any of the loaded backends."</span><span class="p">)</span>
+            <span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">unknown</span><span class="o">=</span><span class="s1">', '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">unknown_elements</span><span class="p">))))</span>
+
+        <span class="k">if</span> <span class="n">cell</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">register_custom_spec</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span>
+            <span class="c1"># Process_element is invoked when the cell is run.</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">shell</span><span class="o">.</span><span class="n">run_cell</span><span class="p">(</span><span class="n">cell</span><span class="p">,</span> <span class="n">store_history</span><span class="o">=</span><span class="n">STORE_HISTORY</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">errmsg</span> <span class="o">=</span> <span class="n">StoreOptions</span><span class="o">.</span><span class="n">validation_error_message</span><span class="p">(</span><span class="n">spec</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">errmsg</span><span class="p">:</span>
+                <span class="n">OptsMagic</span><span class="o">.</span><span class="n">error_message</span> <span class="o">=</span> <span class="kc">None</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">errmsg</span><span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">strict</span><span class="p">:</span>
+                    <span class="n">display</span><span class="p">(</span><span class="n">HTML</span><span class="p">(</span><span class="s1">'Options specification will not be applied.'</span><span class="p">))</span>
+                    <span class="k">return</span>
+
+            <span class="k">with</span> <span class="n">options_policy</span><span class="p">(</span><span class="n">skip_invalid</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">warn_on_skip</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+                <span class="n">StoreOptions</span><span class="o">.</span><span class="n">apply_customizations</span><span class="p">(</span><span class="n">spec</span><span class="p">,</span> <span class="n">Store</span><span class="o">.</span><span class="n">options</span><span class="p">())</span>
+        <span class="n">OptsMagic</span><span class="o">.</span><span class="n">error_message</span> <span class="o">=</span> <span class="kc">None</span></div></div>
+
+
+
+<div class="viewcode-block" id="TimerMagic"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.ipython.html#holoviews.ipython.magics.TimerMagic">[docs]</a><span class="nd">@magics_class</span>
+<span class="k">class</span> <span class="nc">TimerMagic</span><span class="p">(</span><span class="n">Magics</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    A line magic for measuring the execution time of multiple cells.</span>
+
+<span class="sd">    After you start/reset the timer with '%timer start' you may view</span>
+<span class="sd">    elapsed time with any subsequent calls to %timer.</span>
+<span class="sd">    """</span>
+
+    <span class="n">start_time</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">elapsed_time</span><span class="p">():</span>
+        <span class="n">seconds</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span>  <span class="n">TimerMagic</span><span class="o">.</span><span class="n">start_time</span>
+        <span class="n">minutes</span> <span class="o">=</span> <span class="n">seconds</span> <span class="o">//</span> <span class="mi">60</span>
+        <span class="n">hours</span> <span class="o">=</span> <span class="n">minutes</span> <span class="o">//</span> <span class="mi">60</span>
+        <span class="k">return</span> <span class="s2">"Timer elapsed: </span><span class="si">%02d</span><span class="s2">:</span><span class="si">%02d</span><span class="s2">:</span><span class="si">%02d</span><span class="s2">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">hours</span><span class="p">,</span> <span class="n">minutes</span> <span class="o">%</span> <span class="mi">60</span><span class="p">,</span> <span class="n">seconds</span> <span class="o">%</span> <span class="mi">60</span><span class="p">)</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">option_completer</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="s1">'start'</span><span class="p">]</span>
+
+<div class="viewcode-block" id="TimerMagic.timer"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.ipython.html#holoviews.ipython.magics.TimerMagic.timer">[docs]</a>    <span class="nd">@line_magic</span>
+    <span class="k">def</span> <span class="nf">timer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="s1">''</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Timer magic to print initial date/time information and</span>
+<span class="sd">        subsequent elapsed time intervals.</span>
+
+<span class="sd">        To start the timer, run:</span>
+
+<span class="sd">        %timer start</span>
+
+<span class="sd">        This will print the start date and time.</span>
+
+<span class="sd">        Subsequent calls to %timer will print the elapsed time</span>
+<span class="sd">        relative to the time when %timer start was called. Subsequent</span>
+<span class="sd">        calls to %timer start may also be used to reset the timer.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">''</span><span class="p">,</span> <span class="s1">'start'</span><span class="p">]:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"Invalid argument to %timer. For more information consult %timer?"</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="k">elif</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">==</span> <span class="s1">'start'</span><span class="p">:</span>
+            <span class="n">TimerMagic</span><span class="o">.</span><span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">timestamp</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">"%Y/%m/</span><span class="si">%d</span><span class="s2"> %H:%M:%S"</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"Timer start: </span><span class="si">%s</span><span class="s2">"</span> <span class="o">%</span> <span class="n">timestamp</span><span class="p">)</span>
+            <span class="k">return</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">"Please start timer with %timer start. For more information consult %timer?"</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">elapsed_time</span><span class="p">())</span></div></div>
+
+
+<span class="k">def</span> <span class="nf">load_magics</span><span class="p">(</span><span class="n">ip</span><span class="p">):</span>
+    <span class="n">ip</span><span class="o">.</span><span class="n">register_magics</span><span class="p">(</span><span class="n">TimerMagic</span><span class="p">)</span>
+    <span class="n">ip</span><span class="o">.</span><span class="n">register_magics</span><span class="p">(</span><span class="n">OutputMagic</span><span class="p">)</span>
+
+    <span class="n">docstring</span> <span class="o">=</span> <span class="n">Store</span><span class="o">.</span><span class="n">output_settings</span><span class="o">.</span><span class="n">_generate_docstring</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">version_info</span><span class="o">.</span><span class="n">major</span><span class="o">==</span><span class="mi">2</span><span class="p">:</span>
+        <span class="n">OutputMagic</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="vm">__func__</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">docstring</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">OutputMagic</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">docstring</span>
+
+    <span class="k">if</span> <span class="n">pyparsing</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>  <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="si">%o</span><span class="s2">pts magic unavailable (pyparsing cannot be imported)"</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span> <span class="n">ip</span><span class="o">.</span><span class="n">register_magics</span><span class="p">(</span><span class="n">OptsMagic</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">pyparsing</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span> <span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="si">%c</span><span class="s2">ompositor magic unavailable (pyparsing cannot be imported)"</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span> <span class="n">ip</span><span class="o">.</span><span class="n">register_magics</span><span class="p">(</span><span class="n">CompositorMagic</span><span class="p">)</span>
+
+
+    <span class="c1"># Configuring tab completion</span>
+    <span class="n">ip</span><span class="o">.</span><span class="n">set_hook</span><span class="p">(</span><span class="s1">'complete_command'</span><span class="p">,</span> <span class="n">TimerMagic</span><span class="o">.</span><span class="n">option_completer</span><span class="p">,</span> <span class="n">str_key</span> <span class="o">=</span> <span class="s1">'%timer'</span><span class="p">)</span>
+    <span class="n">ip</span><span class="o">.</span><span class="n">set_hook</span><span class="p">(</span><span class="s1">'complete_command'</span><span class="p">,</span> <span class="n">CompositorMagic</span><span class="o">.</span><span class="n">option_completer</span><span class="p">,</span> <span class="n">str_key</span> <span class="o">=</span> <span class="s1">'</span><span class="si">%c</span><span class="s1">ompositor'</span><span class="p">)</span>
+
+    <span class="n">ip</span><span class="o">.</span><span class="n">set_hook</span><span class="p">(</span><span class="s1">'complete_command'</span><span class="p">,</span> <span class="n">OutputMagic</span><span class="o">.</span><span class="n">option_completer</span><span class="p">,</span> <span class="n">str_key</span> <span class="o">=</span> <span class="s1">'</span><span class="si">%o</span><span class="s1">utput'</span><span class="p">)</span>
+    <span class="n">ip</span><span class="o">.</span><span class="n">set_hook</span><span class="p">(</span><span class="s1">'complete_command'</span><span class="p">,</span> <span class="n">OutputMagic</span><span class="o">.</span><span class="n">option_completer</span><span class="p">,</span> <span class="n">str_key</span> <span class="o">=</span> <span class="s1">'</span><span class="si">%%</span><span class="s1">output'</span><span class="p">)</span>
+
+    <span class="n">OptsCompleter</span><span class="o">.</span><span class="n">setup_completer</span><span class="p">()</span>
+    <span class="n">ip</span><span class="o">.</span><span class="n">set_hook</span><span class="p">(</span><span class="s1">'complete_command'</span><span class="p">,</span> <span class="n">OptsCompleter</span><span class="o">.</span><span class="n">option_completer</span><span class="p">,</span> <span class="n">str_key</span> <span class="o">=</span> <span class="s1">'</span><span class="si">%%</span><span class="s1">opts'</span><span class="p">)</span>
+    <span class="n">ip</span><span class="o">.</span><span class="n">set_hook</span><span class="p">(</span><span class="s1">'complete_command'</span><span class="p">,</span> <span class="n">OptsCompleter</span><span class="o">.</span><span class="n">option_completer</span><span class="p">,</span> <span class="n">str_key</span> <span class="o">=</span> <span class="s1">'</span><span class="si">%o</span><span class="s1">pts'</span><span class="p">)</span>
+</pre>
+    </div>
+   </div>
+  </div>
+  <!-- END MAIN BODY OF DOCS ––––––––––––– -->
+  <footer class="footer">
+   <div class="footer-links">
+    <ul>
+     <li>
+      <span class="footer-title">
+       Links
+      </span>
+     </li>
+     <li>
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li>
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li>
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li>
+      <a href="/Reference_Manual/index.html">
+       API Docs
+      </a>
+     </li>
+     <li>
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li>
+      <a href="/about.html">
+       About
+      </a>
+     </li>
+    </ul>
+    <ul>
+     <li>
+      <span class="footer-title">
+       Join Us
+      </span>
+     </li>
+     <li>
+      <a href="//gitter.im/ioam/holoviews.html">
+       Gitter
+      </a>
+     </li>
+     <li>
+      <a href="//twitter.com/holoviews.html">
+       Twitter
+      </a>
+     </li>
+     <li>
+      <a href="//github.com/ioam/holoviews.html">
+       Github
+      </a>
+     </li>
+    </ul>
+    <ul class="copyright">
+     <li>
+      2017 IOAM: Jean-Luc R. Stevens, Philipp Rudiger, and James A. Bednar
+     </li>
+    </ul>
+   </div>
+  </footer>
+  <!-- Google Analytics -->
+  <script>
+   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-61554933-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <!-- MathJax Config -->
+  <script type="text/x-mathjax-config">
+   MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+  </script>
+  <!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+ </body>
+</html>

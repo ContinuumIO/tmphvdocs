@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8"/>
+  <title>
+   holoviews.streams — HoloViews
+  </title>
+  <meta content="HoloViews library, documentation site." name="description"/>
+  <meta content="HoloViews contributors" name="author"/>
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js">
+  </script>
+  <script>
+   WebFont.load({
+      google: {
+        families: ['Source Sans Pro']
+      }
+    });
+  </script>
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../../_static/main.css" rel="stylesheet"/>
+  <link href="../../_static/custom.css" rel="stylesheet"/>
+  <!-- Scripts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
+  </script>
+  <script async="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+  </script>
+  <script src="../../_static/js/main.js">
+  </script>
+  <script src="../../_static/custom.js">
+  </script>
+  <script src="../../_static/require.js">
+  </script>
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../../_static/images/favicon.ico" rel="icon" type="image/png"/>
+  <!-- Canonical
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="http://holoviews.org/_modules/holoviews/streams.html" rel="canonical"/>
+ </head>
+ <body class="">
+  <header class="navigation">
+   <div class="wrapper">
+    <a class="logo" href="//">
+     <img alt="Logo" src="../../_static/images/logo.png"/>
+    </a>
+    <a class="navigation-menu logo-text" href="//">
+     HoloViews
+    </a>
+    <a class="navigation-menu-button" href="javascript:void(0)" id="js-mobile-menu">
+     Menu
+    </a>
+    <nav>
+     <ul class="navigation-menu show" id="js-navigation-menu">
+      <li class="nav-link">
+       <a href="/about.html">
+        About
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="/gallery/index.html">
+        Gallery
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="//github.com/ioam/holoviews.html">
+        Github
+       </a>
+      </li>
+     </ul>
+    </nav>
+   </div>
+  </header>
+  <div class="second-nav">
+   <nav>
+    <ul class="navigation-menu show">
+     <li class="nav-link doc-head">
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+    </ul>
+   </nav>
+   <div class="navigation-tools">
+    <div class="search-bar">
+     <form action="../../search.html" method="get" role="search">
+      <input name="q" placeholder="Search" type="search"/>
+      <button type="submit">
+       <img alt="Search Icon" src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/search-icon-black.png"/>
+      </button>
+     </form>
+    </div>
+   </div>
+  </div>
+  <!-- MAIN BODY OF DOCS –––––––––––––––––– -->
+  <div class="docs section">
+   <div class="toc">
+    <ul>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference external" href="http://github.com/ioam/holoviews">
+       Github source
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../about.html">
+       About
+      </a>
+     </li>
+    </ul>
+   </div>
+   <div class="content">
+    <h1>
+     Source code for holoviews.streams
+    </h1>
+    <div class="highlight">
+     <pre><span></span><span class="sd">"""</span>
+<span class="sd">The streams module defines the streams API that allows visualizations to</span>
+<span class="sd">generate and respond to events, originating either in Python on the</span>
+<span class="sd">server-side or in Javascript in the Jupyter notebook (client-side).</span>
+<span class="sd">"""</span>
+
+<span class="kn">import</span> <span class="nn">uuid</span>
+<span class="kn">import</span> <span class="nn">math</span>
+
+<span class="kn">import</span> <span class="nn">param</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">numbers</span> <span class="k">import</span> <span class="n">Number</span>
+<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">defaultdict</span>
+<span class="kn">from</span> <span class="nn">.core</span> <span class="k">import</span> <span class="n">util</span>
+
+<span class="kn">from</span> <span class="nn">contextlib</span> <span class="k">import</span> <span class="n">contextmanager</span>
+
+
+<div class="viewcode-block" id="triggering_streams"><a class="viewcode-back" href="../../Reference_Manual/holoviews.html#holoviews.streams.triggering_streams">[docs]</a><span class="nd">@contextmanager</span>
+<span class="k">def</span> <span class="nf">triggering_streams</span><span class="p">(</span><span class="n">streams</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Temporarily declares the streams as being in a triggered state.</span>
+<span class="sd">    Needed by DynamicMap to determine whether to memoize on a Callable,</span>
+<span class="sd">    i.e. if a stream has memoization disabled and is in triggered state</span>
+<span class="sd">    Callable should disable lookup in the memoization cache. This is</span>
+<span class="sd">    done by the dynamicmap_memoization context manager.</span>
+<span class="sd">    """</span>
+    <span class="k">for</span> <span class="n">stream</span> <span class="ow">in</span> <span class="n">streams</span><span class="p">:</span>
+        <span class="n">stream</span><span class="o">.</span><span class="n">_triggering</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">yield</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="k">raise</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">stream</span> <span class="ow">in</span> <span class="n">streams</span><span class="p">:</span>
+            <span class="n">stream</span><span class="o">.</span><span class="n">_triggering</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+
+<div class="viewcode-block" id="Stream"><a class="viewcode-back" href="../../Reference_Manual/holoviews.html#holoviews.streams.Stream">[docs]</a><span class="k">class</span> <span class="nc">Stream</span><span class="p">(</span><span class="n">param</span><span class="o">.</span><span class="n">Parameterized</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    A Stream is simply a parameterized object with parameters that</span>
+<span class="sd">    change over time in response to update events and may trigger</span>
+<span class="sd">    downstream events on its subscribers. The Stream parameters can be</span>
+<span class="sd">    updated using the update method, which will optionally trigger the</span>
+<span class="sd">    stream. This will notify the subscribers which may be supplied as</span>
+<span class="sd">    a list of callables or added later using the add_subscriber</span>
+<span class="sd">    method. The subscribers will be passed a dictionary mapping of the</span>
+<span class="sd">    parameters of the stream, which are available on the instance as</span>
+<span class="sd">    the ``contents``.</span>
+
+<span class="sd">    Depending on the plotting backend certain streams may</span>
+<span class="sd">    interactively subscribe to events and changes by the plotting</span>
+<span class="sd">    backend. For this purpose use the LinkedStream baseclass, which</span>
+<span class="sd">    enables the linked option by default. A source for the linking may</span>
+<span class="sd">    be supplied to the constructor in the form of another viewable</span>
+<span class="sd">    object specifying which part of a plot the data should come from.</span>
+
+<span class="sd">    The transient option allows treating stream events as discrete</span>
+<span class="sd">    updates, resetting the parameters to their default after the</span>
+<span class="sd">    stream has been triggered. A downstream callback can therefore</span>
+<span class="sd">    determine whether a stream is active by checking whether the</span>
+<span class="sd">    stream values match the default (usually None).</span>
+
+<span class="sd">    The Stream class is meant for subclassing and subclasses should</span>
+<span class="sd">    generally add one or more parameters but may also override the</span>
+<span class="sd">    transform and reset method to preprocess parameters before they</span>
+<span class="sd">    are passed to subscribers and reset them using custom logic</span>
+<span class="sd">    respectively.</span>
+<span class="sd">    """</span>
+
+    <span class="c1"># Mapping from a source id to a list of streams</span>
+    <span class="n">registry</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+
+    <span class="c1"># Mapping to define callbacks by backend and Stream type.</span>
+    <span class="c1"># e.g. Stream._callbacks['bokeh'][Stream] = Callback</span>
+    <span class="n">_callbacks</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Stream.define"><a class="viewcode-back" href="../../Reference_Manual/holoviews.html#holoviews.streams.Stream.define">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">define</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Utility to quickly and easily declare Stream classes. Designed</span>
+<span class="sd">        for interactive use such as notebooks and shouldn't replace</span>
+<span class="sd">        parameterized class definitions in source code that is imported.</span>
+
+<span class="sd">        Takes a stream class name and a set of keywords where each</span>
+<span class="sd">        keyword becomes a parameter. If the value is already a</span>
+<span class="sd">        parameter, it is simply used otherwise the appropriate parameter</span>
+<span class="sd">        type is inferred and declared, using the value as the default.</span>
+
+<span class="sd">        Supported types: bool, int, float, str, dict, tuple and list</span>
+<span class="sd">        """</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'name'</span><span class="p">:</span><span class="n">param</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">name</span><span class="p">)}</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">kws</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">v</span><span class="p">,</span> <span class="n">constant</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">param</span><span class="o">.</span><span class="n">Parameter</span><span class="p">):</span>
+                <span class="n">params</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+                <span class="n">params</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="o">**</span><span class="n">kws</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+                <span class="n">params</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="o">**</span><span class="n">kws</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">float</span><span class="p">):</span>
+                <span class="n">params</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Number</span><span class="p">(</span><span class="o">**</span><span class="n">kws</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="nb">str</span><span class="p">):</span>
+                <span class="n">params</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">String</span><span class="p">(</span><span class="o">**</span><span class="n">kws</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="nb">dict</span><span class="p">):</span>
+                <span class="n">params</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Dict</span><span class="p">(</span><span class="o">**</span><span class="n">kws</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">):</span>
+                <span class="n">params</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Tuple</span><span class="p">(</span><span class="o">**</span><span class="n">kws</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="nb">list</span><span class="p">):</span>
+                <span class="n">params</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">List</span><span class="p">(</span><span class="o">**</span><span class="n">kws</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+                <span class="n">params</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Array</span><span class="p">(</span><span class="o">**</span><span class="n">kws</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">params</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="o">**</span><span class="n">kws</span><span class="p">)</span>
+
+        <span class="c1"># Dynamic class creation using type</span>
+        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="p">(</span><span class="n">Stream</span><span class="p">,),</span> <span class="n">params</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Stream.trigger"><a class="viewcode-back" href="../../Reference_Manual/holoviews.html#holoviews.streams.Stream.trigger">[docs]</a>    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">trigger</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">streams</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Given a list of streams, collect all the stream parameters into</span>
+<span class="sd">        a dictionary and pass it to the union set of subscribers.</span>
+
+<span class="sd">        Passing multiple streams at once to trigger can be useful when a</span>
+<span class="sd">        subscriber may be set multiple times across streams but only</span>
+<span class="sd">        needs to be called once.</span>
+<span class="sd">        """</span>
+        <span class="c1"># Union of stream contents</span>
+        <span class="n">items</span> <span class="o">=</span> <span class="p">[</span><span class="n">stream</span><span class="o">.</span><span class="n">contents</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">for</span> <span class="n">stream</span> <span class="ow">in</span> <span class="n">streams</span><span class="p">]</span>
+        <span class="n">union</span> <span class="o">=</span> <span class="p">[</span><span class="n">kv</span> <span class="k">for</span> <span class="n">kvs</span> <span class="ow">in</span> <span class="n">items</span> <span class="k">for</span> <span class="n">kv</span> <span class="ow">in</span> <span class="n">kvs</span><span class="p">]</span>
+        <span class="n">klist</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">_</span> <span class="ow">in</span> <span class="n">union</span><span class="p">]</span>
+        <span class="n">clashes</span> <span class="o">=</span> <span class="nb">set</span><span class="p">([</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">klist</span> <span class="k">if</span> <span class="n">klist</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">clashes</span><span class="p">:</span>
+            <span class="n">param</span><span class="o">.</span><span class="n">main</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">'Parameter name clashes for keys: </span><span class="si">%r</span><span class="s1">'</span> <span class="o">%</span> <span class="n">clashes</span><span class="p">)</span>
+
+        <span class="c1"># Group subscribers by precedence while keeping the ordering</span>
+        <span class="c1"># within each group</span>
+        <span class="n">subscriber_precedence</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">stream</span> <span class="ow">in</span> <span class="n">streams</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">precedence</span><span class="p">,</span> <span class="n">subscriber</span> <span class="ow">in</span> <span class="n">stream</span><span class="o">.</span><span class="n">_subscribers</span><span class="p">:</span>
+                <span class="n">subscriber_precedence</span><span class="p">[</span><span class="n">precedence</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">subscriber</span><span class="p">)</span>
+        <span class="n">sorted_subscribers</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">subscriber_precedence</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+        <span class="n">subscribers</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">unique_iterator</span><span class="p">([</span><span class="n">s</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">subscribers</span> <span class="ow">in</span> <span class="n">sorted_subscribers</span>
+                                            <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">subscribers</span><span class="p">])</span>
+
+        <span class="k">with</span> <span class="n">triggering_streams</span><span class="p">(</span><span class="n">streams</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">subscriber</span> <span class="ow">in</span> <span class="n">subscribers</span><span class="p">:</span>
+                <span class="n">subscriber</span><span class="p">(</span><span class="o">**</span><span class="nb">dict</span><span class="p">(</span><span class="n">union</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">stream</span> <span class="ow">in</span> <span class="n">streams</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">util</span><span class="o">.</span><span class="n">disable_constant</span><span class="p">(</span><span class="n">stream</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">stream</span><span class="o">.</span><span class="n">transient</span><span class="p">:</span>
+                    <span class="n">stream</span><span class="o">.</span><span class="n">reset</span><span class="p">()</span></div>
+
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">rename</span><span class="o">=</span><span class="p">{},</span> <span class="n">source</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">subscribers</span><span class="o">=</span><span class="p">[],</span> <span class="n">linked</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">transient</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        The rename argument allows multiple streams with similar event</span>
+<span class="sd">        state to be used by remapping parameter names.</span>
+
+<span class="sd">        Source is an optional argument specifying the HoloViews</span>
+<span class="sd">        datastructure that the stream receives events from, as supported</span>
+<span class="sd">        by the plotting backend.</span>
+
+<span class="sd">        Some streams are configured to automatically link to the source</span>
+<span class="sd">        plot, to disable this set linked=False</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_source</span> <span class="o">=</span> <span class="n">source</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_subscribers</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">subscriber</span> <span class="ow">in</span> <span class="n">subscribers</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_subscriber</span><span class="p">(</span><span class="n">subscriber</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">linked</span> <span class="o">=</span> <span class="n">linked</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_rename</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_validate_rename</span><span class="p">(</span><span class="n">rename</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">transient</span> <span class="o">=</span> <span class="n">transient</span>
+
+        <span class="c1"># Whether this stream is currently triggering its subscribers</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_triggering</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># The metadata may provide information about the currently</span>
+        <span class="c1"># active event, i.e. the source of the stream values may</span>
+        <span class="c1"># indicate where the event originated from</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_metadata</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="nb">super</span><span class="p">(</span><span class="n">Stream</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">source</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">registry</span><span class="p">[</span><span class="nb">id</span><span class="p">(</span><span class="n">source</span><span class="p">)]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">subscribers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s2">" Property returning the subscriber list"</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">p</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_subscribers</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])]</span>
+
+
+<div class="viewcode-block" id="Stream.clear"><a class="viewcode-back" href="../../Reference_Manual/holoviews.html#holoviews.streams.Stream.clear">[docs]</a>    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">policy</span><span class="o">=</span><span class="s1">'all'</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Clear all subscribers registered to this stream.</span>
+
+<span class="sd">        The default policy of 'all' clears all subscribers. If policy is</span>
+<span class="sd">        set to 'user', only subscribers defined by the user are cleared</span>
+<span class="sd">        (precedence between zero and one). A policy of 'internal' clears</span>
+<span class="sd">        subscribers with precedence greater than unity used internally</span>
+<span class="sd">        by HoloViews.</span>
+<span class="sd">        """</span>
+        <span class="n">policies</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'all'</span><span class="p">,</span> <span class="s1">'user'</span><span class="p">,</span> <span class="s1">'internal'</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">policy</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">policies</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'Policy for clearing subscribers must be one of </span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="n">policies</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">policy</span> <span class="o">==</span> <span class="s1">'all'</span><span class="p">:</span>
+            <span class="n">remaining</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">elif</span> <span class="n">policy</span> <span class="o">==</span> <span class="s1">'user'</span><span class="p">:</span>
+            <span class="n">remaining</span> <span class="o">=</span> <span class="p">[(</span><span class="n">p</span><span class="p">,</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">s</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_subscribers</span> <span class="k">if</span> <span class="n">p</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">remaining</span> <span class="o">=</span> <span class="p">[(</span><span class="n">p</span><span class="p">,</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="p">(</span><span class="n">p</span><span class="p">,</span><span class="n">s</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_subscribers</span> <span class="k">if</span> <span class="n">p</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_subscribers</span> <span class="o">=</span> <span class="n">remaining</span></div>
+
+
+<div class="viewcode-block" id="Stream.reset"><a class="viewcode-back" href="../../Reference_Manual/holoviews.html#holoviews.streams.Stream.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Resets stream parameters to their defaults.</span>
+<span class="sd">        """</span>
+        <span class="k">with</span> <span class="n">util</span><span class="o">.</span><span class="n">disable_constant</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="s1">'name'</span><span class="p">:</span>
+                    <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">default</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Stream.add_subscriber"><a class="viewcode-back" href="../../Reference_Manual/holoviews.html#holoviews.streams.Stream.add_subscriber">[docs]</a>    <span class="k">def</span> <span class="nf">add_subscriber</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subscriber</span><span class="p">,</span> <span class="n">precedence</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Register a callable subscriber to this stream which will be</span>
+<span class="sd">        invoked either when event is called or when this stream is</span>
+<span class="sd">        passed to the trigger classmethod.</span>
+
+<span class="sd">        Precedence allows the subscriber ordering to be</span>
+<span class="sd">        controlled. Users should only add subscribers with precedence</span>
+<span class="sd">        between zero and one while HoloViews itself reserves the use of</span>
+<span class="sd">        higher precedence values. Subscribers with high precedence are</span>
+<span class="sd">        invoked later than ones with low precedence.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">callable</span><span class="p">(</span><span class="n">subscriber</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">'Subscriber must be a callable.'</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_subscribers</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">precedence</span><span class="p">,</span> <span class="n">subscriber</span><span class="p">))</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_validate_rename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mapping</span><span class="p">):</span>
+        <span class="n">param_names</span> <span class="o">=</span> <span class="p">[</span><span class="n">k</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">params</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="s1">'name'</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="n">mapping</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">k</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">param_names</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s1">'Cannot rename </span><span class="si">%r</span><span class="s1"> as it is not a stream parameter'</span> <span class="o">%</span> <span class="n">k</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">param_names</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">KeyError</span><span class="p">(</span><span class="s1">'Cannot rename to </span><span class="si">%r</span><span class="s1"> as it clashes with a '</span>
+                               <span class="s1">'stream parameter of the same name'</span> <span class="o">%</span> <span class="n">v</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">mapping</span>
+
+
+<div class="viewcode-block" id="Stream.rename"><a class="viewcode-back" href="../../Reference_Manual/holoviews.html#holoviews.streams.Stream.rename">[docs]</a>    <span class="k">def</span> <span class="nf">rename</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">mapping</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        The rename method allows stream parameters to be allocated to</span>
+<span class="sd">        new names to avoid clashes with other stream parameters of the</span>
+<span class="sd">        same name. Returns a new clone of the stream instance with the</span>
+<span class="sd">        specified name mapping.</span>
+<span class="sd">        """</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span><span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_param_values</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="s1">'name'</span><span class="p">}</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span><span class="n">rename</span><span class="o">=</span><span class="n">mapping</span><span class="p">,</span>
+                              <span class="n">source</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_source</span><span class="p">,</span>
+                              <span class="n">linked</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">linked</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">source</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_source</span>
+
+
+    <span class="nd">@source</span><span class="o">.</span><span class="n">setter</span>
+    <span class="k">def</span> <span class="nf">source</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">source</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_source</span><span class="p">:</span>
+            <span class="n">source_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">registry</span><span class="p">[</span><span class="nb">id</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_source</span><span class="p">)]</span>
+            <span class="k">if</span> <span class="bp">self</span> <span class="ow">in</span> <span class="n">source_list</span><span class="p">:</span>
+                <span class="n">source_list</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_source</span> <span class="o">=</span> <span class="n">source</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">registry</span><span class="p">[</span><span class="nb">id</span><span class="p">(</span><span class="n">source</span><span class="p">)]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="Stream.transform"><a class="viewcode-back" href="../../Reference_Manual/holoviews.html#holoviews.streams.Stream.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Method that can be overwritten by subclasses to process the</span>
+<span class="sd">        parameter values before renaming is applied. Returns a</span>
+<span class="sd">        dictionary of transformed parameters.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="p">{}</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">contents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">filtered</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span><span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_param_values</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span><span class="o">!=</span> <span class="s1">'name'</span> <span class="p">}</span>
+        <span class="k">return</span> <span class="p">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_rename</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">k</span><span class="p">):</span><span class="n">v</span> <span class="k">for</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="n">filtered</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+                <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rename</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="kc">True</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">)}</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">hashkey</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        The object the memoization hash is computed from. By default</span>
+<span class="sd">        returns the stream contents but can be overridden to provide</span>
+<span class="sd">        a custom hash key.</span>
+<span class="sd">        """</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">contents</span>
+
+
+    <span class="k">def</span> <span class="nf">_set_stream_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Sets the stream parameters which are expected to be declared</span>
+<span class="sd">        constant.</span>
+<span class="sd">        """</span>
+        <span class="k">with</span> <span class="n">util</span><span class="o">.</span><span class="n">disable_constant</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_param</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Stream.event"><a class="viewcode-back" href="../../Reference_Manual/holoviews.html#holoviews.streams.Stream.event">[docs]</a>    <span class="k">def</span> <span class="nf">event</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Update the stream parameters and trigger an event.</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">trigger</span><span class="p">([</span><span class="bp">self</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="Stream.update"><a class="viewcode-back" href="../../Reference_Manual/holoviews.html#holoviews.streams.Stream.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        The update method updates the stream parameters (without any</span>
+<span class="sd">        renaming applied) in response to some event. If the stream has a</span>
+<span class="sd">        custom transform method, this is applied to transform the</span>
+<span class="sd">        parameter values accordingly.</span>
+
+<span class="sd">        To update and trigger, use the event method.</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_set_stream_parameters</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">transformed</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">transformed</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_set_stream_parameters</span><span class="p">(</span><span class="o">**</span><span class="n">transformed</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">cls_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="s1">','</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">'</span><span class="si">%s</span><span class="s1">=</span><span class="si">%r</span><span class="s1">'</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span>
+                          <span class="k">for</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_param_values</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span> <span class="o">!=</span> <span class="s1">'name'</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rename</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">'</span><span class="si">%s</span><span class="s1">(</span><span class="si">%s</span><span class="s1">)'</span> <span class="o">%</span> <span class="p">(</span><span class="n">cls_name</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">'</span><span class="si">%s</span><span class="s1">(</span><span class="si">%r</span><span class="s1">, </span><span class="si">%s</span><span class="s1">)'</span> <span class="o">%</span> <span class="p">(</span><span class="n">cls_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rename</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Counter"><a class="viewcode-back" href="../../Reference_Manual/holoviews.html#holoviews.streams.Counter">[docs]</a><span class="k">class</span> <span class="nc">Counter</span><span class="p">(</span><span class="n">Stream</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Simple stream that automatically increments an integer counter</span>
+<span class="sd">    parameter every time it is updated.</span>
+<span class="sd">    """</span>
+
+    <span class="n">counter</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">constant</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bounds</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="kc">None</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">'counter'</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">counter</span> <span class="o">+</span> <span class="mi">1</span><span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="Pipe"><a class="viewcode-back" href="../../Reference_Manual/holoviews.html#holoviews.streams.Pipe">[docs]</a><span class="k">class</span> <span class="nc">Pipe</span><span class="p">(</span><span class="n">Stream</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    A Stream used to pipe arbitrary data to a callback.</span>
+<span class="sd">    Unlike other streams memoization can be disabled for a</span>
+<span class="sd">    Pipe stream (and is disabled by default).</span>
+<span class="sd">    """</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">constant</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        Arbitrary data being streamed to a DynamicMap callback."""</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">memoize</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Pipe</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_memoize</span> <span class="o">=</span> <span class="n">memoize</span>
+
+<div class="viewcode-block" id="Pipe.send"><a class="viewcode-back" href="../../Reference_Manual/holoviews.html#holoviews.streams.Pipe.send">[docs]</a>    <span class="k">def</span> <span class="nf">send</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        A convenience method to send an event with data without</span>
+<span class="sd">        supplying a keyword.</span>
+<span class="sd">        """</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">event</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">hashkey</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_memoize</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">contents</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">'hash'</span><span class="p">:</span> <span class="n">uuid</span><span class="o">.</span><span class="n">uuid4</span><span class="p">()</span><span class="o">.</span><span class="n">hex</span><span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="Buffer"><a class="viewcode-back" href="../../Reference_Manual/holoviews.html#holoviews.streams.Buffer">[docs]</a><span class="k">class</span> <span class="nc">Buffer</span><span class="p">(</span><span class="n">Pipe</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Buffer allows streaming and accumulating incoming chunks of rows</span>
+<span class="sd">    from tabular datasets. The data may be in the form of a pandas</span>
+<span class="sd">    DataFrame, 2D arrays of rows and columns or dictionaries of column</span>
+<span class="sd">    arrays. Buffer will accumulate the last N rows, where N is defined</span>
+<span class="sd">    by the specified ``length``. The accumulated data is then made</span>
+<span class="sd">    available via the ``data`` parameter.</span>
+
+<span class="sd">    A Buffer may also be instantiated with a streamz.StreamingDataFrame</span>
+<span class="sd">    or a streamz.StreamingSeries, it will automatically subscribe to</span>
+<span class="sd">    events emitted by a streamz object.</span>
+
+<span class="sd">    When streaming a DataFrame will reset the DataFrame index by</span>
+<span class="sd">    default making it available to HoloViews elements as dimensions,</span>
+<span class="sd">    this may be disabled by setting index=False.</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">util</span><span class="o">.</span><span class="n">pd</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">util</span><span class="o">.</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)):</span>
+            <span class="n">example</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">data</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Only 2D array data may be streamed by Buffer."</span><span class="p">)</span>
+            <span class="n">example</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">values</span><span class="p">()):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Data in dictionary must be of array types."</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Columns in dictionary must all be the same length."</span><span class="p">)</span>
+            <span class="n">example</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="kn">from</span> <span class="nn">streamz.dataframe</span> <span class="k">import</span> <span class="n">StreamingDataFrame</span><span class="p">,</span> <span class="n">StreamingSeries</span>
+                <span class="n">loaded</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+                <span class="n">loaded</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">loaded</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="p">(</span><span class="n">StreamingDataFrame</span><span class="p">,</span> <span class="n">StreamingSeries</span><span class="p">)):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Buffer must be initialized with pandas DataFrame, "</span>
+                                 <span class="s2">"streamz.StreamingDataFrame or streamz.StreamingSeries."</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">StreamingSeries</span><span class="p">):</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">to_frame</span><span class="p">()</span>
+            <span class="n">example</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">example</span>
+            <span class="n">data</span><span class="o">.</span><span class="n">stream</span><span class="o">.</span><span class="n">sink</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">send</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sdf</span> <span class="o">=</span> <span class="n">data</span>
+
+        <span class="k">if</span> <span class="n">index</span> <span class="ow">and</span> <span class="p">(</span><span class="n">util</span><span class="o">.</span><span class="n">pd</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">example</span><span class="p">,</span> <span class="n">util</span><span class="o">.</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)):</span>
+            <span class="n">example</span> <span class="o">=</span> <span class="n">example</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+        <span class="n">params</span><span class="p">[</span><span class="s1">'data'</span><span class="p">]</span> <span class="o">=</span> <span class="n">example</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Buffer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">length</span> <span class="o">=</span> <span class="n">length</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_chunk_length</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_index</span> <span class="o">=</span> <span class="n">index</span>
+
+
+<div class="viewcode-block" id="Buffer.verify"><a class="viewcode-back" href="../../Reference_Manual/holoviews.html#holoviews.streams.Buffer.verify">[docs]</a>    <span class="k">def</span> <span class="nf">verify</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="sd">""" Verify consistency of dataframes that pass through this stream """</span>
+        <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">"Input expected to be of type </span><span class="si">%s</span><span class="s2">, got </span><span class="si">%s</span><span class="s2">."</span> <span class="o">%</span>
+                            <span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span> <span class="nb">type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">x</span><span class="o">.</span><span class="n">ndim</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">'Streamed array data must be two-dimensional'</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Streamed array data expeced to have </span><span class="si">%d</span><span class="s2"> columns, "</span>
+                                 <span class="s2">"got </span><span class="si">%d</span><span class="s2">."</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+        <span class="k">elif</span> <span class="n">util</span><span class="o">.</span><span class="n">pd</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">util</span><span class="o">.</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">list</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s2">"Input expected to have columns </span><span class="si">%s</span><span class="s2">, got </span><span class="si">%s</span><span class="s2">"</span> <span class="o">%</span>
+                             <span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span> <span class="nb">list</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">columns</span><span class="p">)))</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">c</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">x</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">IndexError</span><span class="p">(</span><span class="s2">"Input expected to have columns </span><span class="si">%s</span><span class="s2">, got </span><span class="si">%s</span><span class="s2">"</span> <span class="o">%</span>
+                                 <span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">()),</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">keys</span><span class="p">())))</span>
+            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Input columns expected to have the "</span>
+                                 <span class="s2">"same number of rows."</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Buffer.clear"><a class="viewcode-back" href="../../Reference_Manual/holoviews.html#holoviews.streams.Buffer.clear">[docs]</a>    <span class="k">def</span> <span class="nf">clear</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="s2">"Clears the data in the stream"</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">util</span><span class="o">.</span><span class="n">pd</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">util</span><span class="o">.</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">v</span><span class="p">[:</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+        <span class="k">with</span> <span class="n">util</span><span class="o">.</span><span class="n">disable_constant</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span> <span class="nf">_concat</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Concatenate and slice the accepted data types to the defined</span>
+<span class="sd">        length.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">data_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">data_length</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">:</span>
+                <span class="n">prev_chunk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="o">-</span><span class="n">data_length</span><span class="p">):]</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">prev_chunk</span><span class="p">,</span> <span class="n">data</span><span class="p">])</span>
+            <span class="k">elif</span> <span class="n">data_length</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">:</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">:]</span>
+        <span class="k">elif</span> <span class="n">util</span><span class="o">.</span><span class="n">pd</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">util</span><span class="o">.</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="n">data_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">data_length</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">:</span>
+                <span class="n">prev_chunk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="o">-</span><span class="n">data_length</span><span class="p">):]</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">util</span><span class="o">.</span><span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">prev_chunk</span><span class="p">,</span> <span class="n">data</span><span class="p">])</span>
+            <span class="k">elif</span> <span class="n">data_length</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">:</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">:]</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="n">data</span><span class="p">:</span>
+            <span class="n">data_length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">values</span><span class="p">())[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">new_data</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">data_length</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">:</span>
+                    <span class="n">prev_chunk</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="n">k</span><span class="p">][</span><span class="o">-</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="o">-</span><span class="n">data_length</span><span class="p">):]</span>
+                    <span class="n">new_data</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">prev_chunk</span><span class="p">,</span> <span class="n">v</span><span class="p">])</span>
+                <span class="k">elif</span> <span class="n">data_length</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">:</span>
+                    <span class="n">new_data</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span><span class="p">[</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">length</span><span class="p">:]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">new_data</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">new_data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_chunk_length</span> <span class="o">=</span> <span class="n">data_length</span>
+        <span class="k">return</span> <span class="n">data</span>
+
+
+<div class="viewcode-block" id="Buffer.update"><a class="viewcode-back" href="../../Reference_Manual/holoviews.html#holoviews.streams.Buffer.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        Overrides update to concatenate streamed data up to defined length.</span>
+<span class="sd">        """</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'data'</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">util</span><span class="o">.</span><span class="n">pd</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">util</span><span class="o">.</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">_index</span><span class="p">:</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">verify</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="n">kwargs</span><span class="p">[</span><span class="s1">'data'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_concat</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Buffer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">hashkey</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">'hash'</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_count</span><span class="p">}</span></div>
+
+
+
+<div class="viewcode-block" id="LinkedStream"><a class="viewcode-back" href="../../Reference_Manual/holoviews.html#holoviews.streams.LinkedStream">[docs]</a><span class="k">class</span> <span class="nc">LinkedStream</span><span class="p">(</span><span class="n">Stream</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    A LinkedStream indicates is automatically linked to plot interactions</span>
+<span class="sd">    on a backend via a Renderer. Not all backends may support dynamically</span>
+<span class="sd">    supplying stream data.</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">linked</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">LinkedStream</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">linked</span><span class="o">=</span><span class="n">linked</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PointerX"><a class="viewcode-back" href="../../Reference_Manual/holoviews.html#holoviews.streams.PointerX">[docs]</a><span class="k">class</span> <span class="nc">PointerX</span><span class="p">(</span><span class="n">LinkedStream</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    A pointer position along the x-axis in data coordinates which may be</span>
+<span class="sd">    a numeric or categorical dimension.</span>
+
+<span class="sd">    With the appropriate plotting backend, this corresponds to the</span>
+<span class="sd">    position of the mouse/trackpad cursor. If the pointer is outside the</span>
+<span class="sd">    plot bounds, the position is set to None.</span>
+<span class="sd">    """</span>
+
+    <span class="n">x</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">ClassSelector</span><span class="p">(</span><span class="n">class_</span><span class="o">=</span><span class="p">(</span><span class="n">Number</span><span class="p">,</span> <span class="n">util</span><span class="o">.</span><span class="n">basestring</span><span class="p">),</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                            <span class="n">constant</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">           Pointer position along the x-axis in data coordinates"""</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PointerY"><a class="viewcode-back" href="../../Reference_Manual/holoviews.html#holoviews.streams.PointerY">[docs]</a><span class="k">class</span> <span class="nc">PointerY</span><span class="p">(</span><span class="n">LinkedStream</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    A pointer position along the y-axis in data coordinates which may be</span>
+<span class="sd">    a numeric or categorical dimension.</span>
+
+<span class="sd">    With the appropriate plotting backend, this corresponds to the</span>
+<span class="sd">    position of the mouse/trackpad pointer. If the pointer is outside</span>
+<span class="sd">    the plot bounds, the position is set to None.</span>
+<span class="sd">    """</span>
+
+
+    <span class="n">y</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">ClassSelector</span><span class="p">(</span><span class="n">class_</span><span class="o">=</span><span class="p">(</span><span class="n">Number</span><span class="p">,</span> <span class="n">util</span><span class="o">.</span><span class="n">basestring</span><span class="p">),</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                            <span class="n">constant</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">           Pointer position along the y-axis in data coordinates"""</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PointerXY"><a class="viewcode-back" href="../../Reference_Manual/holoviews.html#holoviews.streams.PointerXY">[docs]</a><span class="k">class</span> <span class="nc">PointerXY</span><span class="p">(</span><span class="n">LinkedStream</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    A pointer position along the x- and y-axes in data coordinates which</span>
+<span class="sd">    may numeric or categorical dimensions.</span>
+
+<span class="sd">    With the appropriate plotting backend, this corresponds to the</span>
+<span class="sd">    position of the mouse/trackpad pointer. If the pointer is outside</span>
+<span class="sd">    the plot bounds, the position values are set to None.</span>
+<span class="sd">    """</span>
+
+    <span class="n">x</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">ClassSelector</span><span class="p">(</span><span class="n">class_</span><span class="o">=</span><span class="p">(</span><span class="n">Number</span><span class="p">,</span> <span class="n">util</span><span class="o">.</span><span class="n">basestring</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">),</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                            <span class="n">constant</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">           Pointer position along the x-axis in data coordinates"""</span><span class="p">)</span>
+
+    <span class="n">y</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">ClassSelector</span><span class="p">(</span><span class="n">class_</span><span class="o">=</span><span class="p">(</span><span class="n">Number</span><span class="p">,</span> <span class="n">util</span><span class="o">.</span><span class="n">basestring</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">),</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                            <span class="n">constant</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">           Pointer position along the y-axis in data coordinates"""</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Draw"><a class="viewcode-back" href="../../Reference_Manual/holoviews.html#holoviews.streams.Draw">[docs]</a><span class="k">class</span> <span class="nc">Draw</span><span class="p">(</span><span class="n">PointerXY</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    A series of updating x/y-positions when drawing, together with the</span>
+<span class="sd">    current stroke count</span>
+<span class="sd">    """</span>
+
+    <span class="n">stroke_count</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">constant</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">       The current drawing stroke count. Increments every time a new</span>
+<span class="s2">       stroke is started."""</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SingleTap"><a class="viewcode-back" href="../../Reference_Manual/holoviews.html#holoviews.streams.SingleTap">[docs]</a><span class="k">class</span> <span class="nc">SingleTap</span><span class="p">(</span><span class="n">PointerXY</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    The x/y-position of a single tap or click in data coordinates.</span>
+<span class="sd">    """</span></div>
+
+
+<div class="viewcode-block" id="Tap"><a class="viewcode-back" href="../../Reference_Manual/holoviews.html#holoviews.streams.Tap">[docs]</a><span class="k">class</span> <span class="nc">Tap</span><span class="p">(</span><span class="n">PointerXY</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    The x/y-position of a tap or click in data coordinates.</span>
+<span class="sd">    """</span></div>
+
+
+<div class="viewcode-block" id="DoubleTap"><a class="viewcode-back" href="../../Reference_Manual/holoviews.html#holoviews.streams.DoubleTap">[docs]</a><span class="k">class</span> <span class="nc">DoubleTap</span><span class="p">(</span><span class="n">PointerXY</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    The x/y-position of a double-tap or -click in data coordinates.</span>
+<span class="sd">    """</span></div>
+
+
+<div class="viewcode-block" id="MouseEnter"><a class="viewcode-back" href="../../Reference_Manual/holoviews.html#holoviews.streams.MouseEnter">[docs]</a><span class="k">class</span> <span class="nc">MouseEnter</span><span class="p">(</span><span class="n">PointerXY</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    The x/y-position where the mouse/cursor entered the plot area</span>
+<span class="sd">    in data coordinates.</span>
+<span class="sd">    """</span></div>
+
+
+<div class="viewcode-block" id="MouseLeave"><a class="viewcode-back" href="../../Reference_Manual/holoviews.html#holoviews.streams.MouseLeave">[docs]</a><span class="k">class</span> <span class="nc">MouseLeave</span><span class="p">(</span><span class="n">PointerXY</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    The x/y-position where the mouse/cursor entered the plot area</span>
+<span class="sd">    in data coordinates.</span>
+<span class="sd">    """</span></div>
+
+
+<div class="viewcode-block" id="PlotSize"><a class="viewcode-back" href="../../Reference_Manual/holoviews.html#holoviews.streams.PlotSize">[docs]</a><span class="k">class</span> <span class="nc">PlotSize</span><span class="p">(</span><span class="n">LinkedStream</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Returns the dimensions of a plot once it has been displayed.</span>
+<span class="sd">    """</span>
+
+    <span class="n">width</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">constant</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"The width of the plot in pixels"</span><span class="p">)</span>
+
+    <span class="n">height</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Integer</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="n">constant</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"The height of the plot in pixels"</span><span class="p">)</span>
+
+    <span class="n">scale</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Number</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">constant</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">       Scale factor to scale width and height values reported by the stream"""</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">'width'</span><span class="p">:</span>  <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">),</span>
+                <span class="s1">'height'</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">)}</span></div>
+
+
+<div class="viewcode-block" id="RangeXY"><a class="viewcode-back" href="../../Reference_Manual/holoviews.html#holoviews.streams.RangeXY">[docs]</a><span class="k">class</span> <span class="nc">RangeXY</span><span class="p">(</span><span class="n">LinkedStream</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Axis ranges along x- and y-axis in data coordinates.</span>
+<span class="sd">    """</span>
+
+    <span class="n">x_range</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Tuple</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">constant</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">      Range of the x-axis of a plot in data coordinates"""</span><span class="p">)</span>
+
+    <span class="n">y_range</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Tuple</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">constant</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">      Range of the y-axis of a plot in data coordinates"""</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="RangeX"><a class="viewcode-back" href="../../Reference_Manual/holoviews.html#holoviews.streams.RangeX">[docs]</a><span class="k">class</span> <span class="nc">RangeX</span><span class="p">(</span><span class="n">LinkedStream</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Axis range along x-axis in data coordinates.</span>
+<span class="sd">    """</span>
+
+    <span class="n">x_range</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Tuple</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">constant</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">      Range of the x-axis of a plot in data coordinates"""</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="RangeY"><a class="viewcode-back" href="../../Reference_Manual/holoviews.html#holoviews.streams.RangeY">[docs]</a><span class="k">class</span> <span class="nc">RangeY</span><span class="p">(</span><span class="n">LinkedStream</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Axis range along y-axis in data coordinates.</span>
+<span class="sd">    """</span>
+
+    <span class="n">y_range</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Tuple</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">constant</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">      Range of the y-axis of a plot in data coordinates"""</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="BoundsXY"><a class="viewcode-back" href="../../Reference_Manual/holoviews.html#holoviews.streams.BoundsXY">[docs]</a><span class="k">class</span> <span class="nc">BoundsXY</span><span class="p">(</span><span class="n">LinkedStream</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    A stream representing the bounds of a box selection as an</span>
+<span class="sd">    tuple of the left, bottom, right and top coordinates.</span>
+<span class="sd">    """</span>
+
+    <span class="n">bounds</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Tuple</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">constant</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+                         <span class="n">allow_None</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        Bounds defined as (left, bottom, right, top) tuple."""</span><span class="p">)</span></div>
+
+
+<span class="k">class</span> <span class="nc">Bounds</span><span class="p">(</span><span class="n">BoundsXY</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">'Bounds is deprecated use BoundsXY instead.'</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Bounds</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="BoundsX"><a class="viewcode-back" href="../../Reference_Manual/holoviews.html#holoviews.streams.BoundsX">[docs]</a><span class="k">class</span> <span class="nc">BoundsX</span><span class="p">(</span><span class="n">LinkedStream</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    A stream representing the bounds of a box selection as an</span>
+<span class="sd">    tuple of the left and right coordinates.</span>
+<span class="sd">    """</span>
+
+    <span class="n">boundsx</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Tuple</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">constant</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                          <span class="n">allow_None</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        Bounds defined as (left, right) tuple."""</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="BoundsY"><a class="viewcode-back" href="../../Reference_Manual/holoviews.html#holoviews.streams.BoundsY">[docs]</a><span class="k">class</span> <span class="nc">BoundsY</span><span class="p">(</span><span class="n">LinkedStream</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    A stream representing the bounds of a box selection as an</span>
+<span class="sd">    tuple of the bottom and top coordinates.</span>
+<span class="sd">    """</span>
+
+    <span class="n">boundsy</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Tuple</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">constant</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">length</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                          <span class="n">allow_None</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        Bounds defined as (bottom, top) tuple."""</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Selection1D"><a class="viewcode-back" href="../../Reference_Manual/holoviews.html#holoviews.streams.Selection1D">[docs]</a><span class="k">class</span> <span class="nc">Selection1D</span><span class="p">(</span><span class="n">LinkedStream</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    A stream representing a 1D selection of objects by their index.</span>
+<span class="sd">    """</span>
+
+    <span class="n">index</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">List</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="p">[],</span> <span class="n">constant</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        Indices into a 1D datastructure."""</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PlotReset"><a class="viewcode-back" href="../../Reference_Manual/holoviews.html#holoviews.streams.PlotReset">[docs]</a><span class="k">class</span> <span class="nc">PlotReset</span><span class="p">(</span><span class="n">LinkedStream</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    A stream signalling when a plot reset event has been triggered.</span>
+<span class="sd">    """</span>
+
+    <span class="n">reset</span> <span class="o">=</span> <span class="n">param</span><span class="o">.</span><span class="n">Boolean</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">constant</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">doc</span><span class="o">=</span><span class="s2">"""</span>
+<span class="s2">        Whether a reset event is being signalled."""</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">PlotReset</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="nb">dict</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">transient</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="ParamValues"><a class="viewcode-back" href="../../Reference_Manual/holoviews.html#holoviews.streams.ParamValues">[docs]</a><span class="k">class</span> <span class="nc">ParamValues</span><span class="p">(</span><span class="n">Stream</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    A Stream based on the parameter values of some other parameterized</span>
+<span class="sd">    object, whether it is a parameterized class or a parameterized</span>
+<span class="sd">    instance.</span>
+
+<span class="sd">    The update method enables the stream to update the parameters of the</span>
+<span class="sd">    specified object.</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span> <span class="o">=</span> <span class="n">obj</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">ParamValues</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">contents</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_obj</span><span class="p">,</span> <span class="nb">type</span><span class="p">):</span>
+            <span class="n">remapped</span><span class="o">=</span><span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_obj</span><span class="p">,</span><span class="n">k</span><span class="p">)</span>
+                               <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span><span class="o">.</span><span class="n">params</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span><span class="o">!=</span> <span class="s1">'name'</span><span class="p">}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">remapped</span><span class="o">=</span><span class="p">{</span><span class="n">k</span><span class="p">:</span><span class="n">v</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span><span class="n">v</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span><span class="o">.</span><span class="n">get_param_values</span><span class="p">()</span> <span class="k">if</span> <span class="n">k</span><span class="o">!=</span> <span class="s1">'name'</span><span class="p">}</span>
+        <span class="k">return</span> <span class="n">remapped</span>
+
+
+<div class="viewcode-block" id="ParamValues.update"><a class="viewcode-back" href="../../Reference_Manual/holoviews.html#holoviews.streams.ParamValues.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">"""</span>
+<span class="sd">        The update method updates the parameters of the specified object.</span>
+
+<span class="sd">        If trigger is enabled, the trigger classmethod is invoked on</span>
+<span class="sd">        this Stream instance to execute its subscribers.</span>
+<span class="sd">        """</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_obj</span><span class="p">,</span> <span class="nb">type</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span><span class="o">.</span><span class="n">params</span><span class="p">()</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+                    <span class="nb">setattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_obj</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">kwargs</span><span class="p">[</span><span class="n">name</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span><span class="o">.</span><span class="n">set_param</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">__repr__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">cls_name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span>
+        <span class="k">return</span> <span class="s1">'</span><span class="si">%s</span><span class="s1">(</span><span class="si">%r</span><span class="s1">)'</span> <span class="o">%</span> <span class="p">(</span><span class="n">cls_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_obj</span><span class="p">)</span>
+
+
+    <span class="k">def</span> <span class="nf">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">repr</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span></div>
+
+
+<span class="k">class</span> <span class="nc">PositionX</span><span class="p">(</span><span class="n">PointerX</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">'PositionX stream deprecated: use PointerX instead'</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">PositionX</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">PositionY</span><span class="p">(</span><span class="n">PointerY</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">'PositionY stream deprecated: use PointerY instead'</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">PositionY</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">PositionXY</span><span class="p">(</span><span class="n">PointerXY</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">params</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">'PositionXY stream deprecated: use PointerXY instead'</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">PositionXY</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">**</span><span class="n">params</span><span class="p">)</span>
+
+</pre>
+    </div>
+   </div>
+  </div>
+  <!-- END MAIN BODY OF DOCS ––––––––––––– -->
+  <footer class="footer">
+   <div class="footer-links">
+    <ul>
+     <li>
+      <span class="footer-title">
+       Links
+      </span>
+     </li>
+     <li>
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li>
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li>
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li>
+      <a href="/Reference_Manual/index.html">
+       API Docs
+      </a>
+     </li>
+     <li>
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li>
+      <a href="/about.html">
+       About
+      </a>
+     </li>
+    </ul>
+    <ul>
+     <li>
+      <span class="footer-title">
+       Join Us
+      </span>
+     </li>
+     <li>
+      <a href="//gitter.im/ioam/holoviews.html">
+       Gitter
+      </a>
+     </li>
+     <li>
+      <a href="//twitter.com/holoviews.html">
+       Twitter
+      </a>
+     </li>
+     <li>
+      <a href="//github.com/ioam/holoviews.html">
+       Github
+      </a>
+     </li>
+    </ul>
+    <ul class="copyright">
+     <li>
+      2017 IOAM: Jean-Luc R. Stevens, Philipp Rudiger, and James A. Bednar
+     </li>
+    </ul>
+   </div>
+  </footer>
+  <!-- Google Analytics -->
+  <script>
+   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-61554933-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <!-- MathJax Config -->
+  <script type="text/x-mathjax-config">
+   MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+  </script>
+  <!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+ </body>
+</html>

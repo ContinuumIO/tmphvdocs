@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <!-- Basic Page Needs
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta charset="utf-8"/>
+  <title>
+   holoviews.ipython.display_hooks — HoloViews
+  </title>
+  <meta content="HoloViews library, documentation site." name="description"/>
+  <meta content="HoloViews contributors" name="author"/>
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.16/webfont.js">
+  </script>
+  <script>
+   WebFont.load({
+      google: {
+        families: ['Source Sans Pro']
+      }
+    });
+  </script>
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../../../_static/main.css" rel="stylesheet"/>
+  <link href="../../../_static/custom.css" rel="stylesheet"/>
+  <!-- Scripts
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js">
+  </script>
+  <script async="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_CHTML" type="text/javascript">
+  </script>
+  <script src="../../../_static/js/main.js">
+  </script>
+  <script src="../../../_static/custom.js">
+  </script>
+  <script src="../../../_static/require.js">
+  </script>
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="../../../_static/images/favicon.ico" rel="icon" type="image/png"/>
+  <!-- Canonical
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="http://holoviews.org/_modules/holoviews/ipython/display_hooks.html" rel="canonical"/>
+ </head>
+ <body class="">
+  <header class="navigation">
+   <div class="wrapper">
+    <a class="logo" href="//">
+     <img alt="Logo" src="../../../_static/images/logo.png"/>
+    </a>
+    <a class="navigation-menu logo-text" href="//">
+     HoloViews
+    </a>
+    <a class="navigation-menu-button" href="javascript:void(0)" id="js-mobile-menu">
+     Menu
+    </a>
+    <nav>
+     <ul class="navigation-menu show" id="js-navigation-menu">
+      <li class="nav-link">
+       <a href="/about.html">
+        About
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="/gallery/index.html">
+        Gallery
+       </a>
+      </li>
+      <li class="nav-link">
+       <a href="//github.com/ioam/holoviews.html">
+        Github
+       </a>
+      </li>
+     </ul>
+    </nav>
+   </div>
+  </header>
+  <div class="second-nav">
+   <nav>
+    <ul class="navigation-menu show">
+     <li class="nav-link doc-head">
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="nav-link doc-head">
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+    </ul>
+   </nav>
+   <div class="navigation-tools">
+    <div class="search-bar">
+     <form action="../../../search.html" method="get" role="search">
+      <input name="q" placeholder="Search" type="search"/>
+      <button type="submit">
+       <img alt="Search Icon" src="https://raw.githubusercontent.com/thoughtbot/refills/master/source/images/search-icon-black.png"/>
+      </button>
+     </form>
+    </div>
+   </div>
+  </div>
+  <!-- MAIN BODY OF DOCS –––––––––––––––––– -->
+  <div class="docs section">
+   <div class="toc">
+    <ul>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../Reference_Manual/index.html">
+       API
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference external" href="http://github.com/ioam/holoviews">
+       Github source
+      </a>
+     </li>
+     <li class="toctree-l1">
+      <a class="reference internal" href="../../../about.html">
+       About
+      </a>
+     </li>
+    </ul>
+   </div>
+   <div class="content">
+    <h1>
+     Source code for holoviews.ipython.display_hooks
+    </h1>
+    <div class="highlight">
+     <pre><span></span><span class="sd">"""</span>
+<span class="sd">Definition and registration of display hooks for the IPython Notebook.</span>
+<span class="sd">"""</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">wraps</span>
+<span class="kn">from</span> <span class="nn">contextlib</span> <span class="k">import</span> <span class="n">contextmanager</span>
+
+<span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">traceback</span>
+
+<span class="kn">import</span> <span class="nn">IPython</span>
+<span class="kn">from</span> <span class="nn">IPython</span> <span class="k">import</span> <span class="n">get_ipython</span>
+
+<span class="kn">import</span> <span class="nn">holoviews</span>
+<span class="kn">from</span> <span class="nn">holoviews.plotting</span> <span class="k">import</span> <span class="n">Plot</span>
+<span class="kn">from</span> <span class="nn">..core.options</span> <span class="k">import</span> <span class="p">(</span><span class="n">Store</span><span class="p">,</span> <span class="n">StoreOptions</span><span class="p">,</span> <span class="n">SkipRendering</span><span class="p">,</span>
+                            <span class="n">AbbreviatedException</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">..core</span> <span class="k">import</span> <span class="p">(</span><span class="n">ViewableElement</span><span class="p">,</span> <span class="n">UniformNdMapping</span><span class="p">,</span>
+                    <span class="n">HoloMap</span><span class="p">,</span> <span class="n">AdjointLayout</span><span class="p">,</span> <span class="n">NdLayout</span><span class="p">,</span> <span class="n">GridSpace</span><span class="p">,</span> <span class="n">Layout</span><span class="p">,</span>
+                    <span class="n">CompositeOverlay</span><span class="p">,</span> <span class="n">DynamicMap</span><span class="p">)</span>
+<span class="kn">from</span> <span class="nn">..core.traversal</span> <span class="k">import</span> <span class="n">unique_dimkeys</span>
+<span class="kn">from</span> <span class="nn">..core.io</span> <span class="k">import</span> <span class="n">FileArchive</span>
+<span class="kn">from</span> <span class="nn">..util.settings</span> <span class="k">import</span> <span class="n">OutputSettings</span>
+<span class="kn">from</span> <span class="nn">.magics</span> <span class="k">import</span> <span class="n">OptsMagic</span><span class="p">,</span> <span class="n">OutputMagic</span>
+
+<span class="c1"># To assist with debugging of display hooks</span>
+<span class="n">FULL_TRACEBACK</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">ABBREVIATE_TRACEBACKS</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="c1">#==================#</span>
+<span class="c1"># Helper functions #</span>
+<span class="c1">#==================#</span>
+
+
+<span class="k">def</span> <span class="nf">max_frame_warning</span><span class="p">(</span><span class="n">max_frames</span><span class="p">):</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">"Skipping regular visual display to avoid "</span>
+                     <span class="s2">"lengthy animation render times</span><span class="se">\n</span><span class="s2">"</span>
+                     <span class="s2">"[Total item frames exceeds max_frames on OutputSettings (</span><span class="si">%d</span><span class="s2">)]"</span>
+                     <span class="o">%</span> <span class="n">max_frames</span><span class="p">)</span>
+
+<div class="viewcode-block" id="process_object"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.ipython.html#holoviews.ipython.display_hooks.process_object">[docs]</a><span class="k">def</span> <span class="nf">process_object</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+    <span class="s2">"Hook to process the object currently being displayed."</span>
+    <span class="n">invalid_options</span> <span class="o">=</span> <span class="n">OptsMagic</span><span class="o">.</span><span class="n">process_element</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">invalid_options</span><span class="p">:</span> <span class="k">return</span> <span class="n">invalid_options</span>
+    <span class="n">OutputMagic</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span></div>
+
+
+<span class="k">def</span> <span class="nf">render</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">info</span> <span class="o">=</span> <span class="n">process_object</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">info</span><span class="p">:</span>
+        <span class="n">IPython</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">display</span><span class="p">(</span><span class="n">IPython</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">HTML</span><span class="p">(</span><span class="n">info</span><span class="p">))</span>
+        <span class="k">return</span>
+
+
+    <span class="k">if</span> <span class="n">render_anim</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">render_anim</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+
+    <span class="n">backend</span> <span class="o">=</span> <span class="n">Store</span><span class="o">.</span><span class="n">current_backend</span>
+    <span class="n">renderer</span> <span class="o">=</span> <span class="n">Store</span><span class="o">.</span><span class="n">renderers</span><span class="p">[</span><span class="n">backend</span><span class="p">]</span>
+
+    <span class="c1"># Drop back to png if pdf selected, notebook PDF rendering is buggy</span>
+    <span class="k">if</span> <span class="n">renderer</span><span class="o">.</span><span class="n">fig</span> <span class="o">==</span> <span class="s1">'pdf'</span><span class="p">:</span>
+        <span class="n">renderer</span> <span class="o">=</span> <span class="n">renderer</span><span class="o">.</span><span class="n">instance</span><span class="p">(</span><span class="n">fig</span><span class="o">=</span><span class="s1">'png'</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">renderer</span><span class="o">.</span><span class="n">html</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="single_frame_plot"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.ipython.html#holoviews.ipython.display_hooks.single_frame_plot">[docs]</a><span class="k">def</span> <span class="nf">single_frame_plot</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Returns plot, renderer and format for single frame export.</span>
+<span class="sd">    """</span>
+    <span class="n">obj</span> <span class="o">=</span> <span class="n">Layout</span><span class="o">.</span><span class="n">from_values</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">AdjointLayout</span><span class="p">)</span> <span class="k">else</span> <span class="n">obj</span>
+
+    <span class="n">backend</span> <span class="o">=</span> <span class="n">Store</span><span class="o">.</span><span class="n">current_backend</span>
+    <span class="n">renderer</span> <span class="o">=</span> <span class="n">Store</span><span class="o">.</span><span class="n">renderers</span><span class="p">[</span><span class="n">backend</span><span class="p">]</span>
+
+    <span class="n">plot_cls</span> <span class="o">=</span> <span class="n">renderer</span><span class="o">.</span><span class="n">plotting_class</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+    <span class="n">plot</span> <span class="o">=</span> <span class="n">plot_cls</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="o">**</span><span class="n">renderer</span><span class="o">.</span><span class="n">plot_options</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">renderer</span><span class="o">.</span><span class="n">size</span><span class="p">))</span>
+    <span class="n">fmt</span> <span class="o">=</span> <span class="n">renderer</span><span class="o">.</span><span class="n">params</span><span class="p">(</span><span class="s1">'fig'</span><span class="p">)</span><span class="o">.</span><span class="n">objects</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="n">renderer</span><span class="o">.</span><span class="n">fig</span> <span class="o">==</span> <span class="s1">'auto'</span> <span class="k">else</span> <span class="n">renderer</span><span class="o">.</span><span class="n">fig</span>
+    <span class="k">return</span> <span class="n">plot</span><span class="p">,</span> <span class="n">renderer</span><span class="p">,</span> <span class="n">fmt</span></div>
+
+
+<div class="viewcode-block" id="first_frame"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.ipython.html#holoviews.ipython.display_hooks.first_frame">[docs]</a><span class="k">def</span> <span class="nf">first_frame</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+    <span class="s2">"Only display the first frame of an animated plot"</span>
+    <span class="n">plot</span><span class="p">,</span> <span class="n">renderer</span><span class="p">,</span> <span class="n">fmt</span> <span class="o">=</span> <span class="n">single_frame_plot</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+    <span class="n">plot</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">renderer</span><span class="o">.</span><span class="n">html</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="n">fmt</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="middle_frame"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.ipython.html#holoviews.ipython.display_hooks.middle_frame">[docs]</a><span class="k">def</span> <span class="nf">middle_frame</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+    <span class="s2">"Only display the (approximately) middle frame of an animated plot"</span>
+    <span class="n">plot</span><span class="p">,</span> <span class="n">renderer</span><span class="p">,</span> <span class="n">fmt</span> <span class="o">=</span> <span class="n">single_frame_plot</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+    <span class="n">middle_frame</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">plot</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">plot</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">middle_frame</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">renderer</span><span class="o">.</span><span class="n">html</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="n">fmt</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="last_frame"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.ipython.html#holoviews.ipython.display_hooks.last_frame">[docs]</a><span class="k">def</span> <span class="nf">last_frame</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+    <span class="s2">"Only display the last frame of an animated plot"</span>
+    <span class="n">plot</span><span class="p">,</span> <span class="n">renderer</span><span class="p">,</span> <span class="n">fmt</span> <span class="o">=</span> <span class="n">single_frame_plot</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+    <span class="n">plot</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">plot</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">renderer</span><span class="o">.</span><span class="n">html</span><span class="p">(</span><span class="n">plot</span><span class="p">,</span> <span class="n">fmt</span><span class="p">)</span></div>
+
+<span class="c1">#===============#</span>
+<span class="c1"># Display hooks #</span>
+<span class="c1">#===============#</span>
+
+<span class="k">def</span> <span class="nf">dynamic_optstate</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="c1"># Temporary fix to avoid issues with DynamicMap traversal</span>
+    <span class="n">DynamicMap</span><span class="o">.</span><span class="n">_deep_indexable</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">optstate</span> <span class="o">=</span> <span class="n">StoreOptions</span><span class="o">.</span><span class="n">state</span><span class="p">(</span><span class="n">element</span><span class="p">,</span><span class="n">state</span><span class="o">=</span><span class="n">state</span><span class="p">)</span>
+    <span class="n">DynamicMap</span><span class="o">.</span><span class="n">_deep_indexable</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="n">optstate</span>
+
+<span class="nd">@contextmanager</span>
+<span class="k">def</span> <span class="nf">option_state</span><span class="p">(</span><span class="n">element</span><span class="p">):</span>
+    <span class="n">optstate</span> <span class="o">=</span> <span class="n">dynamic_optstate</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+    <span class="n">raised_exception</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">yield</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="n">raised_exception</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">raise</span>
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">raised_exception</span><span class="p">:</span>
+            <span class="n">dynamic_optstate</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="n">optstate</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">display_hook</span><span class="p">(</span><span class="n">fn</span><span class="p">):</span>
+    <span class="nd">@wraps</span><span class="p">(</span><span class="n">fn</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">wrapped</span><span class="p">(</span><span class="n">element</span><span class="p">):</span>
+        <span class="k">global</span> <span class="n">FULL_TRACEBACK</span>
+        <span class="k">if</span> <span class="n">Store</span><span class="o">.</span><span class="n">current_backend</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">html</span> <span class="o">=</span> <span class="n">fn</span><span class="p">(</span><span class="n">element</span><span class="p">,</span>
+                      <span class="n">max_frames</span><span class="o">=</span><span class="n">OutputSettings</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">'max_frames'</span><span class="p">])</span>
+
+            <span class="c1"># Only want to add to the archive for one display hook...</span>
+            <span class="n">disabled_suffixes</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'png_display'</span><span class="p">,</span> <span class="s1">'svg_display'</span><span class="p">]</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="nb">any</span><span class="p">(</span><span class="n">fn</span><span class="o">.</span><span class="vm">__name__</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="n">suffix</span><span class="p">)</span> <span class="k">for</span> <span class="n">suffix</span> <span class="ow">in</span> <span class="n">disabled_suffixes</span><span class="p">):</span>
+                <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">holoviews</span><span class="o">.</span><span class="n">archive</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">FileArchive</span><span class="p">:</span>
+                    <span class="n">holoviews</span><span class="o">.</span><span class="n">archive</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">html</span><span class="o">=</span><span class="n">html</span><span class="p">)</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="n">OutputSettings</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">'filename'</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">filename</span><span class="p">:</span>
+                <span class="n">Store</span><span class="o">.</span><span class="n">renderers</span><span class="p">[</span><span class="n">Store</span><span class="o">.</span><span class="n">current_backend</span><span class="p">]</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">html</span>
+        <span class="k">except</span> <span class="n">SkipRendering</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">warn</span><span class="p">:</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">))</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">except</span> <span class="n">AbbreviatedException</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+
+            <span class="n">FULL_TRACEBACK</span> <span class="o">=</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exception</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">etype</span><span class="p">,</span>
+                                                                  <span class="n">e</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+                                                                  <span class="n">e</span><span class="o">.</span><span class="n">traceback</span><span class="p">))</span>
+            <span class="n">info</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="n">e</span><span class="o">.</span><span class="n">etype</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+                        <span class="n">message</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">value</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span><span class="s1">'&lt;br&gt;'</span><span class="p">))</span>
+            <span class="n">msg</span> <span class="o">=</span>  <span class="s1">'&lt;i&gt; [Call holoviews.ipython.show_traceback() for details]&lt;/i&gt;'</span>
+            <span class="k">return</span> <span class="s2">"&lt;b&gt;</span><span class="si">{name}</span><span class="s2">&lt;/b&gt;</span><span class="si">{msg}</span><span class="s2">&lt;br&gt;</span><span class="si">{message}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">msg</span><span class="o">=</span><span class="n">msg</span><span class="p">,</span> <span class="o">**</span><span class="n">info</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">raise</span>
+    <span class="k">return</span> <span class="n">wrapped</span>
+
+
+<span class="nd">@display_hook</span>
+<span class="k">def</span> <span class="nf">element_display</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">max_frames</span><span class="p">):</span>
+    <span class="n">info</span> <span class="o">=</span> <span class="n">process_object</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">info</span><span class="p">:</span>
+        <span class="n">IPython</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">display</span><span class="p">(</span><span class="n">IPython</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">HTML</span><span class="p">(</span><span class="n">info</span><span class="p">))</span>
+        <span class="k">return</span>
+
+    <span class="n">backend</span> <span class="o">=</span> <span class="n">Store</span><span class="o">.</span><span class="n">current_backend</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">Store</span><span class="o">.</span><span class="n">registry</span><span class="p">[</span><span class="n">backend</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="c1"># Drop back to png if pdf selected, notebook PDF rendering is buggy</span>
+    <span class="n">renderer</span> <span class="o">=</span> <span class="n">Store</span><span class="o">.</span><span class="n">renderers</span><span class="p">[</span><span class="n">backend</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">renderer</span><span class="o">.</span><span class="n">fig</span> <span class="o">==</span> <span class="s1">'pdf'</span><span class="p">:</span>
+        <span class="n">renderer</span> <span class="o">=</span> <span class="n">renderer</span><span class="o">.</span><span class="n">instance</span><span class="p">(</span><span class="n">fig</span><span class="o">=</span><span class="s1">'png'</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">renderer</span><span class="o">.</span><span class="n">html</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="n">renderer</span><span class="o">.</span><span class="n">fig</span><span class="p">)</span>
+
+
+<span class="nd">@display_hook</span>
+<span class="k">def</span> <span class="nf">map_display</span><span class="p">(</span><span class="n">vmap</span><span class="p">,</span> <span class="n">max_frames</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">vmap</span><span class="p">,</span> <span class="p">(</span><span class="n">HoloMap</span><span class="p">,</span> <span class="n">DynamicMap</span><span class="p">)):</span> <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">if</span>  <span class="nb">isinstance</span><span class="p">(</span><span class="n">vmap</span><span class="p">,</span> <span class="n">DynamicMap</span><span class="p">)</span> <span class="ow">and</span> <span class="n">vmap</span><span class="o">.</span><span class="n">unbounded</span><span class="p">:</span>
+        <span class="n">dims</span> <span class="o">=</span> <span class="s1">', '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s1">'</span><span class="si">%r</span><span class="s1">'</span> <span class="o">%</span> <span class="n">dim</span> <span class="k">for</span> <span class="n">dim</span> <span class="ow">in</span>  <span class="n">vmap</span><span class="o">.</span><span class="n">unbounded</span><span class="p">)</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s1">'DynamicMap cannot be displayed without explicit indexing '</span>
+               <span class="s1">'as </span><span class="si">{dims}</span><span class="s1"> dimension(s) are unbounded. '</span>
+               <span class="s1">'</span><span class="se">\n</span><span class="s1">Set dimensions bounds with the DynamicMap redim.range '</span>
+               <span class="s1">'or redim.values methods.'</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dims</span><span class="o">=</span><span class="n">dims</span><span class="p">))</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">vmap</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">vmap</span><span class="p">,</span> <span class="n">DynamicMap</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">vmap</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">max_frames</span><span class="p">:</span>
+        <span class="n">max_frame_warning</span><span class="p">(</span><span class="n">max_frames</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">vmap</span><span class="p">)</span>
+
+
+<span class="nd">@display_hook</span>
+<span class="k">def</span> <span class="nf">layout_display</span><span class="p">(</span><span class="n">layout</span><span class="p">,</span> <span class="n">max_frames</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">layout</span><span class="p">,</span> <span class="n">AdjointLayout</span><span class="p">):</span> <span class="n">layout</span> <span class="o">=</span> <span class="n">Layout</span><span class="o">.</span><span class="n">from_values</span><span class="p">(</span><span class="n">layout</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">layout</span><span class="p">,</span> <span class="p">(</span><span class="n">Layout</span><span class="p">,</span> <span class="n">NdLayout</span><span class="p">)):</span> <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="n">nframes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">unique_dimkeys</span><span class="p">(</span><span class="n">layout</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">nframes</span> <span class="o">&gt;</span> <span class="n">max_frames</span><span class="p">:</span>
+        <span class="n">max_frame_warning</span><span class="p">(</span><span class="n">max_frames</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">layout</span><span class="p">)</span>
+
+
+<span class="nd">@display_hook</span>
+<span class="k">def</span> <span class="nf">grid_display</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">max_frames</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">GridSpace</span><span class="p">):</span> <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="n">nframes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">unique_dimkeys</span><span class="p">(</span><span class="n">grid</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">nframes</span> <span class="o">&gt;</span> <span class="n">max_frames</span><span class="p">:</span>
+        <span class="n">max_frame_warning</span><span class="p">(</span><span class="n">max_frames</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">return</span> <span class="n">render</span><span class="p">(</span><span class="n">grid</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="display"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.ipython.html#holoviews.ipython.display_hooks.display">[docs]</a><span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">raw</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Renders any HoloViews object to HTML and displays it</span>
+<span class="sd">    using the IPython display function. If raw is enabled</span>
+<span class="sd">    the raw HTML is returned instead of displaying it directly.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">GridSpace</span><span class="p">):</span>
+        <span class="k">with</span> <span class="n">option_state</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+            <span class="n">html</span> <span class="o">=</span> <span class="n">grid_display</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="p">(</span><span class="n">CompositeOverlay</span><span class="p">,</span> <span class="n">ViewableElement</span><span class="p">)):</span>
+        <span class="k">with</span> <span class="n">option_state</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+            <span class="n">html</span> <span class="o">=</span> <span class="n">element_display</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="p">(</span><span class="n">Layout</span><span class="p">,</span> <span class="n">NdLayout</span><span class="p">,</span> <span class="n">AdjointLayout</span><span class="p">)):</span>
+        <span class="k">with</span> <span class="n">option_state</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+            <span class="n">html</span> <span class="o">=</span> <span class="n">layout_display</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="p">(</span><span class="n">HoloMap</span><span class="p">,</span> <span class="n">DynamicMap</span><span class="p">)):</span>
+        <span class="k">with</span> <span class="n">option_state</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+            <span class="n">html</span> <span class="o">=</span> <span class="n">map_display</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">repr</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="k">if</span> <span class="n">raw</span> <span class="k">else</span> <span class="n">IPython</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">display</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">html</span> <span class="k">if</span> <span class="n">raw</span> <span class="k">else</span> <span class="n">IPython</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">display</span><span class="p">(</span><span class="n">IPython</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">HTML</span><span class="p">(</span><span class="n">html</span><span class="p">))</span></div>
+
+
+<span class="k">def</span> <span class="nf">pprint_display</span><span class="p">(</span><span class="n">obj</span><span class="p">):</span>
+    <span class="k">if</span> <span class="s1">'html'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">Store</span><span class="o">.</span><span class="n">display_formats</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="c1"># If pretty printing is off, return None (fallback to next display format)</span>
+    <span class="n">ip</span> <span class="o">=</span> <span class="n">get_ipython</span><span class="p">()</span>  <span class="c1">#  # noqa (in IPython namespace)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">ip</span><span class="o">.</span><span class="n">display_formatter</span><span class="o">.</span><span class="n">formatters</span><span class="p">[</span><span class="s1">'text/plain'</span><span class="p">]</span><span class="o">.</span><span class="n">pprint</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="k">return</span> <span class="n">display</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">raw</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="element_png_display"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.ipython.html#holoviews.ipython.display_hooks.element_png_display">[docs]</a><span class="nd">@display_hook</span>
+<span class="k">def</span> <span class="nf">element_png_display</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">max_frames</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Used to render elements to PNG if requested in the display formats.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="s1">'png'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">Store</span><span class="o">.</span><span class="n">display_formats</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">info</span> <span class="o">=</span> <span class="n">process_object</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">info</span><span class="p">:</span>
+        <span class="n">IPython</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">display</span><span class="p">(</span><span class="n">IPython</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">HTML</span><span class="p">(</span><span class="n">info</span><span class="p">))</span>
+        <span class="k">return</span>
+
+
+    <span class="n">backend</span> <span class="o">=</span> <span class="n">Store</span><span class="o">.</span><span class="n">current_backend</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">Store</span><span class="o">.</span><span class="n">registry</span><span class="p">[</span><span class="n">backend</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">renderer</span> <span class="o">=</span> <span class="n">Store</span><span class="o">.</span><span class="n">renderers</span><span class="p">[</span><span class="n">backend</span><span class="p">]</span>
+    <span class="c1"># Current renderer does not support PNG</span>
+    <span class="k">if</span> <span class="s1">'png'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">renderer</span><span class="o">.</span><span class="n">params</span><span class="p">(</span><span class="s1">'fig'</span><span class="p">)</span><span class="o">.</span><span class="n">objects</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="n">data</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">renderer</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">'png'</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data</span></div>
+
+
+<div class="viewcode-block" id="element_svg_display"><a class="viewcode-back" href="../../../Reference_Manual/holoviews.ipython.html#holoviews.ipython.display_hooks.element_svg_display">[docs]</a><span class="nd">@display_hook</span>
+<span class="k">def</span> <span class="nf">element_svg_display</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">max_frames</span><span class="p">):</span>
+    <span class="sd">"""</span>
+<span class="sd">    Used to render elements to SVG if requested in the display formats.</span>
+<span class="sd">    """</span>
+    <span class="k">if</span> <span class="s1">'svg'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">Store</span><span class="o">.</span><span class="n">display_formats</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">info</span> <span class="o">=</span> <span class="n">process_object</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">info</span><span class="p">:</span>
+        <span class="n">IPython</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">display</span><span class="p">(</span><span class="n">IPython</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">HTML</span><span class="p">(</span><span class="n">info</span><span class="p">))</span>
+        <span class="k">return</span>
+
+
+    <span class="n">backend</span> <span class="o">=</span> <span class="n">Store</span><span class="o">.</span><span class="n">current_backend</span>
+    <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">Store</span><span class="o">.</span><span class="n">registry</span><span class="p">[</span><span class="n">backend</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">renderer</span> <span class="o">=</span> <span class="n">Store</span><span class="o">.</span><span class="n">renderers</span><span class="p">[</span><span class="n">backend</span><span class="p">]</span>
+    <span class="c1"># Current renderer does not support SVG</span>
+    <span class="k">if</span> <span class="s1">'svg'</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">renderer</span><span class="o">.</span><span class="n">params</span><span class="p">(</span><span class="s1">'fig'</span><span class="p">)</span><span class="o">.</span><span class="n">objects</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">data</span><span class="p">,</span> <span class="n">info</span> <span class="o">=</span> <span class="n">renderer</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">'svg'</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">data</span></div>
+
+
+<span class="c1"># display_video output by default, but may be set to first_frame,</span>
+<span class="c1"># middle_frame or last_frame (e.g. for testing purposes)</span>
+<span class="n">render_anim</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="k">def</span> <span class="nf">plot_display</span><span class="p">(</span><span class="n">plot</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">plot</span><span class="o">.</span><span class="n">renderer</span><span class="o">.</span><span class="n">html</span><span class="p">(</span><span class="n">plot</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">set_display_hooks</span><span class="p">(</span><span class="n">ip</span><span class="p">):</span>
+    <span class="n">html_formatter</span> <span class="o">=</span> <span class="n">ip</span><span class="o">.</span><span class="n">display_formatter</span><span class="o">.</span><span class="n">formatters</span><span class="p">[</span><span class="s1">'text/html'</span><span class="p">]</span>
+    <span class="n">html_formatter</span><span class="o">.</span><span class="n">for_type</span><span class="p">(</span><span class="n">ViewableElement</span><span class="p">,</span> <span class="n">pprint_display</span><span class="p">)</span>
+    <span class="n">html_formatter</span><span class="o">.</span><span class="n">for_type</span><span class="p">(</span><span class="n">UniformNdMapping</span><span class="p">,</span> <span class="n">pprint_display</span><span class="p">)</span>
+    <span class="n">html_formatter</span><span class="o">.</span><span class="n">for_type</span><span class="p">(</span><span class="n">AdjointLayout</span><span class="p">,</span> <span class="n">pprint_display</span><span class="p">)</span>
+    <span class="n">html_formatter</span><span class="o">.</span><span class="n">for_type</span><span class="p">(</span><span class="n">Layout</span><span class="p">,</span> <span class="n">pprint_display</span><span class="p">)</span>
+    <span class="c1"># Give plot instances rich display</span>
+    <span class="n">html_formatter</span><span class="o">.</span><span class="n">for_type</span><span class="p">(</span><span class="n">Plot</span><span class="p">,</span> <span class="n">plot_display</span><span class="p">)</span>
+
+    <span class="c1"># Note: Disable additional hooks from calling archive</span>
+    <span class="c1">#       (see disabled_suffixes variable in the display decorator)</span>
+    <span class="n">png_formatter</span> <span class="o">=</span> <span class="n">ip</span><span class="o">.</span><span class="n">display_formatter</span><span class="o">.</span><span class="n">formatters</span><span class="p">[</span><span class="s1">'image/png'</span><span class="p">]</span>
+    <span class="n">png_formatter</span><span class="o">.</span><span class="n">for_type</span><span class="p">(</span><span class="n">ViewableElement</span><span class="p">,</span> <span class="n">element_png_display</span><span class="p">)</span>
+
+    <span class="n">svg_formatter</span> <span class="o">=</span> <span class="n">ip</span><span class="o">.</span><span class="n">display_formatter</span><span class="o">.</span><span class="n">formatters</span><span class="p">[</span><span class="s1">'image/svg+xml'</span><span class="p">]</span>
+    <span class="n">svg_formatter</span><span class="o">.</span><span class="n">for_type</span><span class="p">(</span><span class="n">ViewableElement</span><span class="p">,</span> <span class="n">element_svg_display</span><span class="p">)</span>
+</pre>
+    </div>
+   </div>
+  </div>
+  <!-- END MAIN BODY OF DOCS ––––––––––––– -->
+  <footer class="footer">
+   <div class="footer-links">
+    <ul>
+     <li>
+      <span class="footer-title">
+       Links
+      </span>
+     </li>
+     <li>
+      <a href="/getting_started/index.html">
+       Getting Started
+      </a>
+     </li>
+     <li>
+      <a href="/user_guide/index.html">
+       User Guide
+      </a>
+     </li>
+     <li>
+      <a href="/gallery/index.html">
+       Gallery
+      </a>
+     </li>
+     <li>
+      <a href="/Reference_Manual/index.html">
+       API Docs
+      </a>
+     </li>
+     <li>
+      <a href="/FAQ.html">
+       FAQ
+      </a>
+     </li>
+     <li>
+      <a href="/about.html">
+       About
+      </a>
+     </li>
+    </ul>
+    <ul>
+     <li>
+      <span class="footer-title">
+       Join Us
+      </span>
+     </li>
+     <li>
+      <a href="//gitter.im/ioam/holoviews.html">
+       Gitter
+      </a>
+     </li>
+     <li>
+      <a href="//twitter.com/holoviews.html">
+       Twitter
+      </a>
+     </li>
+     <li>
+      <a href="//github.com/ioam/holoviews.html">
+       Github
+      </a>
+     </li>
+    </ul>
+    <ul class="copyright">
+     <li>
+      2017 IOAM: Jean-Luc R. Stevens, Philipp Rudiger, and James A. Bednar
+     </li>
+    </ul>
+   </div>
+  </footer>
+  <!-- Google Analytics -->
+  <script>
+   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-61554933-1', 'auto');
+  ga('send', 'pageview');
+  </script>
+  <!-- MathJax Config -->
+  <script type="text/x-mathjax-config">
+   MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+  </script>
+  <!-- End Document
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+ </body>
+</html>

@@ -1,0 +1,10 @@
+.. _matplotlib_gallery_autompg_histogram:
+
+Autompg histogram
+_________________
+
+.. notebook:: holoviews autompg_histogram.ipynb
+
+-------
+
+`Download this notebook from GitHub (right-click to download). <https://raw.githubusercontent.com/ioam/holoviews/master/examples/gallery/notebooks/matplotlib/autompg_histogram.ipynb>`_

@@ -1,0 +1,10 @@
+.. _plotly_gallery_trisurf3d_demo:
+
+Trisurf3d demo
+______________
+
+.. notebook:: holoviews trisurf3d_demo.ipynb
+
+-------
+
+`Download this notebook from GitHub (right-click to download). <https://raw.githubusercontent.com/ioam/holoviews/master/examples/gallery/notebooks/plotly/trisurf3d_demo.ipynb>`_
