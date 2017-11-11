@@ -3,28 +3,32 @@ language: generic
 sudo: false
 
 install:
-  - wget https://repo.continuum.io/archive/Anaconda2-5.0.1-Linux-x86_64.sh -O anaconda.sh;
-  - bash anaconda.sh -b -p $HOME/anaconda
-  - export PATH="$HOME/anaconda/bin:$PATH"
-  - hash -r
-  - conda config --set always_yes yes --set changeps1 no
-  - conda update conda
-  # Useful for debugging any issues with conda
-  - conda info -a
-  - conda env create -f holoviews_docs.yml
-  - source activate holoviews_docs
+   - ls
+#  - wget https://repo.continuum.io/archive/Anaconda2-5.0.1-Linux-x86_64.sh -O anaconda.sh;
+#  - bash anaconda.sh -b -p $HOME/anaconda
+#  - export PATH="$HOME/anaconda/bin:$PATH"
+#  - hash -r
+#  - conda config --set always_yes yes --set changeps1 no
+#  - conda update conda
+#  # Useful for debugging any issues with conda
+#  - conda info -a
+#  - conda env create -f holoviews_docs.yml
+#  - source activate holoviews_docs
 
 script:
-  - export PYTHONPATH=$PWD/doc
+#  - export PYTHONPATH=$PWD/doc
   - cd doc
-  - make gallery
-  - make refmanual
-  - make html
+  - mkdir _build
+  - mkdir _build/html
+  - echo 'test' > _build/html/index.html
+#  - make gallery
+#  - make refmanual
+#  - make html
 
 deploy:
   provider: pages
   skip_cleanup: true
   github_token: $GITHUB_TOKEN
-  local_dir: ./doc/_build/html
+  local_dir: ./_build/html
   on:
     branch: tmphvdocs
