@@ -18,8 +18,8 @@ range of primitives), see our `Reference Gallery
 * `Introduction <Introduction.html>`_
    What is HoloViews?
 
-* `Customization <Customization.html>`_
-   How to customize the visual representation.
+* `Installation of HoloViews <Installation.html>`_
+   Install HoloViews to run through this guide interactively.
 
 * `Tabular Datasets <Tabular_Datasets.html>`_
    Introduction to working with tabular data.
@@ -30,5 +30,5 @@ range of primitives), see our `Reference Gallery
     :maxdepth: 2
 
     Introduction <Introduction>
-    Customization <Customization>
+    Installation <Installation>
     Tabular Datasets <Tabular_Datasets>

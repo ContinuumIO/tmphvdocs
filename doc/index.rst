@@ -1,7 +1,6 @@
-.. HoloViews documentation master file
-
+*********
 HoloViews
-_________
+*********
 
 .. raw:: html
 
@@ -16,7 +15,7 @@ For examples, check out the thumbnails below and the other items in the `Gallery
 
 The `Getting-Started <getting_started>`_ guide explains the basic concepts and how to start using HoloViews, and is the recommended way to understand how everything works.
 
-The `User Guide <user_guide>`_ goes more deeply into key concepts from HoloViews, when you are ready for further study.
+The `User Guide`_ goes more deeply into key concepts from HoloViews, when you are ready for further study.
 
 The `API <Reference_Manual>`_ is the definitive guide to each HoloViews object, but the same information is available more conveniently via the `hv.help()` command and tab completion in the Jupyter notebook.
 
@@ -65,57 +64,10 @@ If you have any `issues <https://github.com/ioam/holoviews/issues>`_ or wish to 
          <img src="http://assets.holoviews.org/collage/ny_datashader.gif" width='31%'> </a>
    </div>
    </div>
+   <!--   <hr width='100%'></hr> -->
 
-   <hr width='100%'></hr>
-   
-
-Installation
-____________
-
-|CondaPkg|_ |PyPI|_ |License|_ |Coveralls|_
-
-
-HoloViews works with `Python 2.7 and Python 3 <https://travis-ci.org/ioam/holoviews>`_ on Linux, Windows, or Mac, and provides optional extensions for working with the `Jupyter/IPython Notebook <http://jupyter.org>`_.
-
-The recommended way to install HoloViews is using the `conda <http://conda.pydata.org/docs/>`_ command provided by `Anaconda <http://docs.continuum.io/anaconda/install>`_ or `Miniconda <http://conda.pydata.org/miniconda.html>`_::
-
-  conda install -c ioam holoviews bokeh
-
-This command will install the typical packages most useful with HoloViews, though HoloViews itself
-directly depends only on `Numpy <http://numpy.org>`_ and `Param <http://ioam.github.com/param/>`_.
-Additional installation and configuration options are described in the
-`user guide <user_guide/Installing_and_Configuring.html>`_.
-
-
-Usage
-_____
-
-Once you've installed HoloViews, you can get a copy of all the examples shown on this website::
-
-  holoviews --install-examples
-  cd holoviews-examples
-
-And then you can launch Jupyter Notebook to explore them::
-
-  jupyter notebook --NotebookApp.iopub_data_rate_limit=100000000
-
-(Increasing the rate limit in this way is `required for the current 5.0 Jupyter version <user_guide/Installing_and_Configuring.html>`_, but should not be needed in later Jupyter releases.)
-
-
-.. |PyPI| image:: https://img.shields.io/pypi/v/holoviews.svg
-.. _PyPI: https://pypi.python.org/pypi/holoviews
-
-.. |CondaPkg| image:: https://anaconda.org/ioam/holoviews/badges/installer/conda.svg
-.. _CondaPkg: https://anaconda.org/ioam/holoviews
-
-.. |License| image:: https://img.shields.io/pypi/l/holoviews.svg
-.. _License: https://github.com/ioam/holoviews/blob/master/LICENSE.txt
-
-.. |Coveralls| image:: https://img.shields.io/coveralls/ioam/holoviews.svg
-.. _Coveralls: https://coveralls.io/r/ioam/holoviews
 
 .. toctree::
-   :titlesonly:
    :hidden:
    :maxdepth: 2
 

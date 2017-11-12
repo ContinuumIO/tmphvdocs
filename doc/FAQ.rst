@@ -1,13 +1,15 @@
+***
 FAQ
-===
+***
 
 Here is a list of questions we have either been asked by users or
 potential pitfalls we hope to help users avoid:
 
 
-**Q: Can I use HoloViews without IPython/Jupyter?**
+Can I use HoloViews without IPython/Jupyter?
+____________________________________________
 
-**A:** Yes! The IPython/Jupyter notebook support makes a lot of tasks easier, and
+Yes! The IPython/Jupyter notebook support makes a lot of tasks easier, and
 helps keep your data objects separate from the customization options,
 but everything available in IPython can also be done directly from
 Python.  For instance, since HoloViews 1.3.0 you can render an object
@@ -24,13 +26,15 @@ This process is described in detail in the
 Of course, notebook-specific functionality like capturing the data in
 notebook cells or saving cleared notebooks is only for IPython/Jupyter.
 
-**Q: How should I use HoloViews as a short qualified import?**
+How should I use HoloViews as a short qualified import?
+_______________________________________________________
 
 We recommend importing HoloViews using ``import holoviews as hv``.
 
-**Q: My output looks different from what is shown on the website**
+Why does my output look different from what is shown on the website?
+____________________________________________________________________
 
-**A:** HoloViews is organized as data structures that have
+HoloViews is organized as data structures that have
 corresponding plotting code implemented in different plotting-library
 backends, and each library will have differences in behavior.
 Moreover, the same library can give different results depending on its
@@ -49,16 +53,17 @@ You can generally set options explicitly to make the output more
 consistent across HoloViews backends, but in general HoloViews tries
 to use each backend's defaults where possible.
 
-**Q: Help! I don't know how to index into my object!**
+How do I index into my object?
+______________________________
 
-**A:**  In any Python session, you can look at ``print(obj)``. For
+In any Python session, you can look at ``print(obj)``. For
 an explanation of how this information helps you index into your
 object, see our `Composing Elements <user_guides/Composing_Elements.html>`_
 user guide.
 
 
-**Q: Help! How do I find out the options for customizing the
-appearance of my object?**
+How do I find out the options for customizing the appearance of my object?
+__________________________________________________________________________
 
 **A:** If you are in the IPython/Jupyter Notebook you can use the cell magic
 ``%%output info=True`` at the top of your code cell. This will
@@ -70,10 +75,10 @@ of an object, see our `Customizing Plots <user_guides/Customizing_Plots.html>`_
 user guide.
 
 
-**Q: Why don't you let me pass** *matplotlib_option* **as a style
-through to matplotlib?**
+Why don't you let me pass a specific matplotlib option as a style through to matplotlib?
+________________________________________________________________________________________
 
-**A:** We have selected a subset of default allowable style options
+We have selected a subset of default allowable style options
 that are most commonly useful in order to hide the more arcane
 matplotlib options. If you do need such an option to be passed to
 the plotting system, you are welcome to declare that this is allowed.
@@ -89,7 +94,8 @@ element:
 Now you can freely use ``'filternorm'`` in the ``%opts`` line/cell
 magic, including tab-completion!
 
-**Q: I still can't tweak my figure in exactly the way I want. What can I do?**
+I still can't tweak my figure in exactly the way I want. What can I do?
+_______________________________________________________________________
 
 The parameters provided by HoloViews should normally cover the most
 common plotting options needed.  In case you need further control, you
@@ -97,9 +103,10 @@ can always subclass any HoloViews object and modify any of its
 behavior, and the object will still normally interact with other
 HoloViews objects (e.g. in Layout or Overlay configurations).  
 
-**Q: How do I get a legend on my overlay figure?**
+How do I get a legend on my overlay figure?
+___________________________________________
 
-**A:** Legends are generated in two different ways, depending on the
+Legends are generated in two different ways, depending on the
 ``Overlay`` type you are using. When using ``*`` to generate a normal ``Overlay``,
 the legends are generated from the labels of the Elements.
 Alternatively, you can construct an ``NdOverlay``, where the key dimensions
@@ -107,10 +114,10 @@ and values will become part of the legend. The
 `Dimensioned Containers <user_guides/Dimensioned_Containers.html>`_ user guide
 shows an example of an ``NdOverlay`` in action.
 
-**Q: I wish to use special characters in my title, but then attribute
-access becomes confusing.**
+I wish to use special characters in my title, but then attribute access becomes confusing
+_________________________________________________________________________________________
 
-**A:** The title default of ``"{label} {group}"`` is simply a default
+The title default of ``"{label} {group}"`` is simply a default
 that you can override. If you want to use a lot of special characters
 in your titles, you can pick simple ``group`` and ``label`` strings
 that let you refer to the object easily in the code, and then you can
@@ -120,9 +127,10 @@ set the plot title directly, using the plot option
 You can also use 2-tuples when specifying ``group`` and ``label`` where
 the first item is the short name used for attribute access and the second name is the long descriptive name used in the title.
 
-**Q: Where have my custom styles gone after unpickling my object?**
+Where have my custom styles gone after unpickling my object?
+____________________________________________________________
 
-**A:** HoloViews objects are designed to pickle and unpickle your core
+HoloViews objects are designed to pickle and unpickle your core
 data only, if you use Python's ``pickle.load`` and
 ``pickle.dump``. Because custom options are kept separate from
 your data, you need to use the corresponding methods ``Store.dump`` and
@@ -130,10 +138,10 @@ your data, you need to use the corresponding methods ``Store.dump`` and
 customization. You can import ``Store`` from the main namespace with
 ``from holoviews import Store``.
 
-**Q: Can I avoid generating extremely large HTML files when exporting
-my notebook?**
+Can I avoid generating extremely large HTML files when exporting my notebook?
+_____________________________________________________________________________
 
-**A:** It is very easy to visualize large volumes of data with
+It is very easy to visualize large volumes of data with
 HoloMaps, and all available display data is embedded in the HTML
 snapshot when sliders are used so that the result can be viewed
 without using a Python server process. It is therefore worth being
@@ -157,7 +165,8 @@ more difficult to share by email or on web sites, but much more feasible
 for large datasets.
 
   
-**Q: How do I create a Layout or Overlay object from an arbitrary list?**
+How do I create a Layout or Overlay object from an arbitrary list?
+__________________________________________________________________
 
 You can supply a list of ``elements`` directly to the ``Layout`` and
 ``Overlay`` constructors. For instance, you can use
