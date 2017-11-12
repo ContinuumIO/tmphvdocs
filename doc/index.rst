@@ -124,5 +124,4 @@ And then you can launch Jupyter Notebook to explore them::
    Gallery <gallery/index>
    API <Reference_Manual/index>
    FAQ
-   Github source <http://github.com/ioam/holoviews>
    About <about>

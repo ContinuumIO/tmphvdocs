@@ -46,12 +46,21 @@ _NAV =  (
         ('About', '/about'))
 
 
+_LINKS = (
+        ('Getting Started', '/getting_started/index'),
+        ('User Guide', '/user_guide/index'),
+        ('Gallery', '/gallery/index'),
+        ('API', '/Reference_Manual/index'),
+        ('FAQ', '/FAQ'),
+        ('About', '/about'))
+
+
 html_context = {
     'DESCRIPTION': 'HoloViews library, documentation site.',
     'AUTHOR': 'HoloViews contributors',
     'VERSION': version,
     'NAV': _NAV,
-    'LINKS': _NAV,
+    'LINKS': _LINKS,
     'SOCIAL': (
         ('Gitter', '//gitter.im/ioam/holoviews'),
         ('Twitter', '//twitter.com/holoviews'),

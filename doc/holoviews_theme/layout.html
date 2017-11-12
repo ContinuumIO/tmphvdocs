@@ -74,10 +74,12 @@
 
 <!-- MAIN BODY OF DOCS –––––––––––––––––– -->
   <div class="docs section">
-    <div class="toc">
+    <div id="hacketyhackhack"> <!-- style="width:20%;margin-right: 100px;"> --> <!--style="display: none;"> style="display:none;"> -->
+    <div class="toc" style="width:15%; margin-right:20px;">
       {{ toctree(maxdepth=4, collapse=True, includehidden=True) }}
     </div>
-    <div class="content">
+    </div>
+    <div class="content"> <!-- style="max-width:80%;margin-left:auto;margin-right: auto;">-->
         {% block body %}{% endblock %}
     </div>
   </div>
