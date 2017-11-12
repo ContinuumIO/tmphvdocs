@@ -37,46 +37,33 @@ rst_epilog = """
 html_theme = 'holoviews_theme'
 html_theme_path = ['.']
 
+_NAV =  (
+        ('Getting Started', '/getting_started/index'),
+        ('User Guide', '/user_guide/index'),
+        ('Gallery', '/gallery/index'),
+        ('API', '/Reference_Manual/index'),
+        ('FAQ', '/FAQ'),
+        ('About', '/about'))
+
+
 html_context = {
     'DESCRIPTION': 'HoloViews library, documentation site.',
     'AUTHOR': 'HoloViews contributors',
     'VERSION': version,
-    # Nav
-    'NAV': (
-        ('About', '/about'),
-        ('Gallery', '/gallery/index'),
-#        ('Docs', '/'),
-        ('Github', '//github.com/ioam/holoviews'),
-    ),
-    # Links
-    'LINKS': (
-        ('Getting Started', '/getting_started/index'),
-        ('User Guide', '/user_guide/index'),
-        ('Gallery', '/gallery/index'),
-#        ('Reference Gallery', '/reference/index.html'),
-        ('API', '/Reference_Manual/index'),
-        ('FAQ', '/FAQ'),
-        ('About', '/about')
-    ),
-    # About Links
-#    'ABOUT': (
-#        ('About', '/about')
-#    ),
-    # Social links
+    'NAV': _NAV,
+    'LINKS': _NAV,
     'SOCIAL': (
         ('Gitter', '//gitter.im/ioam/holoviews'),
         ('Twitter', '//twitter.com/holoviews'),
         ('Github', '//github.com/ioam/holoviews'),
     ),
     # Links for the docs sub navigation
-    'NAV_DOCS': (
-        ('Getting Started', '/getting_started/index'),
-        ('User Guide', '/user_guide/index'),
-        ('Gallery', '/gallery/index'),
-#        ('Reference Gallery', '/reference/index'),
-        ('API', '/Reference_Manual/index'),
-        ('FAQ', '/FAQ')
-    ),
+#    'NAV_DOCS': (
+#        ('Gallery', '/gallery/index'),
+##        ('Reference Gallery', '/reference/index'),
+#        ('API', '/Reference_Manual/index'),
+#        ('FAQ', '/FAQ')
+#    ),
 #    'css_server': os.environ.get('HOLOVIEWS_DOCS_CSS_SERVER', 'assets.holoviews.org'),
     'js_includes': ['custom.js', 'require.js'],
 
