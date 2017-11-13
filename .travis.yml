@@ -13,6 +13,7 @@ install:
   - conda info -a
   - conda env create -f holoviews_docs.yml
   - source activate holoviews_docs
+  - cd doc/builder/ioam_theme && python setup.py install && cd ../../..  
 
 script:
   - export PYTHONPATH=$PWD/doc

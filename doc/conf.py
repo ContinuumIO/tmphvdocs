@@ -33,9 +33,8 @@ release = '0.0.1' #setup_args['version']
 #.. _tutorial notebooks: {url}/notebooks-{version}.zip
 #""".format(url=ASSETS_URL, version=version)
 
-# Override IOAM theme
-html_theme = 'holoviews_theme'
-html_theme_path = ['.']
+html_theme = 'ioam_theme'
+#html_theme_path = ['.']
 
 _NAV =  (
         ('Getting Started', '/getting_started/index'),
