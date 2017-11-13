@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
 import sys, os
-sys.path.insert(0, os.getcwd())
+#sys.path.insert(0, os.getcwd())
 
 from builder.shared_conf import * # noqa (API import)
 
-paths = ['../param/', '.', '..']
+paths = ['.', '..']
 add_paths(paths)
 
 #from ..setup import setup_args
@@ -90,7 +90,7 @@ html_favicon = '_static/favicon.ico'
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
-exclude_patterns = ['_build', 'nbpublisher', 'builder']
+exclude_patterns = ['_build', 'builder']
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
@@ -136,7 +136,7 @@ intersphinx_mapping = {'http://docs.python.org/': None,
                        'http://ioam.github.io/param/': None}
 
 from builder.paramdoc import param_formatter
-from nbpublisher import nbbuild
+from builder import nbbuild
 
 
 def setup(app):
