@@ -80,10 +80,9 @@ html_context = {
 
 # (Optional) Logo. Should be small enough to fit the navbar (ideally 24x24).
 # Path should be relative to the ``_static`` files directory.
-html_logo = "my_logo.png"
-
-html_logo = '_static/holoviews_logo.png'
-html_favicon = '_static/favicon.ico'
+#html_logo = "my_logo.png"
+#html_logo = '_static/holoviews_logo.png'
+#html_favicon = '_static/favicon.ico'
 
 # -------------------------------------------------------------------------
 # -- The remaining items are less likely to need changing for a new project
@@ -99,7 +98,7 @@ html_title = project
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
-html_static_path = ['_static', 'builder/_shared_static']
+html_static_path = ['builder/_shared_static']
 
 # Output file base name for HTML help builder.
 htmlhelp_basename = ioam_module+'doc'
