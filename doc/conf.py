@@ -55,8 +55,10 @@ _LINKS = (
 
 
 html_context = {
-    'DESCRIPTION': 'HoloViews library, documentation site.',
-    'AUTHOR': 'HoloViews contributors',
+    'DESCRIPTION': description,
+    'AUTHOR': authors,
+    # will work without this - for canonical
+    'WEBSITE_SERVER': 'holoviews.org',
     'VERSION': version,
     'NAV': _NAV,
     'LINKS': _LINKS,
