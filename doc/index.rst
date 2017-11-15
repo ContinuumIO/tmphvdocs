@@ -1,25 +1,37 @@
-*********
-HoloViews
-*********
+*******
+Project
+*******
 
 .. raw:: html
 
    <div style="width: 65%; float:left">
 
 	 
-**Stop plotting your data - annotate your data and let it visualize itself.**
+**Short description of the point of this project**
 
-HoloViews is an `open-source <https://github.com/ioam/holoviews/blob/master/LICENSE.txt>`_ Python library designed to make data analysis and visualization seamless and simple.  With HoloViews, you can usually express what you want to do in very few lines of code, letting you focus on what you are trying to explore and convey, not on the process of plotting.
+Project is an `open-source
+<https://github.com/ioam/holoviews/blob/master/LICENSE.txt>`_ Python
+library for something something something something and something
+more.
 
-For examples, check out the thumbnails below and the other items in the `Gallery <gallery>`_ of demos and apps and the `Reference Gallery <reference>`_ that shows every HoloViews component.  Be sure to look at the code, not just the pictures, to appreciate how easy it is to create such plots yourself!
+For examples of what you can do with Project, check out the thumbnails
+below, or see the `Gallery <gallery>`_ of demos and apps.
 
-The `Getting-Started <getting_started>`_ guide explains the basic concepts and how to start using HoloViews, and is the recommended way to understand how everything works.
+We recommend the `Getting Started Guide <getting_started>`_ to learn
+the basic concepts and start using Project as quickly as possible.
 
-The `User Guide <user_guide>`_ goes more deeply into key concepts from HoloViews, when you are ready for further study.
+The `User Guide <user_guide>`_ goes into key concepts more deeply when
+you are ready for further study.
 
-The `API <Reference_Manual>`_ is the definitive guide to each HoloViews object, but the same information is available more conveniently via the `hv.help()` command and tab completion in the Jupyter notebook.
+The `API <Reference_Manual>`_ is the definitive guide to each Project
+object, but the same information is available more conveniently via
+the `hv.help()` command and tab completion in the Jupyter notebook.
 
-If you have any `issues <https://github.com/ioam/holoviews/issues>`_ or wish to `contribute code <https://help.github.com/articles/about-pull-requests>`_, you can visit our `GitHub site <https://github.com/ioam/holoviews>`_ or chat with the developers on `gitter <https://gitter.im/ioam/holoviews>`_.
+Please feel free to report `issues
+<https://github.com/ioam/holoviews/issues>`_ or `contribute code
+<https://help.github.com/articles/about-pull-requests>`_. You are also
+welcome to chat with the developers on `gitter
+<https://gitter.im/ioam/holoviews>`_.
 
 
 .. raw:: html
