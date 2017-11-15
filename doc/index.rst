@@ -15,7 +15,7 @@ For examples, check out the thumbnails below and the other items in the `Gallery
 
 The `Getting-Started <getting_started>`_ guide explains the basic concepts and how to start using HoloViews, and is the recommended way to understand how everything works.
 
-The `User Guide`_ goes more deeply into key concepts from HoloViews, when you are ready for further study.
+The `User Guide <user_guide>`_ goes more deeply into key concepts from HoloViews, when you are ready for further study.
 
 The `API <Reference_Manual>`_ is the definitive guide to each HoloViews object, but the same information is available more conveniently via the `hv.help()` command and tab completion in the Jupyter notebook.
 
