@@ -1,28 +1,31 @@
-Welcome to HoloViews!
-_____________________
+***************
+Getting Started
+***************
 
-This 'Getting Started' guide aims to get you using HoloViews
-productively as quickly as possible. It is designed as an entrypoint for
-new users that will introduce the core concepts necessary to get you
-working productively with your own data. We recommend reading this guide
-in order if you wish to get an overview of what is offered by HoloViews.
+This 'Getting Started' guide aims to get you using Project
+productively as quickly as possible.
 
-For detailed documentation, please consult our `User Guide
-<../user_guide/index.html>`_ which we will link to from the appropriate
-sections of this guide. An overview of some interesting HoloViews
-examples can be found in our `Gallery <../gallery/index.html>`_ and if
-you are looking for a specific component (or wish to view the available
-range of primitives), see our `Reference Gallery
-<../reference/index.html>`_.
+Detailed documentation is contained in the `User Guide
+<../user_guide/index.html>`_; we link to the user guide from the
+appropriate sections of this guide.
+
+To see what can be done with Project, see our `Gallery
+<../gallery/index.html>`_ of interesting examples.
+
+We recommend you proceed through the following in order; it should
+take around 1 hour in total.
 
 * `Introduction <Introduction.html>`_
-   What is HoloViews?
+   What is Project?
 
-* `Installation of HoloViews <Installation.html>`_
-   Install HoloViews to run through this guide interactively.
+* `Installation <Installation.html>`_
+   Install Project to run through this guide interactively.
 
 * `Tabular Datasets <Tabular_Datasets.html>`_
    Introduction to working with tabular data.
+
+* Etc...
+
 
 .. toctree::
     :titlesonly:
