@@ -18,8 +18,17 @@ description = 'Stop plotting your data - annotate your data and let it visualize
 version = '0.0.1'
 release = '0.0.1'
 
+html_static_path = ['_static']
+
 html_theme = 'ioam_theme'
-#html_theme_options = {}
+html_theme_options = {
+#    'logo':'images/amazinglogo.png'
+#    'favicon':'images/amazingfavicon.ico'
+# ...
+# ? css
+# ? js
+}
+
 
 _NAV =  (
         ('Getting Started', '/getting_started/index'),
@@ -53,11 +62,9 @@ html_context = {
     'js_includes': ['custom.js', 'require.js'],
 }
 
-
 # If extensions (or modules to document with autodoc) are in another
 # directory, add these directories to sys.path here.
 paths = ['.', '..']
-
 
 # end of things to edit
 ##############################################################
@@ -66,4 +73,4 @@ paths = ['.', '..']
 add_paths(paths)
 
 from builder.shared_conf2 import hack
-setup, intersphinx_mapping, texinfo_documents, man_pages, latex_documents, htmlhelp_basename, html_static_path, html_title, exclude_patterns = hack(project,ioam_module,authors,description)
+setup, intersphinx_mapping, texinfo_documents, man_pages, latex_documents, htmlhelp_basename, html_static_path, html_title, exclude_patterns = hack(project,ioam_module,authors,description,html_static_path)
