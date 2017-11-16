@@ -20,6 +20,7 @@ script:
   - cd doc
   - make gallery
   - make refmanual
+  - make ipynb-rst
   - make html
   - make fix-links
   - touch ./_build/html/.nojekyll
