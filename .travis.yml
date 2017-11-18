@@ -18,6 +18,12 @@ install:
 script:
   - export PYTHONPATH=$PWD/doc
   - cd doc
+  - cp builder/tmplate/*.rst .
+  - cp builder/tmplate/*.html .
+  - cp builder/tmplate/*.py .
+  - cp builder/tmplate/Makefile .
+  - cp builder/tmplate/user_guide/index.rst user_guide/
+  - cp builder/tmplate/getting_started/index.rst getting_started/
   - make gallery
   - make refmanual
   - make ipynb-rst
