@@ -22,7 +22,9 @@ script:
   - cp builder/tmplate/*.html .
   - cp builder/tmplate/*.py .
   - cp builder/tmplate/Makefile .
+  - mkdir user_guide
   - cp builder/tmplate/user_guide/index.rst user_guide/
+  - mkdir getting_started
   - cp builder/tmplate/getting_started/index.rst getting_started/
   - make gallery
   - make refmanual
