@@ -22,7 +22,6 @@ install:
 script:
   - export PROJECT=holoviews
   - export MODULE=holoviews
-  #- export PYTHONPATH=$PWD/doc
   - mkdir doc
   - cd doc
   - nbsite_from_tmplate.py .
@@ -46,7 +45,7 @@ script:
   - find ./gallery -type f -name '*.json' -exec mv {} ./_build/html/json/ ";"
   ##########################################################
   # "make fix-links"
-  - nbsite_fix_links.py _build/html 
+  - nbsite_fix_links.py _build/html
   - touch ./_build/html/.nojekyll
 
 deploy:
