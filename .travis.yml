@@ -13,7 +13,7 @@ install:
   - conda info -a
   - conda create --name ioamdocenv
   - source activate ioamdocenv
-  - conda install -c ioam -c bokeh -c conda-forge -c defaults python=3.6* paramnb numpy scipy notebook matplotlib pandas bokeh=0.12.10 nose networkx xarray datashader scikit-image selenium phantomjs streamz=0.2.0 dask=0.15.4 sphinx runipy beautifulsoup4 graphviz plotly
+  - conda install -c ioam -c bokeh -c conda-forge -c defaults python=3.6* paramnb numpy scipy notebook matplotlib pandas bokeh=0.12.10 nose networkx xarray datashader scikit-image selenium phantomjs streamz=0.2.0 dask=0.15.4 sphinx runipy beautifulsoup4 graphviz plotly holoviews
   # worked on my mac, doesn't work on linux; bail on conda pkg til figure out recipe :(
   #- conda install -c cball -c ioam -c bokeh -c conda-forge nbsite
   - pip install nbsite
