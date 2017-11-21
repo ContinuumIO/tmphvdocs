@@ -22,8 +22,8 @@ install:
   - pip install sphinx_ioam_theme
 
 script:
-  - export PROJECT=holoviews
-  - export MODULE=holoviews
+  - export THISPROJECT=holoviews
+  - export THISMODULE=holoviews
   - mkdir doc
   - cd doc
   - nbsite_from_tmplate.py .
@@ -32,10 +32,10 @@ script:
   - nbsite_gallery.py ../
   ##########################################################  
   # "make refmanual"
-  - nbsite_generate_modules.py ${MODULE} -d ./Reference_Manual -n ${PROJECT} -e tests
+  - nbsite_generate_modules.py ${THISMODULE} -d ./Reference_Manual -n ${THISPROJECT} -e tests
   ##########################################################
   # "make ipynb-rst"
-  - nbsite_nbpagebuild.py ${PROJECT} ../examples .
+  - nbsite_nbpagebuild.py ${THISPROJECT} ../examples .
   ##########################################################
   # "make html"
   - sphinx-build -b html . ./_build/html
