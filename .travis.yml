@@ -31,10 +31,10 @@ script:
   - nbsite_gallery.py ../
   ##########################################################  
   # "make refmanual"
-  - nbsite_generate_modules.py $(MODULE) -d ./Reference_Manual -n $(PROJECT) -e tests
+  - nbsite_generate_modules.py ${MODULE} -d ./Reference_Manual -n ${PROJECT} -e tests
   ##########################################################
   # "make ipynb-rst"
-  - nbsite_nbpagebuild.py $(PROJECT) ../examples .
+  - nbsite_nbpagebuild.py ${PROJECT} ../examples .
   ##########################################################
   # "make html"
   - sphinx-build -b html . ./_build/html
