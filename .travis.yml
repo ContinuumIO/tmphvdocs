@@ -11,26 +11,42 @@ install:
   - conda update conda
   # Useful for debugging any issues with conda
   - conda info -a
-  - conda env create -f doc/builder/ioamdocenv.yml
+  - conda create --name ioamdocenv
   - source activate ioamdocenv
-  - cd doc/builder/ioam_theme && python setup.py install && cd ../../..  
+  - conda install -c ioam -c bokeh -c conda-forge -c defaults python=3.6* paramnb numpy scipy notebook matplotlib pandas bokeh=0.12.10 nose networkx xarray datashader scikit-image selenium phantomjs streamz=0.2.0 dask=0.15.4 sphinx runipy beautifulsoup4 graphviz plotly
+  # worked on my mac, doesn't work on linux; bail on conda pkg til figure out recipe :(
+  #- conda install -c cball -c ioam -c bokeh -c conda-forge nbsite
+  - pip install --upgrade nbsite
+  - pip install sphinx_ioam_theme
 
 script:
-  - export PYTHONPATH=$PWD/doc
+  - export PROJECT=holoviews
+  - export MODULE=holoviews
+  #- export PYTHONPATH=$PWD/doc
+  - mkdir doc
   - cd doc
-  - cp builder/tmplate/*.rst .
-  - cp builder/tmplate/*.html .
-  - cp builder/tmplate/*.py .
-  - cp builder/tmplate/Makefile .
-  - mkdir user_guide
-  - cp builder/tmplate/user_guide/index.rst user_guide/
-  - mkdir getting_started
-  - cp builder/tmplate/getting_started/index.rst getting_started/
-  - make gallery
-  - make refmanual
-  - make ipynb-rst
-  - make html
-  - make fix-links
+  - nbsite_from_tmplate.py .
+  ##########################################################  
+  # "make gallery"
+  - nbsite_gallery.py ../
+  ##########################################################  
+  # "make refmanual"
+  - nbsite_generate_modules.py $(MODULE) -d ./Reference_Manual -n $(PROJECT) -e tests
+  ##########################################################
+  # "make ipynb-rst"
+  - nbsite_nbpagebuild.py $(PROJECT) ../examples .
+  ##########################################################
+  # "make html"
+  - sphinx-build -b html . ./_build/html
+  - mkdir -p ./_build/html/json
+  # TODO deal with these find cmds later!
+  - find . -type f -name '*.json' -path "./_build" -prune -exec mv {} ./_build/html/json/ ";"
+  - find ../examples -type f -name '*.json' -exec mv {} ./_build/html/json/ ";"
+  #- find ./reference -type f -name '*.json' -exec mv {} ./_build/html/json/ ";"
+  - find ./gallery -type f -name '*.json' -exec mv {} ./_build/html/json/ ";"
+  ##########################################################
+  # "make fix-links"
+  - nbsite_fix_links.py _build/html 
   - touch ./_build/html/.nojekyll
 
 deploy:
