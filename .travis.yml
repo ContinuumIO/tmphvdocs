@@ -3,9 +3,9 @@ language: generic
 sudo: false
 
 install:
-  - wget https://repo.continuum.io/archive/Anaconda3-5.0.1-Linux-x86_64.sh -O anaconda.sh;
-  - bash anaconda.sh -b -p $HOME/anaconda
-  - export PATH="$HOME/anaconda/bin:$PATH"
+  - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+  - bash miniconda.sh -b -p $HOME/miniconda
+  - export PATH="$HOME/miniconda/bin:$PATH"
   - hash -r
   - conda config --set always_yes yes --set changeps1 no
   - conda update conda
@@ -16,7 +16,7 @@ install:
   - conda install -c ioam -c bokeh -c conda-forge -c defaults python=3.6* paramnb numpy scipy notebook matplotlib pandas bokeh=0.12.10 nose networkx xarray datashader scikit-image selenium phantomjs streamz=0.2.0 dask=0.15.4 sphinx runipy beautifulsoup4 graphviz plotly
   # worked on my mac, doesn't work on linux; bail on conda pkg til figure out recipe :(
   #- conda install -c cball -c ioam -c bokeh -c conda-forge nbsite
-  - pip install --upgrade nbsite
+  - pip install nbsite
   - pip install sphinx_ioam_theme
 
 script:
