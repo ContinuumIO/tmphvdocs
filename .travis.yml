@@ -21,6 +21,12 @@ install:
   - pip install nbsite
   - pip install sphinx_ioam_theme
 
+before_script:
+  # copied from https://docs.travis-ci.com/user/gui-and-headless-browsers/
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+      export DISPLAY=:99.0 && sh -e /etc/init.d/xvfb start && sleep 3;
+    fi
+
 script:
   - export THISPROJECT=holoviews
   - export THISMODULE=holoviews
